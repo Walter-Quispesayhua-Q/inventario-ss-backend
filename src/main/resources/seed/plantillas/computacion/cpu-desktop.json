@@ -1,0 +1,914 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-CPU-2025-V1",
+    "version": "1.0",
+    "nombre": "CPU/Computadora de Escritorio",
+    "categoriaSemantica": "COMPUTADOR_ESCRITORIO",
+    "descripcion": "Plantilla ML de computadora de escritorio - Maneja columna única, múltiples columnas e híbrido para equipos de escritorio completos"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_PROCESADOR",
+        "condicion": ".*(i[357579]|ryzen|core|xeon|athlon|celeron).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró un patrón de procesador conocido"
+      },
+      {
+        "nombre": "BONUS_TIENE_MEMORIA_RAM",
+        "condicion": ".*\\b\\d+\\s*(gb|GB)\\s*(ram|RAM|memoria).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró un patrón de memoria RAM"
+      },
+      {
+        "nombre": "BONUS_TIENE_ALMACENAMIENTO",
+        "condicion": ".*(ssd|hdd|nvme|\\d+\\s*(gb|tb)).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró un patrón de almacenamiento"
+      },
+      {
+        "nombre": "BONUS_TIENE_CONECTIVIDAD",
+        "condicion": ".*(usb|ethernet|gigabit|hdmi).*",
+        "puntos": 0.06,
+        "descripcion": "Se encontró un patrón de conectividad"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "cpu",
+          "computadora",
+          "pc",
+          "desktop",
+          "escritorio"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "computer",
+          "tower",
+          "minitower",
+          "thinkcentre",
+          "optiplex"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "workstation",
+          "business",
+          "sff",
+          "mini"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "sistema",
+          "equipo",
+          "maquina",
+          "dispositivo"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "procesadores": [
+        "i3",
+        "i5",
+        "i7",
+        "i9",
+        "ryzen",
+        "core",
+        "xeon",
+        "athlon",
+        "celeron",
+        "pentium"
+      ],
+      "memoria": [
+        "ddr3",
+        "ddr4",
+        "ddr5",
+        "ram",
+        "memoria",
+        "gb",
+        "16gb",
+        "8gb",
+        "32gb"
+      ],
+      "almacenamiento": [
+        "ssd",
+        "hdd",
+        "nvme",
+        "sata",
+        "m.2",
+        "512gb",
+        "1tb",
+        "2tb"
+      ],
+      "graficas": [
+        "gtx",
+        "rtx",
+        "radeon",
+        "vega",
+        "intel",
+        "uhd",
+        "iris",
+        "quadro"
+      ],
+      "conectividad": [
+        "usb",
+        "hdmi",
+        "vga",
+        "displayport",
+        "ethernet",
+        "wifi",
+        "bluetooth",
+        "gigabit"
+      ],
+      "puertos": [
+        "usb-a",
+        "usb-c",
+        "type-a",
+        "type-c",
+        "usb2.0",
+        "usb3.0",
+        "usb3.2"
+      ],
+      "red": [
+        "10mbps",
+        "100mbps",
+        "1000mbps",
+        "gigabit",
+        "ethernet",
+        "rj45"
+      ],
+      "fuente": [
+        "watts",
+        "vatios",
+        "psu",
+        "fuente",
+        "power"
+      ],
+      "sistemas": [
+        "windows",
+        "linux",
+        "ubuntu",
+        "win10",
+        "win11",
+        "pro",
+        "home"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "dell",
+        "hp",
+        "lenovo",
+        "asus",
+        "acer"
+      ],
+      "tier2": [
+        "msi",
+        "gigabyte",
+        "alienware",
+        "origin",
+        "falcon"
+      ],
+      "tier3": [
+        "gateway",
+        "emachines",
+        "compaq",
+        "packard",
+        "ibm"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "teclado",
+        "mouse",
+        "impresora",
+        "procesador",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "laptop",
+        "notebook",
+        "tablet",
+        "smartphone",
+        "ssd",
+        "disco duro",
+        "tarjeta de video",
+        "t. video",
+        "memoria ram",
+        "gpu",
+        "temperatura",
+        "calefaccion",
+        "potencia 1500w"
+      ],
+      "media": [
+        "servidor",
+        "router",
+        "switch",
+        "ups"
+      ],
+      "debil": [
+        "cable",
+        "adaptador",
+        "usb"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "procesador_intel": "(intel\\s+)?(core\\s+)?(i[3579]|xeon)[-\\s]*([0-9]+[A-Z]*)",
+      "procesador_amd": "(amd\\s+)?(ryzen\\s+[3579]\\s+\\d{4}[A-Z]*|athlon|fx)",
+      "memoria_ram": "(\\d+)\\s*(gb|GB)\\s*(ram|RAM|memoria|ddr[345])",
+      "almacenamiento_ssd": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(ssd|SSD)",
+      "almacenamiento_hdd": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(hdd|HDD)",
+      "sistema_operativo": "(windows|win)\\s*(10|11|7|xp)\\s*(pro|home|enterprise)?",
+      "tipo_disco": "\\b(nvme|m\\.2|sata|ssd|hdd)\\b",
+      "fuente_poder": "(\\d+)\\s*(w|watts|vatios)",
+      "ethernet": "\\b(10|100|1000)\\s*(mbps|gigabit)\\b"
+    },
+    "conectividad": {
+      "puertos_usb": "(usb\\s*[23]\\.[012]|usb[-\\s]*[abc]|type[-\\s]*[ac])",
+      "video_out": "\\b(hdmi|vga|dvi|displayport|dp)\\b",
+      "red": "\\b(ethernet|wifi|bluetooth|gigabit|rj45)\\b",
+      "cantidad_puertos": "(\\d+)\\s*x?\\s*(usb|hdmi|vga)"
+    },
+    "caracteristicas": {
+      "factor_forma": "\\b(tower|mini|sff|desktop|all-in-one)\\b",
+      "frecuencia": "(\\d{1,2}\\.\\d{1,2})\\s*(ghz|GHz)",
+      "nucleos": "(\\d+)\\s*(cores?|núcleos?)",
+      "consumo": "(\\d+)\\s*(w|watts|vatios)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Lenovo, Dell, HP",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Manufacturer",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: ThinkCentre M70s, OptiPlex 9020",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo",
+              "Tipo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "[A-Z][\\w]{1,3}\\d{3,4}[\\w]*"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROCESADOR",
+      "etiqueta": "Procesador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Intel Core i7-10700, AMD Ryzen 5 3600",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Procesador",
+              "CPU",
+              "Processor",
+              "Chip"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(intel\\s+)?(core\\s+)?(i[3579]|xeon)[-\\s]*([0-9]+[A-Z]*)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(amd\\s+)?(ryzen\\s+[3579]\\s+\\d{4}[A-Z]*|athlon|fx)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_RAM",
+      "etiqueta": "Memoria RAM",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 8GB DDR4-2933, 16GB DDR4",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RAM",
+              "Memoria",
+              "Memory",
+              "DDR"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(gb|GB)\\s*(ddr[345][-\\s]*\\d{4}|ram|memoria)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "de\\s+(\\d+gb)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALMACENAMIENTO",
+      "etiqueta": "Almacenamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 512GB SSD, 1TB HDD",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Almacenamiento",
+              "Storage",
+              "Disco",
+              "SSD",
+              "HDD"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(ssd|hdd|SSD|HDD|nvme|NVMe)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "con\\s+(\\d+\\w+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DISCO",
+      "etiqueta": "Tipo de Disco",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: SSD M.2 NVMe, SATA SSD, HDD SATA",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": [
+        "SSD M.2 NVMe",
+        "SSD M.2 SATA",
+        "SSD SATA",
+        "HDD SATA",
+        "HDD SAS"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo Disco",
+              "Tecnología",
+              "Interface",
+              "Tipo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(nvme|m\\.2|sata|sas)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(ssd|SSD)\\s+(m\\.2|nvme|sata)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(hdd|HDD)\\s+(sata|sas)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_OPERATIVO",
+      "etiqueta": "Sistema Operativo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Windows 11 Pro, Windows 10 Home",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "SO",
+              "OS",
+              "Sistema",
+              "Windows"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(windows|win)\\s*(10|11|7)\\s*(pro|home|enterprise)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "win10": "Windows 10",
+            "win11": "Windows 11"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FACTOR_FORMA",
+      "etiqueta": "Factor de Forma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Tower, Mini Tower, SFF",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "Tower",
+        "Mini Tower",
+        "SFF",
+        "Desktop",
+        "All-in-One"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Factor",
+              "Forma",
+              "Type",
+              "Tipo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(tower|mini|sff|desktop|all-in-one)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TARJETA_GRAFICA",
+      "etiqueta": "Tarjeta Gráfica",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Intel UHD Graphics, NVIDIA GTX 1650",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "GPU",
+              "Gráfica",
+              "Video",
+              "Graphics"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(nvidia|amd|intel)\\s+(gtx|rtx|radeon|uhd|iris)\\s*[\\w\\s]+",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RED_ETHERNET",
+      "etiqueta": "Red Ethernet",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Gigabit 10/100/1000, 1000 Mbps",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "10 Mbps",
+        "100 Mbps",
+        "1000 Mbps (Gigabit)",
+        "10/100 Mbps",
+        "10/100/1000 Mbps"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Red",
+              "Ethernet",
+              "LAN",
+              "Network"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(10/100/1000|gigabit|1000\\s*mbps|100\\s*mbps)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "ethernet\\s+(10/100/1000|gigabit)",
+            "grupo": 1
+          },
+          {
+            "tipo": "MAPEO",
+            "gigabit": "1000 Mbps (Gigabit)",
+            "1000mbps": "1000 Mbps (Gigabit)"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_USB_DETALLE",
+      "etiqueta": "Puertos USB (Detalle)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4x USB 3.0, 2x USB-C, 2x USB 2.0",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "USB",
+              "Puertos USB",
+              "USB Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(usb\\s*[23]\\.[012]|usb[-\\s]*[abc]|type[-\\s]*[ac])",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "usb\\s*[23]\\.[012]|usb[-\\s]*c|type[-\\s]*c",
+            "multiple": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Puertos/Conectores Adicionales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HDMI, VGA, DisplayPort",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectores",
+              "Puertos",
+              "Conectividad",
+              "Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hdmi|vga|dvi|displayport|dp)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUENTE_PODER",
+      "etiqueta": "Fuente de Poder (Watts)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 500, 650, 750",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 200,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Fuente",
+              "PSU",
+              "Power Supply",
+              "Watts"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "fuente\\s+de?\\s+(\\d+)\\s*(w|watts)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(w|watts|vatios)\\s*(fuente|psu|power)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "psu\\s+(\\d+)\\s*w",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Gris, Plateado",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "silver",
+              "black",
+              "white"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_PROCESADOR",
+      "etiqueta": "Frecuencia CPU (GHz)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 3.1, 2.8, 4.2",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 1.0,
+        "max": 6.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "GHz",
+              "Clock",
+              "Speed"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d{1,2})\\s*(ghz|GHz)",
+            "grupo": 1
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: CPU con etiquetas detalladas",
+      "texto": "01 CPU Ma: Lenovo Mo: ThinkCentre M70s Se: MJ0J5ZAJ, i7 - 10700 de 8GB Mo: DDR4-2933 MHZ con 512GB SSD NVMe M.2 con Window 11 Pro Co: Negro Ethernet Gigabit 4x USB 3.0 2x USB-C fuente 500W",
+      "extraccionEsperada": {
+        "MARCA": "Lenovo",
+        "MODELO": "ThinkCentre M70s",
+        "NUMERO_SERIE": "MJ0J5ZAJ",
+        "PROCESADOR": "i7-10700",
+        "MEMORIA_RAM": "8GB DDR4-2933",
+        "ALMACENAMIENTO": "512GB SSD NVMe",
+        "TIPO_DISCO": "SSD M.2 NVMe",
+        "SISTEMA_OPERATIVO": "Windows 11 Pro",
+        "COLOR": "Negro",
+        "RED_ETHERNET": "Gigabit",
+        "PUERTOS_USB_DETALLE": "4x USB 3.0, 2x USB-C",
+        "FUENTE_PODER": "500"
+      }
+    },
+    {
+      "nombre": "Caso 2: PC en lenguaje natural",
+      "texto": "PC marca Dell modelo OPTIPLEX 9020MT core i7 8 GB RAM HDD 1TB SATA red 10/100/1000 Mbps 6 puertos USB 3.0 PSU 650W",
+      "extraccionEsperada": {
+        "MARCA": "Dell",
+        "MODELO": "OPTIPLEX 9020MT",
+        "PROCESADOR": "Core i7",
+        "MEMORIA_RAM": "8 GB RAM",
+        "ALMACENAMIENTO": "1TB HDD",
+        "TIPO_DISCO": "HDD SATA",
+        "RED_ETHERNET": "10/100/1000 Mbps",
+        "PUERTOS_USB_DETALLE": "6x USB 3.0",
+        "FUENTE_PODER": "650"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "HP",
+        "Modelo": "EliteDesk 800 G5",
+        "Procesador": "Intel Core i5-9500",
+        "RAM": "16GB DDR4",
+        "Almacenamiento": "256GB SSD SATA",
+        "Tipo Disco": "SSD SATA",
+        "SO": "Windows 10 Pro",
+        "Red": "Gigabit Ethernet",
+        "USB": "4x USB 3.0, 2x USB 2.0",
+        "Fuente": "500W",
+        "Color": "Negro"
+      },
+      "extraccionEsperada": {
+        "MARCA": "HP",
+        "MODELO": "EliteDesk 800 G5",
+        "PROCESADOR": "Intel Core i5-9500",
+        "MEMORIA_RAM": "16GB DDR4",
+        "ALMACENAMIENTO": "256GB SSD SATA",
+        "TIPO_DISCO": "SSD SATA",
+        "SISTEMA_OPERATIVO": "Windows 10 Pro",
+        "RED_ETHERNET": "Gigabit Ethernet",
+        "PUERTOS_USB_DETALLE": "4x USB 3.0, 2x USB 2.0",
+        "FUENTE_PODER": "500",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

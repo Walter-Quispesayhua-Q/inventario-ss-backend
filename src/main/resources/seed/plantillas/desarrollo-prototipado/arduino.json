@@ -1,0 +1,995 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-ARD-2025-V1",
+    "version": "1.0",
+    "nombre": "Arduino",
+    "categoriaSemantica": "DESARROLLO_ARDUINO_MICROCONTROLADOR",
+    "descripcion": "Plantilla ML de Arduino - Maneja columna única, múltiples columnas e híbrido para placas Arduino y kits de sensores"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_KIT_SENSORES_COMPLETO",
+        "condicion": ".*(kit.*sensores.*placas.*arduinos.*incluye).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró kit completo de sensores y placas Arduino"
+      },
+      {
+        "nombre": "BONUS_SENSORES_ESPECIFICOS",
+        "condicion": ".*(flujo.*agua.*presion.*luz.*color.*sonido).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontraron sensores específicos múltiples"
+      },
+      {
+        "nombre": "BONUS_ARDUINO_UNO",
+        "condicion": ".*(arduino\\s+uno).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró Arduino UNO específico"
+      },
+      {
+        "nombre": "BONUS_PLACA_INTERNET",
+        "condicion": ".*(placa.*internet.*arduino).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró placa de Internet para Arduino"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "arduino",
+          "kit",
+          "sensores",
+          "placas",
+          "uno"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "flujo",
+          "presion",
+          "luz",
+          "color",
+          "sonido",
+          "gas"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "calidad",
+          "aire",
+          "agua",
+          "internet",
+          "proyectos"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "microcontrolador",
+          "electronics",
+          "maker",
+          "diy"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos_arduino": [
+        "uno",
+        "nano",
+        "mega",
+        "leonardo",
+        "micro",
+        "pro-mini"
+      ],
+      "tipos_kit": [
+        "kit-sensores",
+        "kit-proyectos",
+        "starter-kit",
+        "placa-internet"
+      ],
+      "sensores_basicos": [
+        "temperatura",
+        "humedad",
+        "luz",
+        "sonido",
+        "movimiento"
+      ],
+      "sensores_avanzados": [
+        "flujo-agua",
+        "presion",
+        "color",
+        "calidad-aire",
+        "gas",
+        "ph"
+      ],
+      "conectividad": [
+        "wifi",
+        "bluetooth",
+        "ethernet",
+        "gsm",
+        "lora"
+      ],
+      "actuadores": [
+        "servo",
+        "motor",
+        "led",
+        "buzzer",
+        "relay"
+      ],
+      "interfaces": [
+        "i2c",
+        "spi",
+        "uart",
+        "analog",
+        "digital"
+      ],
+      "alimentacion": [
+        "5v",
+        "3.3v",
+        "usb",
+        "battery",
+        "external"
+      ],
+      "marcas_comunes": [
+        "arduino",
+        "elegoo",
+        "keyestudio",
+        "sunfounder"
+      ],
+      "shields": [
+        "wifi-shield",
+        "ethernet-shield",
+        "motor-shield",
+        "sensor-shield"
+      ],
+      "aplicaciones": [
+        "iot",
+        "robotics",
+        "automation",
+        "monitoring",
+        "control"
+      ],
+      "lenguajes": [
+        "c++",
+        "arduino-ide",
+        "scratch",
+        "python"
+      ],
+      "protocolos": [
+        "mqtt",
+        "http",
+        "tcp",
+        "udp",
+        "modbus"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "arduino",
+        "elegoo",
+        "keyestudio",
+        "sunfounder"
+      ],
+      "tier2": [
+        "dfrobot",
+        "seeedstudio",
+        "adafruit",
+        "sparkfun"
+      ],
+      "tier3": [
+        "kuman",
+        "miuzei",
+        "osoyoo",
+        "freenove"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "raspberry",
+        "jetson",
+        "monitor",
+        "cpu",
+        "procesador",
+        "intel",
+        "amd",
+        "ryzen",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "xeon",
+        "threadripper"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "ghz",
+        "nucleos",
+        "cores"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "archivador",
+        "escritorio"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(arduino|elegoo|keyestudio)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(uno|nano|mega|leonardo)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_arduino": "\\b(arduino|kit\\s+de\\s+sensores|kit\\s+de\\s+proyectos|placa\\s+de\\s+internet)\\b",
+      "modelo_arduino": "\\b(arduino\\s+uno|nano|mega|leonardo|micro|pro\\s*mini)\\b",
+      "tipo_kit": "\\b(kit\\s+de\\s+sensores|kit\\s+de\\s+proyectos|placa\\s+de\\s+internet|starter\\s*kit)\\b",
+      "sensores_incluidos": "\\b(flujo\\s+de\\s+agua|presion|luz|color|sonido|calidad\\s+de\\s+aire|gas|temperatura|humedad|movimiento)\\b",
+      "conectividad_arduino": "\\b(wifi|bluetooth|ethernet|gsm|lora|usb|serial)\\b",
+      "actuadores": "\\b(servo|motor|led|buzzer|relay|stepper)\\b",
+      "interfaces": "\\b(i2c|spi|uart|analog|digital|pwm)\\b",
+      "alimentacion_arduino": "\\b(5v|3\\.3v|usb|battery|external|vin)\\b",
+      "shields": "\\b(wifi\\s*shield|ethernet\\s*shield|motor\\s*shield|sensor\\s*shield)\\b",
+      "aplicaciones_arduino": "\\b(iot|robotics|automation|monitoring|control|home\\s*automation)\\b",
+      "lenguajes_arduino": "\\b(c\\+\\+|arduino\\s*ide|scratch|python|blockly)\\b",
+      "protocolos": "\\b(mqtt|http|tcp|udp|modbus|rs485)\\b",
+      "cantidad": "(\\d{1,2})\\s*(arduino|kit|sensores?|placas?)",
+      "voltaje_arduino": "(\\d+(?:\\.\\d+)?)\\s*v\\s*(input|supply|logic)?",
+      "corriente_arduino": "(\\d+(?:\\.\\d+)?)\\s*(?:ma|amp)\\s*(max|per\\s*pin)?",
+      "frecuencia": "(\\d+)\\s*(?:mhz|khz)\\s*(crystal|clock)?",
+      "pines": "(\\d+)\\s*pines?\\s*(digital|analog|pwm)?"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Arduino, Elegoo, Keyestudio",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(arduino|elegoo|keyestudio)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: UNO, Nano, Mega, Leonardo",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(uno|nano|mega|leonardo)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_ARDUINO",
+      "etiqueta": "Tipo de Arduino",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Arduino UNO, Kit de sensores, Placa de Internet",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Arduino UNO",
+        "Kit de sensores",
+        "Kit de proyectos",
+        "Placa de Internet",
+        "Starter Kit"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(arduino\\s+uno|kit\\s+de\\s+sensores|kit\\s+de\\s+proyectos|placa\\s+de\\s+internet)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "arduino",
+              "uno",
+              "kit",
+              "sensores",
+              "proyectos",
+              "placa",
+              "internet"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSORES_INCLUIDOS",
+      "etiqueta": "Sensores Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Flujo de agua, Presión, Luz, Color, Sonido",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sensores",
+              "Sensors",
+              "Components"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(flujo\\s+de\\s+agua|presion|luz|color|sonido|calidad\\s+de\\s+aire|gas|temperatura|humedad|movimiento)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WiFi, Bluetooth, Ethernet, USB",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Communication"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi|bluetooth|ethernet|gsm|lora|usb|serial)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACTUADORES",
+      "etiqueta": "Actuadores",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Servo, Motor, LED, Buzzer, Relay",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Actuadores",
+              "Actuators",
+              "Output"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(servo|motor|led|buzzer|relay|stepper)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INTERFACES",
+      "etiqueta": "Interfaces",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: I2C, SPI, UART, Analog, Digital",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Interfaces",
+              "Communication",
+              "Protocols"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(i2c|spi|uart|analog|digital|pwm)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 5V, 3.3V, USB, Battery",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "5V",
+        "3.3V",
+        "USB",
+        "Battery",
+        "External",
+        "VIN"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Alimentación",
+              "Power",
+              "Supply"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(5v|3\\.3v|usb|battery|external|vin)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "5v",
+              "3.3v",
+              "usb",
+              "battery",
+              "external"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SHIELDS",
+      "etiqueta": "Shields Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WiFi Shield, Motor Shield, Sensor Shield",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Shields",
+              "Extensions",
+              "Modules"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi\\s*shield|ethernet\\s*shield|motor\\s*shield|sensor\\s*shield)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACIONES",
+      "etiqueta": "Aplicaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: IoT, Robotics, Automation, Monitoring",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aplicaciones",
+              "Applications",
+              "Uses"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(iot|robotics|automation|monitoring|control|home\\s*automation)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LENGUAJES_PROGRAMACION",
+      "etiqueta": "Lenguajes de Programación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: C++, Arduino IDE, Python, Scratch",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Lenguajes",
+              "Languages",
+              "Programming"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(c\\+\\+|arduino\\s*ide|scratch|python|blockly)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTOCOLOS",
+      "etiqueta": "Protocolos de Comunicación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: MQTT, HTTP, TCP, UDP, Modbus",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Protocolos",
+              "Protocols",
+              "Communication"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(mqtt|http|tcp|udp|modbus|rs485)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 5, 10",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(arduino|kit|sensores?|placas?)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(arduino|kit|sensores?|placas?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE",
+      "etiqueta": "Voltaje (V)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 5, 3.3, 12, 24",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 1,
+        "max": 48
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje",
+              "Voltage",
+              "Supply"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*v\\s*(input|supply|logic)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CORRIENTE",
+      "etiqueta": "Corriente (mA)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 200, 500, 1000, 2000",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 10,
+        "max": 5000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente",
+              "Current",
+              "mA"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:ma|amp)\\s*(max|per\\s*pin)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA",
+      "etiqueta": "Frecuencia (MHz)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 16, 8, 84, 180",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 1,
+        "max": 500
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "Frequency",
+              "MHz"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(?:mhz|khz)\\s*(crystal|clock)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PINES",
+      "etiqueta": "Número de Pines",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 14, 20, 54, 70",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 6,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pines",
+              "Pins",
+              "IO"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*pines?\\s*(digital|analog|pwm)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Azul, Verde, Rojo, Negro",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "azul",
+              "verde",
+              "rojo",
+              "negro",
+              "blanco"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Kit sensores completo del inventario real",
+      "texto": "01 Kit de sensores y placas arduinos, incluye sensores de flujo de agua, presion, luz, color, sonido, calidad de aire y gas",
+      "extraccionEsperada": {
+        "TIPO_ARDUINO": "Kit de sensores",
+        "SENSORES_INCLUIDOS": [
+          "Flujo de agua",
+          "Presión",
+          "Luz",
+          "Color",
+          "Sonido",
+          "Calidad de aire",
+          "Gas"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 2: Arduino UNO del inventario real",
+      "texto": "01 Arduino UNO R3 con cable USB y documentación",
+      "extraccionEsperada": {
+        "TIPO_ARDUINO": "Arduino UNO",
+        "MODELO": "UNO",
+        "CONECTIVIDAD": [
+          "USB"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 3: Placas de Internet del inventario real",
+      "texto": "02 Placa de Internet para Arduino con conectividad WiFi",
+      "extraccionEsperada": {
+        "CANTIDAD": "2",
+        "TIPO_ARDUINO": "Placa de Internet",
+        "CONECTIVIDAD": [
+          "WiFi"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 4: Kit de sensores múltiple del inventario real",
+      "texto": "02 Kit de Sensores para Arduino con temperatura humedad y movimiento",
+      "extraccionEsperada": {
+        "CANTIDAD": "2",
+        "TIPO_ARDUINO": "Kit de sensores",
+        "SENSORES_INCLUIDOS": [
+          "Temperatura",
+          "Humedad",
+          "Movimiento"
+        ]
+      }
+    }
+  ]
+}

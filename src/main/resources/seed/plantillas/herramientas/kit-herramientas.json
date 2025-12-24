@@ -1,0 +1,574 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-TLK-2025-V1",
+    "version": "1.0",
+    "nombre": "KitHerramientas",
+    "categoriaSemantica": "HERRAMIENTAS_KIT_TOOLS_INSTALACION_NETWORKING",
+    "descripcion": "Plantilla ML de Kit de Herramientas - Maneja columna única, múltiples columnas e híbrido para kits de instalación, networking, eléctricos y generales"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_SATRA_INSTALLER_KIT",
+        "condicion": ".*(ma\\s+satra.*mo\\s+instaler\\s+kit|satra.*instaler\\s+kit).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Kit SATRA INSTALLER KIT específico del inventario"
+      },
+      {
+        "nombre": "BONUS_NEXXT_AW251NXT05",
+        "condicion": ".*(ma\\s+nexxt.*mo\\s+aw251nxt05|nexxt.*aw251nxt05).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró Kit Nexxt AW251NXT05 específico del inventario"
+      },
+      {
+        "nombre": "BONUS_CAT5E_CAT6_6A",
+        "condicion": ".*(cat5e.*cat\\s*6.*6a|jack.*cat5e.*cat\\s*6.*6a).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontraron tipos de cable CAT5E, CAT 6, 6A específicos"
+      },
+      {
+        "nombre": "BONUS_MALETIN_TESTEADOR",
+        "condicion": ".*(malet[ií]n.*testeador|testeador.*malet[ií]n|instalador.*malet[ií]n).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró kit instalador en maletín con testeador"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["kit", "herramientas", "tools", "instalador", "testeador"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["maletin", "cables", "crimping", "pelador", "terminador"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["impactool", "jack", "cat5e", "cat6", "networking"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["professional", "precision", "installation", "repair"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": ["satra", "nexxt", "klein", "fluke", "ideal", "greenlee"],
+      "tipos_kit": ["instalador", "networking", "electricista", "general", "profesional", "basico"],
+      "contenedores": ["maletin", "caja", "estuche", "bolsa", "organizador"],
+      "herramientas": ["testeador", "pelador", "terminador", "crimping", "impactool", "alicate", "destornillador"],
+      "cables": ["cat5e", "cat6", "cat6a", "cat7", "rj45", "coaxial", "fibra"],
+      "aplicaciones": ["instalacion", "reparacion", "mantenimiento", "networking", "cableado"],
+      "materiales": ["acero", "cromo-vanadio", "carbono", "plastico", "goma"],
+      "precisiones": ["profesional", "industrial", "domestico", "precision", "basico"],
+      "certificaciones": ["ce", "ul", "rohs", "iso", "ansi"],
+      "cantidad_piezas": ["5-piezas", "10-piezas", "15-piezas", "20-piezas", "30-piezas"],
+      "colores": ["azul", "negro", "rojo", "amarillo", "verde", "gris"],
+      "garantias": ["1-año", "2-años", "5-años", "lifetime"],
+      "pesos": ["0.5kg", "1kg", "1.5kg", "2kg", "3kg"],
+      "modelos": ["installer-kit", "network-kit", "electric-kit", "basic-kit"]
+    },
+    "marcas": {
+      "tier1": ["satra", "nexxt", "klein", "fluke", "ideal"],
+      "tier2": ["greenlee", "southwire", "craftsman", "stanley", "bahco"],
+      "tier3": ["generic", "no-brand", "china", "oem", "local"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "cpu", "laptop", "impresora"],
+      "fuerte": ["silla", "mesa", "escritorio", "archivador"],
+      "media": ["mueble", "furniture", "office", "storage"],
+      "debil": ["electronic", "computer", "digital", "software"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(satra|nexxt|klein|fluke)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(instaler\\s+kit|aw\\d+nxt\\d+|network[-\\s]*kit)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_kit": "\\b(kit\\s+de\\s+herramientas|tool\\s+kit|herramientas)\\b",
+      "tipo_aplicacion": "\\b(instalador|red|networking|electricista|general|profesional|basico)\\b",
+      "contenedor_kit": "\\b(malet[ií]n|caja|estuche|bolsa|organizador)\\b",
+      "marca_kit": "Ma\\s+([\\w\\-]+)",
+      "modelo_kit": "Mo\\s+([\\w\\-\\d\\s]+?)(?=\\s+Co|$)",
+      "color_kit": "Co\\s+([A-Za-z]+)",
+      "herramientas_contenidas": "\\b(testeador|pelador|terminador|crimping|impactool|alicate|destornillador|punzon)\\b",
+      "tipos_cable_kit": "\\b(cat5e|cat\\s*6|cat\\s*6a|cat\\s*7|rj45|coaxial|fibra)\\b",
+      "contenido_detallado": "contiene\\s+([^,]+(?:,[^,]+)*)",
+      "aplicacion_kit": "\\b(cables|networking|instalaci[oó]n|reparaci[oó]n|mantenimiento|cableado)\\b",
+      "certificaciones_kit": "\\b(ce|ul|rohs|iso|ansi)\\b",
+      "material_herramientas": "\\b(acero|cromo\\s+vanadio|carbono|inoxidable|pl[aá]stico)\\b",
+      "precision_kit": "\\b(precisi[oó]n|profesional|industrial|domestico|b[aá]sico)\\b",
+      "piezas_cantidad": "(\\d+)\\s*(piezas?|pieces?|herramientas?|tools?|elementos?)",
+      "peso_kit": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+      "dimensiones_kit": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "garantia_kit": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)",
+      "uso_profesional": "\\b(profesional|industrial|domestico|aficionado|comercial)\\b",
+      "especializacion": "\\b(red|networking|el[eé]ctrico|mec[aá]nico|electr[oó]nico)\\b",
+      "jack_tipos": "\\b(jack|rj45|rj11|keystone|patch)\\b",
+      "cable_metros": "(\\d+)\\s*m\\s*(cable|metro|length)",
+      "voltage_rating": "(\\d+)\\s*v\\s*(rated|voltage|nominal)",
+      "torque_specs": "(\\d+(?:\\.\\d+)?)\\s*(nm|ft[-\\s]*lb)\\s*(torque|par)",
+      "temperature_range": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "cantidad": "(\\d{1,2})\\s*(kit\\s+de\\s+herramientas|tool\\s+kit|kit)",
+      "incluye_accesorios": "\\b(incluye|include|with|con)\\s+([^.]+(?:\\.|$))",
+      "compatibilidad": "\\b(compatible|compatibility)\\s+(con|with)\\s+([\\w\\s,]+)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: SATRA, Nexxt, Klein, Fluke, Ideal",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(satra|nexxt|klein|fluke)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: INSTALLER KIT, AW251NXT05, Network-Pro, Basic-Set",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Mo\\s+([\\w\\-\\d\\s]+?)(?=\\s+Co|$)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "\\b(instaler\\s+kit|aw\\d+nxt\\d+|network[-\\s]*kit)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_APLICACION",
+      "etiqueta": "Tipo de Aplicación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Instalador, Networking, Eléctrico, General",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Instalador", "Networking", "Eléctrico", "General", "Profesional", "Básico"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Application", "Category"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(instalador|red|networking|electricista|general|profesional|basico)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["instalador", "networking", "electricista", "general", "profesional"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONTENEDOR",
+      "etiqueta": "Tipo de Contenedor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Maletín, Caja, Estuche, Bolsa, Organizador",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Maletín", "Caja", "Estuche", "Bolsa", "Organizador"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Contenedor", "Container", "Case"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(malet[ií]n|caja|estuche|bolsa|organizador)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["maletin", "caja", "estuche", "bolsa", "organizador"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "HERRAMIENTAS_INCLUIDAS",
+      "etiqueta": "Herramientas Incluidas",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Testeador, Pelador de cables, Terminador, Crimping",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Herramientas", "Tools", "Includes"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(testeador|pelador|terminador|crimping|impactool|alicate|destornillador|punzon)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPOS_CABLE_SOPORTADOS",
+      "etiqueta": "Tipos de Cable Soportados",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CAT5E, CAT 6, CAT 6A, RJ45, Coaxial",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cables", "Cable Types", "Support"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cat5e|cat\\s*6|cat\\s*6a|cat\\s*7|rj45|coaxial|fibra)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONTENIDO_DETALLADO",
+      "etiqueta": "Contenido Detallado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Descripción completa del contenido del kit",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Contenido", "Content", "Description"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "contiene\\s+([^,]+(?:,[^,]+)*)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION_USO",
+      "etiqueta": "Aplicación/Uso",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Instalación, Reparación, Mantenimiento, Cableado",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Aplicación", "Application", "Use"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cables|networking|instalaci[oó]n|reparaci[oó]n|mantenimiento|cableado)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_HERRAMIENTAS",
+      "etiqueta": "Material de las Herramientas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Acero, Cromo vanadio, Carbono, Inoxidable",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": ["Acero", "Cromo vanadio", "Carbono", "Inoxidable", "Plástico"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Construction", "Build"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(acero|cromo\\s+vanadio|carbono|inoxidable|pl[aá]stico)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["acero", "cromo", "vanadio", "carbono", "inoxidable"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NIVEL_PRECISION",
+      "etiqueta": "Nivel de Precisión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Profesional, Industrial, Doméstico, Básico",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Profesional", "Industrial", "Doméstico", "Básico", "Precisión"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Precisión", "Level", "Grade"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(precisi[oó]n|profesional|industrial|domestico|b[aá]sico)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["precision", "profesional", "industrial", "domestico", "basico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD_PIEZAS",
+      "etiqueta": "Cantidad de Piezas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 5, 10, 15, 20, 25, 30",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Piezas", "Pieces", "Tools Count"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(piezas?|pieces?|herramientas?|tools?|elementos?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.5, 1.0, 1.5, 2.0, 3.0",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 0.1,
+        "max": 20.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Mass"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, UL, RoHS, ISO, ANSI",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ce|ul|rohs|iso|ansi)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_PROFESIONAL",
+      "etiqueta": "Uso Profesional",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Profesional, Industrial, Doméstico, Comercial",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": ["Profesional", "Industrial", "Doméstico", "Comercial", "Aficionado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Uso", "Usage", "Professional"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(profesional|industrial|domestico|aficionado|comercial)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["profesional", "industrial", "domestico", "comercial", "aficionado"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESPECIALIZACION",
+      "etiqueta": "Especialización",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Redes, Eléctrico, Mecánico, Electrónico",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": ["Redes", "Eléctrico", "Mecánico", "Electrónico", "General"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Especialización", "Specialization", "Field"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(red|networking|el[eé]ctrico|mec[aá]nico|electr[oó]nico)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["red", "networking", "electrico", "mecanico", "electronico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPOS_JACK",
+      "etiqueta": "Tipos de Jack Soportados",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: RJ45, RJ11, Keystone, Patch",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Jack", "Connectors", "Plugs"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(jack|rj45|rj11|keystone|patch)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GARANTIA",
+      "etiqueta": "Garantía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1 año, 2 años, 5 años, Lifetime",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Garantía", "Warranty", "Guarantee"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INCLUYE_ACCESORIOS",
+      "etiqueta": "Accesorios Incluidos",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Manual, cables de prueba, adaptadores",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Accesorios", "Accessories", "Includes"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(incluye|include|with|con)\\s+([^.]+(?:\\.|$))", "grupo": 2}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPATIBILIDAD",
+      "etiqueta": "Compatibilidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Compatible con estándares específicos",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Compatibilidad", "Compatibility", "Compatible"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(compatible|compatibility)\\s+(con|with)\\s+([\\w\\s,]+)", "grupo": 3}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(kit\\s+de\\s+herramientas|tool\\s+kit|kit)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(kit\\s+de\\s+herramientas|tool\\s+kit|kit)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Azul, Negro, Rojo, Amarillo, Verde",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Co\\s+([A-Za-z]+)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["azul", "negro", "rojo", "amarillo", "verde", "gris"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Kit SATRA instalador del inventario real",
+      "texto": "01 kit de herramientas instalador en maletín contiene testeador para cables, pelador de cables, terminador para jack CAT5E- CAT 6 - 6A SATRA, Crimping Ma SATRA Mo INSTALER KIT Co Azul",
+      "extraccionEsperada": {
+        "MARCA": "SATRA",
+        "MODELO": "INSTALER KIT",
+        "TIPO_APLICACION": "Instalador",
+        "CONTENEDOR": "Maletín",
+        "HERRAMIENTAS_INCLUIDAS": ["Testeador", "Pelador de cables", "Terminador", "Crimping"],
+        "TIPOS_CABLE_SOPORTADOS": ["CAT5E", "CAT 6", "CAT 6A"],
+        "COLOR": "Azul",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Kit Nexxt del inventario real",
+      "texto": "01 Kit de herramientas Ma Nexxt Mo AW251NXT05 Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Nexxt",
+        "MODELO": "AW251NXT05",
+        "COLOR": "Negro",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 3: Kit SATRA básico del inventario real",
+      "texto": "01 Kit de herramientas Ma Satra crimpin, impactool, testeador y pelador Co Azul",
+      "extraccionEsperada": {
+        "MARCA": "Satra",
+        "HERRAMIENTAS_INCLUIDAS": ["Crimping", "Impactool", "Testeador", "Pelador"],
+        "COLOR": "Azul",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 4: Kit profesional completo",
+      "texto": "02 Kit de herramientas profesional Klein 15 piezas para networking con certificación UL",
+      "extraccionEsperada": {
+        "MARCA": "Klein",
+        "NIVEL_PRECISION": "Profesional",
+        "CANTIDAD_PIEZAS": "15",
+        "ESPECIALIZACION": "Networking",
+        "CERTIFICACIONES": ["UL"],
+        "CANTIDAD": "2"
+      }
+    }
+  ]
+}

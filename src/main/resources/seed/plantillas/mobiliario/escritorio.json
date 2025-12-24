@@ -1,0 +1,534 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-DSK-2025-V1",
+    "version": "1.0",
+    "nombre": "Escritorio",
+    "categoriaSemantica": "MOBILIARIO_ESCRITORIO_TRABAJO",
+    "descripcion": "Plantilla ML de escritorio - Maneja columna única, múltiples columnas e híbrido para escritorios de trabajo y oficina"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIPO_EJECUTIVO",
+        "condicion": ".*(ejecutivo|gerencial|directivo|docente).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró tipo específico de escritorio ejecutivo"
+      },
+      {
+        "nombre": "BONUS_FORMA_L",
+        "condicion": ".*(modelo\\s+l|en\\s+l|l\\s+shaped).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró forma específica en L"
+      },
+      {
+        "nombre": "BONUS_CAJONES_ESPECIFICOS",
+        "condicion": ".*\\d+\\s*cajones?.*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró número específico de cajones"
+      },
+      {
+        "nombre": "BONUS_MELAMINA_GROSOR",
+        "condicion": ".*(melamina|melamine).*\\d+\\s*mm.*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró material melamina con grosor específico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["escritorio", "desk", "bureau", "workstation"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["ejecutivo", "gerencial", "docente", "modular", "en-l"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["melamina", "cajones", "laterales", "cantonera", "18mm"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["mobiliario", "furniture", "office", "trabajo"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["ejecutivo", "gerencial", "docente", "secretarial", "operativo", "directivo"],
+      "formas": ["en-l", "l-shaped", "rectangular", "angular", "modular", "u-shaped"],
+      "materiales": ["melamina", "melamine", "madera", "mdf", "vidrio", "metal", "laminado"],
+      "acabados": ["nogal", "haya", "roble", "chocolate", "blanco", "natural", "enchapado"],
+      "componentes": ["cajones", "laterales", "cantonera", "tablero", "modulo", "pedestal"],
+      "grosores": ["18mm", "25mm", "30mm", "15mm", "20mm"],
+      "caracteristicas": ["ergonomico", "regulable", "modular", "extensible", "compacto"],
+      "estilos": ["contemporaneo", "clasico", "moderno", "minimalista", "tradicional"],
+      "marcas_mobiliario": ["steelcase", "herman-miller", "teknion", "haworth", "global"],
+      "medidas_estandar": ["120x60", "140x60", "160x80", "180x90", "200x100"]
+    },
+    "marcas": {
+      "tier1": ["steelcase", "herman-miller", "teknion", "haworth", "knoll"],
+      "tier2": ["global", "kimball", "humanscale", "okamura", "hon"],
+      "tier3": ["ikea", "office-depot", "staples", "flash-furniture", "boss"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["silla", "mesa", "estante", "archivador"],
+      "fuerte": ["monitor", "cpu", "teclado", "mouse"],
+      "media": ["sofa", "cama", "banco", "taburete"],
+      "debil": ["mueble", "furniture", "office", "trabajo"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(steelcase|herman-miller|teknion)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(ejecutivo|gerencial|docente|l[-\\s]*shaped)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_escritorio": "\\b(escritorio|desk)\\s*(para\\s+el\\s+)?(ejecutivo|gerencial|docente|directivo|secretarial)?\\b",
+      "forma_escritorio": "\\b(modelo\\s+l|en\\s+l|l[-\\s]*shaped|rectangular|angular|modular|u[-\\s]*shaped)\\b",
+      "material_escritorio": "\\b(melamina|melamine|madera|mdf|vidrio|metal|laminado)\\b",
+      "grosor_material": "(\\d+)\\s*(mm|cms?)\\s*(melamina|melamine|madera|grosor|espesor)",
+      "acabado_color": "\\b(nogal|haya|roble|chocolate|blanco|natural|enchapado|cedro)\\s*(oscuro|claro)?\\b",
+      "cajones_numero": "(\\d+)\\s*cajones?\\s*(laterales|frontales|inferiores)?",
+      "cantonera": "\\b(cantonera|borde|canto)\\s*(gruesa|delgada|\\d+mm)?\\b",
+      "tablero": "\\b(tablero)\\s*(recto|curvo|\\d+\\s*grados?)\\b",
+      "cantidad": "(\\d{1,2})\\s*(escritorio|escritorios|desk)",
+      "dimensiones_escritorio": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m))?",
+      "largo_escritorio": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(largo|length|ancho.*largo)",
+      "ancho_escritorio": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(ancho|width|de\\s+ancho)",
+      "alto_escritorio": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(alto|height|de\\s+alto)",
+      "capacidad_usuarios": "para\\s+(\\d+)\\s*personas?",
+      "accesorios": "\\b(jaladores|tiradores|chapas|ruedas|organizadores)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Steelcase, Herman Miller, Nacional",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(steelcase|herman-miller|teknion)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Ejecutivo, Gerencial, Docente, En L",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(ejecutivo|gerencial|docente|l[-\\s]*shaped)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_ESCRITORIO",
+      "etiqueta": "Tipo de Escritorio",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Ejecutivo, Gerencial, Docente, Directivo",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Ejecutivo", "Gerencial", "Docente", "Directivo", "Secretarial", "Operativo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Categoria"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(escritorio|desk)\\s*(para\\s+el\\s+)?(ejecutivo|gerencial|docente|directivo|secretarial)?\\b", "grupo": 3, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ejecutivo", "gerencial", "docente", "directivo", "secretarial"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMA",
+      "etiqueta": "Forma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: En L, Rectangular, Angular, Modular",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["En L", "Rectangular", "Angular", "Modular", "En U", "Circular"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Forma", "Shape", "Form"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(modelo\\s+l|en\\s+l|l[-\\s]*shaped|rectangular|angular|modular|u[-\\s]*shaped)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["modelo", "en", "l", "rectangular", "angular", "modular"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_PRINCIPAL",
+      "etiqueta": "Material Principal",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Melamina, Madera, MDF, Laminado",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Melamina", "Madera", "MDF", "Vidrio", "Metal", "Laminado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Materials", "Superficie"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(melamina|melamine|madera|mdf|vidrio|metal|laminado)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["melamina", "melamine", "madera", "mdf", "vidrio", "metal"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GROSOR_MATERIAL",
+      "etiqueta": "Grosor del Material (mm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 18, 25, 30",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 10,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Grosor", "Thickness", "mm"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(mm|cms?)\\s*(melamina|melamine|madera|grosor|espesor)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACABADO_COLOR",
+      "etiqueta": "Acabado/Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Nogal oscuro, Haya, Chocolate, Cedro",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["Nogal oscuro", "Haya", "Chocolate", "Cedro", "Blanco", "Natural", "Roble"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Acabado", "Color", "Finish"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(nogal|haya|roble|chocolate|blanco|natural|enchapado|cedro)\\s*(oscuro|claro)?\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["nogal", "haya", "chocolate", "cedro", "blanco", "natural"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_CAJONES",
+      "etiqueta": "Número de Cajones",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2, 3, 4, 6",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 0,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cajones", "Drawers", "Gavetas"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*cajones?\\s*(laterales|frontales|inferiores)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CAJONES",
+      "etiqueta": "Tipo de Cajones",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Laterales, Frontales, Inferiores, Mixtos",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": ["Laterales", "Frontales", "Inferiores", "Mixtos", "Corredizos"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo Cajones", "Drawer Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*cajones?\\s*(laterales|frontales|inferiores|corredizos)", "grupo": 2, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["laterales", "frontales", "inferiores", "corredizos"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTONERA",
+      "etiqueta": "Cantonera",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Gruesa, Delgada, Con cantonera, Sin cantonera",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Gruesa", "Delgada", "Con cantonera", "Sin cantonera", "2mm", "3mm"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantonera", "Edge", "Borde"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cantonera|borde|canto)\\s*(gruesa|delgada|\\d+mm)?\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["cantonera", "gruesa", "delgada", "borde", "canto"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TABLERO",
+      "etiqueta": "Tipo de Tablero",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Recto, Curvo, 90 grados",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": ["Recto", "Curvo", "90 grados", "Ergonómico", "Biselado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tablero", "Desktop", "Surface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(tablero)\\s*(recto|curvo|\\d+\\s*grados?)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["tablero", "recto", "curvo", "grados"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_USUARIOS",
+      "etiqueta": "Capacidad de Usuarios",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 1,
+        "max": 6
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Usuarios", "Persons", "Capacity"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "para\\s+(\\d+)\\s*personas?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 5",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(escritorio|escritorios|desk)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(escritorio|escritorios|desk)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LARGO",
+      "etiqueta": "Largo (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 120, 140, 160, 180",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 80,
+        "max": 300
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Largo", "Length", "Long"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(largo|length|ancho.*largo)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 60, 70, 80, 90",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 50,
+        "max": 150
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Wide"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(ancho|width|de\\s+ancho)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTO",
+      "etiqueta": "Alto (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 70, 75, 80, 85",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 65,
+        "max": 120
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alto", "Height", "High"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(alto|height|de\\s+alto)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1.40mx0.60mx0.80m, 202 X 60 X 82cm",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m))?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS",
+      "etiqueta": "Accesorios",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Jaladores de acero inox, Chapas, Organizadores",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Accesorios", "Accessories", "Extras"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(jaladores|tiradores|chapas|ruedas|organizadores)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Chocolate, Haya, Blanco humo, Cedro",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["chocolate", "haya", "blanco", "humo", "cedro", "nogal"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Escritorio ejecutivo del inventario real",
+      "texto": "01 Escritorio de melamina color nogal oscuro Mo Ejecutivo 18mm con cantonera gruesa. 1.40mx0.60mx0.80m 4 cajones laterales. tablero recto 90 grados",
+      "extraccionEsperada": {
+        "MODELO": "Ejecutivo",
+        "TIPO_ESCRITORIO": "Ejecutivo",
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "GROSOR_MATERIAL": "18",
+        "ACABADO_COLOR": "Nogal oscuro",
+        "CANTONERA": "Gruesa",
+        "DIMENSIONES": "1.40mx0.60mx0.80m",
+        "NUMERO_CAJONES": "4",
+        "TIPO_CAJONES": "Laterales",
+        "TABLERO": "Recto 90 grados"
+      }
+    },
+    {
+      "nombre": "Caso 2: Escritorio en L del inventario real",
+      "texto": "02 Escritorios modelo L ancho 1.82 cm 1.40cm de largo mas cajones y jaladores de acero inox.",
+      "extraccionEsperada": {
+        "FORMA": "En L",
+        "CANTIDAD": "2",
+        "LARGO": "140",
+        "ANCHO": "182",
+        "ACCESORIOS": ["Jaladores", "Cajones"]
+      }
+    },
+    {
+      "nombre": "Caso 3: Escritorio para docente del inventario real",
+      "texto": "01 ESCRITORIO PARA EL DOCENTE DE MELAMINA DE 18 MMS, ACCESORIOS PESADOS 70 CMS. X 90 CMS.",
+      "extraccionEsperada": {
+        "TIPO_ESCRITORIO": "Docente",
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "GROSOR_MATERIAL": "18",
+        "DIMENSIONES": "70 CMS. X 90 CMS.",
+        "LARGO": "90",
+        "ANCHO": "70"
+      }
+    }
+  ]
+}

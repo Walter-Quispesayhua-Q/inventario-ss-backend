@@ -1,0 +1,87 @@
+"""
+Registro de actividad del sistema de auditoría.
+Almacena información sobre operaciones realizadas por usuarios en el sistema.
+"""
+type RegistroActividadDTO {
+    id: ID!
+    tipoOperacion: String!
+    tipoEndpoint: String
+    entidadAfectada: String
+    entidadId: Long
+    entidadNombre: String
+    descripcion: String!
+    metadatos: JSON
+    fechaOperacion: DateTime!
+    usuarioId: Long
+    usuarioNombre: String
+    usuarioEmail: String
+}
+
+"""
+Respuesta paginada de registros de actividad.
+"""
+type RegistrosActividadPaginados {
+    data: [RegistroActividadDTO!]!
+    paginacion: PaginacionInfo!
+}
+
+"""
+Entrada para crear un nuevo registro de actividad.
+Usado internamente por el sistema de auditoría automática.
+"""
+input RegistroActividadCreacionInput {
+    tipoOperacion: String!
+    tipoEndpoint: String!
+    entidadAfectada: String
+    entidadId: Long
+    descripcion: String!
+    metadatos: JSON
+    ipAddress: String
+    userAgent: String
+}
+
+extend type Query {
+    """
+    Obtiene registros de actividad con filtros y paginación.
+    Soporta búsqueda por texto, usuario, tipo de operación, entidad y rango de fechas.
+    """
+    obtenerRegistrosActividad(
+        page: Int
+        limit: Int
+        buscar: String
+        usuarioId: Long
+        tipoOperacion: String
+        entidadAfectada: String
+        entidadId: Long
+        fechaInicio: String
+        fechaFin: String
+        ordenarPor: String
+        orden: String
+    ): RegistrosActividadPaginados!
+
+    """
+    Obtiene un registro de actividad específico por su ID.
+    """
+    registroActividadPorId(id: Long!): RegistroActividadDTO
+
+    """
+    Obtiene todas las actividades realizadas por un usuario específico.
+    """
+    actividadesPorUsuario(usuarioId: Long!): [RegistroActividadDTO!]!
+
+    """
+    Obtiene todas las actividades relacionadas con una entidad específica.
+    """
+    actividadesPorEntidad(
+        entidadAfectada: String!
+        entidadId: Long!
+    ): [RegistroActividadDTO!]!
+}
+
+extend type Mutation {
+    """
+    Crea un nuevo registro de actividad manualmente.
+    Normalmente los registros se crean automáticamente vía aspectos AOP.
+    """
+    crearRegistroActividad(registro: RegistroActividadCreacionInput!): OperacionResultadoAuditoria!
+}

@@ -1,0 +1,491 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-BRD-2025-V1",
+    "version": "1.0",
+    "nombre": "Pizarra",
+    "categoriaSemantica": "EDUCATIVO_PIZARRA_ESCRITURA",
+    "descripcion": "Plantilla ML de pizarra - Maneja columna única, múltiples columnas e híbrido para pizarras acrílicas, magnéticas y de escritura"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_ACRILICA_GIRATORIO",
+        "condicion": ".*(pizarra.*acrilica|acrlica).*giratorio.*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró pizarra acrílica giratoria específica del inventario"
+      },
+      {
+        "nombre": "BONUS_MARCO_ALUMINIO",
+        "condicion": ".*(marco.*de.*aluminio|aluminio.*marco).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró marco de aluminio específico"
+      },
+      {
+        "nombre": "BONUS_AMBOS_LADOS",
+        "condicion": ".*(ambos.*lados|doble.*cara|cuadriculada).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró característica ambos lados o cuadriculada"
+      },
+      {
+        "nombre": "BONUS_SOPORTE_METALICO",
+        "condicion": ".*(soporte.*metalico|soporte.*metlico).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró soporte metálico específico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["pizarra", "whiteboard", "blackboard", "board", "tablero"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["acrilica", "acrlica", "giratorio", "marco", "aluminio"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["cuadriculada", "magnetica", "soporte", "metalico", "movil"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["educativo", "escolar", "oficina", "teaching"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "materiales": ["acrilica", "acrlica", "magnetica", "tiza", "marcador", "vidrio", "ceramica"],
+      "marcos": ["aluminio", "metalico", "plastico", "madera", "sin-marco", "cromado"],
+      "caracteristicas": ["giratorio", "movil", "fija", "plegable", "cuadriculada", "rayada", "borrable"],
+      "superficies": ["ambos-lados", "doble-cara", "una-cara", "lisa", "texturizada"],
+      "soportes": ["metalico", "metlico", "con-ruedas", "tripode", "pared", "caballete"],
+      "tipos_escritura": ["tiza", "marcador", "borrable", "permanente", "magnetico"],
+      "tamaños_estandar": ["90x60", "120x80", "120x240", "150x100", "180x120"],
+      "formatos": ["horizontal", "vertical", "cuadrada", "panoramica"],
+      "colores_superficie": ["blanco", "negro", "verde", "azul", "gris"],
+      "accesorios": ["borradores", "marcadores", "imanes", "reglas", "compases"],
+      "usos": ["educativo", "oficina", "presentaciones", "conferencias", "capacitacion"]
+    },
+    "marcas": {
+      "tier1": ["quartet", "ghent", "bi-office", "mastervision", "universal"],
+      "tier2": ["staples", "office-depot", "amazon-basics", "post-it", "3m"],
+      "tier3": ["maxwell", "lorell", "mooreco", "luxor", "iceberg"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "pantalla", "tv", "proyector"],
+      "fuerte": ["cpu", "impresora", "scanner", "tablet"],
+      "media": ["mesa", "escritorio", "silla", "estante"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(quartet|ghent|bi[-\\s]*office)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(cuadrimax|professional|magnetic)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_pizarra": "\\b(pizarra|whiteboard|blackboard|board|tablero)\\s*(acrilica|acrlica|magnetica|tiza)?\\b",
+      "material_superficie": "\\b(acrilica|acrlica|magnetica|tiza|marcador|vidrio|ceramica)\\b",
+      "marco_tipo": "\\b(marco\\s+de\\s+aluminio|marco\\s+metalico|marco\\s+plastico|sin\\s+marco)\\b",
+      "caracteristicas_movimiento": "\\b(giratorio|movil|fija|plegable|ajustable|inclinable)\\b",
+      "superficie_escritura": "\\b(ambos\\s+lados|doble\\s+cara|una\\s+cara|cuadriculada|rayada|lisa)\\b",
+      "tipo_soporte": "\\b(soporte\\s+metalico|soporte\\s+metlico|con\\s+ruedas|tripode|caballete|pared)\\b",
+      "tipo_escritura": "\\b(tiza|marcador|borrable|permanente|magnetico|seco)\\b",
+      "cantidad": "(\\d{1,2})\\s*(pizarra|pizarras|board)",
+      "dimensiones_pizarra": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?))\\s*(?:cms?|m|M)",
+      "largo_pizarra": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?|m|M)\\s*(largo|length|ancho.*largo)",
+      "ancho_pizarra": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?|m|M)\\s*(ancho|width|de\\s+ancho)",
+      "grosor": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?|mm)\\s*(grosor|espesor|thick)",
+      "formato": "\\b(horizontal|vertical|cuadrada|panoramica|16:9|4:3)\\b",
+      "instalacion": "\\b(pared|caballete|tripode|movil|fija|colgante)\\b",
+      "accesorios_incluidos": "\\b(borradores|marcadores|imanes|reglas|compases|soporte)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Quartet, Ghent, Bi-Office",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(quartet|ghent|bi[-\\s]*office)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Cuadrimax, Professional, Magnetic",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(cuadrimax|professional|magnetic)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_SUPERFICIE",
+      "etiqueta": "Material de Superficie",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Acrílica, Magnética, Tiza, Marcador",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Acrílica", "Magnética", "Tiza", "Marcador", "Vidrio", "Cerámica"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Surface", "Tipo"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(acrilica|acrlica|magnetica|tiza|marcador|vidrio|ceramica)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["acrilica", "acrlica", "magnetica", "tiza", "marcador", "vidrio"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MARCO",
+      "etiqueta": "Tipo de Marco",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: De aluminio, Metálico, Plástico, Sin marco",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["De aluminio", "Metálico", "Plástico", "Madera", "Sin marco", "Cromado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marco", "Frame", "Border"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(marco\\s+de\\s+aluminio|marco\\s+metalico|marco\\s+plastico|sin\\s+marco)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["marco", "aluminio", "metalico", "plastico", "madera", "sin"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_MOVIMIENTO",
+      "etiqueta": "Características de Movimiento",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Giratorio, Móvil, Fija, Plegable",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Movimiento", "Movement", "Características"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(giratorio|movil|fija|plegable|ajustable|inclinable)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SUPERFICIE_ESCRITURA",
+      "etiqueta": "Superficie de Escritura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Ambos lados, Doble cara, Cuadriculada",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": ["Ambos lados", "Doble cara", "Una cara", "Cuadriculada", "Rayada", "Lisa"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Superficie", "Surface", "Writing"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ambos\\s+lados|doble\\s+cara|una\\s+cara|cuadriculada|rayada|lisa)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ambos", "lados", "doble", "cara", "cuadriculada", "rayada"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SOPORTE",
+      "etiqueta": "Tipo de Soporte",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Metálico, Con ruedas, Trípode, Caballete",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["Metálico", "Con ruedas", "Trípode", "Caballete", "Pared", "Sin soporte"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Soporte", "Support", "Stand"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(soporte\\s+metalico|soporte\\s+metlico|con\\s+ruedas|tripode|caballete|pared)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["soporte", "metalico", "metlico", "ruedas", "tripode", "caballete"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_ESCRITURA",
+      "etiqueta": "Tipo de Escritura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Tiza, Marcador, Borrable, Magnético",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["Tiza", "Marcador", "Borrable", "Permanente", "Magnético", "Seco"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Escritura", "Writing", "Marker"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(tiza|marcador|borrable|permanente|magnetico|seco)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["tiza", "marcador", "borrable", "permanente", "magnetico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(pizarra|pizarras|board)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(pizarra|pizarras|board)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LARGO",
+      "etiqueta": "Largo (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 120, 180, 240, 480",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 60,
+        "max": 600
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Largo", "Length", "Width"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:cms?|m|M)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 80, 100, 120, 240",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 60,
+        "max": 300
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Height"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:cms?|m|M)", "grupo": 2}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1.20 X 2.40, 120x80, 480x120 cm",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?))\\s*(?:cms?|m|M)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GROSOR",
+      "etiqueta": "Grosor (mm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 6, 8, 10, 12",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 3,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Grosor", "Thickness", "Depth"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?|mm)\\s*(grosor|espesor|thick)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO",
+      "etiqueta": "Formato",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Horizontal, Vertical, Cuadrada, Panorámica",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": ["Horizontal", "Vertical", "Cuadrada", "Panorámica", "16:9", "4:3"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formato", "Format", "Orientation"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(horizontal|vertical|cuadrada|panoramica|16:9|4:3)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["horizontal", "vertical", "cuadrada", "panoramica"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INSTALACION",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Pared, Caballete, Trípode, Móvil",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": ["Pared", "Caballete", "Trípode", "Móvil", "Fija", "Colgante"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Instalación", "Installation", "Mount"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(pared|caballete|tripode|movil|fija|colgante)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["pared", "caballete", "tripode", "movil", "fija"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS_INCLUIDOS",
+      "etiqueta": "Accesorios Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Borradores, Marcadores, Imanes, Soporte",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Accesorios", "Accessories", "Includes"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(borradores|marcadores|imanes|reglas|compases|soporte)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Negro, Verde, Azul",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["blanco", "negro", "verde", "azul", "gris"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Pizarra acrílica giratoria del inventario real",
+      "texto": "01 Pizarra acrlica marco de aluminio giratorio 1.20 X 2.40 ambos lados cuadriculada con soporte metlico Co Blanco",
+      "extraccionEsperada": {
+        "MATERIAL_SUPERFICIE": "Acrílica",
+        "TIPO_MARCO": "De aluminio",
+        "CARACTERISTICAS_MOVIMIENTO": ["Giratorio"],
+        "SUPERFICIE_ESCRITURA": "Ambos lados",
+        "TIPO_SOPORTE": "Metálico",
+        "DIMENSIONES": "1.20 X 2.40",
+        "LARGO": "120",
+        "ANCHO": "240",
+        "COLOR": "Blanco"
+      }
+    },
+    {
+      "nombre": "Caso 2: Pizarra Cuadrimax del inventario real",
+      "texto": "1 Pizarra Acrilica Cuadrimax de 1.20x4.80 M superficie cuadriculada",
+      "extraccionEsperada": {
+        "MODELO": "Cuadrimax",
+        "MATERIAL_SUPERFICIE": "Acrílica",
+        "SUPERFICIE_ESCRITURA": "Cuadriculada",
+        "DIMENSIONES": "1.20x4.80 M",
+        "LARGO": "120",
+        "ANCHO": "480"
+      }
+    },
+    {
+      "nombre": "Caso 3: Pizarra acrílica móvil del inventario real",
+      "texto": "01 Pizarra acrilica movil con soporte con ruedas",
+      "extraccionEsperada": {
+        "MATERIAL_SUPERFICIE": "Acrílica",
+        "CARACTERISTICAS_MOVIMIENTO": ["Móvil"],
+        "TIPO_SOPORTE": "Con ruedas"
+      }
+    }
+  ]
+}

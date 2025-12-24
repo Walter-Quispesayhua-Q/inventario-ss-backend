@@ -1,0 +1,510 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-HDD-2025-V1",
+    "version": "1.0",
+    "nombre": "Disco Duro",
+    "categoriaSemantica": "DISPOSITIVO_ALMACENAMIENTO_DISCO",
+    "descripcion": "Plantilla ML de disco duro - Maneja columna única, múltiples columnas e híbrido para dispositivos de almacenamiento"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_CAPACIDAD",
+        "condicion": ".*(\\d+)\\s*(tb|gb|teras?|gigas?).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró capacidad específica del disco"
+      },
+      {
+        "nombre": "BONUS_TIPO_DISCO",
+        "condicion": ".*(externo|interno|ssd|hdd|portable).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró tipo específico de disco"
+      },
+      {
+        "nombre": "BONUS_MARCA_CONOCIDA",
+        "condicion": ".*(adata|seagate|western|wd|toshiba|samsung|lacie).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró marca conocida de discos duros"
+      },
+      {
+        "nombre": "BONUS_CARACTERISTICAS_ESPECIALES",
+        "condicion": ".*(antigolpes|militar|rugger|purple|pro).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron características especiales del disco"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["disco", "duro", "hard", "drive", "hdd", "ssd"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["externo", "interno", "portable", "storage", "almacenamiento", "tb", "gb"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["usb", "sata", "nvme", "m.2", "2.5", "3.5", "antigolpes"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["backup", "respaldo", "datos", "archivo"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["externo", "interno", "ssd", "hdd", "hybrid", "portable", "desktop"],
+      "capacidades": ["tb", "gb", "teras", "gigas", "terabyte", "gigabyte"],
+      "interfaces": ["usb", "usb-c", "usb3.0", "sata", "nvme", "m.2", "thunderbolt", "firewire"],
+      "formatos": ["2.5", "3.5", "m.2", "msata", "compact"],
+      "velocidades": ["5400rpm", "7200rpm", "10000rpm", "15000rpm"],
+      "caracteristicas": ["antigolpes", "militar", "rugger", "purple", "pro", "black", "blue", "red"],
+      "marcas_comunes": ["adata", "seagate", "western", "digital", "toshiba", "samsung", "lacie", "iomega"],
+      "modelos_especificos": ["hd720", "hd650", "hd710", "ego", "rugger"]
+    },
+    "marcas": {
+      "tier1": ["seagate", "western-digital", "samsung", "toshiba", "intel"],
+      "tier2": ["adata", "lacie", "sandisk", "crucial", "kingston"],
+      "tier3": ["iomega", "transcend", "buffalo", "maxtor", "hitachi"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "teclado", "mouse", "impresora"],
+      "fuerte": ["memoria", "ram", "procesador", "cpu"],
+      "media": ["cable", "adaptador", "cargador", "hub"],
+      "debil": ["usb", "sata", "datos", "archivo"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(adata|seagate|western|wd|toshiba|samsung|lacie|iomega)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(hd\\d+|ego\\s+\\w+|rugger\\s+\\w+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "tipo_disco": "\\b(disco\\s+(duro|externo)|hard\\s+drive|ssd|hdd)\\b",
+      "capacidad_tb": "(\\d+(?:\\.\\d+)?)\\s*(tb|teras?|terabytes?)",
+      "capacidad_gb": "(\\d+(?:\\.\\d+)?)\\s*(gb|gigas?|gigabytes?)",
+      "tipo_almacenamiento": "\\b(externo|interno|portable|desktop|ssd|hdd|hybrid)\\b",
+      "interface": "\\b(usb|usb[-\\s]*c|usb\\s*3\\.0|usb\\s*2\\.0|sata|nvme|m\\.2|thunderbolt|firewire)\\b",
+      "factor_forma": "\\b(2\\.5|3\\.5|m\\.2|msata|compact)\\b",
+      "velocidad_rpm": "(\\d+)\\s*rpm",
+      "caracteristicas_especiales": "\\b(antigolpes|militar|rugger|purple|pro|black|blue|red|enterprise)\\b",
+      "grado_proteccion": "\\b(ip\\d+|militar|enterprise|consumer)\\b",
+      "tecnologia": "\\b(mechanical|solid\\s+state|hybrid|flash)\\b",
+      "cache": "(\\d+)\\s*(mb|gb)\\s*(cache|buffer)",
+      "mtbf": "(\\d+(?:,\\d+)?)\\s*(hours?|horas?)\\s*(mtbf|vida)",
+      "temperatura": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c",
+      "dimensiones": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm|inches?)",
+      "peso": "(\\d+(?:\\.\\d+)?)\\s*(g|gramos?|kg|kilogramos?|lbs?|pounds?)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: ADATA, Seagate, Western Digital, LaCie",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(adata|seagate|western|wd|toshiba|samsung|lacie|iomega)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: HD720, HD650, Barracuda 2TB, EGO E50",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(hd\\d+|ego\\s+\\w+|rugger\\s+\\w+)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD",
+      "etiqueta": "Capacidad de Almacenamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1TB, 2TB, 500GB, 10TB",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Capacity", "Storage", "Tamaño"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(tb|teras?|terabytes?)", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(gb|gigas?|gigabytes?)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DISCO",
+      "etiqueta": "Tipo de Disco",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Externo, Interno, SSD, HDD, Portable",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Externo", "Interno", "SSD", "HDD", "Híbrido", "Portable", "Desktop"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Categoria"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(externo|interno|portable|desktop|ssd|hdd|hybrid)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["externo", "interno", "portable", "ssd", "hdd", "solid", "mechanical"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INTERFAZ_CONEXION",
+      "etiqueta": "Interfaz de Conexión",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB 3.0, SATA III, Thunderbolt",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Interfaz", "Interface", "Conexión"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|usb[-\\s]*c|usb\\s*3\\.0|usb\\s*2\\.0|sata|nvme|m\\.2|thunderbolt|firewire)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FACTOR_FORMA",
+      "etiqueta": "Factor de Forma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2.5 pulgadas, 3.5 pulgadas, M.2",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": ["2.5 pulgadas", "3.5 pulgadas", "M.2", "mSATA", "Compact Flash"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Factor", "Form Factor", "Tamaño"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(2\\.5|3\\.5|m\\.2|msata|compact)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["2.5", "3.5", "m.2", "msata", "compact"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_ROTACION",
+      "etiqueta": "Velocidad de Rotación (RPM)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 5400, 7200, 10000",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 3600,
+        "max": 20000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["RPM", "Velocidad", "Rotation"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*rpm", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CACHE_BUFFER",
+      "etiqueta": "Caché/Buffer",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 64MB, 128MB, 256MB",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cache", "Buffer", "Caché"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(mb|gb)\\s*(cache|buffer)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Antigolpes, Militar, Resistente al agua",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Especiales"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(antigolpes|militar|rugger|purple|pro|black|blue|red|enterprise)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GRADO_PROTECCION",
+      "etiqueta": "Grado de Protección",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Militar, IP67, Consumer, Enterprise",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Militar", "Enterprise", "Consumer", "IP65", "IP67", "IP68"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Protección", "Protection", "Grado"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ip\\d+|militar|enterprise|consumer)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["militar", "enterprise", "consumer", "ip65", "ip67"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_ALMACENAMIENTO",
+      "etiqueta": "Tecnología de Almacenamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Mechanical, Solid State, Hybrid",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": ["Mechanical (HDD)", "Solid State (SSD)", "Hybrid (SSHD)", "Flash Memory"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tecnología", "Technology", "Storage Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mechanical|solid\\s+state|hybrid|flash)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["mechanical", "solid", "state", "hybrid", "flash"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MTBF_FIABILIDAD",
+      "etiqueta": "MTBF/Fiabilidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1,000,000 horas, 2,500,000 horas",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["MTBF", "Fiabilidad", "Reliability"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:,\\d+)?)\\s*(hours?|horas?)\\s*(mtbf|vida)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0°C a 60°C, -40°C a 85°C",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Temperature", "Operating Temp"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_TRANSFERENCIA",
+      "etiqueta": "Velocidad de Transferencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 150 MB/s, 3.5 GB/s, 560 MB/s",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Velocidad", "Speed", "Transfer Rate"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(mb/s|gb/s|mbps|gbps)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2.5W, 8.5W activo, 1.2W idle",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Consumo", "Power", "Watts"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(w|watts?)\\s*(activo|idle|max)?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 129 x 80 x 15 mm",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm|inches?)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.15, 0.68, 1.2",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 0.05,
+        "max": 5.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Kg"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(g|gramos?|kg|kilogramos?|lbs?|pounds?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Guinda, Plateado, Azul",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w]+)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "guinda", "plateado", "azul", "rojo", "blanco"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Disco ADATA del inventario real",
+      "texto": "01 DISCO DURO EXTERNO MaADATA MoHD720 CoNEGROANTIGOLPESAGUA GRADO MILITAR 1TB USB 3.0",
+      "extraccionEsperada": {
+        "MARCA": "ADATA",
+        "MODELO": "HD720",
+        "TIPO_DISCO": "Externo",
+        "CAPACIDAD": "1TB",
+        "INTERFAZ_CONEXION": ["USB 3.0"],
+        "CARACTERISTICAS_ESPECIALES": ["Antigolpes", "Militar"],
+        "GRADO_PROTECCION": "Militar",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 2: Disco LACIE del inventario real",
+      "texto": "01 DISCO EXTERNO LACIE RUGGER V2 CON PUERTOS THUNDERBOLT USB 3,0-1TB portable resistente",
+      "extraccionEsperada": {
+        "MARCA": "LACIE",
+        "MODELO": "RUGGER V2",
+        "TIPO_DISCO": "Externo",
+        "CAPACIDAD": "1TB",
+        "INTERFAZ_CONEXION": ["Thunderbolt", "USB 3.0"],
+        "CARACTERISTICAS_ESPECIALES": ["Rugger", "Portable"]
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "Seagate",
+        "Modelo": "Barracuda ST2000DM008",
+        "Capacidad": "2TB",
+        "Tipo": "Interno",
+        "Interface": "SATA III",
+        "RPM": "7200",
+        "Cache": "256MB",
+        "Factor": "3.5 pulgadas",
+        "Características": "Desktop, Pro",
+        "Velocidad": "220 MB/s",
+        "Consumo": "8.4W",
+        "Color": "Negro"
+      },
+      "extraccionEsperada": {
+        "MARCA": "Seagate",
+        "MODELO": "Barracuda ST2000DM008",
+        "CAPACIDAD": "2TB",
+        "TIPO_DISCO": "Interno",
+        "INTERFAZ_CONEXION": ["SATA III"],
+        "VELOCIDAD_ROTACION": "7200",
+        "CACHE_BUFFER": "256MB",
+        "FACTOR_FORMA": "3.5 pulgadas",
+        "CARACTERISTICAS_ESPECIALES": ["Desktop", "Pro"],
+        "VELOCIDAD_TRANSFERENCIA": "220 MB/s",
+        "CONSUMO_ENERGIA": "8.4W",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

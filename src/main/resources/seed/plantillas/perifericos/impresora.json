@@ -1,0 +1,1516 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-IMP-2025-V1",
+    "version": "1.0",
+    "nombre": "IMPRESORA",
+    "categoriaSemantica": "DISPOSITIVO_IMPRESION",
+    "descripcion": "Plantilla ML de impresora - Maneja columna única, múltiples columnas e híbrido para equipos de impresión y multifuncionales"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_TECNOLOGIA_IMPRESION",
+        "condicion": ".*(laser|inkjet|inyeccion|tinta|matricial|termica).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró una tecnología de impresión específica"
+      },
+      {
+        "nombre": "BONUS_TIENE_VELOCIDAD_PPM",
+        "condicion": ".*\\b\\d+\\s*(ppm|paginas?.*minuto).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró velocidad de impresión en PPM"
+      },
+      {
+        "nombre": "BONUS_TIENE_RESOLUCION_DPI",
+        "condicion": ".*\\b\\d+\\s*(dpi|x\\s*\\d+\\s*dpi).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró resolución de impresión en DPI"
+      },
+      {
+        "nombre": "BONUS_MULTIFUNCION",
+        "condicion": ".*(mfp|multifuncion|scanner|fax|copiadora).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró que es multifunción"
+      },
+      {
+        "nombre": "BONUS_TIENE_VELOCIDAD_TERMICA",
+        "condicion": ".*\\b\\d+\\s*mm/s.*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró velocidad térmica en mm/s"
+      },
+      {
+        "nombre": "BONUS_TICKETERA",
+        "condicion": ".*(ticketera|pos|rollo|80mm).*",
+        "puntos": 0.10,
+        "descripcion": "Se identificó como impresora ticketera/POS"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "impresora",
+          "printer",
+          "multifuncion",
+          "mfp"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "laser",
+          "inkjet",
+          "inyeccion",
+          "termica",
+          "matricial",
+          "ticketera"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "monocromo",
+          "color",
+          "duplex",
+          "scanner",
+          "fax"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "papel",
+          "tinta",
+          "toner",
+          "cartridge"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tecnologia": [
+        "laser",
+        "inkjet",
+        "inyeccion",
+        "tinta",
+        "matricial",
+        "termica",
+        "dot-matrix"
+      ],
+      "velocidad": [
+        "ppm",
+        "paginas",
+        "minuto",
+        "ipm",
+        "imagenes",
+        "mm/s"
+      ],
+      "resolucion": [
+        "dpi",
+        "dots",
+        "inch",
+        "1200x1200",
+        "4800x1200",
+        "600x600"
+      ],
+      "color": [
+        "monocromo",
+        "color",
+        "negro",
+        "blanco",
+        "rgb",
+        "cmyk"
+      ],
+      "funciones": [
+        "impresion",
+        "scanner",
+        "copiadora",
+        "fax",
+        "email",
+        "scan-to"
+      ],
+      "conectividad": [
+        "usb",
+        "ethernet",
+        "wifi",
+        "bluetooth",
+        "nfc",
+        "cloud"
+      ],
+      "papel": [
+        "a4",
+        "a3",
+        "carta",
+        "legal",
+        "photo",
+        "envelope",
+        "rollo"
+      ],
+      "duplex": [
+        "duplex",
+        "doble",
+        "cara",
+        "automatic",
+        "manual"
+      ],
+      "capacidad": [
+        "bandeja",
+        "tray",
+        "hojas",
+        "sheets",
+        "alimentador",
+        "feeder"
+      ],
+      "ticketera": [
+        "ticketera",
+        "pos",
+        "rollo",
+        "80mm",
+        "57mm",
+        "termica"
+      ],
+      "sistemas": [
+        "continua",
+        "cartuchos",
+        "toner",
+        "termica",
+        "directa"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "hp",
+        "canon",
+        "epson",
+        "brother",
+        "xerox"
+      ],
+      "tier2": [
+        "samsung",
+        "ricoh",
+        "lexmark",
+        "kyocera",
+        "dell"
+      ],
+      "tier3": [
+        "oki",
+        "sharp",
+        "pantum",
+        "toshiba",
+        "konica",
+        "bienex",
+        "flashforge"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "proyector",
+        "scanner",
+        "copiadora",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "laptop",
+        "desktop",
+        "router",
+        "switch",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "ups",
+        "servidor",
+        "cpu",
+        "tablet"
+      ],
+      "debil": [
+        "cable",
+        "papel",
+        "tinta",
+        "toner"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|marca\\s+([\\w\\-]+)",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|ns\\.|serie|$|,))|modelo\\s+([\\w\\s\\-\\.]+?)(?=\\s*(serie|ns\\.|$))",
+      "serie": "(se:|serie:|serial:|ns\\.)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "tecnologia": "\\b(laser|inkjet|inyeccion|tinta|matricial|termica|dot[-\\s]*matrix)\\b",
+      "velocidad_ppm": "(\\d+)\\s*(ppm|paginas?.*minuto)",
+      "velocidad_termica": "(\\d+)\\s*(mm/s|mm\\/s)",
+      "resolucion_dpi": "(\\d+)\\s*x?\\s*(\\d+)?\\s*(dpi)",
+      "resolucion_completa": "(\\d{3,4})\\s*x\\s*(\\d{3,4})\\s*(dpi)",
+      "color_impresion": "\\b(monocromo|color|negro|blanco)\\b",
+      "duplex": "\\b(duplex|doble\\s*cara|automatic|manual)\\b",
+      "capacidad_papel": "(\\d+)\\s*(hojas?|sheets?)",
+      "velocidad_scanner": "(\\d+)\\s*(ipm|imagenes.*minuto)",
+      "ancho_rollo": "(\\d+)\\s*(mm|MM)(?=\\s*(?:rollo|papel|x|$))",
+      "sistema_tinta": "\\b(tinta\\s*continua|cartuchos?|toner|termica\\s*directa)\\b"
+    },
+    "conectividad": {
+      "usb": "\\b(usb)\\s*([23]\\.\\d|[abc])?\\b",
+      "red": "\\b(ethernet|wifi|wireless|bluetooth|nfc)\\b",
+      "cloud": "\\b(cloud|google|airprint|mopria)\\b"
+    },
+    "caracteristicas": {
+      "multifuncion": "\\b(mfp|multifuncion|scanner|copiadora|fax)\\b",
+      "formatos_papel": "\\b(a[34]|carta|legal|photo|envelope)\\b",
+      "bandeja": "(\\d+)\\s*(bandeja|tray|alimentador)",
+      "memoria": "(\\d+)\\s*(mb|gb)\\s*(memoria|ram)",
+      "ticketera": "\\b(ticketera|pos|rollo|80mm|57mm)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: HP, Canon, Epson, Brother, BIENEX",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "marca\\s+([\\w\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: LaserJet Pro 200 MFP M276, PIXMA G3110, POS E802L",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|ns\\.|serie|$|,))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "modelo\\s+([\\w\\s\\-\\.]+?)(?=\\s*(serie|ns\\.|$))",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(laserjet|inkjet|pixma|deskjet)\\s*[\\w\\s\\-]+"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_IMPRESION",
+      "etiqueta": "Tecnología de Impresión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Láser, Inyección de Tinta, Térmica",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Láser",
+        "Inyección de Tinta",
+        "Térmica",
+        "Matricial",
+        "Inkjet",
+        "LED"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tecnología",
+              "Technology",
+              "Tipo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(laser|inkjet|inyeccion|termica|matricial|led)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "MAPEO",
+            "laser": "Láser",
+            "inkjet": "Inyección de Tinta",
+            "inyeccion": "Inyección de Tinta",
+            "termica": "Térmica"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_IMPRESORA",
+      "etiqueta": "Tipo de Impresora",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Multifunción, Solo Impresión, Ticketera, MFP",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "Multifunción (MFP)",
+        "Solo Impresión",
+        "Ticketera",
+        "Etiquetas",
+        "Fotográfica",
+        "3D"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Categoría"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(mfp|multifuncion|ticketera|etiquetas|photo|3d)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "mfp",
+              "multifuncion",
+              "ticketera",
+              "etiquetas",
+              "3d"
+            ]
+          },
+          {
+            "tipo": "MAPEO",
+            "mfp": "Multifunción (MFP)",
+            "multifuncion": "Multifunción (MFP)",
+            "ticketera": "Ticketera",
+            "3d": "3D"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_TINTA",
+      "etiqueta": "Sistema de Tinta/Tóner",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Tinta Continua, Cartuchos, Tóner, Térmica Directa",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": [
+        "Tinta Continua",
+        "Cartuchos",
+        "Tóner",
+        "Térmica Directa"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sistema",
+              "Tinta",
+              "Consumibles"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(tinta\\s*continua|cartuchos?|toner|termica\\s*directa)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "MAPEO",
+            "tinta continua": "Tinta Continua",
+            "cartuchos": "Cartuchos",
+            "toner": "Tóner",
+            "termica": "Térmica Directa"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES",
+      "etiqueta": "Funciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Impresión, Scanner, Copiadora, Fax",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Funciones",
+              "Functions",
+              "Características"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(impresion|scanner|copiadora|fax|email|scan[-\\s]*to)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "IMPRESION_COLOR",
+      "etiqueta": "Impresión a Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Monocromo, Color",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": [
+        "Sí",
+        "No",
+        "Solo Monocromo",
+        "Color y Monocromo"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Color Print"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(color|monocromatica|monocromo|negro|blanco)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "color": "Sí",
+            "monocromatica": "Solo Monocromo",
+            "monocromo": "Solo Monocromo",
+            "negro": "Solo Monocromo"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_IMPRESION_NEGRO",
+      "etiqueta": "Velocidad Impresión Negro (PPM)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 20, 35, 50",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 1,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "PPM Negro",
+              "Speed Black",
+              "Velocidad"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(ppm|paginas?.*minuto).*negro",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "negro[:\\s]+(\\d+)\\s*ppm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_IMPRESION_COLOR",
+      "etiqueta": "Velocidad Impresión Color (PPM)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 15, 28, 40",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 1,
+        "max": 150
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "PPM Color",
+              "Speed Color"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(ppm|paginas?.*minuto).*color",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "color[:\\s]+(\\d+)\\s*ppm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_TERMICA",
+      "etiqueta": "Velocidad Térmica (mm/s)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 200, 150, 300",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 50,
+        "max": 500
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Velocidad Térmica",
+              "Thermal Speed",
+              "mm/s"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*mm/s",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "velocidad\\s+(\\d+)\\s*mm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_IMPRESION",
+      "etiqueta": "Resolución de Impresión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1200x1200 dpi, 4800x1200 dpi, 203 dpi",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "DPI"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{3,4})\\s*x\\s*(\\d{3,4})\\s*(dpi)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(dpi)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_SCANNER",
+      "etiqueta": "Velocidad Scanner (IPM)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 25, 40, 60",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 1,
+        "max": 300
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Scanner IPM",
+              "Scan Speed"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(ipm|imagenes.*minuto)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "scanner[:\\s]+(\\d+)\\s*ipm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_SCANNER",
+      "etiqueta": "Resolución Scanner",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1200x1200 dpi, 4800x4800 dpi",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Scanner DPI",
+              "Scan Resolution"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "scanner[:\\s]+(\\d+\\s*x\\s*\\d+\\s*dpi)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "scan[:\\s]+(\\d+\\s*dpi)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DUPLEX_AUTOMATICO",
+      "etiqueta": "Dúplex Automático",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Manual, Automático",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": [
+        "Sí",
+        "No",
+        "Manual",
+        "Automático",
+        "Solo Impresión",
+        "Impresión y Scanner"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dúplex",
+              "Duplex",
+              "Doble Cara"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(duplex|doble\\s*cara|automatic|manual)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "duplex",
+              "doble",
+              "cara",
+              "automatic",
+              "manual"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_PAPEL_PRINCIPAL",
+      "etiqueta": "Capacidad Bandeja Principal",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 150, 250, 500",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 10,
+        "max": 5000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Capacidad",
+              "Paper Tray",
+              "Bandeja"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(hojas?|sheets?).*bandeja",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "bandeja[:\\s]+(\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO_ROLLO",
+      "etiqueta": "Ancho de Rollo (mm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 80, 57, 110",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 30,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Ancho",
+              "Rollo",
+              "Roll Width"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "rollo\\s+(\\d+)\\s*mm",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)MM",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "de\\s+(\\d+)MM",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATOS_PAPEL",
+      "etiqueta": "Formatos de Papel Soportados",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: A4, A3, Carta, Legal",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Formatos",
+              "Paper Size",
+              "Tamaños"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(a[34]|carta|legal|photo|envelope)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_USB",
+      "etiqueta": "Conectividad USB",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1x USB 2.0, 2x USB-B, USB 3.0",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "USB",
+              "Puertos USB"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(usb)\\s*([23]\\.\\d|[ab])?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(usb)\\s*([23]\\.\\d|[ab])?\\b",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_ETHERNET",
+      "etiqueta": "Conectividad Ethernet",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, 10/100/1000, Gigabit",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "opciones": [
+        "Sí",
+        "No",
+        "10/100",
+        "10/100/1000",
+        "Gigabit"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Ethernet",
+              "LAN",
+              "Red"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ethernet|10/100/1000|10/100|gigabit)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "ethernet",
+              "gigabit",
+              "lan",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_WIFI",
+      "etiqueta": "Conectividad WiFi",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, WiFi 802.11n, WiFi 6",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "opciones": [
+        "Sí",
+        "No",
+        "802.11n",
+        "802.11ac",
+        "802.11ax (WiFi 6)",
+        "WiFi Direct"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "WiFi",
+              "Wireless",
+              "Inalámbrica"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi|wireless|802\\.11[a-z]+)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "wifi",
+              "wireless",
+              "inalambrica"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_BLUETOOTH",
+      "etiqueta": "Conectividad Bluetooth",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Bluetooth 4.0, BLE",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "opciones": [
+        "Sí",
+        "No",
+        "Bluetooth 4.0",
+        "Bluetooth 5.0",
+        "BLE"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Bluetooth",
+              "BT"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(bluetooth|bt)\\s*([45]\\.\\d)?\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "bluetooth",
+              "bt",
+              "ble"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_CLOUD",
+      "etiqueta": "Servicios Cloud",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Google Cloud Print, AirPrint, Mopria",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cloud",
+              "Print Services"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(google\\s*cloud|airprint|mopria|cloud\\s*print)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PANTALLA",
+      "etiqueta": "Pantalla/Display",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LCD 2.7\", Touch 4.3\", LED, No",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pantalla",
+              "Display",
+              "LCD"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(lcd|led|touch)\\s*(\\d+\\.\\d+)?[\\\"]?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "lcd",
+              "led",
+              "touch",
+              "pantalla",
+              "display"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_INTERNA",
+      "etiqueta": "Memoria Interna",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 128MB, 512MB, 1GB RAM",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Memoria",
+              "RAM",
+              "Memory"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(mb|gb)\\s*(memoria|ram)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "memoria[:\\s]+(\\d+\\s*[mg]b)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARTUCHOS_TINTA_TONER",
+      "etiqueta": "Cartuchos/Tinta/Tóner",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4 cartuchos CMYK, Tóner negro, HP 305",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cartuchos",
+              "Tinta",
+              "Tóner",
+              "Consumibles"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(cartuchos?|tinta|toner)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(cmyk|negro|color)\\s*(cartuchos?|tinta|toner)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 45W activo, 1.5W standby",
+      "prioridad": 26,
+      "orden_ui": 26,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Consumo",
+              "Power",
+              "Watts"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(w|watts|vatios)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "consumo[:\\s]+(\\d+\\s*w)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (A x L x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 435 x 363 x 238 mm",
+      "prioridad": 27,
+      "orden_ui": 27,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "dimensiones[:\\s]+(\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 8.5, 15.2, 25.0",
+      "prioridad": 28,
+      "orden_ui": 28,
+      "validacion": {
+        "min": 0.5,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Kg"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d)\\s*(kg|kilogramos)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "peso[:\\s]+(\\d+\\.?\\d*)\\s*kg",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris",
+      "prioridad": 29,
+      "orden_ui": 29,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "black",
+              "white",
+              "silver"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Impresora HP multifunción completa",
+      "texto": "01 Impresora marca HP Lasert Jet modelo pro 200 MFP M276 serie CNB9D888M9 láser color multifunción 16 ppm negro 4 ppm color 1200x1200 dpi scanner 1200 dpi duplex automático bandeja 150 hojas A4/Carta USB 2.0 Ethernet WiFi LCD 3.5\" memoria 128MB negro consumo 42W",
+      "extraccionEsperada": {
+        "MARCA": "HP",
+        "MODELO": "LaserJet Pro 200 MFP M276",
+        "TECNOLOGIA_IMPRESION": "Láser",
+        "TIPO_IMPRESORA": "Multifunción (MFP)",
+        "FUNCIONES": [
+          "Impresión",
+          "Scanner"
+        ],
+        "IMPRESION_COLOR": "Sí",
+        "VELOCIDAD_IMPRESION_NEGRO": "16",
+        "VELOCIDAD_IMPRESION_COLOR": "4",
+        "RESOLUCION_IMPRESION": "1200x1200 dpi",
+        "RESOLUCION_SCANNER": "1200 dpi",
+        "DUPLEX_AUTOMATICO": "Automático",
+        "CAPACIDAD_PAPEL_PRINCIPAL": "150",
+        "FORMATOS_PAPEL": [
+          "A4",
+          "Carta"
+        ],
+        "CONECTIVIDAD_USB": "USB 2.0",
+        "CONECTIVIDAD_ETHERNET": "Sí",
+        "CONECTIVIDAD_WIFI": "Sí",
+        "PANTALLA": "LCD 3.5\"",
+        "MEMORIA_INTERNA": "128MB",
+        "COLOR": "Negro",
+        "CONSUMO_ENERGIA": "42W"
+      }
+    },
+    {
+      "nombre": "Caso 2: Impresora térmica ticketera",
+      "texto": "01 Impresora ticketera térmica de 80MM USB ethernet - Escritorio térmica monocromática Ma: BIENEX Mo: POS E802L Se: HTRP 8022022200348 Co: Negro velocidad 200mm/s resolución 203 dpi rollo 80mm x 80mm USB 2.0 ethernet 10/100 negro 1.2kg",
+      "extraccionEsperada": {
+        "MARCA": "BIENEX",
+        "MODELO": "POS E802L",
+        "COLOR": "Negro",
+        "TECNOLOGIA_IMPRESION": "Térmica",
+        "TIPO_IMPRESORA": "Ticketera",
+        "SISTEMA_TINTA": "Térmica Directa",
+        "IMPRESION_COLOR": "Solo Monocromo",
+        "VELOCIDAD_TERMICA": "200",
+        "RESOLUCION_IMPRESION": "203 dpi",
+        "ANCHO_ROLLO": "80",
+        "CONECTIVIDAD_USB": "USB 2.0",
+        "CONECTIVIDAD_ETHERNET": "10/100",
+        "PESO": "1.2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Impresora EPSON tinta continua",
+      "texto": "01 Impresora marca EPSON modelo M200 NS. UKTY00964 multifuncional de tinta continua color negro",
+      "extraccionEsperada": {
+        "MARCA": "EPSON",
+        "MODELO": "M200",
+        "TECNOLOGIA_IMPRESION": "Inyección de Tinta",
+        "TIPO_IMPRESORA": "Multifunción (MFP)",
+        "SISTEMA_TINTA": "Tinta Continua",
+        "IMPRESION_COLOR": "Sí",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 4: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "Canon",
+        "Modelo": "PIXMA G3110",
+        "Tecnología": "Inyección de Tinta",
+        "Tipo": "Multifunción",
+        "Sistema": "Tinta Continua",
+        "Color": "Sí",
+        "PPM Negro": "8.8",
+        "PPM Color": "5.0",
+        "Resolución": "4800x1200 dpi",
+        "Scanner": "600x1200 dpi",
+        "Bandeja": "100 hojas",
+        "Formatos": "A4, Carta, Legal",
+        "USB": "USB 2.0",
+        "WiFi": "802.11n",
+        "Pantalla": "No",
+        "Cartuchos": "4 tanques CMYK"
+      },
+      "extraccionEsperada": {
+        "MARCA": "Canon",
+        "MODELO": "PIXMA G3110",
+        "TECNOLOGIA_IMPRESION": "Inyección de Tinta",
+        "TIPO_IMPRESORA": "Multifunción (MFP)",
+        "SISTEMA_TINTA": "Tinta Continua",
+        "IMPRESION_COLOR": "Sí",
+        "VELOCIDAD_IMPRESION_NEGRO": "8",
+        "VELOCIDAD_IMPRESION_COLOR": "5",
+        "RESOLUCION_IMPRESION": "4800x1200 dpi",
+        "RESOLUCION_SCANNER": "600x1200 dpi",
+        "CAPACIDAD_PAPEL_PRINCIPAL": "100",
+        "FORMATOS_PAPEL": [
+          "A4",
+          "Carta",
+          "Legal"
+        ],
+        "CONECTIVIDAD_USB": "USB 2.0",
+        "CONECTIVIDAD_WIFI": "802.11n",
+        "PANTALLA": "No",
+        "CARTUCHOS_TINTA_TONER": "4 tanques CMYK"
+      }
+    },
+    {
+      "nombre": "Caso 5: Impresora 3D",
+      "texto": "01 Impresora 3D Ma:FLASHFORGE Mo:Finder3 Se:LLMB9200064",
+      "extraccionEsperada": {
+        "MARCA": "FLASHFORGE",
+        "MODELO": "Finder3",
+        "TIPO_IMPRESORA": "3D"
+      }
+    }
+  ]
+}

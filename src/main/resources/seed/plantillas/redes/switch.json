@@ -1,0 +1,1227 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SWI-2025-V1",
+    "version": "1.0",
+    "nombre": "SWITCH",
+    "categoriaSemantica": "DISPOSITIVO_RED_SWITCH",
+    "descripcion": "Plantilla ML de switch - Maneja columna única, múltiples columnas e híbrido para equipos de conmutación de red"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_NUMERO_PUERTOS",
+        "condicion": ".*\\b\\d+[-\\s]*(puertos?|ports?|pt)\\b.*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró número específico de puertos"
+      },
+      {
+        "nombre": "BONUS_TIENE_VELOCIDAD_PUERTOS",
+        "condicion": ".*(10/100/1000|gigabit|fast.*ethernet|10gbe).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró velocidad de puertos específica"
+      },
+      {
+        "nombre": "BONUS_TIENE_GESTION",
+        "condicion": ".*(managed|gestionado|smart|web|gui).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró tipo de gestión"
+      },
+      {
+        "nombre": "BONUS_TIENE_POE",
+        "condicion": ".*(poe|power.*over.*ethernet).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró soporte PoE"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "switch",
+          "conmutador",
+          "hub",
+          "switching"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "ethernet",
+          "network",
+          "managed",
+          "unmanaged",
+          "gigabit"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "layer",
+          "vlan",
+          "poe",
+          "sfp",
+          "uplink"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "red",
+          "puertos",
+          "ports",
+          "conectividad"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "velocidades": [
+        "10mbps",
+        "100mbps",
+        "1000mbps",
+        "10gbps",
+        "gigabit",
+        "fast-ethernet"
+      ],
+      "puertos": [
+        "rj45",
+        "sfp",
+        "sfp+",
+        "qsfp",
+        "combo",
+        "uplink"
+      ],
+      "gestion": [
+        "managed",
+        "unmanaged",
+        "smart",
+        "web-managed",
+        "cli",
+        "snmp"
+      ],
+      "protocolos": [
+        "vlan",
+        "stp",
+        "rstp",
+        "mstp",
+        "lacp",
+        "lldp",
+        "igmp"
+      ],
+      "poe": [
+        "poe",
+        "poe+",
+        "poe++",
+        "power-over-ethernet",
+        "15.4w",
+        "30w",
+        "60w",
+        "90w"
+      ],
+      "caracteristicas": [
+        "layer2",
+        "layer3",
+        "qos",
+        "acl",
+        "mirror",
+        "trunk"
+      ],
+      "backplane": [
+        "switching",
+        "forwarding",
+        "throughput",
+        "pps",
+        "packets"
+      ],
+      "montaje": [
+        "rack",
+        "desktop",
+        "wall-mount",
+        "din-rail"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "cisco",
+        "hp",
+        "dell",
+        "juniper",
+        "aruba"
+      ],
+      "tier2": [
+        "netgear",
+        "d-link",
+        "ubiquiti",
+        "mikrotik",
+        "extreme"
+      ],
+      "tier3": [
+        "tp-link",
+        "zyxel",
+        "allied",
+        "3com",
+        "linksys"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "router",
+        "access-point",
+        "firewall",
+        "modem",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "wireless",
+        "wifi",
+        "bluetooth",
+        "vpn",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "servidor",
+        "laptop",
+        "desktop",
+        "ups"
+      ],
+      "debil": [
+        "cable",
+        "patch",
+        "rack",
+        "gabinete"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w\\-]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "numero_puertos": "(\\d+)[-\\s]*(puertos?|ports?|pt)",
+      "velocidad_puertos": "\\b(10/100/1000|10/100|gigabit|fast[-\\s]*ethernet|10gbe)\\b",
+      "tipo_puertos": "\\b(rj45|sfp\\+?|qsfp|combo)\\b",
+      "capacidad_switching": "(\\d+(?:\\.\\d+)?)\\s*(gbps|tbps)",
+      "forwarding_rate": "(\\d+(?:\\.\\d+)?)\\s*(mpps|pps)",
+      "tabla_mac": "(\\d+[k]?)\\s*(mac|direcciones)",
+      "vlan_support": "(\\d+)\\s*(vlans?)",
+      "poe_budget": "(\\d+)\\s*(w|watts)\\s*(poe|budget)"
+    },
+    "conectividad": {
+      "uplink_ports": "(\\d+)\\s*x?\\s*(sfp\\+?|qsfp|uplink)",
+      "console_port": "\\b(console|rs232|rj45)\\b",
+      "stack_ports": "(\\d+)\\s*x?\\s*(stack|stacking)"
+    },
+    "caracteristicas": {
+      "gestion": "\\b(managed|unmanaged|smart|web[-\\s]*managed)\\b",
+      "layer": "\\b(layer\\s*[23]|l[23])\\b",
+      "poe_type": "\\b(poe\\+\\+?|power[-\\s]*over[-\\s]*ethernet)\\b",
+      "montaje": "\\b(rack[-\\s]*mount|desktop|wall[-\\s]*mount|din[-\\s]*rail)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Cisco, HP, D-Link",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: WS-C2960+24PC-S, DGS-1024C, SG300-28",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "[A-Z]{2,4}[-]?[0-9]{3,4}[A-Z+-]*"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_PUERTOS_TOTAL",
+      "etiqueta": "Número Total de Puertos",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 24, 48, 8, 16",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "validacion": {
+        "min": 4,
+        "max": 128
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Puertos",
+              "Ports",
+              "Total Ports",
+              "Número"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)[-\\s]*(puertos?|ports?|pt)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(\\d+)\\s*ptos\\b",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_PUERTOS",
+      "etiqueta": "Velocidad de Puertos",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10/100/1000, Gigabit, Fast Ethernet",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "10/100/1000 Mbps",
+        "10/100 Mbps",
+        "Gigabit",
+        "10 Gigabit",
+        "Fast Ethernet"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Velocidad",
+              "Speed",
+              "Rate"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(10/100/1000|10/100|gigabit|fast[-\\s]*ethernet|10gbe)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "1000mbps": "Gigabit",
+            "1000": "Gigabit"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PUERTOS",
+      "etiqueta": "Tipo de Puertos",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: RJ45, SFP, SFP+, Combo",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": [
+        "RJ45",
+        "SFP",
+        "SFP+",
+        "QSFP",
+        "Combo RJ45/SFP"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo Puertos",
+              "Port Type",
+              "Connector"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(rj45|sfp\\+?|qsfp|combo)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "rj45",
+              "sfp",
+              "qsfp",
+              "combo"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_UPLINK",
+      "etiqueta": "Puertos Uplink",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2x SFP+, 4x SFP, 2x T/SFP",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Uplink",
+              "SFP",
+              "Fiber"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(sfp\\+?|t/sfp|uplink)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(t/sfp|sfp)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_GESTION",
+      "etiqueta": "Tipo de Gestión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Managed, Unmanaged, Smart, Web-Managed",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": [
+        "Managed",
+        "Unmanaged",
+        "Smart",
+        "Web-Managed",
+        "CLI"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Gestión",
+              "Management",
+              "Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(managed|unmanaged|smart|web[-\\s]*managed)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "managed",
+              "unmanaged",
+              "smart",
+              "web"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOPORTE_POE",
+      "etiqueta": "Soporte PoE",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, PoE+, PoE++",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "Sí",
+        "No",
+        "PoE (15.4W)",
+        "PoE+ (30W)",
+        "PoE++ (60W)",
+        "PoE++ (90W)"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "PoE",
+              "Power over Ethernet",
+              "Power"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(poe\\+\\+?|power[-\\s]*over[-\\s]*ethernet)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "poe",
+              "power",
+              "ethernet"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PRESUPUESTO_POE",
+      "etiqueta": "Presupuesto PoE Total (Watts)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 370, 740, 185",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 15,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "PoE Budget",
+              "Total PoE",
+              "Power Budget"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(w|watts)\\s*(poe|budget|total)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "budget[:\\s]+(\\d+)\\s*w",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_SWITCHING",
+      "etiqueta": "Capacidad de Switching",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 52 Gbps, 1.28 Tbps, 176 Gbps",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Switching",
+              "Backplane",
+              "Fabric"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(gbps|tbps)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "switching[:\\s]+(\\d+\\s*[gt]bps)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORWARDING_RATE",
+      "etiqueta": "Tasa de Reenvío",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 38.69 Mpps, 130.95 Mpps",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Forwarding",
+              "Mpps",
+              "PPS"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(mpps|pps)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "forwarding[:\\s]+(\\d+\\s*mpps)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TABLA_MAC",
+      "etiqueta": "Tabla de Direcciones MAC",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 8K, 16K, 32K direcciones",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "MAC Table",
+              "MAC",
+              "Addresses"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+[k]?)\\s*(mac|direcciones)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "tabla[:\\s]+(\\d+k?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOPORTE_VLAN",
+      "etiqueta": "Soporte VLAN",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4094 VLANs, 256 VLANs, Sí",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "VLAN",
+              "VLANs",
+              "Virtual LAN"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(vlans?)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "vlan",
+              "virtual",
+              "lan"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTOCOLOS_SPANNING_TREE",
+      "etiqueta": "Protocolos Spanning Tree",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: STP, RSTP, MSTP",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "STP",
+              "Spanning Tree",
+              "Protocols"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(stp|rstp|mstp|spanning[-\\s]*tree)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTOCOLOS_AGREGACION",
+      "etiqueta": "Protocolos de Agregación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: LACP, Static LAG, PAgP",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "LACP",
+              "LAG",
+              "Agregación"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(lacp|lag|pagp|etherchannel)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "QOS_SUPPORT",
+      "etiqueta": "Soporte QoS",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, 8 colas, DSCP",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "QoS",
+              "Quality of Service",
+              "Colas"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(qos|dscp|cos|(\\d+)\\s*colas?)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "qos",
+              "dscp",
+              "cos",
+              "colas"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_LAYER3",
+      "etiqueta": "Funciones Layer 3",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Static Routing, RIP, OSPF",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Layer 3",
+              "L3",
+              "Routing"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(static[-\\s]*routing|rip|ospf|eigrp|bgp)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SEGURIDAD",
+      "etiqueta": "Características de Seguridad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: ACL, Port Security, 802.1X",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Seguridad",
+              "Security",
+              "ACL"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(acl|port[-\\s]*security|802\\.1x|radius|tacacs)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "STACKING",
+      "etiqueta": "Capacidad de Stacking",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, 9 unidades, 480 Gbps",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Stacking",
+              "Stack",
+              "Cascade"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(stacking|cascade|(\\d+)\\s*unidades?)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "stacking",
+              "cascade",
+              "stack"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GESTION_REMOTA",
+      "etiqueta": "Gestión Remota",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Web GUI, CLI, SNMP, SSH",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Gestión",
+              "Management",
+              "Administration"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(web|gui|cli|snmp|ssh|telnet|https)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MONTAJE",
+      "etiqueta": "Tipo de Montaje",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Rack 1U, Desktop, Wall Mount",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "opciones": [
+        "Rack 1U",
+        "Rack 2U",
+        "Desktop",
+        "Wall Mount",
+        "DIN Rail"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Montaje",
+              "Mount",
+              "Installation"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(rack|desktop|wall[-\\s]*mount|din[-\\s]*rail)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 38W, 185W típico, 25W máximo",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Consumo",
+              "Power",
+              "Watts"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(w|watts|vatios)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "consumo[:\\s]+(\\d+\\s*w)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (A x L x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 44 x 442 x 257 mm",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "dimensiones[:\\s]+(\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Gris, Plomo",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "gris",
+              "plomo",
+              "plateado",
+              "black",
+              "grey",
+              "silver"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Switch Cisco empresarial completo",
+      "texto": "01 Switch Ma: Cisco Mo: WS-C2960+24PC-S Plus 24 10/100 + 2T/SFP LAN Base A Se: FOC2414Y2B1 Co: Negro 24 puertos 10/100/1000 2x SFP uplink PoE+ 370W managed VLAN STP RSTP LACP QoS 8 colas ACL 802.1X SNMP SSH Web GUI rack 1U consumo 185W",
+      "extraccionEsperada": {
+        "MARCA": "Cisco",
+        "MODELO": "WS-C2960+24PC-S",
+        "NUMERO_SERIE": "FOC2414Y2B1",
+        "COLOR": "Negro",
+        "NUMERO_PUERTOS_TOTAL": "24",
+        "VELOCIDAD_PUERTOS": "10/100/1000",
+        "PUERTOS_UPLINK": "2x SFP",
+        "TIPO_GESTION": "Managed",
+        "SOPORTE_POE": "PoE+ (30W)",
+        "PRESUPUESTO_POE": "370",
+        "SOPORTE_VLAN": "Sí",
+        "PROTOCOLOS_SPANNING_TREE": [
+          "STP",
+          "RSTP"
+        ],
+        "PROTOCOLOS_AGREGACION": [
+          "LACP"
+        ],
+        "QOS_SUPPORT": "8 colas",
+        "SEGURIDAD": [
+          "ACL",
+          "802.1X"
+        ],
+        "GESTION_REMOTA": [
+          "SNMP",
+          "SSH",
+          "Web GUI"
+        ],
+        "MONTAJE": [
+          "Rack 1U"
+        ],
+        "CONSUMO_ENERGIA": "185W"
+      }
+    },
+    {
+      "nombre": "Caso 2: Switch D-Link básico",
+      "texto": "Switch D-Link 24ptos 10/100/1000 Mo: DGS-1024C Se: QS7Q31A010021 unmanaged desktop gigabit switching capacity 48 Gbps forwarding rate 35.7 Mpps tabla MAC 8K negro 19W",
+      "extraccionEsperada": {
+        "MARCA": "D-Link",
+        "MODELO": "DGS-1024C",
+        "NUMERO_SERIE": "QS7Q31A010021",
+        "NUMERO_PUERTOS_TOTAL": "24",
+        "VELOCIDAD_PUERTOS": "10/100/1000",
+        "TIPO_GESTION": "Unmanaged",
+        "CAPACIDAD_SWITCHING": "48 Gbps",
+        "FORWARDING_RATE": "35.7 Mpps",
+        "TABLA_MAC": "8K",
+        "MONTAJE": [
+          "Desktop"
+        ],
+        "COLOR": "Negro",
+        "CONSUMO_ENERGIA": "19W"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "HP",
+        "Modelo": "ProCurve 2824",
+        "Puertos": "24",
+        "Velocidad": "Gigabit",
+        "Uplink": "2x SFP",
+        "Gestión": "Web-Managed",
+        "PoE": "PoE+ 370W",
+        "VLAN": "4094 VLANs",
+        "STP": "RSTP/MSTP",
+        "QoS": "8 colas",
+        "Seguridad": "ACL, 802.1X",
+        "Montaje": "Rack 1U",
+        "Consumo": "45W"
+      },
+      "extraccionEsperada": {
+        "MARCA": "HP",
+        "MODELO": "ProCurve 2824",
+        "NUMERO_PUERTOS_TOTAL": "24",
+        "VELOCIDAD_PUERTOS": "Gigabit",
+        "PUERTOS_UPLINK": "2x SFP",
+        "TIPO_GESTION": "Web-Managed",
+        "SOPORTE_POE": "PoE+ (30W)",
+        "PRESUPUESTO_POE": "370",
+        "SOPORTE_VLAN": "4094 VLANs",
+        "PROTOCOLOS_SPANNING_TREE": [
+          "RSTP",
+          "MSTP"
+        ],
+        "QOS_SUPPORT": "8 colas",
+        "SEGURIDAD": [
+          "ACL",
+          "802.1X"
+        ],
+        "MONTAJE": [
+          "Rack 1U"
+        ],
+        "CONSUMO_ENERGIA": "45W"
+      }
+    }
+  ]
+}

@@ -1,0 +1,675 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-ROLLER-2025-V1",
+    "version": "1.0",
+    "nombre": "Roller/Cortina",
+    "categoriaSemantica": "MOBILIARIO_CORTINA_PERSIANA_ROLLER_BLACKOUT",
+    "descripcion": "Plantilla ML de Roller/Cortina - Maneja columna única, múltiples columnas e híbrido para rollers, cortinas, persianas motorizadas y manuales",
+    "grupoMaestro": "GRPO-MOB-2025",
+    "nombreGrupo": "EQUIPOS_MOBILIARIO"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.75,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.35,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.10,
+      "patrones": 0.20,
+      "etiquetas": 0.10,
+      "contexto": 0.05
+    },
+    "umbrales": {
+      "rechazo": 0.40,
+      "dudoso": 0.60,
+      "probable": 0.80,
+      "seguro": 0.90,
+      "certeza": 0.95
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_ROLLER_MOTORIZADO_MEDIDAS",
+        "condicion": ".*(roller\\s+motorizado.*\\d+\\.\\d+\\s*[xX]\\s*\\d+\\.\\d+\\s*mts?).*",
+        "puntos": 0.25,
+        "descripcion": "Roller motorizado con medidas específicas del inventario"
+      },
+      {
+        "nombre": "BONUS_MEDIDAS_2_10_0_80",
+        "condicion": ".*(2\\.10\\s*[xX]\\s*0\\.80|2\\.02\\s*[xX]\\s*1\\.22).*mts?.*",
+        "puntos": 0.20,
+        "descripcion": "Medidas específicas del inventario: 2.10x0.80 o 2.02x1.22"
+      },
+      {
+        "nombre": "BONUS_LAB_REDES",
+        "condicion": ".*(lab\\.\\s*redes|laboratorio\\s+redes).*",
+        "puntos": 0.15,
+        "descripcion": "Roller ubicado en Lab. Redes específico del inventario"
+      },
+      {
+        "nombre": "BONUS_MOTORIZADO_AUTOMATICO",
+        "condicion": ".*(motorizado|motorizada|el[eé]ctric[oa]|autom[aá]tic[oa]).*",
+        "puntos": 0.12,
+        "descripcion": "Sistema motorizado o eléctrico"
+      },
+      {
+        "nombre": "BONUS_DIMENSIONES_PRECISAS",
+        "condicion": ".*(\\d+\\.\\d+\\s*[xX]\\s*\\d+\\.\\d+).*mts?.*",
+        "puntos": 0.10,
+        "descripcion": "Dimensiones específicas en metros con decimales"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["roller", "cortina", "persiana", "estor", "blackout", "motorizado"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["motorizada", "enrollable", "sunscreen", "vertical", "screen"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["manual", "cadena", "tela", "vinilo", "toldo", "zebra"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["ventana", "decoracion", "ambiente", "proteccion", "interior"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos_cortina": ["roller", "persiana", "cortina", "estor", "toldo", "screen", "blackout", "zebra"],
+      "mecanismos": ["motorizado", "manual", "cadena", "manivela", "spring", "cordless", "smart", "remoto"],
+      "materiales": ["blackout", "sunscreen", "traslucido", "opaco", "screen", "poliester", "vinilo", "lino"],
+      "instalacion": ["techo", "pared", "interior-marco", "exterior-marco", "empotrado"],
+      "colores_neutros": ["blanco", "beige", "gris", "marron", "crema", "natural"],
+      "colores_modernos": ["negro", "antracita", "plata", "titanio", "grafito"],
+      "medidas_ventanas": ["0.80x1.20", "1.50x1.50", "2.00x2.00", "2.10x0.80", "2.02x1.22"],
+      "control": ["control-remoto", "app-movil", "wifi", "bluetooth", "sensor"],
+      "aplicacion": ["interior", "exterior", "comercial", "residencial", "oficina"]
+    },
+    "marcas": {
+      "tier1": ["hunter-douglas", "luxaflex", "somfy", "lutron"],
+      "tier2": ["levolor", "graber", "bali", "3m", "kirsch"],
+      "tier3": ["arlo-blinds", "chicology", "achim", "lotus", "windoware"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["ecran", "proyeccion", "pantalla-proyeccion", "display", "monitor"],
+      "fuerte": ["computadora", "televisor", "cpu", "laptop"],
+      "media": ["dispensador", "impresora", "scanner", "router"],
+      "debil": ["escritorio", "silla", "mesa", "archivador"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(hunter|luxaflex|somfy|lutron)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_cortina_principal": "\\b(roller|cortina|persiana|estor|toldo|screen|blackout)\\b",
+      "mecanismo_operacion": "\\b(motorizado|motorizada|manual|el[eé]ctric[oa]|smart|automatico|remoto)\\b",
+      "dimensiones_exactas": "(\\d+\\.\\d+)\\s*[XxDdxX]\\s*(\\d+\\.\\d+)\\s*(?:mts?|metros?|m)\\b",
+      "dimension_ancho": "(?:ancho|width|w):?\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mts?|m)\\b",
+      "dimension_alto": "(?:alto|height|h):?\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mts?|m)\\b",
+      "medidas_inventario_especificas": "\\b(2\\.10\\s*[xX]\\s*0\\.80|2\\.02\\s*[xX]\\s*1\\.22)\\s*mts?\\b",
+      "material_blackout": "\\b(blackout|black[-\\s]*out|oscurecimiento)\\b",
+      "material_sunscreen": "\\b(sunscreen|sun[-\\s]*screen|solar[-\\s]*screen)\\b",
+      "material_vinilo": "\\b(vinilo|vinyl|pvc)\\b",
+      "material_poliester": "\\b(poli[eé]ster|polyester|tela)\\b",
+      "material_screen": "\\b(screen|fibra[-\\s]*vidrio)\\b",
+      "marca_tier1": "\\b(hunter[-\\s]*douglas|luxaflex|somfy|lutron)\\b",
+      "marca_tier2": "\\b(levolor|graber|bali|3m|kirsch)\\b",
+      "marca_tier3": "\\b(arlo[-\\s]*blinds|chicology|achim|lotus)\\b",
+      "color_neutro": "\\b(blanco|beige|gris|marr[oó]n|crema|natural)\\b",
+      "color_moderno": "\\b(negro|antracita|plata|titanio|grafito)\\b",
+      "instalacion_tipo": "\\b(techo|pared|interior[-\\s]*marco|exterior[-\\s]*marco|empotrado)\\b",
+      "montaje_posicion": "\\b(superior|lateral|frontal|posterior)\\s*(mount|montaje)?\\b",
+      "control_remoto": "\\b(control\\s+remoto|remote\\s+control|rc)\\b",
+      "control_app": "\\b(app|aplicaci[oó]n|smartphone|wifi|bluetooth)\\b",
+      "sensor_integrado": "\\b(sensor|sensores?)\\s*(luz|viento|lluvia|temperatura)\\b",
+      "tipo_enrollamiento": "\\b(enrollable|enrollamiento|roll[-\\s]*up)\\b",
+      "sistema_guias": "\\b(gu[ií]as?|guide|rail|riel)\\s*(laterales?|lateral)?\\b",
+      "freno_seguridad": "\\b(freno|brake|seguridad|safety)\\s*(autom[aá]tico|automatic)?\\b",
+      "ubicacion_interior": "\\b(interior|indoor|sala|dormitorio|cocina)\\b",
+      "ubicacion_exterior": "\\b(exterior|outdoor|terraza|balc[oó]n)\\b",
+      "uso_comercial": "\\b(comercial|oficina|hospital|hotel|restaurant)\\b",
+      "uso_laboratorio": "\\b(lab\\.|laboratorio)\\s*([\\w\\s]+)",
+      "facil_limpieza": "\\b(f[aá]cil\\s+limpieza|washable|lavable)\\b",
+      "resistente_agua": "\\b(resistente\\s+agua|waterproof|impermeable)\\b",
+      "anti_bacterial": "\\b(anti[-\\s]*bacterial|antibacteriano|higi[eé]nico)\\b",
+      "garantia_cortina": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)",
+      "durabilidad_uso": "(\\d+)\\s*(a[ñn]os?)\\s*(duraci[oó]n|vida\\s+[uú]til|lifespan)",
+      "area_cobertura": "(\\d+(?:\\.\\d+)?)\\s*m[²2]\\s*(cobertura|coverage|area)?",
+      "porcentaje_bloqueo_luz": "(\\d+)%\\s*(bloqueo|blockout|opacidad)",
+      "factor_solar": "factor\\s+solar:?\\s*(\\d+(?:\\.\\d+)?)",
+      "transmision_luz": "(\\d+(?:\\.\\d+)?)%\\s*(transmisi[oó]n|transmission)\\s*(luz|light)",
+      "grosor_tela": "(\\d+(?:\\.\\d+)?)\\s*mm\\s*(grosor|thickness|espesor)",
+      "peso_por_metro": "(\\d+(?:\\.\\d+)?)\\s*(g|kg)/m[²2]\\s*(peso|weight)",
+      "temperatura_maxima": "hasta\\s*(\\d+)°c\\s*(temperatura|temp)",
+      "velocidad_motor": "(\\d+)\\s*(rpm|revoluciones)\\s*(motor|speed)",
+      "consumo_energia": "(\\d+(?:\\.\\d+)?)\\s*(w|watts?)\\s*(consumo|consumption)",
+      "nivel_ruido": "(\\d+)\\s*db\\s*(ruido|noise|silencioso)",
+      "ciclos_vida": "(\\d+(?:,\\d{3})*)\\s*(ciclos|cycles)\\s*(vida|life)",
+      "carga_maxima": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(carga\\s+m[aá]xima|max\\s+load)",
+      "cantidad": "^(\\d{1,2})\\s*(roller|cortina|persiana)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Hunter Douglas, Luxaflex, Somfy, Lutron",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(hunter|luxaflex|somfy|lutron)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Silhouette, Duette, Luminette, PowerView",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CORTINA",
+      "etiqueta": "Tipo de Cortina",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Roller, Persiana, Cortina, Estor, Blackout",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Roller", "Persiana", "Cortina", "Estor", "Toldo", "Screen", "Blackout", "Zebra"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Category"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(roller|cortina|persiana|estor|toldo|screen|blackout)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["roller", "cortina", "persiana", "estor", "blackout"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MECANISMO_OPERACION",
+      "etiqueta": "Mecanismo de Operación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Motorizado, Manual, Eléctrico, Smart, Remoto",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Motorizado", "Manual", "Eléctrico", "Smart", "Automático", "Remoto", "App Control"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Mecanismo", "Operation", "Control"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(motorizado|motorizada|manual|el[eé]ctric[oa]|smart|automatico|remoto)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["motorizado", "manual", "electrico", "smart", "automatico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (metros)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2.10 x 0.80, 2.02 x 1.22, 1.50 x 2.00",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Medidas", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+\\.\\d+)\\s*[XxDdxX]\\s*(\\d+\\.\\d+)\\s*(?:mts?|metros?|m)\\b", "grupo": 0},
+          {"tipo": "PATRON", "patron": "\\b(2\\.10\\s*[xX]\\s*0\\.80|2\\.02\\s*[xX]\\s*1\\.22)\\s*mts?\\b", "grupo": 1, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (metros)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.10, 2.02, 1.50, 3.00",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 0.5,
+        "max": 10.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "W"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+\\.\\d+)\\s*[XxDdxX]\\s*\\d+\\.\\d+\\s*(?:mts?|m)\\b", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(?:ancho|width|w):?\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mts?|m)\\b", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTO",
+      "etiqueta": "Alto (metros)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.80, 1.22, 2.00, 2.50",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 0.3,
+        "max": 6.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alto", "Height", "H"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\d+\\.\\d+\\s*[XxDdxX]\\s*(\\d+\\.\\d+)\\s*(?:mts?|m)\\b", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(?:alto|height|h):?\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mts?|m)\\b", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AREA_COBERTURA",
+      "etiqueta": "Área de Cobertura (m²)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1.68, 2.46, 4.00, 6.00",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 0.5,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Área", "Area", "Coverage"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*m[²2]\\s*(cobertura|coverage|area)?", "grupo": 1},
+          {"tipo": "CALCULO_AUTOMATICO", "formula": "ancho * alto"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_TELA",
+      "etiqueta": "Material de la Tela",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Blackout, Sunscreen, Screen, Poliéster, Vinilo",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Fabric", "Tela"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(blackout|sunscreen|screen|poli[eé]ster|vinilo|lino|algod[oó]n)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GRADO_OPACIDAD",
+      "etiqueta": "Grado de Opacidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100% (Blackout), 75% (Opaco), 25% (Traslúcido)",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["100% Blackout", "75% Opaco", "50% Semi-opaco", "25% Traslúcido", "5% Screen"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Opacidad", "Opacity", "Blockout"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)%\\s*(bloqueo|blockout|opacidad)", "grupo": 0},
+          {"tipo": "PATRON", "patron": "\\b(blackout)\\b", "valorFijo": "100% Blackout"},
+          {"tipo": "PATRON", "patron": "\\b(sunscreen)\\b", "valorFijo": "5% Screen"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_INSTALACION",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Techo, Pared, Interior marco, Exterior marco",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": ["Techo", "Pared", "Interior marco", "Exterior marco", "Empotrado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Instalación", "Installation", "Mount"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(techo|pared|interior[-\\s]*marco|exterior[-\\s]*marco|empotrado)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["techo", "pared", "marco", "empotrado"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_CONTROL",
+      "etiqueta": "Sistema de Control",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Control remoto, App móvil, WiFi, Bluetooth",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Control", "Remote", "App"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(control\\s+remoto|app|wifi|bluetooth|smartphone)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSORES_INTEGRADOS",
+      "etiqueta": "Sensores Integrados",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Sensor luz, Sensor viento, Sensor lluvia",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Sensores", "Sensors", "Auto"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(sensor|sensores?)\\s*(luz|viento|lluvia|temperatura)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Fácil limpieza, Resistente agua, Antibacterial",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Special"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(f[aá]cil\\s+limpieza|resistente\\s+agua|antibacteriano)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_MOTOR",
+      "etiqueta": "Velocidad del Motor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 15 RPM, 20 RPM, Variable",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Velocidad", "Speed", "RPM"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(rpm|revoluciones)\\s*(motor|speed)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 25W, 50W, 100W, Bajo consumo",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Consumo", "Power", "Energy"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(w|watts?)\\s*(consumo|consumption)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NIVEL_RUIDO",
+      "etiqueta": "Nivel de Ruido",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 35dB, Silencioso, Ultra quiet",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ruido", "Noise", "Sound"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*db\\s*(ruido|noise|silencioso)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CICLOS_VIDA_MOTOR",
+      "etiqueta": "Ciclos de Vida del Motor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 50,000 ciclos, 100,000 ciclos",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ciclos", "Life Cycles", "Durability"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:,\\d{3})*)\\s*(ciclos|cycles)\\s*(vida|life)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARGA_MAXIMA",
+      "etiqueta": "Carga Máxima Soportada",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 5kg, 10kg, 15kg",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Carga", "Load", "Weight"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(carga\\s+m[aá]xima|max\\s+load)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION_USO",
+      "etiqueta": "Aplicación/Uso",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Residencial, Comercial, Oficina, Hospital",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Aplicación", "Application", "Use"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(residencial|comercial|oficina|hospital|hotel|restaurant)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "UBICACION_INSTALACION",
+      "etiqueta": "Ubicación de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Lab. Redes, Oficina, Sala, Dormitorio",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ubicación", "Location", "Room"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(lab\\.|laboratorio)\\s*([\\w\\s]+)", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "\\b(interior|exterior|sala|dormitorio|cocina)\\b", "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIER_MARCA",
+      "etiqueta": "Nivel de Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Tier1 Premium, Tier2 Profesional, Tier3 Comercial",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "opciones": ["Tier1 Premium", "Tier2 Profesional", "Tier3 Comercial", "Tier4 Económico"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "PATRON", "patron": "\\b(hunter[-\\s]*douglas|luxaflex|somfy|lutron)\\b", "valorFijo": "Tier1 Premium"},
+          {"tipo": "PATRON", "patron": "\\b(levolor|graber|bali|3m|kirsch)\\b", "valorFijo": "Tier2 Profesional"},
+          {"tipo": "PATRON", "patron": "\\b(arlo[-\\s]*blinds|chicology|achim|lotus)\\b", "valorFijo": "Tier3 Comercial"},
+          {"tipo": "PATRON", "patron": "\\b(generic|local|custom|oem)\\b", "valorFijo": "Tier4 Económico"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GARANTIA",
+      "etiqueta": "Garantía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1 año, 2 años, 5 años, Limitada",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Garantía", "Warranty", "Guarantee"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 4, 5",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(roller|cortina|persiana)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(roller|cortina|persiana)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Beige, Gris, Negro, Marrón",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(blanco|beige|gris|negro|marr[oó]n|antracita)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["blanco", "beige", "gris", "negro", "marron"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.75,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Roller motorizado 2.10x0.80 del inventario real",
+      "texto": "01 ROLLER MOTORIZADO DE 2.10 X 0.80MTS",
+      "extraccionEsperada": {
+        "TIPO_CORTINA": "ROLLER",
+        "MECANISMO_OPERACION": "MOTORIZADO",
+        "DIMENSIONES": "2.10 X 0.80MTS",
+        "ANCHO": "2.10",
+        "ALTO": "0.80",
+        "AREA_COBERTURA": "1.68",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Roller motorizado 2.02x1.22 del inventario real",
+      "texto": "01 ROLLER MOTORIZADO D E2.02 X 1.22 MTS",
+      "extraccionEsperada": {
+        "TIPO_CORTINA": "ROLLER",
+        "MECANISMO_OPERACION": "MOTORIZADO",
+        "DIMENSIONES": "2.02 X 1.22 MTS",
+        "ANCHO": "2.02",
+        "ALTO": "1.22",
+        "AREA_COBERTURA": "2.46",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 3: Cortina blackout motorizada con control remoto",
+      "texto": "02 Cortina Blackout motorizada Hunter Douglas 1.80x2.00m control remoto WiFi blanca",
+      "extraccionEsperada": {
+        "MARCA": "Hunter Douglas",
+        "TIPO_CORTINA": "Cortina",
+        "MATERIAL_TELA": ["Blackout"],
+        "MECANISMO_OPERACION": "Motorizada",
+        "DIMENSIONES": "1.80x2.00m",
+        "SISTEMA_CONTROL": ["Control remoto", "WiFi"],
+        "COLOR": "Blanca",
+        "TIER_MARCA": "Tier1 Premium",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Persiana vertical manual oficina",
+      "texto": "03 Persiana vertical manual Sunscreen 3.00x2.50m instalación techo oficina comercial gris",
+      "extraccionEsperada": {
+        "TIPO_CORTINA": "Persiana",
+        "MATERIAL_TELA": ["Sunscreen"],
+        "MECANISMO_OPERACION": "Manual",
+        "DIMENSIONES": "3.00x2.50m",
+        "ANCHO": "3.00",
+        "ALTO": "2.50",
+        "TIPO_INSTALACION": "Techo",
+        "APLICACION_USO": ["Comercial"],
+        "COLOR": "Gris",
+        "CANTIDAD": "3"
+      }
+    }
+  ]
+}

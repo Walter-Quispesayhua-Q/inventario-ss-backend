@@ -1,0 +1,934 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-UPS-2025-V1",
+    "version": "1.0",
+    "nombre": "UPS/Sistema de Alimentación Ininterrumpida",
+    "categoriaSemantica": "SISTEMA_ALIMENTACION",
+    "descripcion": "Plantilla ML de UPS - Maneja columna única, múltiples columnas e híbrido para sistemas de alimentación ininterrumpida"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_POTENCIA_VA",
+        "condicion": ".*\\b\\d+\\s*(va|VA|kva|KVA)\\b.*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró un patrón de potencia en VA"
+      },
+      {
+        "nombre": "BONUS_TIENE_VOLTAJE",
+        "condicion": ".*\\b\\d+\\s*(v|V|voltios?)\\b.*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró un patrón de voltaje"
+      },
+      {
+        "nombre": "BONUS_TIENE_BATERIA",
+        "condicion": ".*(bateria|battery|autonomia|backup).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró referencia a batería o autonomía"
+      },
+      {
+        "nombre": "BONUS_TIENE_FRECUENCIA",
+        "condicion": ".*\\b\\d+\\s*(hz|Hz|hertz)\\b.*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró un patrón de frecuencia"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "ups",
+          "sai",
+          "uninterruptible",
+          "alimentacion"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "backup",
+          "power",
+          "battery",
+          "bateria",
+          "nobreak"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "smart",
+          "interactivo",
+          "online",
+          "offline",
+          "line"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "respaldo",
+          "energia",
+          "electrico",
+          "proteccion"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "potencia": [
+        "va",
+        "kva",
+        "watts",
+        "w",
+        "1000va",
+        "1500va",
+        "3000va",
+        "6000va"
+      ],
+      "voltaje": [
+        "110v",
+        "220v",
+        "230v",
+        "120v",
+        "240v",
+        "entrada",
+        "salida"
+      ],
+      "frecuencia": [
+        "50hz",
+        "60hz",
+        "hertz",
+        "hz"
+      ],
+      "topologia": [
+        "online",
+        "offline",
+        "line-interactive",
+        "interactivo",
+        "doble"
+      ],
+      "conectividad": [
+        "usb",
+        "rs232",
+        "ethernet",
+        "snmp",
+        "lcd",
+        "led"
+      ],
+      "caracteristicas": [
+        "senoidal",
+        "pura",
+        "simulada",
+        "cuadrada",
+        "regulacion",
+        "avr"
+      ],
+      "bateria": [
+        "plomo",
+        "acido",
+        "litio",
+        "gel",
+        "sellada",
+        "12v",
+        "9ah",
+        "backup"
+      ],
+      "display": [
+        "lcd",
+        "led",
+        "pantalla",
+        "display",
+        "touch",
+        "touchscreen"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "apc",
+        "tripp",
+        "cyberpower",
+        "eaton",
+        "vertiv"
+      ],
+      "tier2": [
+        "liebert",
+        "emerson",
+        "delta",
+        "schneider",
+        "riello"
+      ],
+      "tier3": [
+        "sms",
+        "forza",
+        "cdp",
+        "omega",
+        "kstar"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "cpu",
+        "impresora",
+        "router",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "transformador",
+        "estabilizador",
+        "regulador",
+        "fuente",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "switch",
+        "servidor",
+        "laptop",
+        "tablet"
+      ],
+      "debil": [
+        "cable",
+        "adaptador",
+        "cargador",
+        "bateria"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "potencia_va": "(\\d+)\\s*(va|VA|kva|KVA)",
+      "potencia_watts": "(\\d+)\\s*(w|W|watts|WATTS)",
+      "voltaje_entrada": "(\\d+[-\\d]*)\\s*(v|V|voltios?)\\s*(entrada|input|in)",
+      "voltaje_salida": "(\\d+[-\\d]*)\\s*(v|V|voltios?)\\s*(salida|output|out)",
+      "frecuencia_entrada": "(\\d+)\\s*(hz|Hz|hertz)\\s*(entrada|input|in)?",
+      "frecuencia_salida": "(\\d+)\\s*(hz|Hz|hertz)\\s*(salida|output|out)",
+      "autonomia": "(\\d+)\\s*(min|minutos|horas|h)",
+      "bateria_tipo": "\\b(plomo|acido|litio|gel|sellada)\\b",
+      "dimensiones": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)"
+    },
+    "conectividad": {
+      "comunicacion": "\\b(usb|rs232|ethernet|snmp|rj45)\\b",
+      "pantalla": "\\b(lcd|led|display|pantalla|touch|touchscreen)\\b",
+      "conectores": "(\\d+)\\s*(tomas|outlets|conectores)"
+    },
+    "caracteristicas": {
+      "topologia": "\\b(online|offline|line-interactive|interactivo|doble)\\b",
+      "onda": "\\b(senoidal|pura|simulada|cuadrada)\\b",
+      "monofasico": "\\b(monofasico|trifasico|single|three)\\b",
+      "formato": "\\b(torre|rack|desktop|\\d+u)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: APC, Tripp Lite, CyberPower",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: PRO 1200, SMT3000T, 6000IRT5UXLN",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "[A-Z0-9]{3,}[\\w\\-]*"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA_VA",
+      "etiqueta": "Potencia (VA)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1200, 3000, 6000",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "validacion": {
+        "min": 300,
+        "max": 50000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "VA",
+              "Potencia",
+              "Power",
+              "KVA"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(va|VA|kva|KVA)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "de\\s+(\\d+)\\s*kva",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA_WATTS",
+      "etiqueta": "Potencia (Watts)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 720, 1800, 4200",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 200,
+        "max": 30000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Watts",
+              "W",
+              "Potencia Real"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(w|W|watts|WATTS)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_ENTRADA",
+      "etiqueta": "Voltaje de Entrada",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 230V, 110-120V, 220V",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje Entrada",
+              "Input Voltage",
+              "Entrada"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "entrada\\s+(\\d+[-\\d]*)\\s*v",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "voltaje.*entrada.*?(\\d+[-\\d]*)\\s*v",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+[-\\d]*)\\s*v\\s*(entrada|input)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_SALIDA",
+      "etiqueta": "Voltaje de Salida",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 220V, 110V, 230V",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje Salida",
+              "Output Voltage",
+              "Salida"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "salida\\s+(\\d+[-\\d]*)\\s*v",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "voltaje.*salida.*?(\\d+[-\\d]*)\\s*v",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+[-\\d]*)\\s*v\\s*(salida|output)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_ENTRADA",
+      "etiqueta": "Frecuencia de Entrada",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 50Hz, 60Hz, 50/60Hz",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia Entrada",
+              "Input Frequency",
+              "Freq In"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "entrada\\s+(\\d+[-/\\d]*)\\s*hz",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "frecuencia.*entrada.*?(\\d+[-/\\d]*)\\s*hz",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+[-/\\d]*)\\s*hz\\s*(entrada|input)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_SALIDA",
+      "etiqueta": "Frecuencia de Salida",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 50Hz, 60Hz, 50/60Hz",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia Salida",
+              "Output Frequency",
+              "Freq Out"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "salida\\s+(\\d+[-/\\d]*)\\s*hz",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "frecuencia.*salida.*?(\\d+[-/\\d]*)\\s*hz",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+[-/\\d]*)\\s*hz\\s*(salida|output)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TOPOLOGIA",
+      "etiqueta": "Topología",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Line Interactive, Online, Offline",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": [
+        "Line Interactive",
+        "Online",
+        "Offline",
+        "Standby"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Topologia",
+              "Topology",
+              "Tipo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(online|offline|line-interactive|interactivo)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "MAPEO",
+            "interactivo": "Line Interactive",
+            "linea": "Line Interactive"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AUTONOMIA",
+      "etiqueta": "Autonomía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10 min, 30 minutos, 1 hora",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Autonomia",
+              "Runtime",
+              "Backup",
+              "Tiempo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(min|minutos|horas|h)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_ONDA",
+      "etiqueta": "Tipo de Onda",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Senoidal Pura, Simulada, Cuadrada",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": [
+        "Senoidal Pura",
+        "Senoidal Simulada",
+        "Cuadrada",
+        "Modificada"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Onda",
+              "Wave",
+              "Senoidal"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(senoidal|pura|simulada|cuadrada)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, RS232, Ethernet, SNMP",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Puertos",
+              "Comunicacion"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(usb|rs232|ethernet|snmp|rj45)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISPLAY",
+      "etiqueta": "Tipo de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LCD, LED, Touchscreen, Ninguno",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "LCD",
+        "LED",
+        "Touchscreen",
+        "OLED",
+        "Ninguno"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Display",
+              "Pantalla",
+              "Screen"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(lcd|led|touchscreen|touch|oled|display|pantalla)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "lcd",
+              "led",
+              "touchscreen",
+              "oled",
+              "pantalla",
+              "display"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO",
+      "etiqueta": "Factor de Forma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Torre, Rack 1U, Desktop",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": [
+        "Torre",
+        "Rack",
+        "Desktop",
+        "Piso"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Formato",
+              "Form",
+              "Tipo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(torre|rack|desktop|\\d+u)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Gris, Beige",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "beige",
+              "plateado",
+              "black",
+              "white"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_TOMAS",
+      "etiqueta": "Número de Tomas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 4, 6, 8, 12",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 2,
+        "max": 32
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tomas",
+              "Outlets",
+              "Conectores"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(tomas|outlets|conectores)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (Alto x Ancho x Profundo)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 430 x 190 x 660 mm",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Medidas",
+              "Tamaño"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "dimensiones?[:\\s]+(\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: UPS con etiquetas completas",
+      "texto": "01 UPS Ma:APC Mo:PRO 1200 Se:3B1108X20111, rack pantalla LCD, tarjeta de red, cable RJ45 Satra, conectores RJ45, voltaje de entrada 230 V salida 220V 50Hz",
+      "extraccionEsperada": {
+        "MARCA": "APC",
+        "MODELO": "PRO 1200",
+        "NUMERO_SERIE": "3B1108X20111",
+        "POTENCIA_VA": "1200",
+        "VOLTAJE_ENTRADA": "230V",
+        "VOLTAJE_SALIDA": "220V",
+        "FRECUENCIA_SALIDA": "50Hz",
+        "DISPLAY": "LCD",
+        "CONECTIVIDAD": [
+          "LCD",
+          "RJ45",
+          "Ethernet"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 2: UPS en lenguaje natural",
+      "texto": "01 UPS SMART APC SMT 3000T, INTERACTIVO, 3000 VA SERIE:AS1417140354 entrada 220V 60Hz salida 220V pantalla touchscreen",
+      "extraccionEsperada": {
+        "MARCA": "APC",
+        "MODELO": "SMT 3000T",
+        "NUMERO_SERIE": "AS1417140354",
+        "POTENCIA_VA": "3000",
+        "TOPOLOGIA": "Line Interactive",
+        "VOLTAJE_ENTRADA": "220V",
+        "VOLTAJE_SALIDA": "220V",
+        "FRECUENCIA_ENTRADA": "60Hz",
+        "DISPLAY": "Touchscreen"
+      }
+    },
+    {
+      "nombre": "Caso 3: UPS monofásico de alta potencia",
+      "texto": "01 UPS MONOFASICO DE 6KVA Ma:LIEBERT-VERTIV-GAMA,Mo:6000IRT5UXLN INCLUYE TARJETA SNMP Y 4 BANCOS DE 16 BATERIAS DE 12V Y 9AH dimensiones 430 x 190 x 660 mm",
+      "extraccionEsperada": {
+        "MARCA": "LIEBERT-VERTIV-GAMA",
+        "MODELO": "6000IRT5UXLN",
+        "POTENCIA_VA": "6000",
+        "CONECTIVIDAD": [
+          "SNMP"
+        ],
+        "FORMATO": "Rack",
+        "DIMENSIONES": "430 x 190 x 660 mm"
+      }
+    }
+  ]
+}

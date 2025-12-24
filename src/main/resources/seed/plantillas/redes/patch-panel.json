@@ -1,0 +1,1321 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-PPL-2025-V1",
+    "version": "1.0",
+    "nombre": "PatchPanel",
+    "categoriaSemantica": "NETWORKING_PATCH_PANEL_PATCHERA_CABLEADO_ESTRUCTURADO",
+    "descripcion": "Plantilla ML de Patch Panel - Maneja columna única, múltiples columnas e híbrido para patch panels de 12, 24, 48 puertos y organizadores de rack"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_SATRA_PATCH_PANEL",
+        "condicion": ".*(ma\\s+satra.*patch\\s+panel|satra.*negro).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Patch Panel SATRA específico del inventario"
+      },
+      {
+        "nombre": "BONUS_SOPORTE_CISCO",
+        "condicion": ".*(soporte.*cisco|switch\\s+cisco).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró patch panel para soporte de Switch Cisco"
+      },
+      {
+        "nombre": "BONUS_24_PUERTOS",
+        "condicion": ".*(24\\s+puertos|switch\\s+de\\s+24).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró patch panel de 24 puertos específico"
+      },
+      {
+        "nombre": "BONUS_COLOR_NEGRO",
+        "condicion": ".*(color\\s+negro|negro\\s+patch).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró patch panel color negro"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "patch",
+          "panel",
+          "patchera",
+          "conexion",
+          "networking"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "satra",
+          "puertos",
+          "cisco",
+          "switch",
+          "rack"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "cat5e",
+          "cat6",
+          "rj45",
+          "cableado",
+          "organizador"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "structured",
+          "cabling",
+          "infrastructure",
+          "wiring"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": [
+        "satra",
+        "panduit",
+        "commscope",
+        "leviton",
+        "hubbell",
+        "belden"
+      ],
+      "tipos_patch": [
+        "patch-panel",
+        "patchera",
+        "organizador",
+        "panel-conexion"
+      ],
+      "puertos": [
+        "12-port",
+        "24-port",
+        "48-port",
+        "96-port"
+      ],
+      "categorias_cable": [
+        "cat5",
+        "cat5e",
+        "cat6",
+        "cat6a",
+        "cat7",
+        "cat8"
+      ],
+      "tipos_montaje": [
+        "19-inch",
+        "rack-mount",
+        "wall-mount",
+        "surface-mount"
+      ],
+      "unidades_rack": [
+        "1u",
+        "2u",
+        "3u",
+        "4u"
+      ],
+      "tipos_conexion": [
+        "rj45",
+        "rj11",
+        "keystone",
+        "lsa",
+        "110",
+        "krone"
+      ],
+      "blindajes": [
+        "stp",
+        "utp",
+        "ftp",
+        "sftp",
+        "blindado",
+        "unshielded"
+      ],
+      "aplicaciones": [
+        "datos",
+        "voz",
+        "video",
+        "cctv",
+        "networking"
+      ],
+      "compatibilidad": [
+        "cisco",
+        "hp",
+        "dell",
+        "generic",
+        "universal"
+      ],
+      "certificaciones": [
+        "ul",
+        "ce",
+        "rohs",
+        "tia",
+        "eia",
+        "iso11801"
+      ],
+      "colores": [
+        "negro",
+        "blanco",
+        "gris",
+        "azul",
+        "beige"
+      ],
+      "materiales": [
+        "metal",
+        "plastic",
+        "steel",
+        "aluminio",
+        "acero"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "satra",
+        "panduit",
+        "commscope",
+        "leviton",
+        "hubbell"
+      ],
+      "tier2": [
+        "belden",
+        "anixter",
+        "siemon",
+        "amp",
+        "molex"
+      ],
+      "tier3": [
+        "generic",
+        "no-brand",
+        "china",
+        "oem",
+        "local"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "cpu",
+        "laptop",
+        "impresora",
+        "procesador",
+        "microprocesador",
+        "processor",
+        "fuente de alimentacion",
+        "fuente alimentacion",
+        "power supply",
+        "psu",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "ryzen 3",
+        "ryzen 5",
+        "ryzen 7",
+        "ryzen 9"
+      ],
+      "fuerte": [
+        "pizarra",
+        "escritorio",
+        "silla",
+        "archivador",
+        "nucleos",
+        "cores",
+        "threads",
+        "hilos",
+        "ghz",
+        "socket",
+        "voltaje",
+        "corriente",
+        "watts"
+      ],
+      "media": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ],
+      "debil": [
+        "electronic",
+        "computer",
+        "digital",
+        "software"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(satra|panduit|commscope|leviton)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(pp\\d+|cp\\d+|nk\\d+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)|color\\s+([a-zA-Z]+)"
+    },
+    "especificaciones": {
+      "tipo_patch_panel": "\\b(patch\\s+panel|patchera|panel\\s+conexi[oó]n)\\b",
+      "marca_patch": "Ma\\s+([\\w\\-]+)",
+      "puertos_patch": "(\\d+)\\s*(puertos?|ports?|jacks?)\\s*(rj45|cat[56]a?)?",
+      "categoria_cable": "\\b(cat\\s*5|cat\\s*5e|cat\\s*6|cat\\s*6a|cat\\s*7|cat\\s*8)\\b",
+      "tipo_montaje": "\\b(19\\s*inch|rack|wall\\s+mount|surface)\\s*(mount|montaje)?",
+      "unidades_rack": "(\\d+)\\s*(u|ur|ru)\\s*(rack|altura|height)?",
+      "tipo_conexion": "\\b(rj45|rj11|keystone|lsa|110|krone)\\b",
+      "blindaje_patch": "\\b(stp|utp|ftp|sftp|blindado|unshielded|shielded)\\b",
+      "color_patch": "color\\s+([a-zA-Z]+)",
+      "material_patch": "\\b(metal|plastic|steel|aluminio|acero|abs)\\b",
+      "aplicacion_patch": "\\b(datos|voice|video|cctv|networking|data)\\b",
+      "compatibilidad_patch": "\\b(cisco|hp|dell|generic|universal)\\s*(compatible|compatibility)?",
+      "numeracion_puertos": "\\b(numerado|numbered|etiquetado|labeled|marcado)\\b",
+      "organizador_cables": "\\b(organizador|cable\\s+management|strain\\s+relief|guía)\\b",
+      "certificacion_patch": "\\b(ul|ce|rohs|tia|eia|iso11801|ansi)\\b",
+      "ancho_banda": "(\\d+)\\s*(mhz|ghz)\\s*(bandwidth|ancho\\s+banda)?",
+      "impedancia_patch": "(\\d+)\\s*(ohm|ω)\\s*(impedancia|impedance)?",
+      "contactos_dorados": "\\b(contactos\\s+dorados|gold\\s+plated|oro|plated)\\b",
+      "instalacion_patch": "\\b(frontal|rear|trasero|front)\\s*(instalaci[oó]n|mounting|access)?",
+      "estandar_patch": "\\b(t568a|t568b|straight|cross)\\s*(estandar|standard|wiring)?",
+      "poe_compatible": "\\b(poe|power\\s+over\\s+ethernet)\\s*(compatible|support)?",
+      "temperatura_patch": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "humedad_patch": "(\\d+)%\\s*(to|a)\\s*(\\d+)%\\s*(humedad|humidity)",
+      "vida_util": "(\\d+)\\s*(ciclos|insertions|mating|conexiones)\\s*(vida\\s+[uú]til|lifespan)?",
+      "dimensiones_patch": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|inch|cm)",
+      "peso_patch": "(\\d+(?:\\.\\d+)?)\\s*(kg|g|lb)\\s*(peso|weight)?",
+      "garantia_patch": "(\\d+)\\s*(a[ñn]os?|meses?|years?)\\s*(garant[ií]a|warranty)",
+      "soporte_switch": "\\b(soporte|support)\\s+(de\\s+)?(switch|cisco|hp|dell)",
+      "funcion_patch": "\\b(organizaci[oó]n|organization|management|administration)\\s*(conexiones|connections)?",
+      "instalacion_profesional": "\\b(instalaci[oó]n\\s+profesional|professional\\s+installation)\\b",
+      "cableado_estructurado": "\\b(cableado\\s+estructurado|structured\\s+cabling)\\b",
+      "configuracion_puertos": "\\b(configuraci[oó]n|configuration)\\s*(puertos|ports)",
+      "distribucion_horizontal": "\\b(distribuci[oó]n\\s+horizontal|horizontal\\s+distribution)\\b",
+      "panel_distribucion": "\\b(panel\\s+distribuci[oó]n|distribution\\s+panel)\\b",
+      "terminacion_cables": "\\b(terminaci[oó]n|termination)\\s*(cables|wiring)",
+      "conector_modular": "\\b(conector\\s+modular|modular\\s+connector|jack\\s+modular)\\b",
+      "densidad_puertos": "\\b(alta\\s+densidad|high\\s+density)\\s*(puertos|ports)?",
+      "faceplate": "\\b(faceplate|placa\\s+frontal|tapa\\s+frontal)\\b",
+      "keystone_jack": "\\b(keystone\\s+jack|jack\\s+keystone|conector\\s+keystone)\\b",
+      "punch_down": "\\b(punch\\s+down|punchdown|conexi[oó]n\\s+directa)\\b",
+      "cross_connect": "\\b(cross\\s+connect|conexi[oó]n\\s+cruzada|interconexion)\\b",
+      "cantidad": "(\\d{1,2})\\s*(patch\\s+panel|patchera)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: SATRA, Panduit, CommScope, Leviton, Hubbell",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(satra|panduit|commscope|leviton)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: PP24, CP48, NK24, DP24-UC",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(pp\\d+|cp\\d+|nk\\d+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_PUERTOS",
+      "etiqueta": "Número de Puertos",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 12, 24, 48, 96",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "validacion": {
+        "min": 4,
+        "max": 144
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Puertos",
+              "Ports",
+              "Jacks"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(puertos?|ports?|jacks?)\\s*(rj45|cat[56]a?)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CATEGORIA_CABLE",
+      "etiqueta": "Categoría de Cable",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: CAT5E, CAT6, CAT6A, CAT7",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "CAT5",
+        "CAT5E",
+        "CAT6",
+        "CAT6A",
+        "CAT7",
+        "CAT8"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Categoría",
+              "Category",
+              "Cable Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(cat\\s*5|cat\\s*5e|cat\\s*6|cat\\s*6a|cat\\s*7|cat\\s*8)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "cat5",
+              "cat5e",
+              "cat6",
+              "cat6a",
+              "cat7",
+              "cat8"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MONTAJE",
+      "etiqueta": "Tipo de Montaje",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 19 inch rack, Wall mount, Surface mount",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": [
+        "19 inch rack",
+        "Wall mount",
+        "Surface mount",
+        "Desktop"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Montaje",
+              "Mount",
+              "Installation"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(19\\s*inch|rack|wall\\s+mount|surface)\\s*(mount|montaje)?",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "rack",
+              "wall",
+              "mount",
+              "surface",
+              "desktop"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "UNIDADES_RACK",
+      "etiqueta": "Unidades de Rack (U)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 4",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Unidades",
+              "RU",
+              "Rack Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(u|ur|ru)\\s*(rack|altura|height)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CONEXION",
+      "etiqueta": "Tipo de Conexión",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: RJ45, RJ11, Keystone, LSA, 110",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conexión",
+              "Connection",
+              "Jack Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(rj45|rj11|keystone|lsa|110|krone)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BLINDAJE",
+      "etiqueta": "Tipo de Blindaje",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: UTP, STP, FTP, SFTP",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "UTP",
+        "STP",
+        "FTP",
+        "SFTP",
+        "Blindado",
+        "Unshielded"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Blindaje",
+              "Shielding",
+              "Shield"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(stp|utp|ftp|sftp|blindado|unshielded|shielded)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "stp",
+              "utp",
+              "ftp",
+              "sftp",
+              "blindado",
+              "unshielded"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL",
+      "etiqueta": "Material",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Metal, Plástico, Steel, Aluminio, ABS",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": [
+        "Metal",
+        "Plástico",
+        "Steel",
+        "Aluminio",
+        "ABS",
+        "Acero"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Material",
+              "Construction",
+              "Build"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(metal|plastic|steel|aluminio|acero|abs)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "metal",
+              "plastic",
+              "steel",
+              "aluminio",
+              "acero",
+              "abs"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION",
+      "etiqueta": "Aplicación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Datos, Voz, Video, CCTV, Networking",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aplicación",
+              "Application",
+              "Use"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(datos|voice|video|cctv|networking|data)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPATIBILIDAD",
+      "etiqueta": "Compatibilidad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Cisco, HP, Dell, Generic, Universal",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Compatibilidad",
+              "Compatibility",
+              "Compatible"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(cisco|hp|dell|generic|universal)\\s*(compatible|compatibility)?",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOPORTE_FUNCION",
+      "etiqueta": "Soporte/Función",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Soporte de Switch, Organización conexiones",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Función",
+              "Function",
+              "Purpose"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(soporte|support)\\s+(de\\s+)?(switch|cisco|hp|dell)",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(organizaci[oó]n|organization|management|administration)\\s*(conexiones|connections)?",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERACION_PUERTOS",
+      "etiqueta": "Numeración de Puertos",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Numerado, Etiquetado, Sin numerar",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "Numerado",
+        "Etiquetado",
+        "Marcado",
+        "Sin numerar"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Numeración",
+              "Numbering",
+              "Labeling"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(numerado|numbered|etiquetado|labeled|marcado)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "numerado",
+              "etiquetado",
+              "marcado",
+              "labeled"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ORGANIZACION_CABLES",
+      "etiqueta": "Organización de Cables",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Organizador incluido, Cable management, Strain relief",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Organización",
+              "Organization",
+              "Management"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(organizador|cable\\s+management|strain\\s+relief|guía)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "organizador",
+              "management",
+              "strain",
+              "relief",
+              "guia"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO_BANDA",
+      "etiqueta": "Ancho de Banda",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 250MHz, 500MHz, 1GHz",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Bandwidth",
+              "Ancho Banda",
+              "Frequency"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(mhz|ghz)\\s*(bandwidth|ancho\\s+banda)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "IMPEDANCIA",
+      "etiqueta": "Impedancia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100Ω, 120Ω, 75Ω",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Impedancia",
+              "Impedance",
+              "Ohm"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(ohm|ω)\\s*(impedancia|impedance)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONTACTOS_DORADOS",
+      "etiqueta": "Contactos Dorados",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Gold plated, Oro",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "opciones": [
+        "Sí",
+        "No",
+        "Gold plated",
+        "Oro",
+        "Plated"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Contactos",
+              "Gold",
+              "Plated"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(contactos\\s+dorados|gold\\s+plated|oro|plated)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "contactos",
+              "dorados",
+              "gold",
+              "plated",
+              "oro"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INSTALACION_TIPO",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Frontal, Trasero, Front access, Rear access",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "opciones": [
+        "Frontal",
+        "Trasero",
+        "Front access",
+        "Rear access"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Instalación",
+              "Installation",
+              "Access"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(frontal|rear|trasero|front)\\s*(instalaci[oó]n|mounting|access)?",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "frontal",
+              "rear",
+              "trasero",
+              "front",
+              "access"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESTANDAR_CABLEADO",
+      "etiqueta": "Estándar de Cableado",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: T568A, T568B, Straight, Cross",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Estándar",
+              "Standard",
+              "Wiring"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(t568a|t568b|straight|cross)\\s*(estandar|standard|wiring)?",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: UL, CE, RoHS, TIA, EIA, ISO11801",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Certificaciones",
+              "Certifications",
+              "Standards"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ul|ce|rohs|tia|eia|iso11801|ansi)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VIDA_UTIL_CONEXIONES",
+      "etiqueta": "Vida Útil de Conexiones",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 750 ciclos, 1000 insertions, 500 mating",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Vida Útil",
+              "Lifespan",
+              "Cycles"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(ciclos|insertions|mating|conexiones)\\s*(vida\\s+[uú]til|lifespan)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.5, 1.2, 2.5, 5.0",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "validacion": {
+        "min": 0.1,
+        "max": 20.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g|lb)\\s*(peso|weight)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GARANTIA",
+      "etiqueta": "Garantía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1 año, 2 años, 25 años",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Garantía",
+              "Warranty",
+              "Guarantee"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(a[ñn]os?|meses?|years?)\\s*(garant[ií]a|warranty)",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(patch\\s+panel|patchera)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(patch\\s+panel|patchera)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Azul, Beige",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "color\\s+([a-zA-Z]+)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "azul",
+              "beige"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Patch Panel SATRA del inventario real",
+      "texto": "1 PATCH PANEL Ma SATRA de color negro para soporte de SWitch Cisco",
+      "extraccionEsperada": {
+        "MARCA": "SATRA",
+        "COLOR": "negro",
+        "SOPORTE_FUNCION": "Soporte de Switch",
+        "COMPATIBILIDAD": [
+          "Cisco"
+        ],
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Patch Panel SATRA 24 puertos del inventario real",
+      "texto": "1 PATCH PANEL Ma SATRA de color negro para soporte de Switch de 24 puertos",
+      "extraccionEsperada": {
+        "MARCA": "SATRA",
+        "COLOR": "negro",
+        "NUMERO_PUERTOS": "24",
+        "SOPORTE_FUNCION": "Soporte de Switch",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 3: Patch Panel 48 puertos CAT6",
+      "texto": "02 Patch Panel Panduit 48 puertos CAT6 19 inch rack 2U RJ45 UTP",
+      "extraccionEsperada": {
+        "MARCA": "Panduit",
+        "NUMERO_PUERTOS": "48",
+        "CATEGORIA_CABLE": "CAT6",
+        "TIPO_MONTAJE": "19 inch rack",
+        "UNIDADES_RACK": "2",
+        "TIPO_CONEXION": [
+          "RJ45"
+        ],
+        "BLINDAJE": "UTP",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Patch Panel profesional con certificaciones",
+      "texto": "01 Panel conexión CommScope 24 port CAT6A 1U keystone gold plated UL CE TIA",
+      "extraccionEsperada": {
+        "MARCA": "CommScope",
+        "NUMERO_PUERTOS": "24",
+        "CATEGORIA_CABLE": "CAT6A",
+        "UNIDADES_RACK": "1",
+        "TIPO_CONEXION": [
+          "Keystone"
+        ],
+        "CONTACTOS_DORADOS": "Gold plated",
+        "CERTIFICACIONES": [
+          "UL",
+          "CE",
+          "TIA"
+        ]
+      }
+    }
+  ]
+}

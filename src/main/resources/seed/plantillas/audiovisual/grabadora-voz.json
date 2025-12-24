@@ -1,0 +1,593 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-VRC-2025-V1",
+    "version": "1.0",
+    "nombre": "GrabadoraVoz",
+    "categoriaSemantica": "AUDIO_GRABADORA_VOICE_RECORDER_DIGITAL",
+    "descripcion": "Plantilla ML de Grabadora de Voz - Maneja columna única, múltiples columnas e híbrido para grabadoras digitales, portátiles y profesionales"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_SONY_PX312F",
+        "condicion": ".*(sony.*modelo\\s+px312f|px312f.*port[aá]til).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Grabadora Sony PX312F específica del inventario"
+      },
+      {
+        "nombre": "BONUS_PORTATIL_2GB",
+        "condicion": ".*(port[aá]til.*cap.*2gb|2gb.*port[aá]til).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró grabadora portátil con capacidad 2GB"
+      },
+      {
+        "nombre": "BONUS_VOICE_RECORDER",
+        "condicion": ".*(grabadora\\s+de\\s+voz|voice\\s+recorder).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró tipo grabadora de voz específico"
+      },
+      {
+        "nombre": "BONUS_DIGITAL_RECORDING",
+        "condicion": ".*(grabaci[oó]n\\s+digital|digital\\s+recording|mp3|wav).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron características de grabación digital"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["grabadora", "voz", "voice", "recorder", "audio"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["sony", "portatil", "digital", "capacidad", "grabacion"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["mp3", "wav", "memoria", "bateria", "microfono"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["recording", "dictaphone", "memo", "notes"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": ["sony", "olympus", "zoom", "tascam", "philips", "panasonic"],
+      "tipos_grabadora": ["portatil", "digital", "analogica", "profesional", "mini", "pen"],
+      "capacidades": ["1gb", "2gb", "4gb", "8gb", "16gb", "32gb", "64gb", "128gb"],
+      "formatos_audio": ["mp3", "wav", "wma", "aac", "flac", "pcm", "ogg"],
+      "calidades": ["8khz", "16khz", "22khz", "44khz", "48khz", "96khz"],
+      "bits": ["8bit", "16bit", "24bit", "32bit"],
+      "conectividad": ["usb", "bluetooth", "wifi", "sd-card", "micro-sd"],
+      "pantallas": ["lcd", "led", "oled", "segment", "backlight"],
+      "baterias": ["aaa", "aa", "recargable", "litio", "nimh"],
+      "funciones": ["control-voz", "noise-reduction", "ecualizador", "variable-speed"],
+      "memorias": ["interna", "expandible", "sd", "micro-sd", "usb"],
+      "aplicaciones": ["entrevistas", "conferencias", "clases", "reuniones", "dictado"],
+      "tiempo_grabacion": ["1h", "2h", "4h", "8h", "50h", "100h", "572h"],
+      "sensibilidades": ["alta", "media", "baja", "ajustable"],
+      "filtros": ["low-cut", "noise-cancel", "wind-filter"]
+    },
+    "marcas": {
+      "tier1": ["sony", "olympus", "zoom", "tascam", "philips"],
+      "tier2": ["panasonic", "aiworth", "yemenren", "aomago", "eoqo"],
+      "tier3": ["generic", "no-brand", "china", "oem", "local"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["microfono", "altavoz", "speaker", "audifonos"],
+      "fuerte": ["pizarra", "ecran", "rotuladora", "impresora"],
+      "media": ["silla", "mesa", "escritorio", "archivador"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(sony|olympus|zoom|tascam)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(px\\d+[a-z]*|wm[-\\s]*\\d+|h\\d+n?)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_grabadora": "\\b(grabadora\\s+de\\s+voz|voice\\s+recorder|audio\\s+recorder|dictaphone)\\b",
+      "tipo_dispositivo": "\\b(port[aá]til|digital|anal[oó]gica|profesional|mini|pen)\\b",
+      "capacidad_almacenamiento": "cap\\.?\\s*(\\d+)\\s*(gb|mb|tb)",
+      "formato_audio": "\\b(mp3|wav|wma|aac|flac|pcm|ogg)\\b",
+      "calidad_grabacion": "\\b(\\d+)\\s*k?hz\\s*[/\\\\]?\\s*(\\d+)\\s*bit",
+      "tiempo_grabacion": "(\\d+)\\s*(horas?|hours?|minutos?|minutes?)\\s*(grabaci[oó]n|recording)",
+      "microfono_integrado": "\\b(micr[oó]fono\\s+integrado|built[-\\s]*in\\s+mic|stereo\\s+mic)\\b",
+      "conectividad_grabadora": "\\b(usb|bluetooth|wifi|sd\\s+card|micro\\s+sd)\\b",
+      "pantalla_grabadora": "\\b(pantalla|display|lcd|led|oled|backlight)\\b",
+      "bateria_grabadora": "(\\d+)\\s*mah\\s*(bateria|battery)?",
+      "tipo_bateria": "\\b(aaa|aa|recargable|litio|nimh)\\s*(bateria|battery)?",
+      "autonomia_grabadora": "(\\d+)\\s*(horas?|hours?)\\s*(autonom[ií]a|playback|uso)",
+      "funciones_grabadora": "\\b(control\\s+voz|voice\\s+activation|noise\\s+reduction|ecualizador|variable\\s+speed)\\b",
+      "peso_grabadora": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+      "dimensiones_grabadora": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "temperatura_operacion": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "memoria_expandible": "\\b(expandible|micro\\s*sd|sd\\s*card|memoria\\s*externa|hasta\\s*\\d+gb)\\b",
+      "sensibilidad_ajustable": "\\b(sensibilidad\\s+ajustable|alta|media|baja)\\s*(sensibilidad|sensitivity)?",
+      "filtros_audio": "\\b(low[-\\s]*cut|noise[-\\s]*cancel|wind[-\\s]*filter|filtro)\\b",
+      "velocidad_reproduccion": "\\b(variable\\s+speed|slow|fast|0\\.\\d+x|\\d+\\.\\d+x)\\b",
+      "marcadores": "\\b(marcadores|bookmarks|index|a[-\\s]*b\\s+repeat)\\b",
+      "carpetas": "\\b(carpetas|folders|\\d+\\s+carpetas)\\b",
+      "archivos_maximos": "(\\d+)\\s*(archivos|files)\\s*(m[aá]ximo|max)",
+      "activacion_voz": "\\b(activaci[oó]n\\s+por\\s+voz|voice\\s+activation|vox)\\b",
+      "grabacion_programada": "\\b(grabaci[oó]n\\s+programada|timer\\s+recording|scheduled)\\b",
+      "cantidad": "(\\d{1,2})\\s*(grabadora|voice\\s+recorder|audio\\s+recorder)",
+      "salida_audio": "\\b(auriculares|headphones|speaker\\s+integrado|line\\s+out)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sony, Olympus, Zoom, Tascam, Philips",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(sony|olympus|zoom|tascam)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: PX312F, WM-73, H4n Pro, DR-40X",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "modelo\\s+([\\w\\-\\d]+)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "\\b(px\\d+[a-z]*|wm[-\\s]*\\d+|h\\d+n?)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DISPOSITIVO",
+      "etiqueta": "Tipo de Dispositivo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Portátil, Digital, Profesional, Mini",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Portátil", "Digital", "Analógica", "Profesional", "Mini", "Pen"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Category"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(port[aá]til|digital|anal[oó]gica|profesional|mini|pen)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["portatil", "digital", "analogica", "profesional", "mini"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_ALMACENAMIENTO",
+      "etiqueta": "Capacidad de Almacenamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2GB, 4GB, 8GB, 16GB, 32GB",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Storage", "Memory"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "cap\\.?\\s*(\\d+)\\s*(gb|mb|tb)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO_AUDIO",
+      "etiqueta": "Formato de Audio",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: MP3, WAV, WMA, AAC, FLAC",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formato", "Audio Format", "Codec"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mp3|wav|wma|aac|flac|pcm|ogg)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CALIDAD_GRABACION",
+      "etiqueta": "Calidad de Grabación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 44kHz/16bit, 48kHz/24bit, 96kHz/24bit",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Calidad", "Quality", "Sample Rate"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(\\d+)\\s*k?hz\\s*[/\\\\]?\\s*(\\d+)\\s*bit", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIEMPO_GRABACION",
+      "etiqueta": "Tiempo de Grabación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4 horas, 50 horas, 572 horas",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tiempo", "Recording Time", "Duration"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(horas?|hours?|minutos?|minutes?)\\s*(grabaci[oó]n|recording)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MICROFONO_INTEGRADO",
+      "etiqueta": "Micrófono Integrado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Stereo, Mono, Omnidireccional, Direccional",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["Stereo", "Mono", "Omnidireccional", "Direccional", "Built-in"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Micrófono", "Microphone", "Mic"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(micr[oó]fono\\s+integrado|built[-\\s]*in\\s+mic|stereo\\s+mic)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["integrado", "built-in", "stereo", "mono"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, Bluetooth, WiFi, SD Card, Micro SD",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "Ports"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|bluetooth|wifi|sd\\s+card|micro\\s+sd)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PANTALLA",
+      "etiqueta": "Tipo de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LCD, LED, OLED, Backlight, Sin pantalla",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["LCD", "LED", "OLED", "Backlight", "7-Segment", "Sin pantalla"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Pantalla", "Display", "Screen"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(pantalla|display|lcd|led|oled|backlight)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["lcd", "led", "oled", "backlight", "pantalla"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BATERIA",
+      "etiqueta": "Capacidad de Batería (mAh)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 500, 1000, 1500, 2000",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 100,
+        "max": 10000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Batería", "Battery", "mAh"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*mah\\s*(bateria|battery)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_BATERIA",
+      "etiqueta": "Tipo de Batería",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: AAA, AA, Recargable, Litio, NiMH",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["AAA", "AA", "Recargable", "Litio", "NiMH"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo Batería", "Battery Type", "Power"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(aaa|aa|recargable|litio|nimh)\\s*(bateria|battery)?", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["aaa", "aa", "recargable", "litio", "nimh"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AUTONOMIA",
+      "etiqueta": "Autonomía (horas)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 8, 12, 24, 50, 100",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 1.0,
+        "max": 1000.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Autonomía", "Battery Life", "Usage"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(horas?|hours?)\\s*(autonom[ií]a|playback|uso)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES",
+      "etiqueta": "Funciones Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Control voz, Noise reduction, Ecualizador",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Funciones", "Features", "Functions"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(control\\s+voz|voice\\s+activation|noise\\s+reduction|ecualizador|variable\\s+speed)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (g)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 150, 200",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 20,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Mass"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_EXPANDIBLE",
+      "etiqueta": "Memoria Expandible",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Micro SD hasta 32GB, SD Card hasta 128GB",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Memoria Expandible", "Expandable", "SD"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(expandible|micro\\s*sd|sd\\s*card|memoria\\s*externa|hasta\\s*\\d+gb)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["expandible", "micro", "sd", "card", "externa"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSIBILIDAD",
+      "etiqueta": "Sensibilidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Alta, Media, Baja, Ajustable",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "opciones": ["Alta", "Media", "Baja", "Ajustable"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Sensibilidad", "Sensitivity", "Level"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(sensibilidad\\s+ajustable|alta|media|baja)\\s*(sensibilidad|sensitivity)?", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["alta", "media", "baja", "ajustable", "sensibilidad"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FILTROS_AUDIO",
+      "etiqueta": "Filtros de Audio",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Low-cut, Noise-cancel, Wind-filter",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Filtros", "Filters", "Audio Processing"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(low[-\\s]*cut|noise[-\\s]*cancel|wind[-\\s]*filter|filtro)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACTIVACION_VOZ",
+      "etiqueta": "Activación por Voz",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["VOX", "Voice Activation", "Auto Start"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(activaci[oó]n\\s+por\\s+voz|voice\\s+activation|vox)\\b", "booleano": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SALIDA_AUDIO",
+      "etiqueta": "Salida de Audio",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Auriculares, Speaker integrado, Line out",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Salida", "Output", "Audio Out"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(auriculares|headphones|speaker\\s+integrado|line\\s+out)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(grabadora|voice\\s+recorder|audio\\s+recorder)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(grabadora|voice\\s+recorder|audio\\s+recorder)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Plateado, Gris, Azul",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "plateado", "gris", "azul", "blanco"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Grabadora Sony del inventario real",
+      "texto": "01 Grabadora de Voz marca SONY modelo PX312F portátil cap. 2Gb",
+      "extraccionEsperada": {
+        "MARCA": "SONY",
+        "MODELO": "PX312F",
+        "TIPO_DISPOSITIVO": "Portátil",
+        "CAPACIDAD_ALMACENAMIENTO": "2GB",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Grabadora digital con MP3 y WAV",
+      "texto": "02 Grabadora digital Olympus WM-73 con MP3/WAV 8GB y pantalla LCD",
+      "extraccionEsperada": {
+        "MARCA": "Olympus",
+        "MODELO": "WM-73",
+        "TIPO_DISPOSITIVO": "Digital",
+        "FORMATO_AUDIO": ["MP3", "WAV"],
+        "CAPACIDAD_ALMACENAMIENTO": "8GB",
+        "PANTALLA": "LCD",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Grabadora profesional con funciones avanzadas",
+      "texto": "01 Voice recorder Zoom H4n Pro 44kHz/24bit con activación por voz y noise reduction",
+      "extraccionEsperada": {
+        "MARCA": "Zoom",
+        "MODELO": "H4n Pro",
+        "TIPO_DISPOSITIVO": "Profesional",
+        "CALIDAD_GRABACION": "44kHz/24bit",
+        "ACTIVACION_VOZ": true,
+        "FUNCIONES": ["Noise reduction"]
+      }
+    },
+    {
+      "nombre": "Caso 4: Grabadora con memoria expandible",
+      "texto": "01 Audio recorder Tascam DR-40X con SD card hasta 128GB y batería recargable",
+      "extraccionEsperada": {
+        "MARCA": "Tascam",
+        "MODELO": "DR-40X",
+        "MEMORIA_EXPANDIBLE": "SD card hasta 128GB",
+        "TIPO_BATERIA": "Recargable"
+      }
+    }
+  ]
+}

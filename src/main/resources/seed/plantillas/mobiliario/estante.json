@@ -1,0 +1,540 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SHF-2025-V1",
+    "version": "1.0",
+    "nombre": "Estante",
+    "categoriaSemantica": "MOBILIARIO_ESTANTE_ALMACENAMIENTO",
+    "descripcion": "Plantilla ML de estante - Maneja columna única, múltiples columnas e híbrido para estantería y almacenamiento"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_PARA_ARCHIVADORES",
+        "condicion": ".*(para\\s+archivadores|archivero|filing).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró estante específico para archivadores"
+      },
+      {
+        "nombre": "BONUS_MODELO_GERENCIAL",
+        "condicion": ".*(mo\\s+gerencial|modelo\\s+gerencial).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró modelo gerencial específico"
+      },
+      {
+        "nombre": "BONUS_NIVELES_ESPECIFICOS",
+        "condicion": ".*\\d+\\s*niveles?.*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró número específico de niveles"
+      },
+      {
+        "nombre": "BONUS_MELAMINA_GROSOR",
+        "condicion": ".*(melamina|melamine).*\\d+\\s*mm.*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró material melamina con grosor específico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["estante", "shelf", "estanteria", "shelving", "repisas"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["archivadores", "biblioteca", "almacenamiento", "abierto", "cerrado"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["niveles", "puertas", "divisiones", "cantonera", "melamina"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["mobiliario", "furniture", "storage", "organizacion"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["para-archivadores", "abierto", "cerrado", "biblioteca", "almacen", "modular", "industrial"],
+      "modelos": ["gerencial", "ejecutivo", "bibliotecario", "industrial", "estandar"],
+      "materiales": ["melamina", "melamine", "maf", "madera", "metal", "acero", "mdf"],
+      "acabados": ["nogal", "haya", "chocolate", "cedro", "blanco", "natural", "enchapado"],
+      "componentes": ["niveles", "repisas", "puertas", "divisiones", "cantonera", "tableros"],
+      "grosores": ["18mm", "25mm", "15mm", "20mm", "30mm"],
+      "caracteristicas": ["ajustable", "fijo", "modular", "desmontable", "reforzado"],
+      "usos": ["oficina", "biblioteca", "archivo", "almacen", "hogar", "industrial"],
+      "marcas_mobiliario": ["steelcase", "herman-miller", "teknion", "global", "haworth"],
+      "medidas_estandar": ["0.90x0.30x2.00", "1.80x0.80", "2.30x1.00x0.32"]
+    },
+    "marcas": {
+      "tier1": ["steelcase", "herman-miller", "teknion", "haworth", "global"],
+      "tier2": ["kimball", "hon", "knoll", "humanscale", "okamura"],
+      "tier3": ["ikea", "office-depot", "staples", "sauder", "bush"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["silla", "mesa", "escritorio", "archivador"],
+      "fuerte": ["monitor", "cpu", "impresora", "scanner"],
+      "media": ["sofa", "cama", "armario", "closet"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(steelcase|herman-miller|teknion)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(gerencial|ejecutivo|bibliotecario|industrial)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_estante": "\\b(estante|shelf|estanteria|shelving)\\s*(para\\s+)?(archivadores|biblioteca|almacenamiento)?\\b",
+      "configuracion": "\\b(abierto|cerrado|semi[-\\s]*cerrado|modular|ajustable)\\b",
+      "material_principal": "\\b(melamina|melamine|maf|madera|metal|acero|mdf)\\b",
+      "grosor_material": "(\\d+)\\s*(mm|cms?)\\s*(melamina|melamine|madera|grosor|espesor)",
+      "acabado_color": "\\b(nogal|haya|chocolate|cedro|blanco|natural|enchapado|roble)\\s*(oscuro|claro)?\\b",
+      "niveles_repisas": "(\\d+)\\s*niveles?",
+      "numero_puertas": "(\\d+)\\s*puertas?\\s*(superiores?|inferiores?|laterales?)?",
+      "divisiones": "(\\d+)\\s*divisiones?",
+      "cantonera": "\\b(cantonera|borde|canto)\\s*(gruesa|delgada|\\d+mm)?\\b",
+      "cantidad": "(\\d{1,2})\\s*(estante|estantes|shelf)",
+      "dimensiones_estante": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:mx|cms?\\.?|cm|m|x)\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:mx|cms?\\.?|cm|m|x)?\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)?",
+      "largo_estante": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(largo|length|de\\s+largo)",
+      "ancho_estante": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(ancho|width|de\\s+ancho)",
+      "alto_estante": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(alto|height|de\\s+alto)",
+      "capacidad_peso": "(\\d+)\\s*(kg|kilogramos?)\\s*(por\\s+nivel|total|capacidad)",
+      "ubicacion_puertas": "\\b(nivel\\s+inferior|nivel\\s+superior|laterales|frontales)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Steelcase, Herman Miller, Nacional",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(steelcase|herman-miller|teknion)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Gerencial, Ejecutivo, Bibliotecario",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(gerencial|ejecutivo|bibliotecario|industrial)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_ESTANTE",
+      "etiqueta": "Tipo de Estante",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Para archivadores, Abierto, Biblioteca",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Para archivadores", "Abierto", "Cerrado", "Biblioteca", "Almacén", "Modular", "Industrial"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Uso"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(estante|shelf)\\s*(para\\s+)?(archivadores|biblioteca|almacenamiento|abierto|cerrado)?\\b", "grupo": 3, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["para", "archivadores", "abierto", "cerrado", "biblioteca", "almacen"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONFIGURACION",
+      "etiqueta": "Configuración",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Abierto, Cerrado, Semi-cerrado, Modular",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Abierto", "Cerrado", "Semi-cerrado", "Modular", "Ajustable", "Fijo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Configuración", "Configuration", "Setup"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(abierto|cerrado|semi[-\\s]*cerrado|modular|ajustable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["abierto", "cerrado", "modular", "ajustable", "fijo"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_PRINCIPAL",
+      "etiqueta": "Material Principal",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Melamina, MAF, Madera, Metal",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Melamina", "MAF", "Madera", "Metal", "Acero", "MDF"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Materials", "Superficie"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(melamina|melamine|maf|madera|metal|acero|mdf)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["melamina", "melamine", "maf", "madera", "metal", "acero"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GROSOR_MATERIAL",
+      "etiqueta": "Grosor del Material (mm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 15, 18, 25, 30",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 10,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Grosor", "Thickness", "mm"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(mm|cms?)\\s*(melamina|melamine|madera|grosor|espesor)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACABADO_COLOR",
+      "etiqueta": "Acabado/Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Nogal oscuro, Haya, Chocolate, Cedro",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["Nogal oscuro", "Haya", "Chocolate", "Cedro", "Blanco", "Natural", "Roble"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Acabado", "Color", "Finish"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(nogal|haya|chocolate|cedro|blanco|natural|enchapado|roble)\\s*(oscuro|claro)?\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["nogal", "haya", "chocolate", "cedro", "blanco", "natural"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_NIVELES",
+      "etiqueta": "Número de Niveles",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 3, 4, 5, 6",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Niveles", "Shelves", "Repisas"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*niveles?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_PUERTAS",
+      "etiqueta": "Número de Puertas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 0, 2, 3, 4",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 0,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Puertas", "Doors", "Gates"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*puertas?\\s*(superiores?|inferiores?|laterales?)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "UBICACION_PUERTAS",
+      "etiqueta": "Ubicación de Puertas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Nivel inferior, Nivel superior, Laterales",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Nivel inferior", "Nivel superior", "Laterales", "Frontales", "Mixtas"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ubicación Puertas", "Door Location"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(nivel\\s+inferior|nivel\\s+superior|laterales|frontales)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["nivel", "inferior", "superior", "laterales", "frontales"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_DIVISIONES",
+      "etiqueta": "Número de Divisiones",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 0, 4, 6, 8",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 0,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Divisiones", "Dividers", "Separators"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*divisiones?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTONERA",
+      "etiqueta": "Cantonera",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Gruesa, Delgada, Con cantonera, Sin cantonera",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Gruesa", "Delgada", "Con cantonera", "Sin cantonera", "2mm", "3mm"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantonera", "Edge", "Borde"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cantonera|borde|canto)\\s*(gruesa|delgada|\\d+mm)?\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["cantonera", "gruesa", "delgada", "borde", "canto"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(estante|estantes|shelf)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(estante|estantes|shelf)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LARGO",
+      "etiqueta": "Largo (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 90, 180, 230",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 30,
+        "max": 400
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Largo", "Length", "Long"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(largo|length|de\\s+largo)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho/Profundidad (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 30, 48, 80, 100",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 20,
+        "max": 150
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Profundidad"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(ancho|width|de\\s+ancho)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTO",
+      "etiqueta": "Alto (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 170, 200, 250",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 80,
+        "max": 300
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alto", "Height", "High"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)\\s*(alto|height|de\\s+alto)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0.90mx0.30mx2.00m, 2.30x1.00x0.32",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:mx|cms?\\.?|cm|m|x)\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:mx|cms?\\.?|cm|m|x)?\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:mx|cms?\\.?|cm|m)?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_PESO",
+      "etiqueta": "Capacidad de Peso (kg)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 150 por nivel",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 20,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Weight", "Peso Max"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(kg|kilogramos?)\\s*(por\\s+nivel|total|capacidad)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Nogal oscuro, Chocolate, Haya, Cedro",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["nogal", "chocolate", "haya", "cedro", "blanco", "natural"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Estante para archivadores del inventario real",
+      "texto": "01 Estante para archivadores de melamina color nogal oscuro Mo Gerencial 18mm con cantonera gruesa 0.90mx0.30mx2.00m 5 niveles y 2 puertas en nivel inferior",
+      "extraccionEsperada": {
+        "MODELO": "Gerencial",
+        "TIPO_ESTANTE": "Para archivadores",
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "GROSOR_MATERIAL": "18",
+        "ACABADO_COLOR": "Nogal oscuro",
+        "CANTONERA": "Gruesa",
+        "DIMENSIONES": "0.90mx0.30mx2.00m",
+        "NUMERO_NIVELES": "5",
+        "NUMERO_PUERTAS": "2",
+        "UBICACION_PUERTAS": "Nivel inferior"
+      }
+    },
+    {
+      "nombre": "Caso 2: Estante abierto del inventario real",
+      "texto": "01 Estante abierto 1,80cm. X 0,80cm. De color chocolate melamina modular",
+      "extraccionEsperada": {
+        "CONFIGURACION": "Abierto",
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "ACABADO_COLOR": "Chocolate",
+        "LARGO": "180",
+        "ANCHO": "80"
+      }
+    },
+    {
+      "nombre": "Caso 3: Estante con divisiones del inventario real",
+      "texto": "Estante de melamine de 2.30cm x 1.00cm x 0.32 Color chocolate con 3 puertas inferiores y 6 divisiones",
+      "extraccionEsperada": {
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "ACABADO_COLOR": "Chocolate",
+        "DIMENSIONES": "2.30cm x 1.00cm x 0.32",
+        "NUMERO_PUERTAS": "3",
+        "UBICACION_PUERTAS": "Inferiores",
+        "NUMERO_DIVISIONES": "6"
+      }
+    }
+  ]
+}

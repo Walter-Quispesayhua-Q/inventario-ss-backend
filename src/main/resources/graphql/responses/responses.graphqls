@@ -1,0 +1,132 @@
+"""
+Niveles de notificación para respuestas de operaciones.
+Útil para que el frontend muestre alertas con colores apropiados.
+"""
+enum NivelNotificacion {
+    INFO
+    SUCCESS
+    WARNING
+    ERROR
+}
+
+"""
+Respuesta estándar para operaciones sobre bienes.
+"""
+type OperacionResultadoBien {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: BienDTO
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones sobre usuarios.
+"""
+type OperacionResultadoUsuario {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: UsuarioDTO
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones de login.
+"""
+type OperacionResultadoLoginUsuario {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: UsuarioLoginResponseDTO
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones sobre categorías.
+"""
+type OperacionResultadoCategoria {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: CategoriaDTO
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones de auditoría.
+"""
+type OperacionResultadoAuditoria {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: RegistroActividadDTO
+    timestamp: DateTime!
+}
+
+"""
+Respuesta genérica para operaciones sin tipo específico.
+"""
+type OperacionResultadoGenerico {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: JSON
+    timestamp: DateTime!
+}
+
+"""
+Respuesta para operaciones que retornan un valor booleano.
+"""
+type OperacionResultadoBoolean {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: Boolean
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones sobre edificios.
+"""
+type OperacionResultadoEdificio {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: Edificio
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones sobre pisos.
+"""
+type OperacionResultadoPiso {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: Piso
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones sobre ambientes.
+"""
+type OperacionResultadoAmbiente {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: Ambiente
+    timestamp: DateTime!
+}
+
+"""
+Respuesta estándar para operaciones sobre estaciones.
+"""
+type OperacionResultadoEstacion {
+    exito: Boolean!
+    mensaje: String!
+    nivel: NivelNotificacion!
+    data: Estacion
+    timestamp: DateTime!
+}
+

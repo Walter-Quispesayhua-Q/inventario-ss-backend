@@ -1,0 +1,648 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SBR-2025-V1",
+    "version": "1.0",
+    "nombre": "Soundbar",
+    "categoriaSemantica": "AUDIO_SOUNDBAR_SOUND_BAR_SPEAKER_SYSTEM",
+    "descripcion": "Plantilla ML de Soundbar - Maneja columna única, múltiples columnas e híbrido para barras de sonido, sistemas de audio y altavoces para TV"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_SAMSUNG_HW_M360",
+        "condicion": ".*(ma\\s+samsung.*mo\\s+hw[-\\s]*m360|samsung.*hw[-\\s]*m360).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Soundbar Samsung HW-M360 específico del inventario"
+      },
+      {
+        "nombre": "BONUS_SERIE_0CFQ14MM100714",
+        "condicion": ".*(se\\s+0cfq14mm100714|0cfq14mm100714).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró serie específica del inventario"
+      },
+      {
+        "nombre": "BONUS_SOUNDBAR_SAMSUNG",
+        "condicion": ".*(soundbar\\s+samsung|samsung.*soundbar).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró combinación Soundbar Samsung"
+      },
+      {
+        "nombre": "BONUS_BARRA_SONIDO",
+        "condicion": ".*(barra\\s+de\\s+sonido|sound\\s+bar).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró término barra de sonido específico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["soundbar", "sound", "bar", "barra", "sonido"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["samsung", "audio", "altavoz", "speaker", "sistema"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["bluetooth", "wireless", "hdmi", "tv", "subwoofer"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["entertainment", "home", "theater", "cinema"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": ["samsung", "lg", "sony", "bose", "jbl", "yamaha"],
+      "tipos_soundbar": ["soundbar", "sound-bar", "barra-sonido", "speaker-bar"],
+      "potencias": ["50w", "100w", "150w", "200w", "300w", "500w"],
+      "canales": ["2.0", "2.1", "3.1", "5.1", "7.1", "9.1"],
+      "conectividad": ["bluetooth", "wifi", "hdmi", "optical", "usb", "aux", "nfc"],
+      "subwoofers": ["subwoofer", "inalambrico", "integrado", "externo"],
+      "dolby": ["dolby-digital", "dolby-atmos", "dts", "dts-x"],
+      "montaje": ["pared", "mesa", "wall-mount", "table"],
+      "controles": ["control-remoto", "app", "voice-control", "alexa", "google"],
+      "modos": ["movie", "music", "voice", "game", "sport", "news", "night"],
+      "codecs": ["aac", "sbc", "aptx", "ldac", "mp3", "wav"],
+      "versiones_bluetooth": ["4.0", "4.2", "5.0", "5.1", "5.2"],
+      "puertos": ["hdmi-arc", "hdmi-earc", "optical", "usb", "aux", "rca"],
+      "dimensiones": ["compacto", "slim", "grande", "pequeño", "mini"],
+      "colores": ["negro", "blanco", "gris", "plateado"]
+    },
+    "marcas": {
+      "tier1": ["samsung", "lg", "sony", "bose", "jbl"],
+      "tier2": ["yamaha", "philips", "panasonic", "harman-kardon", "pioneer"],
+      "tier3": ["generic", "no-brand", "china", "oem", "local"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["microfono", "grabadora", "audifonos", "headphones"],
+      "fuerte": ["pizarra", "ecran", "rotuladora", "impresora"],
+      "media": ["silla", "mesa", "escritorio", "archivador"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(samsung|lg|sony|bose|jbl)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(hw[-\\s]*[a-z]?\\d+|las[-\\s]*\\d+|ht[-\\s]*\\w+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_soundbar": "\\b(soundbar|sound\\s+bar|barra\\s+de\\s+sonido|speaker\\s+bar)\\b",
+      "potencia_soundbar": "(\\d+)\\s*w\\s*(potencia|power|rms|total)?",
+      "canales_audio": "(\\d+)[\\.,](\\d+)\\s*(canales?|channels?|ch)",
+      "conectividad_soundbar": "\\b(bluetooth|wifi|hdmi|optical|usb|aux|nfc|wireless)\\b",
+      "subwoofer": "\\b(subwoofer|sub\\s*woofer|graves|bass)\\b",
+      "subwoofer_tipo": "\\b(inal[aá]mbrico|wireless|integrado|built[-\\s]*in|externo|external)\\s*(subwoofer|sub)?",
+      "dolby_support": "\\b(dolby\\s+digital|dolby\\s+atmos|dts|dts[-\\s]*x)\\b",
+      "respuesta_freq_soundbar": "(\\d+)\\s*hz\\s*[-–]\\s*(\\d+)\\s*k?hz",
+      "dimensiones_soundbar": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "peso_soundbar": "(\\d+(?:\\.\\d+)?)\\s*kg\\s*(peso|weight)?",
+      "control_remoto_soundbar": "\\b(control\\s+remoto|remote\\s+control)\\b",
+      "montaje_soundbar": "\\b(pared|wall\\s+mount|mesa|table|soporte)\\b",
+      "led_display": "\\b(display|led|pantalla|indicadores)\\b",
+      "modos_sonido": "\\b(movie|music|voice|game|sport|news|night|modo)\\b",
+      "codec_audio": "\\b(aac|sbc|aptx|ldac|mp3|wav|codec)\\b",
+      "version_bluetooth": "bluetooth\\s+(\\d+\\.\\d+|\\d+)",
+      "alcance_bluetooth": "(\\d+)\\s*m\\s*(alcance|range|bluetooth)",
+      "consumo_soundbar": "(\\d+(?:\\.\\d+)?)\\s*w\\s*(consumo|consumption|standby)?",
+      "voltaje_soundbar": "(\\d+)\\s*v\\s*(voltaje|voltage|input)?",
+      "puertos_entrada": "\\b(hdmi\\s+arc|hdmi\\s+earc|optical|toslink|aux|rca|line\\s+in)\\b",
+      "hdmi_version": "hdmi\\s+(\\d+\\.\\d+|arc|earc)",
+      "ecualizador": "\\b(ecualizador|equalizer|eq|bass|treble)\\b",
+      "control_voz": "\\b(alexa|google\\s+assistant|voice\\s+control|control\\s+voz)\\b",
+      "app_control": "\\b(app|aplicaci[oó]n|smartphone|mobile)\\s*(control|app)?",
+      "certificaciones_soundbar": "\\b(ce|fcc|rohs|energy\\s+star)\\b",
+      "garantia_soundbar": "(\\d+)\\s*(a[ñn]os?|years?)\\s*(garant[ií]a|warranty)",
+      "cantidad": "(\\d{1,2})\\s*(soundbar|sound\\s+bar|barra\\s+de\\s+sonido)",
+      "temperatura_soundbar": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Samsung, LG, Sony, Bose, JBL",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(samsung|lg|sony|bose|jbl)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: HW-M360, LAS-650, HT-S350, SoundLink",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(hw[-\\s]*[a-z]?\\d+|las[-\\s]*\\d+|ht[-\\s]*\\w+)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SOUNDBAR",
+      "etiqueta": "Tipo de Soundbar",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Soundbar, Barra de sonido, Speaker Bar",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Soundbar", "Barra de sonido", "Speaker Bar", "Sound Bar"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Category"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(soundbar|sound\\s+bar|barra\\s+de\\s+sonido|speaker\\s+bar)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["soundbar", "sound", "bar", "barra", "sonido"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA",
+      "etiqueta": "Potencia (W)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 150, 200, 300, 500",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 10,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Potencia", "Power", "Watts"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*w\\s*(potencia|power|rms|total)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANALES",
+      "etiqueta": "Canales de Audio",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2.0, 2.1, 3.1, 5.1, 7.1",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["2.0", "2.1", "3.1", "5.1", "7.1", "9.1"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Canales", "Channels", "Audio"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)[\\.,](\\d+)\\s*(canales?|channels?|ch)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Bluetooth, WiFi, HDMI, Optical, USB",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "Connections"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(bluetooth|wifi|hdmi|optical|usb|aux|nfc|wireless)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SUBWOOFER",
+      "etiqueta": "Subwoofer",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Integrado, Inalámbrico, Externo, Sin subwoofer",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["Integrado", "Inalámbrico", "Externo", "Built-in", "Sin subwoofer"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Subwoofer", "Bass", "Woofer"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(subwoofer|sub\\s*woofer|graves|bass)\\b", "mayusculas": true},
+          {"tipo": "PATRON", "patron": "\\b(inal[aá]mbrico|wireless|integrado|built[-\\s]*in|externo|external)\\s*(subwoofer|sub)?", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["subwoofer", "graves", "bass", "integrado", "inalambrico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DOLBY_SUPPORT",
+      "etiqueta": "Soporte Dolby/DTS",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Dolby Digital, Dolby Atmos, DTS, DTS-X",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dolby", "DTS", "Audio Support"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(dolby\\s+digital|dolby\\s+atmos|dts|dts[-\\s]*x)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESPUESTA_FRECUENCIA",
+      "etiqueta": "Respuesta de Frecuencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 20Hz-20kHz, 40Hz-18kHz, 60Hz-20kHz",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Respuesta", "Frequency Response", "Range"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*hz\\s*[-–]\\s*(\\d+)\\s*k?hz", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1.5, 2.0, 3.5, 5.0",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 0.5,
+        "max": 20.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Mass"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*kg\\s*(peso|weight)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONTROL_REMOTO",
+      "etiqueta": "Control Remoto",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Control Remoto", "Remote", "Control"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(control\\s+remoto|remote\\s+control)\\b", "booleano": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MONTAJE",
+      "etiqueta": "Tipo de Montaje",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Pared, Mesa, Wall mount, Table",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Montaje", "Mounting", "Installation"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(pared|wall\\s+mount|mesa|table|soporte)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISPLAY",
+      "etiqueta": "Display/Indicadores",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LED, Pantalla, Indicadores, Sin display",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": ["LED", "Pantalla", "Indicadores", "OLED", "Sin display"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Display", "Pantalla", "LED"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(display|led|pantalla|indicadores)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["led", "display", "pantalla", "indicadores"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODOS_SONIDO",
+      "etiqueta": "Modos de Sonido",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Movie, Music, Voice, Game, Sport, News",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modos", "Sound Modes", "Audio Modes"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(movie|music|voice|game|sport|news|night|modo)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VERSION_BLUETOOTH",
+      "etiqueta": "Versión Bluetooth",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4.0, 4.2, 5.0, 5.1, 5.2",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": ["4.0", "4.2", "5.0", "5.1", "5.2"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Bluetooth", "BT Version", "Wireless"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "bluetooth\\s+(\\d+\\.\\d+|\\d+)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALCANCE_BLUETOOTH",
+      "etiqueta": "Alcance Bluetooth (m)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 10, 15, 30, 50",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 5,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alcance", "Range", "Distance"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*m\\s*(alcance|range|bluetooth)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_ENTRADA",
+      "etiqueta": "Puertos de Entrada",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HDMI ARC, Optical, AUX, RCA, Line in",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Puertos", "Inputs", "Connections"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(hdmi\\s+arc|hdmi\\s+earc|optical|toslink|aux|rca|line\\s+in)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CODECSAUDIO",
+      "etiqueta": "Códecs de Audio",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: AAC, SBC, aptX, LDAC, MP3, WAV",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Códecs", "Codecs", "Audio Format"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(aac|sbc|aptx|ldac|mp3|wav|codec)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONTROL_VOZ",
+      "etiqueta": "Control por Voz",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Alexa, Google Assistant, Control voz",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Control Voz", "Voice Control", "Assistant"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(alexa|google\\s+assistant|voice\\s+control|control\\s+voz)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APP_CONTROL",
+      "etiqueta": "Control por App",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["App", "Mobile App", "Smartphone"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(app|aplicaci[oó]n|smartphone|mobile)\\s*(control|app)?", "booleano": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO",
+      "etiqueta": "Consumo de Energía (W)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 15, 25, 35, 50",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "validacion": {
+        "min": 5.0,
+        "max": 200.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Consumo", "Power Consumption", "Energy"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*w\\s*(consumo|consumption|standby)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE",
+      "etiqueta": "Voltaje (V)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 110, 220, 240",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "validacion": {
+        "min": 100,
+        "max": 250
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Voltaje", "Voltage", "Input"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*v\\s*(voltaje|voltage|input)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, FCC, RoHS, Energy Star",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ce|fcc|rohs|energy\\s+star)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(soundbar|sound\\s+bar|barra\\s+de\\s+sonido)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(soundbar|sound\\s+bar|barra\\s+de\\s+sonido)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Plateado",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "plateado", "azul"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Soundbar Samsung del inventario real",
+      "texto": "01 Soundbar Ma SAMSUNG Mo HW-M360 Se 0CFQ14MM100714",
+      "extraccionEsperada": {
+        "MARCA": "SAMSUNG",
+        "MODELO": "HW-M360",
+        "TIPO_SOUNDBAR": "Soundbar",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Soundbar LG con especificaciones completas",
+      "texto": "01 Soundbar LG LAS-650 200W 2.1 con subwoofer inalámbrico Bluetooth 5.0",
+      "extraccionEsperada": {
+        "MARCA": "LG",
+        "MODELO": "LAS-650",
+        "POTENCIA": "200",
+        "CANALES": "2.1",
+        "SUBWOOFER": "Inalámbrico",
+        "CONECTIVIDAD": ["Bluetooth"],
+        "VERSION_BLUETOOTH": "5.0"
+      }
+    },
+    {
+      "nombre": "Caso 3: Soundbar Sony con Dolby Atmos",
+      "texto": "02 Sound bar Sony HT-S350 320W con Dolby Digital y control remoto",
+      "extraccionEsperada": {
+        "MARCA": "Sony",
+        "MODELO": "HT-S350",
+        "POTENCIA": "320",
+        "DOLBY_SUPPORT": ["Dolby Digital"],
+        "CONTROL_REMOTO": true,
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Barra de sonido con múltiples conexiones",
+      "texto": "01 Barra de sonido Bose 150W con HDMI ARC, Optical, Bluetooth y montaje pared",
+      "extraccionEsperada": {
+        "MARCA": "Bose",
+        "TIPO_SOUNDBAR": "Barra de sonido",
+        "POTENCIA": "150",
+        "PUERTOS_ENTRADA": ["HDMI ARC", "Optical"],
+        "CONECTIVIDAD": ["Bluetooth"],
+        "MONTAJE": ["Pared"]
+      }
+    }
+  ]
+}

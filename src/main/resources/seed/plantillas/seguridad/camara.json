@@ -1,0 +1,554 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-CAM-2025-V1",
+    "version": "1.0",
+    "nombre": "Cámara",
+    "categoriaSemantica": "DISPOSITIVO_CAPTURA_CAMARA",
+    "descripcion": "Plantilla ML de cámara - Maneja columna única, múltiples columnas e híbrido para dispositivos de captura de imagen y video"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_RESOLUCION_ESPECIFICA",
+        "condicion": ".*(hd|4k|1080p|720p|2k|8k|megapixel).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró resolución específica de la cámara"
+      },
+      {
+        "nombre": "BONUS_CONECTIVIDAD",
+        "condicion": ".*(wifi|ip|usb|bluetooth|wireless).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró tipo de conectividad específica"
+      },
+      {
+        "nombre": "BONUS_CARACTERISTICAS_ESPECIALES",
+        "condicion": ".*(dia.*noche|zoom|lente|profesional|security).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontraron características especiales de cámara"
+      },
+      {
+        "nombre": "BONUS_MARCA_CONOCIDA",
+        "condicion": ".*(olympus|canon|nikon|sony|logitech|yahboom).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró marca conocida de cámaras"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["camara", "camera", "cam", "webcam"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["video", "foto", "imagen", "captura", "recording", "hd", "4k"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["lente", "zoom", "megapixel", "resolution", "wifi", "ip"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["digital", "optico", "sensor", "ccd", "cmos"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["webcam", "ip", "security", "profesional", "digital", "analogica", "action", "drone"],
+      "resoluciones": ["hd", "4k", "2k", "8k", "1080p", "720p", "480p", "4mp", "2mp", "megapixel"],
+      "conectividad": ["wifi", "ip", "usb", "usb-c", "ethernet", "bluetooth", "wireless", "poe"],
+      "lentes": ["4mm", "6mm", "8mm", "12mm", "zoom", "fijo", "varifocal", "fisheye", "wide"],
+      "caracteristicas": ["dia", "noche", "infrared", "ir", "motion", "detection", "ptz", "dome", "bullet"],
+      "formatos": ["mp4", "avi", "jpeg", "h264", "h265", "mjpeg"],
+      "marcas_comunes": ["olympus", "canon", "nikon", "sony", "logitech", "yahboom", "hikvision", "dahua"],
+      "sensores": ["ccd", "cmos", "sony", "omnivision", "aptina"],
+      "modelos_especificos": ["tg-610", "c8w", "jetbot"]
+    },
+    "marcas": {
+      "tier1": ["canon", "nikon", "sony", "olympus", "panasonic"],
+      "tier2": ["logitech", "microsoft", "creative", "razer", "asus"],
+      "tier3": ["yahboom", "generic", "no-brand", "oem", "hikvision"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "pantalla", "display", "proyector"],
+      "fuerte": ["impresora", "scanner", "disco", "memoria"],
+      "media": ["cable", "adaptador", "tripode", "soporte"],
+      "debil": ["usb", "video", "digital", "optico"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(olympus|canon|nikon|sony|logitech|yahboom|hikvision)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(tg-\\d+|c\\d+w|jetbot)\\b|MoIP\\s+(\\w+)|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "tipo_camara": "\\b(camara|camera|webcam|ip\\s+camera|security\\s+camera)\\b",
+      "resolucion_hd": "\\b(hd|4k|2k|8k|1080p|720p|480p)\\b",
+      "megapixeles": "(\\d+(?:\\.\\d+)?)\\s*(mp|megapixel|megapixeles)",
+      "lente_focal": "(\\d+)\\s*mm\\s*(lente|lens|focal)",
+      "zoom_optico": "(\\d+)\\s*x\\s*(zoom|optico|optical)",
+      "conectividad": "\\b(wifi|ip|usb|usb[-\\s]*c|ethernet|bluetooth|wireless|poe)\\b",
+      "caracteristicas_vision": "\\b(dia.*noche|day.*night|infrared|ir|motion|detection)\\b",
+      "tipo_instalacion": "\\b(dome|bullet|ptz|fisheye|cube|turret)\\b",
+      "formato_video": "\\b(mp4|avi|h264|h265|mjpeg)\\b",
+      "sensor_tipo": "\\b(ccd|cmos|sony|omnivision|aptina)\\b",
+      "angulo_vision": "(\\d+)\\s*°?\\s*(grados?|degrees?|fov|angulo)",
+      "iluminacion_ir": "(\\d+)\\s*(m|metros?)\\s*(ir|infrared|night)",
+      "almacenamiento": "\\b(sd|microsd|cloud|nvr|local)\\b",
+      "alimentacion": "\\b(poe|12v|24v|usb|battery|bateria)\\b",
+      "temperatura": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c",
+      "dimensiones": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm)",
+      "peso": "(\\d+(?:\\.\\d+)?)\\s*(g|gramos?|kg|kilogramos?)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Olympus, Canon, Sony, Logitech, Yahboom",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(olympus|canon|nikon|sony|logitech|yahboom|hikvision)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: TG-610, IP C8W, Jetbot AI, EOS 5D",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(tg-\\d+|c\\d+w|jetbot)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "MoIP\\s+(\\w+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CAMARA",
+      "etiqueta": "Tipo de Cámara",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Webcam, IP Camera, Security, Profesional",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Webcam", "IP Camera", "Security", "Profesional", "Action", "Drone", "Digital", "Módulo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Categoria"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(webcam|ip\\s+camera|security\\s+camera|profesional|action|drone|digital|modulo)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["webcam", "ip", "security", "profesional", "action", "digital"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_VIDEO",
+      "etiqueta": "Resolución de Video",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: HD, 4K, 1080p, 720p",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["HD", "4K", "2K", "8K", "1080p", "720p", "480p"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Resolución", "Resolution", "Quality"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(hd|4k|2k|8k|1080p|720p|480p)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["hd", "4k", "1080p", "720p", "2k", "8k"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEGAPIXELES",
+      "etiqueta": "Megapíxeles",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.0, 4.0, 12.1, 24.2",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 0.3,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Megapíxeles", "MP", "Pixels"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(mp|megapixel|megapixeles)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LENTE",
+      "etiqueta": "Lente/Focal",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4mm, 6mm fijo, 2.8-12mm varifocal",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Lente", "Lens", "Focal"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*mm\\s*(lente|lens|focal)", "grupo": 0},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?[-~]\\d+(?:\\.\\d+)?)\\s*mm", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ZOOM",
+      "etiqueta": "Zoom Óptico/Digital",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10x óptico, 4x digital, Sin zoom",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Zoom", "Optical Zoom", "Digital Zoom"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(zoom|optico|optical|digital)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WiFi, USB, Ethernet, IP",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connection", "Interface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(wifi|ip|usb|usb[-\\s]*c|ethernet|bluetooth|wireless|poe)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VISION_NOCTURNA",
+      "etiqueta": "Visión Nocturna",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Día y Noche, IR 20m",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": ["Sí", "No", "Día y Noche", "Infrared", "IR LED"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Visión Nocturna", "Night Vision", "IR"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(dia.*noche|day.*night|infrared|ir|night)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["dia", "noche", "infrared", "ir", "night", "vision"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANGULO_VISION",
+      "etiqueta": "Ángulo de Visión",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 90, 120, 180",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 30,
+        "max": 360
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ángulo", "FOV", "Field of View"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*°?\\s*(grados?|degrees?|fov|angulo)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DETECTOR_MOVIMIENTO",
+      "etiqueta": "Detector de Movimiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, PIR, Smart Detection",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": ["Sí", "No", "PIR", "Smart Detection", "AI Motion"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Motion", "Detección", "Movement"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(motion|detection|pir|smart|ai)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["motion", "detection", "pir", "smart", "movimento"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_INSTALACION",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Dome, Bullet, PTZ, Desktop",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Dome", "Bullet", "PTZ", "Cube", "Turret", "Desktop", "Módulo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Instalación", "Mount", "Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(dome|bullet|ptz|fisheye|cube|turret|desktop|modulo)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["dome", "bullet", "ptz", "cube", "desktop"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO_VIDEO",
+      "etiqueta": "Formato de Video",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: MP4, AVI, H.264, MJPEG",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formato", "Video Format", "Codec"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mp4|avi|h264|h265|mjpeg)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSOR",
+      "etiqueta": "Tipo de Sensor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: CMOS, CCD, Sony IMX, OmniVision",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": ["CMOS", "CCD", "Sony IMX", "OmniVision", "Aptina"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Sensor", "Image Sensor", "CCD"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ccd|cmos|sony|omnivision|aptina)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ccd", "cmos", "sony", "omnivision", "aptina"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALMACENAMIENTO",
+      "etiqueta": "Almacenamiento",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: MicroSD, Cloud, NVR, Local",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Almacenamiento", "Storage", "Recording"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(sd|microsd|cloud|nvr|local|ftp)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: PoE, 12V DC, USB, Batería",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "opciones": ["PoE", "12V DC", "24V AC", "USB", "Batería", "Solar"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alimentación", "Power", "Supply"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(poe|12v|24v|usb|battery|bateria|solar)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["poe", "12v", "24v", "usb", "battery", "bateria"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: -10°C a 50°C, 0°C a 40°C",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Temperature", "Operating"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 85 x 85 x 25 mm",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.18, 0.35, 0.65",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 0.05,
+        "max": 2.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Kg"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(g|gramos?|kg|kilogramos?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Plata",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w]+)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "plata", "dorado", "azul"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Cámara IP del inventario real",
+      "texto": "02 CAMARA MoIP C8W CON WIFI LENTE 4MM DIA Y NOCHE HD 1080p seguridad",
+      "extraccionEsperada": {
+        "MODELO": "IP C8W",
+        "TIPO_CAMARA": "IP Camera",
+        "CONECTIVIDAD": ["WiFi", "IP"],
+        "LENTE": "4MM",
+        "VISION_NOCTURNA": "Día y Noche",
+        "RESOLUCION_VIDEO": "HD"
+      }
+    },
+    {
+      "nombre": "Caso 2: Cámara Olympus del inventario real",
+      "texto": "01 Cámara Ma Olympus Mo TG-610 con su cargador digital profesional 12MP USB",
+      "extraccionEsperada": {
+        "MARCA": "Olympus",
+        "MODELO": "TG-610",
+        "TIPO_CAMARA": "Profesional",
+        "MEGAPIXELES": "12.0",
+        "CONECTIVIDAD": ["USB"]
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "Sony",
+        "Modelo": "Alpha A7III",
+        "Tipo": "Profesional",
+        "Resolución": "4K",
+        "Megapíxeles": "24.2",
+        "Lente": "28-70mm",
+        "Zoom": "Sin zoom",
+        "Conectividad": "USB-C, WiFi",
+        "Visión Nocturna": "No",
+        "Sensor": "CMOS",
+        "Formato": "MP4, JPEG",
+        "Peso": "0.65kg",
+        "Color": "Negro"
+      },
+      "extraccionEsperada": {
+        "MARCA": "Sony",
+        "MODELO": "Alpha A7III",
+        "TIPO_CAMARA": "Profesional",
+        "RESOLUCION_VIDEO": "4K",
+        "MEGAPIXELES": "24.2",
+        "LENTE": "28-70mm",
+        "ZOOM": "Sin zoom",
+        "CONECTIVIDAD": ["USB-C", "WiFi"],
+        "VISION_NOCTURNA": "No",
+        "SENSOR": "CMOS",
+        "FORMATO_VIDEO": ["MP4", "JPEG"],
+        "PESO": "0.65",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

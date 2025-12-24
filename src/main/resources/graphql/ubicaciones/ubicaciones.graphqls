@@ -1,0 +1,45 @@
+"""
+Ubicación física para almacenamiento de bienes.
+Sistema legacy que se mantiene por compatibilidad con datos históricos.
+"""
+type UbicacionDTO {
+    id: ID!
+    nombreUbicacion: String!
+    descripcion: String
+    edificio: String
+    piso: String
+    oficinaAmbiente: String
+}
+
+"""
+Datos para crear una nueva ubicación.
+"""
+input UbicacionCreacionInput {
+    nombreSimple: String
+    edificio: String
+    piso: String
+    oficinaAmbiente: String
+    descripcion: String
+}
+
+"""
+Datos para actualizar una ubicación existente.
+"""
+input UbicacionActualizacionInput {
+    descripcion: String
+    edificio: String
+    piso: String
+    oficinaAmbiente: String
+}
+
+extend type Query {
+    """
+    Obtiene todas las ubicaciones del sistema.
+    """
+    ubicaciones: [UbicacionDTO!]!
+    
+    """
+    Obtiene una ubicación específica por su ID.
+    """
+    ubicacionPorId(id: ID!): UbicacionDTO
+}

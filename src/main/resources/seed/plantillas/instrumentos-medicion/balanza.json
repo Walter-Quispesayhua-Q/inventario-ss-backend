@@ -1,0 +1,1224 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-BAL-2025-V1",
+    "version": "1.0",
+    "nombre": "Balanza",
+    "categoriaSemantica": "EQUIPOS_BALANZA_SCALE_PESO_PRECISION",
+    "descripcion": "Plantilla ML de Balanza - Maneja columna única, múltiples columnas e híbrido para balanzas digitales, analógicas, de pie y precisión"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_SOEHNLE_BLANCO",
+        "condicion": ".*(mr\\s+soehnle.*color\\s+blanco|soehnle.*blanco).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Balanza Soehnle color blanco específica del inventario"
+      },
+      {
+        "nombre": "BONUS_LUXXE_PESAS_100GRS",
+        "condicion": ".*(mr\\s+luxxe.*cap.*100grs|luxxe.*100grs.*pesas).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró Balanza Luxxe con pesas 100grs específica"
+      },
+      {
+        "nombre": "BONUS_SCALE_ELECTRONIC_TH1000",
+        "condicion": ".*(mr\\s+scale\\s+electronic.*mo\\s+th1000|scale.*th1000).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró Balanza Scale Electronic TH1000 específica"
+      },
+      {
+        "nombre": "BONUS_BALANZA_PIE_DIGITAL",
+        "condicion": ".*(balanza\\s+de\\s+pie|balanza\\s+digital|digital.*balanza).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró balanza de pie o digital"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "balanza",
+          "scale",
+          "peso",
+          "bascula",
+          "digital"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "soehnle",
+          "luxxe",
+          "electronic",
+          "precision",
+          "pesas"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "capacidad",
+          "gramos",
+          "kilos",
+          "plataforma",
+          "lcd"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "weighing",
+          "measurement",
+          "calibration",
+          "commercial"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": [
+        "soehnle",
+        "luxxe",
+        "scale-electronic",
+        "ohaus",
+        "sartorius",
+        "mettler"
+      ],
+      "tipos_balanza": [
+        "digital",
+        "analogica",
+        "de-pie",
+        "precision",
+        "comercial",
+        "industrial"
+      ],
+      "capacidades": [
+        "100g",
+        "500g",
+        "1kg",
+        "2kg",
+        "5kg",
+        "10kg",
+        "20kg",
+        "50kg"
+      ],
+      "precisiones": [
+        "0.1g",
+        "0.01g",
+        "0.001g",
+        "1g",
+        "5g",
+        "10g"
+      ],
+      "unidades": [
+        "g",
+        "kg",
+        "lb",
+        "oz",
+        "mg",
+        "ct",
+        "dwt"
+      ],
+      "pantallas": [
+        "lcd",
+        "led",
+        "digital",
+        "analogica",
+        "backlight"
+      ],
+      "funciones": [
+        "tara",
+        "cero",
+        "pesaje",
+        "conteo",
+        "porcentaje",
+        "acumulacion"
+      ],
+      "conectividad": [
+        "rs232",
+        "usb",
+        "ethernet",
+        "bluetooth",
+        "wifi"
+      ],
+      "alimentacion": [
+        "bateria",
+        "adaptador",
+        "220v",
+        "110v",
+        "pilas-aa",
+        "pilas-aaa"
+      ],
+      "plataformas": [
+        "acero-inoxidable",
+        "aluminio",
+        "plastico",
+        "vidrio"
+      ],
+      "aplicaciones": [
+        "comercial",
+        "industrial",
+        "laboratorio",
+        "cocina",
+        "personal"
+      ],
+      "certificaciones": [
+        "ce",
+        "rohs",
+        "iso",
+        "haccp",
+        "oiml",
+        "ntep"
+      ],
+      "colores": [
+        "blanco",
+        "negro",
+        "plomo",
+        "plateado",
+        "gris"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "soehnle",
+        "ohaus",
+        "sartorius",
+        "mettler-toledo",
+        "adam"
+      ],
+      "tier2": [
+        "luxxe",
+        "scale-electronic",
+        "kern",
+        "and",
+        "cas"
+      ],
+      "tier3": [
+        "generic",
+        "no-brand",
+        "china",
+        "oem",
+        "local"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "cpu",
+        "laptop",
+        "impresora",
+        "procesador",
+        "microprocesador",
+        "processor",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "ryzen",
+        "intel",
+        "amd",
+        "osciloscopio"
+      ],
+      "fuerte": [
+        "pizarra",
+        "escritorio",
+        "silla",
+        "archivador",
+        "nucleos",
+        "cores",
+        "threads",
+        "hilos",
+        "socket",
+        "ghz"
+      ],
+      "media": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ],
+      "debil": [
+        "computer",
+        "software"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|Mr\\s+([\\w\\s\\-]+)|\\b(soehnle|ohaus|sartorius)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se|$)|\\b(th\\d+|es\\d+|scout\\d+)\\b",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)|color\\s+([a-zA-Z]+)"
+    },
+    "especificaciones": {
+      "tipo_balanza": "\\b(balanza|scale|peso|bascula)\\b",
+      "subtipo_balanza": "\\b(digital|anal[oó]gica|de\\s+pie|precisi[oó]n|comercial|industrial|personal)\\b",
+      "marca_balanza": "Mr\\s+([\\w\\s\\-]+)",
+      "modelo_balanza": "Mo\\s+([\\w\\-\\d\\s]+?)(?=\\s+Se|$)",
+      "serie_balanza": "Se\\s*([A-Z0-9\\-]+)",
+      "capacidad_balanza": "cap\\.\\s*(\\d+(?:\\.\\d+)?)\\s*(grs?|kg|g|lb|oz)(?:\\s|\\.|$)",
+      "precision_balanza": "precisi[oó]n\\s+(\\d+(?:\\.\\d+)?)\\s*(g|mg|kg)",
+      "unidades_medida": "\\b(g|kg|lb|oz|mg|ct|dwt)\\b",
+      "pantalla_balanza": "\\b(lcd|led|digital|anal[oó]gica|backlight)\\s*(pantalla|display)?",
+      "calibracion_balanza": "\\b(calibraci[oó]n\\s+externa|interna|autom[aá]tica|manual)\\b",
+      "funciones_balanza": "\\b(tara|cero|pesaje|conteo|porcentaje|acumulaci[oó]n)\\b",
+      "conectividad_balanza": "\\b(rs232|usb|ethernet|bluetooth|wifi|serial)\\b",
+      "alimentacion_balanza": "\\b(bater[ií]a|adaptador|220v|110v|pilas|aa|aaa)\\b",
+      "plataforma_balanza": "\\b(acero\\s+inoxidable|aluminio|pl[aá]stico|vidrio)\\s*(plataforma|platform)?",
+      "tamaño_plataforma": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm|inch)\\s*(plataforma|platform)?",
+      "color_balanza": "color\\s+([a-zA-Z]+)",
+      "uso_balanza": "\\b(comercial|industrial|laboratorio|cocina|personal|m[eé]dico)\\b",
+      "pesas_incluidas": "(\\d+)\\s+pesas",
+      "rango_pesaje": "(\\d+(?:\\.\\d+)?)\\s*(g|kg)\\s*(to|a|hasta)\\s*(\\d+(?:\\.\\d+)?)\\s*(g|kg)",
+      "estabilizacion_balanza": "(\\d+)\\s*(segundos?|seg)\\s*(estabilizaci[oó]n|stabilization)",
+      "temperatura_balanza": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "humedad_balanza": "(\\d+)%\\s*(to|a)\\s*(\\d+)%\\s*(humedad|humidity)",
+      "certificaciones_balanza": "\\b(ce|rohs|iso|haccp|oiml|ntep|gmp)\\b",
+      "garantia_balanza": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)",
+      "dimensiones_balanza": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "peso_balanza": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+      "linealidad": "(\\d+(?:\\.\\d+)?)\\s*(g|mg)\\s*(linealidad|linearity)",
+      "repetibilidad": "(\\d+(?:\\.\\d+)?)\\s*(g|mg)\\s*(repetibilidad|repeatability)",
+      "tiempo_respuesta": "(\\d+(?:\\.\\d+)?)\\s*(segundos?|seg|s)\\s*(respuesta|response)",
+      "deriva": "(\\d+(?:\\.\\d+)?)\\s*(g|mg)\\s*(h|hora)\\s*(deriva|drift)",
+      "carga_minima": "(\\d+(?:\\.\\d+)?)\\s*(g|mg)\\s*(m[ií]nima|minimum)",
+      "interfaz_balanza": "\\b(rs232|usb|ethernet|paralelo|serie)\\b",
+      "software_balanza": "\\b(software|driver|sdk|application)\\s*(incluido|included)?",
+      "montaje_balanza": "\\b(mesa|wall\\s+mount|soporte|tr[ií]pode)\\b",
+      "proteccion_balanza": "\\b(ip\\d+|waterproof|dustproof|hermetic)\\b",
+      "cantidad": "(\\d{1,2})\\s*(balanza|scale|bascula)",
+      "aprobacion": "\\b(aprobada|approved|certified|legal\\s+for\\s+trade)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Soehnle, Luxxe, Scale Electronic, Ohaus",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma",
+              "Mr"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mr\\s+([\\w\\s\\-]+)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(soehnle|ohaus|sartorius)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: TH1000, ES2000, Scout Pro, PWC",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se|$)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(th\\d+|es\\d+|scout\\d+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_BALANZA",
+      "etiqueta": "Tipo de Balanza",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Digital, Analógica, De pie, Precisión, Comercial",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Digital",
+        "Analógica",
+        "De pie",
+        "Precisión",
+        "Comercial",
+        "Industrial",
+        "Personal"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(digital|anal[oó]gica|de\\s+pie|precisi[oó]n|comercial|industrial|personal)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "digital",
+              "analogica",
+              "pie",
+              "precision",
+              "comercial"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD",
+      "etiqueta": "Capacidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100grs, 1kg, 5kg, 20kg",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Capacidad",
+              "Capacity",
+              "Max"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "cap\\.\\s*(\\d+(?:\\.\\d+)?)\\s*(grs?|kg|g|lb|oz)(?:\\s|\\.|$)",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PRECISION",
+      "etiqueta": "Precisión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0.1g, 0.01g, 0.001g, 1g",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Precisión",
+              "Precision",
+              "Resolution"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "precisi[oó]n\\s+(\\d+(?:\\.\\d+)?)\\s*(g|mg|kg)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "UNIDADES_MEDIDA",
+      "etiqueta": "Unidades de Medida",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: g, kg, lb, oz, mg, ct",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Unidades",
+              "Units",
+              "Measure"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(g|kg|lb|oz|mg|ct|dwt)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PANTALLA",
+      "etiqueta": "Tipo de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LCD, LED, Digital, Analógica, Backlight",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": [
+        "LCD",
+        "LED",
+        "Digital",
+        "Analógica",
+        "Backlight",
+        "Sin pantalla"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pantalla",
+              "Display",
+              "Screen"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(lcd|led|digital|anal[oó]gica|backlight)\\s*(pantalla|display)?",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "lcd",
+              "led",
+              "digital",
+              "analogica",
+              "backlight"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES",
+      "etiqueta": "Funciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Tara, Cero, Pesaje, Conteo, Porcentaje",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Funciones",
+              "Functions",
+              "Features"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(tara|cero|pesaje|conteo|porcentaje|acumulaci[oó]n)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: RS232, USB, Ethernet, Bluetooth, WiFi",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Interface"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(rs232|usb|ethernet|bluetooth|wifi|serial)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Batería, Adaptador, 220V, 110V, Pilas AA",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "Batería",
+        "Adaptador",
+        "220V",
+        "110V",
+        "Pilas AA",
+        "Pilas AAA"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Alimentación",
+              "Power",
+              "Supply"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(bater[ií]a|adaptador|220v|110v|pilas|aa|aaa)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "bateria",
+              "adaptador",
+              "220v",
+              "110v",
+              "pilas"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_PLATAFORMA",
+      "etiqueta": "Material de la Plataforma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Acero inoxidable, Aluminio, Plástico, Vidrio",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": [
+        "Acero inoxidable",
+        "Aluminio",
+        "Plástico",
+        "Vidrio",
+        "ABS"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Plataforma",
+              "Platform",
+              "Material"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(acero\\s+inoxidable|aluminio|pl[aá]stico|vidrio)\\s*(plataforma|platform)?",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "acero",
+              "inoxidable",
+              "aluminio",
+              "plastico",
+              "vidrio"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMANO_PLATAFORMA",
+      "etiqueta": "Tamaño de Plataforma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 200x200mm, 300x400mm, 500x400mm",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tamaño",
+              "Size",
+              "Platform Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm|inch)\\s*(plataforma|platform)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_APLICACION",
+      "etiqueta": "Uso/Aplicación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Comercial, Industrial, Laboratorio, Cocina, Personal",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Uso",
+              "Application",
+              "Purpose"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(comercial|industrial|laboratorio|cocina|personal|m[eé]dico)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESAS_INCLUIDAS",
+      "etiqueta": "Pesas Incluidas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2, 4, 6, 8 pesas",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pesas",
+              "Weights",
+              "Calibration"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s+pesas",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CALIBRACION",
+      "etiqueta": "Tipo de Calibración",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Externa, Interna, Automática, Manual",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": [
+        "Externa",
+        "Interna",
+        "Automática",
+        "Manual"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Calibración",
+              "Calibration",
+              "Cal"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(calibraci[oó]n\\s+externa|interna|autom[aá]tica|manual)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "externa",
+              "interna",
+              "automatica",
+              "manual",
+              "calibracion"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO_EQUIPO",
+      "etiqueta": "Peso del Equipo (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.5, 5.0, 10.5, 15.0",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 1.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso Equipo",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_TEMPERATURA",
+      "etiqueta": "Rango de Temperatura (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: -10°C a 40°C, 0°C a 50°C",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Temperatura",
+              "Temperature",
+              "Operating"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, RoHS, ISO, HACCP, OIML, NTEP",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Certificaciones",
+              "Certifications",
+              "Standards"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ce|rohs|iso|haccp|oiml|ntep|gmp)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIEMPO_ESTABILIZACION",
+      "etiqueta": "Tiempo de Estabilización",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2 segundos, 5 segundos, 10 segundos",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Estabilización",
+              "Stabilization",
+              "Response"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(segundos?|seg)\\s*(estabilizaci[oó]n|stabilization)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GARANTIA",
+      "etiqueta": "Garantía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1 año, 2 años, 3 años",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Garantía",
+              "Warranty",
+              "Guarantee"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MONTAJE",
+      "etiqueta": "Tipo de Montaje",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Mesa, Wall mount, Soporte, Trípode",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "opciones": [
+        "Mesa",
+        "Wall mount",
+        "Soporte",
+        "Trípode",
+        "Empotrado"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Montaje",
+              "Mounting",
+              "Installation"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(mesa|wall\\s+mount|soporte|tr[ií]pode)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "mesa",
+              "wall",
+              "mount",
+              "soporte",
+              "tripode"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(balanza|scale|bascula)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(balanza|scale|bascula)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Negro, Plomo, Plateado, Gris",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "color\\s+([a-zA-Z]+)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "blanco",
+              "negro",
+              "plomo",
+              "plateado",
+              "gris"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Balanza Soehnle del inventario real",
+      "texto": "1 Balanza de pie Mr Soehnle color blanco",
+      "extraccionEsperada": {
+        "MARCA": "Soehnle",
+        "TIPO_BALANZA": "De pie",
+        "COLOR": "blanco",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Balanza Luxxe con pesas del inventario real",
+      "texto": "2 Balanzas de 04 pesas Mr Luxxe cap. 100grs. Color plomo",
+      "extraccionEsperada": {
+        "MARCA": "Luxxe",
+        "CAPACIDAD": "100grs",
+        "PESAS_INCLUIDAS": "4",
+        "COLOR": "plomo",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Balanza digital Scale Electronic del inventario real",
+      "texto": "2 Balanzas digital Se ESJ03710HK Mr Scale Electronic Mo TH1000",
+      "extraccionEsperada": {
+        "MARCA": "Scale Electronic",
+        "MODELO": "TH1000",
+        "TIPO_BALANZA": "Digital",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Balanza comercial con especificaciones completas",
+      "texto": "01 Balanza comercial Ohaus Scout Pro 2kg precisión 0.1g LCD USB RS232 acero inoxidable",
+      "extraccionEsperada": {
+        "MARCA": "Ohaus",
+        "MODELO": "Scout Pro",
+        "TIPO_BALANZA": "Comercial",
+        "CAPACIDAD": "2kg",
+        "PRECISION": "0.1g",
+        "TIPO_PANTALLA": "LCD",
+        "CONECTIVIDAD": [
+          "USB",
+          "RS232"
+        ],
+        "MATERIAL_PLATAFORMA": "Acero inoxidable"
+      }
+    }
+  ]
+}

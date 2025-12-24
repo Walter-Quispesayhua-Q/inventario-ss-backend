@@ -1,0 +1,1213 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-ROU-2025-V1",
+    "version": "1.0",
+    "nombre": "ROUTER",
+    "categoriaSemantica": "DISPOSITIVO_RED",
+    "descripcion": "Plantilla ML de router - Maneja columna única, múltiples columnas e híbrido para equipos de enrutamiento y conectividad de red"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_WIFI_STANDARD",
+        "condicion": ".*(wifi|802\\.11[a-z]+|wireless|ac|ax|be).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró un patrón de estándar WiFi"
+      },
+      {
+        "nombre": "BONUS_TIENE_PUERTOS_ETHERNET",
+        "condicion": ".*\\b\\d+\\s*(puertos?|ports?|ge|gigabit|ethernet).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró información de puertos Ethernet"
+      },
+      {
+        "nombre": "BONUS_TIENE_VELOCIDAD",
+        "condicion": ".*(mbps|gbps|ac\\d+|ax\\d+|\\d+\\s*mb).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró patrón de velocidad de red"
+      },
+      {
+        "nombre": "BONUS_TIENE_ANTENAS",
+        "condicion": ".*(antena|antenna|\\d+x\\d+|mimo).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró información de antenas"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "router",
+          "enrutador",
+          "gateway",
+          "modem"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "wireless",
+          "wifi",
+          "inalambrico",
+          "broadband",
+          "adsl"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "vpn",
+          "firewall",
+          "nat",
+          "dhcp",
+          "mesh"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "red",
+          "network",
+          "internet",
+          "conexion"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "wifi": [
+        "802.11a",
+        "802.11b",
+        "802.11g",
+        "802.11n",
+        "802.11ac",
+        "802.11ax",
+        "802.11be",
+        "wifi4",
+        "wifi5",
+        "wifi6",
+        "wifi6e",
+        "wifi7"
+      ],
+      "velocidad": [
+        "mbps",
+        "gbps",
+        "ac1200",
+        "ac1750",
+        "ac3000",
+        "ax1800",
+        "ax3000",
+        "ax6000",
+        "be9300"
+      ],
+      "bandas": [
+        "2.4ghz",
+        "5ghz",
+        "6ghz",
+        "dual-band",
+        "tri-band",
+        "banda",
+        "frecuencia"
+      ],
+      "puertos": [
+        "ethernet",
+        "gigabit",
+        "fast",
+        "wan",
+        "lan",
+        "usb",
+        "rj45",
+        "10/100",
+        "10/100/1000"
+      ],
+      "antenas": [
+        "mimo",
+        "mu-mimo",
+        "beamforming",
+        "externa",
+        "interna",
+        "omnidireccional",
+        "antena"
+      ],
+      "seguridad": [
+        "wpa",
+        "wpa2",
+        "wpa3",
+        "wep",
+        "firewall",
+        "vpn",
+        "dmz",
+        "mac",
+        "filtrado"
+      ],
+      "caracteristicas": [
+        "mesh",
+        "qos",
+        "parental",
+        "guest",
+        "extender",
+        "repeater",
+        "access"
+      ],
+      "procesador": [
+        "dual-core",
+        "quad-core",
+        "arm",
+        "mips",
+        "broadcom",
+        "qualcomm",
+        "mediatek"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "cisco",
+        "netgear",
+        "linksys",
+        "asus",
+        "tp-link"
+      ],
+      "tier2": [
+        "d-link",
+        "ubiquiti",
+        "mikrotik",
+        "juniper",
+        "fortinet"
+      ],
+      "tier3": [
+        "tenda",
+        "mercusys",
+        "totolink",
+        "edimax",
+        "buffalo"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "switch",
+        "hub",
+        "access-point",
+        "repetidor",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "monitor",
+        "impresora",
+        "servidor",
+        "ups",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "cable",
+        "adaptador",
+        "antena",
+        "patch"
+      ],
+      "debil": [
+        "ethernet",
+        "wifi",
+        "red",
+        "internet"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w\\-]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "wifi_standard": "\\b(802\\.11[a-z]+|wifi\\s*[4567]e?|ax|ac|be)\\b",
+      "velocidad_wifi": "\\b(ac|ax|be)(\\d{3,4})\\b",
+      "velocidad_mbps": "(\\d+)\\s*(mbps|gbps|mb/s|gb/s)",
+      "bandas_frecuencia": "(\\d\\.\\d)\\s*(ghz|GHz)",
+      "dual_tri_band": "\\b(dual|tri|quad)[-\\s]*(band|banda)\\b",
+      "puertos_ethernet": "(\\d+)\\s*(x?\\s*)?(ge|gigabit|ethernet|lan|wan|rj45)",
+      "velocidad_ethernet": "\\b(10/100/1000|10/100|gigabit|fast)\\b",
+      "antenas_mimo": "(\\d+)\\s*x\\s*(\\d+)\\s*(mimo|antena)",
+      "procesador": "\\b(dual|quad)[-\\s]*(core|cpu)\\b"
+    },
+    "conectividad": {
+      "puertos_usb": "(\\d+)\\s*x?\\s*(usb)\\s*([23]\\.\\d|[abc])?",
+      "wan_ports": "(\\d+)\\s*x?\\s*(wan|internet)\\s*(port|puerto)?",
+      "lan_ports": "(\\d+)\\s*x?\\s*(lan|ethernet)\\s*(port|puerto)?",
+      "sfp": "\\b(sfp|sfp\\+|fiber)\\s*(port|puerto)?\\b"
+    },
+    "caracteristicas": {
+      "seguridad": "\\b(wpa[23]?|wep|firewall|vpn|dmz)\\b",
+      "funciones": "\\b(mesh|qos|parental|guest|beamforming|mu-mimo)\\b",
+      "memoria": "(\\d+)\\s*(mb|gb)\\s*(ram|flash|memoria)",
+      "consumo": "(\\d+)\\s*(w|watts|vatios)",
+      "temperatura": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Cisco, NETGEAR, Linksys",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: ISR4221, Nighthawk AX12, RV130W",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "[A-Z]{2,4}[0-9]{3,4}[A-Z]*"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESTANDAR_WIFI",
+      "etiqueta": "Estándar WiFi",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 802.11ax (WiFi 6), 802.11ac (WiFi 5)",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "802.11ax (WiFi 6E)",
+        "802.11ax (WiFi 6)",
+        "802.11ac (WiFi 5)",
+        "802.11n (WiFi 4)",
+        "802.11be (WiFi 7)"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "WiFi",
+              "Wireless",
+              "Estándar",
+              "Standard"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(802\\.11[a-z]+|wifi\\s*[4567]e?|ax|ac|be)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "ax": "802.11ax (WiFi 6)",
+            "ac": "802.11ac (WiFi 5)",
+            "wifi6": "802.11ax (WiFi 6)"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_WIFI_MAXIMA",
+      "etiqueta": "Velocidad WiFi Máxima",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: AX6000, AC3000, 1200 Mbps",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Velocidad",
+              "Speed",
+              "Throughput",
+              "Mbps"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ac|ax|be)(\\d{3,4})\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(mbps|gbps)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BANDAS_FRECUENCIA",
+      "etiqueta": "Bandas de Frecuencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Dual Band (2.4 + 5 GHz), Tri Band",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": [
+        "Single Band (2.4 GHz)",
+        "Dual Band (2.4 + 5 GHz)",
+        "Tri Band (2.4 + 5 + 6 GHz)",
+        "Quad Band"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Bandas",
+              "Bands",
+              "Frecuencia",
+              "Frequency"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(dual|tri|quad)[-\\s]*(band|banda)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d\\.\\d)\\s*(ghz|GHz)",
+            "multiple": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_WAN",
+      "etiqueta": "Puertos WAN",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1x Gigabit WAN, 2x WAN, 1x SFP+",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "WAN",
+              "Internet",
+              "Uplink"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(wan|internet)\\s*(gigabit|ge)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "wan[:\\s]+(\\d+\\s*x?[\\w\\s]*)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_LAN_ETHERNET",
+      "etiqueta": "Puertos LAN Ethernet",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4x Gigabit LAN, 8x 10/100/1000",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "LAN",
+              "Ethernet",
+              "Puertos",
+              "Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(ge|gigabit|ethernet|lan|rj45)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "lan[:\\s]+(\\d+\\s*x?[\\w\\s/]*)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_PUERTOS_ETHERNET",
+      "etiqueta": "Velocidad Puertos Ethernet",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Gigabit (1000 Mbps), 10/100/1000",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "10/100 Mbps",
+        "10/100/1000 Mbps (Gigabit)",
+        "2.5 Gbps",
+        "10 Gbps"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Velocidad Ethernet",
+              "Port Speed",
+              "Ethernet Speed"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(10/100/1000|10/100|gigabit|2\\.5g|10g)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "gigabit": "10/100/1000 Mbps (Gigabit)",
+            "ge": "10/100/1000 Mbps (Gigabit)"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANTENAS",
+      "etiqueta": "Configuración de Antenas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4x4 MIMO, 8 antenas externas, 6 internas",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Antenas",
+              "Antennas",
+              "MIMO"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*(mimo|antena)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(antenas?|antennas?)\\s*(externa|interna)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_MIMO",
+      "etiqueta": "Tecnología MIMO",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: MU-MIMO, 4x4 MIMO, Beamforming",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "MIMO",
+        "MU-MIMO",
+        "Beamforming",
+        "OFDMA",
+        "TWT"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "MIMO",
+              "MU-MIMO",
+              "Beamforming"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(mu-mimo|mimo|beamforming|ofdma|twt)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "mu-mimo",
+              "mimo",
+              "beamforming",
+              "ofdma",
+              "twt"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_USB",
+      "etiqueta": "Puertos USB",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1x USB 3.0, 2x USB 2.0, No",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "USB",
+              "Puertos USB",
+              "USB Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(usb)\\s*([23]\\.\\d|[abc])?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "usb\\s*([23]\\.\\d|[abc])?",
+            "multiple": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SEGURIDAD_WIFI",
+      "etiqueta": "Seguridad WiFi",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WPA3, WPA2, WEP, Firewall",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Seguridad",
+              "Security",
+              "Encriptación"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wpa[23]?|wep|firewall|vpn|dmz)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_AVANZADAS",
+      "etiqueta": "Funciones Avanzadas",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: QoS, Control Parental, Guest Network",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Funciones",
+              "Features",
+              "Características"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "DETECTAR",
+            "palabras": [
+              "mesh",
+              "qos",
+              "parental",
+              "guest",
+              "beamforming",
+              "vpn",
+              "firewall"
+            ]
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOPORTE_VPN",
+      "etiqueta": "Soporte VPN",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, OpenVPN, IPSec, L2TP",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": [
+        "Sí",
+        "No",
+        "OpenVPN",
+        "IPSec",
+        "L2TP",
+        "PPTP",
+        "WireGuard"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "VPN",
+              "Virtual Private Network"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(vpn|openvpn|ipsec|l2tp|pptp|wireguard)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "vpn",
+              "openvpn",
+              "ipsec",
+              "l2tp",
+              "pptp"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROCESADOR",
+      "etiqueta": "Procesador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Dual-Core 1.8 GHz, ARM Quad-Core",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Procesador",
+              "CPU",
+              "Processor"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(dual|quad)[-\\s]*(core|cpu)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(arm|mips|broadcom|qualcomm)\\s*[\\w\\s]*",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_RAM",
+      "etiqueta": "Memoria RAM",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 512MB, 1GB, 2GB DDR4",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RAM",
+              "Memoria",
+              "Memory"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(mb|gb)\\s*(ram|memoria|ddr[345])?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_FLASH",
+      "etiqueta": "Memoria Flash/Storage",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 128MB, 256MB, 1GB Flash",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Flash",
+              "Storage",
+              "Almacenamiento"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(mb|gb)\\s*(flash|storage)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GESTION_REMOTA",
+      "etiqueta": "Gestión Remota",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Web GUI, SSH, SNMP, CLI",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Gestión",
+              "Management",
+              "Admin"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(web|gui|ssh|snmp|cli|telnet)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "web",
+              "gui",
+              "ssh",
+              "snmp",
+              "cli",
+              "telnet"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía (Watts)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 12, 25, 45",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 5,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Consumo",
+              "Power",
+              "Watts",
+              "Energía"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(w|watts|vatios)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "consumo[:\\s]+(\\d+)\\s*w",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_TEMPERATURA",
+      "etiqueta": "Rango de Temperatura Operativa",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0°C a 40°C, -10°C ~ 50°C",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Temperatura",
+              "Temperature",
+              "Operating Temp"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "temperatura[:\\s]+(-?\\d+.*?\\d+.*?c)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 230 x 144 x 35 mm",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Medidas"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "dimensiones[:\\s]+(\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.8, 1.2, 2.5",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "validacion": {
+        "min": 0.1,
+        "max": 10.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Kg"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d)\\s*(kg|kilogramos|libras|lb)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "peso[:\\s]+(\\d+\\.?\\d*)\\s*kg",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "azul",
+              "black",
+              "white"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Router Cisco empresarial completo",
+      "texto": "01 Router Ma: Cisco Mo: ISR4221 Fabricante: CISCO SYSTEMS - ENTERPRISE (2GE,2NIM,8G FLASH,4G DRAM,IPB) Co: Negro WiFi 802.11ac dual-band 2.4+5GHz 2x WAN Gigabit 4x LAN 10/100/1000 VPN IPSec firewall dual-core 1.8GHz 4GB RAM 8GB Flash SNMP SSH consumo 45W dimensiones 442 x 318 x 44 mm",
+      "extraccionEsperada": {
+        "MARCA": "Cisco",
+        "MODELO": "ISR4221",
+        "COLOR": "Negro",
+        "ESTANDAR_WIFI": "802.11ac (WiFi 5)",
+        "BANDAS_FRECUENCIA": "Dual Band (2.4 + 5 GHz)",
+        "PUERTOS_WAN": "2x WAN Gigabit",
+        "PUERTOS_LAN_ETHERNET": "4x LAN",
+        "VELOCIDAD_PUERTOS_ETHERNET": "10/100/1000 Mbps (Gigabit)",
+        "SOPORTE_VPN": "IPSec",
+        "FUNCIONES_AVANZADAS": [
+          "Firewall",
+          "VPN"
+        ],
+        "PROCESADOR": "Dual-Core 1.8GHz",
+        "MEMORIA_RAM": "4GB RAM",
+        "MEMORIA_FLASH": "8GB Flash",
+        "GESTION_REMOTA": [
+          "SNMP",
+          "SSH"
+        ],
+        "CONSUMO_ENERGIA": "45",
+        "DIMENSIONES": "442 x 318 x 44 mm"
+      }
+    },
+    {
+      "nombre": "Caso 2: Router doméstico en lenguaje natural",
+      "texto": "Router NETGEAR Nighthawk AX12 WiFi 6 802.11ax AX6000 tri-band 2.4GHz + 5GHz + 6GHz MU-MIMO beamforming 1x WAN gigabit 4x LAN gigabit 2x USB 3.0 WPA3 firewall QoS control parental quad-core ARM 1GB RAM",
+      "extraccionEsperada": {
+        "MARCA": "NETGEAR",
+        "MODELO": "Nighthawk AX12",
+        "ESTANDAR_WIFI": "802.11ax (WiFi 6)",
+        "VELOCIDAD_WIFI_MAXIMA": "AX6000",
+        "BANDAS_FRECUENCIA": "Tri Band (2.4 + 5 + 6 GHz)",
+        "TECNOLOGIA_MIMO": "MU-MIMO Beamforming",
+        "PUERTOS_WAN": "1x WAN Gigabit",
+        "PUERTOS_LAN_ETHERNET": "4x LAN Gigabit",
+        "VELOCIDAD_PUERTOS_ETHERNET": "10/100/1000 Mbps (Gigabit)",
+        "PUERTOS_USB": "2x USB 3.0",
+        "SEGURIDAD_WIFI": [
+          "WPA3",
+          "Firewall"
+        ],
+        "FUNCIONES_AVANZADAS": [
+          "QoS",
+          "Control Parental"
+        ],
+        "PROCESADOR": "Quad-Core ARM",
+        "MEMORIA_RAM": "1GB RAM"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "Linksys",
+        "Modelo": "MR9600",
+        "WiFi": "802.11ax WiFi 6",
+        "Velocidad": "AX6000",
+        "Bandas": "Dual Band",
+        "WAN": "1x Gigabit",
+        "LAN": "4x Gigabit",
+        "USB": "1x USB 3.0",
+        "Seguridad": "WPA3",
+        "MIMO": "4x4 MU-MIMO",
+        "Funciones": "Mesh, QoS, Guest Network",
+        "Procesador": "Quad-Core ARM",
+        "RAM": "512MB",
+        "Consumo": "36W",
+        "Color": "Negro"
+      },
+      "extraccionEsperada": {
+        "MARCA": "Linksys",
+        "MODELO": "MR9600",
+        "ESTANDAR_WIFI": "802.11ax (WiFi 6)",
+        "VELOCIDAD_WIFI_MAXIMA": "AX6000",
+        "BANDAS_FRECUENCIA": "Dual Band",
+        "PUERTOS_WAN": "1x Gigabit",
+        "PUERTOS_LAN_ETHERNET": "4x Gigabit",
+        "PUERTOS_USB": "1x USB 3.0",
+        "SEGURIDAD_WIFI": [
+          "WPA3"
+        ],
+        "TECNOLOGIA_MIMO": "4x4 MU-MIMO",
+        "FUNCIONES_AVANZADAS": [
+          "Mesh",
+          "QoS",
+          "Guest Network"
+        ],
+        "PROCESADOR": "Quad-Core ARM",
+        "MEMORIA_RAM": "512MB",
+        "CONSUMO_ENERGIA": "36",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

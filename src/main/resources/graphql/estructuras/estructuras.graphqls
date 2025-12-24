@@ -1,0 +1,705 @@
+"""
+Tipo de configuración para estructuras físicas del sistema.
+Define características para edificios, pisos, ambientes y estaciones.
+"""
+type TipoEstructura {
+    idTipo: ID!
+    nombre: String!
+    codigo: String!
+    nivelAplicable: NivelEstructura!
+    descripcion: String
+    icono: String
+    color: String
+    configuracionCampos: JSON
+    activo: Boolean!
+    fechaCreacion: String!
+    fechaUltimaModificacion: String
+}
+
+"""
+Edificio o inmueble del campus universitario.
+"""
+type Edificio {
+    idEdificio: ID!
+    nombre: String!
+    codigo: String!
+    tipoEstructura: TipoEstructura!
+    direccion: String
+    numeroPisos: Int
+    areaTotalM2: Float
+    anoConstruccion: Int
+    idResponsableMantenimiento: ID!
+    nombreResponsableMantenimiento: String
+    observaciones: String
+    propiedadesAdicionales: JSON
+    fechaCreacion: String!
+    fechaUltimaModificacion: String
+    pisos: [Piso!]
+    cantidadPisos: Int
+}
+
+"""
+Piso o nivel dentro de un edificio.
+"""
+type Piso {
+    idPiso: ID!
+    nombre: String!
+    codigo: String!
+    numeroPiso: Int!
+    idEdificio: ID!
+    nombreEdificio: String
+    codigoEdificio: String
+    edificio: Edificio
+    tipoEstructura: TipoEstructura!
+    idResponsableMantenimiento: ID!
+    nombreResponsableMantenimiento: String
+    observaciones: String
+    propiedadesAdicionales: JSON
+    fechaCreacion: String!
+    fechaUltimaModificacion: String
+    ambientes: [Ambiente!]
+    cantidadAmbientes: Int
+}
+
+"""
+Ambiente o sala dentro de un piso.
+Puede contener múltiples estaciones de trabajo.
+"""
+type Ambiente {
+    idAmbiente: ID!
+    nombre: String!
+    codigo: String!
+    capacidadPersonas: Int
+    idPiso: ID!
+    nombrePiso: String
+    codigoPiso: String
+    numeroPiso: Int
+    piso: Piso
+    idEdificio: ID
+    nombreEdificio: String
+    tipoEstructura: TipoEstructura!
+    idResponsable: ID!
+    nombreResponsable: String
+    idDepartamentoResponsable: ID
+    nombreDepartamentoResponsable: String
+    observaciones: String
+    propiedadesAdicionales: JSON
+    fechaCreacion: String!
+    fechaUltimaModificacion: String
+    estaciones: [Estacion!]
+    cantidadEstaciones: Int
+}
+
+"""
+Estación de trabajo o ubicación específica para asignación de bienes.
+"""
+type Estacion {
+    idEstacion: ID!
+    nombre: String!
+    codigo: String!
+    capacidadBienes: Int
+    idAmbiente: ID!
+    nombreAmbiente: String
+    codigoAmbiente: String
+    ambiente: Ambiente
+    idPiso: ID
+    nombrePiso: String
+    numeroPiso: Int
+    idEdificio: ID
+    nombreEdificio: String
+    tipoEstructura: TipoEstructura!
+    observaciones: String
+    propiedadesAdicionales: JSON
+    fechaCreacion: String!
+    fechaUltimaModificacion: String
+    cantidadBienesAsignados: Int
+    capacidadDisponible: Int
+}
+
+type PisoResumen {
+    idPiso: ID!
+    nombre: String!
+    codigo: String!
+    numeroPiso: Int!
+    tipoEstructura: TipoEstructura
+    cantidadAmbientes: Int
+}
+
+type AmbienteResumen {
+    idAmbiente: ID!
+    nombre: String!
+    codigo: String!
+    capacidadPersonas: Int
+    tipoEstructura: TipoEstructura
+    nombreResponsable: String
+    cantidadEstaciones: Int
+}
+
+type EdificioConPisosResponse {
+    idEdificio: ID!
+    nombre: String!
+    codigo: String!
+    tipoEstructura: TipoEstructura
+    direccion: String
+    numeroPisos: Int
+    idResponsableMantenimiento: ID
+    nombreResponsableMantenimiento: String
+    observaciones: String
+    pisos: [PisoResumen!]!
+    totalPisos: Int!
+}
+
+type PisoConAmbientesResponse {
+    idPiso: ID!
+    nombre: String!
+    codigo: String!
+    numeroPiso: Int!
+    tipoEstructura: TipoEstructura
+    idEdificio: ID!
+    nombreEdificio: String
+    codigoEdificio: String
+    idResponsableMantenimiento: ID
+    nombreResponsableMantenimiento: String
+    observaciones: String
+    ambientes: [AmbienteResumen!]!
+    totalAmbientes: Int!
+}
+
+type ConfirmacionOperacion {
+    codigoConfirmacion: String
+    mensaje: String!
+    confirmado: Boolean!
+}
+
+type ResultadoOperacion {
+    exito: Boolean!
+    mensaje: String!
+    codigoOperacion: String
+    datos: JSON
+}
+
+type EstacionResumen {
+    idEstacion: ID!
+    nombre: String!
+    codigo: String!
+    capacidadBienes: Int
+    cantidadBienesAsignados: Int
+    capacidadDisponible: Int
+    tipoEstructura: TipoEstructura
+    observaciones: String
+}
+
+type BienAsignado {
+    idBien: ID!
+    nombre: String
+    caf: String
+    numeroSerie: String
+    categoriaId: ID
+    categoriaNombre: String
+    estadoFisico: String
+    estadoOperacional: String
+    marca: String
+    modelo: String
+    responsableActualNombre: String
+    idEstacionAnterior: ID
+    nombreEstacionAnterior: String
+}
+
+type ComponenteResumen {
+    id: ID!
+    nombre: String
+    tipo: String!
+    categoriaBase: String
+    orden: Int
+    bienes: [BienAsignado!]!
+    totalBienes: Int!
+}
+
+type EstacionConBienesResponse {
+    idEstacion: ID!
+    nombre: String!
+    codigo: String!
+    idAmbiente: ID!
+    nombreAmbiente: String
+    idPiso: ID
+    nombrePiso: String
+    numeroPiso: Int
+    idEdificio: ID
+    nombreEdificio: String
+    tipoEstructura: TipoEstructura
+    capacidadBienes: Int
+    capacidadDisponible: Int
+    cantidadBienesAsignados: Int
+    responsableNombre: String
+    componentes: [ComponenteResumen!]!
+    bienesIndividuales: [BienAsignado!]!
+    totalComponentes: Int!
+    totalBienes: Int!
+    totalBienesIndividuales: Int!
+    propiedadesAdicionales: JSON
+    observaciones: String
+}
+
+type ResultadoVerificacionBienes {
+    todosLibres: Boolean!
+    bienesLibres: [BienAsignado!]!
+    bienesEnOtraEstacion: [BienAsignado!]!
+    mensaje: String
+    requiereConfirmacion: Boolean!
+}
+
+type BienesParaEstacionResponse {
+    bienesLibres: [BienAsignado!]!
+    bienesEnOtrasEstaciones: [BienAsignado!]!
+    bienesEnEstacionActual: [BienAsignado!]!
+    totalLibres: Int!
+    totalEnOtras: Int!
+    totalEnActual: Int!
+}
+
+type EstacionCompleta {
+    idEstacion: ID!
+    nombre: String!
+    codigo: String!
+    capacidadBienes: Int
+    cantidadBienesAsignados: Int
+    capacidadDisponible: Int
+    observaciones: String
+    propiedadesAdicionales: JSON
+    tipoEstructura: TipoEstructura!
+    ubicacion: UbicacionCompleta!
+    auditoria: AuditoriaCompleta!
+    bienesAsignados: [BienEstacionCompleta!]!
+}
+
+type UbicacionCompleta {
+    ambiente: AmbienteCompleta!
+    piso: PisoCompleta!
+    edificio: EdificioCompleta!
+}
+
+type AmbienteCompleta {
+    idAmbiente: ID!
+    nombre: String!
+    codigo: String!
+    capacidadPersonas: Int
+    tipoEstructura: TipoEstructura!
+    observaciones: String
+    propiedadesAdicionales: JSON
+    responsable: UsuarioInfo!
+    departamentoResponsable: DepartamentoInfo
+}
+
+type PisoCompleta {
+    idPiso: ID!
+    nombre: String!
+    codigo: String!
+    numeroPiso: Int!
+    tipoEstructura: TipoEstructura!
+    observaciones: String
+    propiedadesAdicionales: JSON
+    responsableMantenimiento: UsuarioInfo!
+}
+
+type EdificioCompleta {
+    idEdificio: ID!
+    nombre: String!
+    codigo: String!
+    direccion: String
+    numeroPisos: Int
+    areaTotalM2: Float
+    anoConstruccion: Int
+    tipoEstructura: TipoEstructura!
+    observaciones: String
+    propiedadesAdicionales: JSON
+    responsableMantenimiento: UsuarioInfo!
+}
+
+type AuditoriaCompleta {
+    fechaCreacion: String!
+    fechaUltimaModificacion: String
+    fechaEliminacion: String
+    usuarioCreacion: UsuarioInfo
+    usuarioUltimaModificacion: UsuarioInfo
+}
+
+type BienEstacionCompleta {
+    idAsignacion: ID!
+    posicionRelativa: String
+    fechaAsignacion: String!
+    fechaDesasignacion: String
+    observaciones: String
+    asignacionActiva: Boolean!
+    usuarioAsignacion: UsuarioInfo
+    bien: BienCompleto!
+}
+
+type BienCompleto {
+    idBien: ID!
+    nombre: String!
+    numeroSerie: String
+    caf: String
+    marca: String
+    modelo: String
+    color: String
+    valorUnitario: Float
+    estado: String
+    observaciones: String
+    categoria: CategoriaInfo
+    fechaCreacion: String!
+    fechaUltimaModificacion: String
+}
+
+type UsuarioInfo {
+    idUsuario: ID!
+    nombre: String!
+    apellido: String!
+    email: String!
+    nombreCompleto: String!
+}
+
+type DepartamentoInfo {
+    idDepartamento: ID!
+    nombre: String!
+    codigo: String!
+}
+
+type CategoriaInfo {
+    idCategoria: ID!
+    nombre: String!
+    codigo: String!
+}
+
+type BienEstacion {
+    id: ID!
+    idBien: ID!
+    nombreBien: String
+    cafBien: String
+    numeroSerieBien: String
+    idEstacion: ID!
+    nombreEstacion: String
+    codigoEstacion: String
+    idAmbiente: ID
+    nombreAmbiente: String
+    idPiso: ID
+    nombrePiso: String
+    numeroPiso: Int
+    idEdificio: ID
+    nombreEdificio: String
+    posicionRelativa: String
+    fechaAsignacion: String!
+    fechaDesasignacion: String
+    idUsuarioAsignacion: ID
+    nombreUsuarioAsignacion: String
+    observaciones: String
+    asignacionActiva: Boolean!
+}
+
+input EdificioInput {
+    nombre: String!
+    codigo: String!
+    idTipoEstructura: ID!
+    direccion: String
+    numeroPisos: Int
+    areaTotalM2: Float
+    anoConstruccion: Int
+    idResponsableMantenimiento: ID!
+    observaciones: String
+    propiedadesAdicionales: JSON
+    pisos: [PisoInput!]
+}
+
+input PisoInput {
+    idPiso: ID
+    nombre: String!
+    codigo: String!
+    idEdificio: ID
+    idTipoEstructura: ID!
+    numeroPiso: Int!
+    idResponsableMantenimiento: ID!
+    observaciones: String
+    propiedadesAdicionales: JSON
+}
+
+input AmbienteInput {
+    nombre: String!
+    codigo: String!
+    idPiso: ID!
+    idTipoEstructura: ID!
+    capacidadPersonas: Int
+    idResponsable: ID!
+    idDepartamentoResponsable: ID
+    observaciones: String
+    propiedadesAdicionales: JSON
+}
+
+input EstacionInput {
+    nombre: String!
+    codigo: String!
+    idAmbiente: ID
+    idTipoEstructura: ID
+    capacidadBienes: Int
+    idResponsable: ID
+    observaciones: String
+    propiedadesAdicionales: JSON
+}
+
+input BienEstacionInput {
+    idBien: ID!
+    idEstacion: ID!
+    posicionRelativa: String
+    observaciones: String
+}
+
+input ConfirmacionOperacionInput {
+    codigoConfirmacion: String!
+    confirmado: Boolean!
+}
+
+input CrearEstacionConBienesInput {
+    estacion: EstacionInput!
+    idsBienes: [ID!]
+    forzarReasignacion: Boolean
+}
+
+input ActualizarEstacionConBienesInput {
+    estacion: EstacionInput!
+    idsBienes: [ID!]
+    forzarReasignacion: Boolean
+}
+
+enum NivelEstructura {
+    EDIFICIO
+    PISO
+    AMBIENTE
+    ESTACION
+}
+
+enum OrdenEstacion {
+    NOMBRE_ASC
+    NOMBRE_DESC
+    FECHA_CREACION_ASC
+    FECHA_CREACION_DESC
+    CAPACIDAD_ASC
+    CAPACIDAD_DESC
+}
+
+input EstacionConBienesInput {
+    nombre: String!
+    codigo: String!
+    idAmbiente: ID!
+    idTipoEstructura: ID
+    capacidadBienes: Int
+    observaciones: String
+    propiedadesAdicionales: JSON
+    idsBienes: [ID!]
+    forzarReasignacion: Boolean
+}
+
+type ResultadoCreacionEstacion {
+    estacion: Estacion!
+    resultadoAsignacion: ResultadoAsignacionMasiva
+}
+
+type ResultadoAsignacion {
+    exito: Boolean!
+    requiereConfirmacion: Boolean!
+    mensaje: String!
+    idAsignacion: ID
+    idEstacionActual: ID
+    nombreEstacionActual: String
+}
+
+type BienYaAsignado {
+    idBien: ID!
+    idEstacionActual: ID!
+    nombreEstacionActual: String!
+}
+
+type ResultadoAsignacionMasiva {
+    totalBienes: Int!
+    bienesLibresAsignados: Int!
+    bienesYaAsignados: [BienYaAsignado!]!
+    bienesAsignadosExitosamente: [ID!]!
+    errores: [String!]!
+    requiereConfirmacion: Boolean!
+}
+
+type ResultadoDesasignacion {
+    exito: Boolean!
+    mensaje: String!
+    nombreEstacionAnterior: String
+}
+
+type DiagnosticoBien {
+    idBien: ID!
+    bienExiste: Boolean!
+    tieneAsignacionActiva: Boolean!
+    cantidadAsignacionesActivas: Int!
+    cantidadAsignacionesTotales: Int!
+    hayInconsistencias: Boolean!
+    mensaje: String!
+    nombreEstacionActual: String
+}
+
+type ResultadoDesasignacionMasiva {
+    totalBienes: Int!
+    bienesDesasignados: [ID!]!
+    bienesNoAsignados: [ID!]!
+    errores: [String!]!
+    exito: Boolean!
+    mensaje: String!
+}
+
+type ResultadoGestionBienes {
+    idEstacion: ID!
+    nombreEstacion: String!
+    resultadoAgrupacion: ResultadoAsignacionMasiva
+    resultadoDesagrupacion: ResultadoDesasignacionMasiva
+    bienesEnConflicto: [BienYaAsignado!]!
+    requiereConfirmacion: Boolean!
+    exito: Boolean!
+    mensaje: String!
+}
+
+type BienEstacionPaginado {
+    contenido: [BienEstacion!]!
+    totalElementos: Int!
+    totalPaginas: Int!
+    paginaActual: Int!
+    tamanoPagina: Int!
+    primeraPagina: Boolean!
+    ultimaPagina: Boolean!
+}
+
+input FiltroEdificio {
+    nombre: String
+    codigo: String
+    idTipoEstructura: ID
+    idResponsableMantenimiento: ID
+}
+
+input FiltroPiso {
+    nombre: String
+    codigo: String
+    idEdificio: ID
+    numeroPiso: Int
+    idTipoEstructura: ID
+}
+
+input FiltroAmbiente {
+    nombre: String
+    codigo: String
+    idPiso: ID
+    idEdificio: ID
+    idTipoEstructura: ID
+    idDepartamentoResponsable: ID
+}
+
+input FiltroEstacion {
+    nombre: String
+    codigo: String
+    idAmbiente: ID
+    idPiso: ID
+    idEdificio: ID
+    idTipoEstructura: ID
+    tieneBienesAsignados: Boolean
+    "Buscar por CAF o número de serie de un bien asignado a la estación"
+    codigoBien: String
+}
+
+extend type Query {
+    """
+    Obtiene todos los tipos de estructura disponibles en el sistema.
+    """
+    tiposEstructura: [TipoEstructura!]!
+    tipoEstructuraPorId(idTipo: ID!): TipoEstructura
+    tipoEstructuraPorCodigo(codigo: String!): TipoEstructura
+    tiposEstructuraPorNivel(nivel: NivelEstructura!): [TipoEstructura!]!
+
+    """
+    Obtiene todos los edificios del campus.
+    """
+    edificios: [Edificio!]!
+    edificioPorCodigo(codigo: String!): Edificio
+    
+    """
+    Obtiene un edificio con todos sus pisos.
+    """
+    edificioConPisos(idEdificio: ID!): EdificioConPisosResponse!
+    buscarEdificios(filtro: FiltroEdificio!): [Edificio!]!
+
+    pisos: [Piso!]!
+    pisoPorEdificioYNumero(idEdificio: ID!, numeroPiso: Int!): Piso
+    
+    """
+    Obtiene un piso con todos sus ambientes.
+    """
+    pisoConAmbientes(idPiso: ID!): PisoConAmbientesResponse!
+    buscarPisos(filtro: FiltroPiso!): [Piso!]!
+
+    ambientes: [Ambiente!]!
+    ambientesPorDepartamento(idDepartamento: ID!): [Ambiente!]!
+    buscarAmbientes(filtro: FiltroAmbiente!): [Ambiente!]!
+
+    estaciones: [Estacion!]!
+    
+    """
+    Obtiene una estación con todos los bienes asignados organizados por componentes.
+    """
+    estacionConBienes(idEstacion: ID!): EstacionConBienesResponse!
+    estacionesConCapacidad: [Estacion!]!
+    buscarEstaciones(filtro: FiltroEstacion!, orden: OrdenEstacion): [Estacion!]!
+
+    """
+    Obtiene el historial de asignaciones de un bien específico.
+    """
+    asignacionesPorBien(idBien: ID!): [BienEstacion!]!
+    bienesDeEstacion(idEstacion: ID!, pagina: Int = 0, tamanoPagina: Int = 20): BienEstacionPaginado!
+    estacionActualDelBien(idBien: ID!): Estacion
+    
+    """
+    Diagnostica el estado de asignación de un bien para detectar inconsistencias.
+    """
+    diagnosticarEstadoBien(idBien: ID!): DiagnosticoBien!
+    bienesParaEstacion(idEstacion: ID): BienesParaEstacionResponse!
+}
+
+extend type Mutation {
+    """
+    Crea un nuevo edificio en el campus.
+    """
+    crearEdificio(input: EdificioInput!): EdificioConPisosResponse!
+    actualizarEdificio(idEdificio: ID!, input: EdificioInput!): EdificioConPisosResponse!
+    eliminarEdificio(idEdificio: ID!, confirmacion: ConfirmacionOperacionInput): ResultadoOperacion!
+    agregarPisoAEdificio(idEdificio: ID!, input: PisoInput!): PisoResumen!
+
+    actualizarPiso(idPiso: ID!, input: PisoInput!): PisoConAmbientesResponse!
+    eliminarPiso(idEdificio: ID!, idPiso: ID!, confirmacion: ConfirmacionOperacionInput): ResultadoOperacion!
+    agregarAmbienteAPiso(idPiso: ID!, input: AmbienteInput!): AmbienteResumen!
+
+    actualizarAmbiente(idAmbiente: ID!, input: AmbienteInput!, confirmacion: ConfirmacionOperacionInput): AmbienteResumen!
+    eliminarAmbiente(idAmbiente: ID!, confirmacion: ConfirmacionOperacionInput): ResultadoOperacion!
+
+    agregarEstacionAAmbiente(idAmbiente: ID!, input: EstacionInput!): EstacionResumen!
+    actualizarEstacion(idEstacion: ID!, input: EstacionInput!, confirmacion: ConfirmacionOperacionInput): EstacionResumen!
+    eliminarEstacion(idEstacion: ID!, confirmacion: ConfirmacionOperacionInput): ResultadoOperacion!
+
+    """
+    Asigna un bien a una estación de trabajo.
+    """
+    asignarBienAEstacion(idBien: ID!, idEstacion: ID!, posicionRelativa: String, forzarReasignacion: Boolean): ResultadoAsignacion!
+    
+    """
+    Asigna múltiples bienes a una estación de forma masiva.
+    """
+    asignarBienesMasivos(idsBienes: [ID!]!, idEstacion: ID!, forzarReasignacion: Boolean): ResultadoAsignacionMasiva!
+    desasignarBienDeEstacion(idBien: ID!): ResultadoDesasignacion!
+    desasignarBienesMasivos(idsBienes: [ID!]!): ResultadoDesasignacionMasiva!
+    desagruparBienesDeEstacion(idEstacion: ID!, idsBienes: [ID!]!): ResultadoDesasignacionMasiva!
+    
+    """
+    Gestiona bienes de una estación agregando y/o removiendo en una sola operación.
+    """
+    gestionarBienesEstacion(idEstacion: ID!, bienesAAgrupar: [ID!], bienesADesagrupar: [ID!], forzarReasignacion: Boolean): ResultadoGestionBienes!
+}

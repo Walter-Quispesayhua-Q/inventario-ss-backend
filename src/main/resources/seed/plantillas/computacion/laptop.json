@@ -1,0 +1,1248 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-LAP-2025-V1",
+    "version": "1.0",
+    "nombre": "Laptop/Notebook",
+    "categoriaSemantica": "COMPUTADOR_PORTATIL",
+    "descripcion": "Plantilla ML de laptop/notebook - Maneja columna única, múltiples columnas e híbrido para computadoras portátiles"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_PROCESADOR_MOBILE",
+        "condicion": ".*(i[357579]|ryzen|core|mobile|laptop).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró un patrón de procesador móvil"
+      },
+      {
+        "nombre": "BONUS_TIENE_PANTALLA",
+        "condicion": ".*\\b\\d{2}(\\.\\d)?[\\s]*(\\\" |pulgadas|inch).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró un patrón de tamaño de pantalla"
+      },
+      {
+        "nombre": "BONUS_PORTATIL",
+        "condicion": ".*(laptop|notebook|portatil|portable).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró referencia explícita a dispositivo portátil"
+      },
+      {
+        "nombre": "BONUS_WEBCAM",
+        "condicion": ".*(webcam|camara|camera|video).*",
+        "puntos": 0.06,
+        "descripcion": "Se encontró referencia a cámara web"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "laptop",
+          "notebook",
+          "portatil",
+          "portable"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "thinkpad",
+          "inspiron",
+          "pavilion",
+          "satellite",
+          "aspire"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "ultrabook",
+          "chromebook",
+          "gaming",
+          "business",
+          "mobile"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "computadora",
+          "equipo",
+          "maquina",
+          "dispositivo"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "procesadores": [
+        "i3",
+        "i5",
+        "i7",
+        "i9",
+        "ryzen",
+        "core",
+        "celeron",
+        "athlon",
+        "mobile",
+        "u",
+        "h",
+        "hq"
+      ],
+      "memoria": [
+        "ddr3",
+        "ddr4",
+        "ddr5",
+        "ram",
+        "memoria",
+        "4gb",
+        "8gb",
+        "16gb",
+        "32gb",
+        "sodimm"
+      ],
+      "almacenamiento": [
+        "ssd",
+        "hdd",
+        "emmc",
+        "nvme",
+        "sata",
+        "m.2",
+        "128gb",
+        "256gb",
+        "512gb",
+        "1tb"
+      ],
+      "pantalla": [
+        "led",
+        "lcd",
+        "oled",
+        "ips",
+        "tn",
+        "va",
+        "fhd",
+        "hd",
+        "4k",
+        "touch",
+        "tactil"
+      ],
+      "graficas": [
+        "intel",
+        "nvidia",
+        "amd",
+        "gtx",
+        "rtx",
+        "radeon",
+        "iris",
+        "uhd",
+        "mx",
+        "geforce"
+      ],
+      "conectividad": [
+        "wifi",
+        "bluetooth",
+        "usb",
+        "hdmi",
+        "vga",
+        "ethernet",
+        "sd",
+        "webcam",
+        "rj45"
+      ],
+      "wifi": [
+        "wifi5",
+        "wifi6",
+        "wifi6e",
+        "802.11ac",
+        "802.11ax",
+        "wireless"
+      ],
+      "caracteristicas": [
+        "retroiluminado",
+        "backlit",
+        "numerico",
+        "touchpad",
+        "dvd",
+        "cd",
+        "optica"
+      ],
+      "puertos": [
+        "usb-a",
+        "usb-c",
+        "thunderbolt",
+        "type-c",
+        "hdmi",
+        "ethernet",
+        "sd"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "dell",
+        "hp",
+        "lenovo",
+        "asus",
+        "acer"
+      ],
+      "tier2": [
+        "msi",
+        "gigabyte",
+        "razer",
+        "alienware",
+        "surface"
+      ],
+      "tier3": [
+        "toshiba",
+        "gateway",
+        "packard",
+        "compaq",
+        "samsung"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "desktop",
+        "cpu",
+        "torre",
+        "servidor",
+        "procesador",
+        "optiplex",
+        "prodesk",
+        "elitedesk",
+        "thinkcentre",
+        "pc desktop",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "monitor",
+        "teclado",
+        "mouse",
+        "impresora",
+        "pantalla",
+        "display",
+        "lcd monitor",
+        "led monitor",
+        "p2722h",
+        "temperatura",
+        "calefaccion",
+        "potencia 1500w"
+      ],
+      "media": [
+        "tablet",
+        "smartphone",
+        "router",
+        "switch",
+        "disco duro",
+        "memoria ram"
+      ],
+      "debil": [
+        "cable",
+        "adaptador",
+        "cargador"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "procesador_intel": "(intel\\s+)?(core\\s+)?(i[3579]|celeron|pentium)[-\\s]*([0-9]+[A-Z]*)",
+      "procesador_amd": "(amd\\s+)?(ryzen\\s+[3579]\\s+\\d{4}[A-Z]*|athlon)",
+      "memoria_ram": "(\\d+)\\s*(gb|GB)\\s*(ram|RAM|memoria|ddr[345])",
+      "almacenamiento": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(ssd|hdd|SSD|HDD|emmc)",
+      "tipo_disco": "\\b(nvme|m\\.2|sata|emmc|ssd|hdd)\\b",
+      "pantalla_pulgadas": "(\\d{2}(?:\\.\\d)?)[\\\"]?\\s*(pulgadas|pulg|\\\"|inch)",
+      "resolucion": "(\\d{3,4})\\s*[xX×]\\s*(\\d{3,4})",
+      "tipo_pantalla": "\\b(ips|tn|va|oled|led|lcd|touch|tactil)\\b",
+      "webcam": "\\b(webcam|camara|camera)\\s*(hd|fhd|720p|1080p|\\d+mp)?\\b",
+      "wifi_version": "\\b(wifi\\s*[56]e?|802\\.11[a-z]+|wireless\\s*[a-z]+)\\b",
+      "bluetooth_version": "\\b(bluetooth|bt)\\s*([45]\\.[0-2])\\b"
+    },
+    "conectividad": {
+      "wifi": "\\b(wifi|wi-fi|wireless|802\\.11[a-z]+)\\b",
+      "bluetooth": "\\b(bluetooth|bt)\\s*[\\d\\.]*\\b",
+      "puertos": "\\b(usb|hdmi|vga|ethernet|sd|audio|thunderbolt|type[-\\s]*c)\\b",
+      "puerto_usb": "(\\d+)\\s*x?\\s*(usb\\s*[23]\\.[012]|usb[-\\s]*[abc]|type[-\\s]*[ac]|thunderbolt)",
+      "ethernet_port": "\\b(ethernet|rj45|rj-45|lan)\\b",
+      "lector_sd": "\\b(sd|microsd|card\\s*reader|lector\\s*tarjetas)\\b"
+    },
+    "caracteristicas": {
+      "tipo_pantalla_tech": "\\b(led|lcd|oled|ips|tn|va|touch|tactil)\\b",
+      "bateria": "(\\d+)\\s*(wh|whr|mah|celda|cell)",
+      "peso": "(\\d{1,2}\\.\\d)\\s*(kg|kilogramos|libras|lb)",
+      "sistema": "(windows|linux|chrome\\s*os|mac\\s*os)",
+      "teclado_retroiluminado": "\\b(retroiluminado|backlit|rgb|iluminado)\\b",
+      "teclado_numerico": "\\b(numerico|numeric\\s*keypad|teclado\\s*numerico)\\b",
+      "unidad_optica": "\\b(dvd|cd|blu[-\\s]*ray|grabador|lector\\s*optico)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Dell, HP, Lenovo, Toshiba",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: ThinkPad X1, Inspiron 15, Satellite",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo",
+              "Serie"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(thinkpad|inspiron|pavilion|satellite|aspire|zenbook)\\s*[\\w\\s\\-]+"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROCESADOR",
+      "etiqueta": "Procesador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Intel Core i7-10th Gen, AMD Ryzen 5",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Procesador",
+              "CPU",
+              "Processor"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(intel\\s+)?(core\\s+)?(i[3579]|celeron)[-\\s]*([0-9]+[A-Z]*)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(amd\\s+)?(ryzen\\s+[3579]\\s+\\d{4}[A-Z]*)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_RAM",
+      "etiqueta": "Memoria RAM",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 8GB DDR4, 16GB SODIMM",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RAM",
+              "Memoria",
+              "Memory"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(gb|GB)\\s*(ddr[345]|ram|memoria|sodimm)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALMACENAMIENTO",
+      "etiqueta": "Almacenamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 256GB SSD, 1TB HDD, 512GB NVMe",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Almacenamiento",
+              "Storage",
+              "Disco"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(ssd|hdd|emmc|nvme)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DISCO",
+      "etiqueta": "Tipo de Disco",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: SSD NVMe M.2, SSD SATA, eMMC, HDD",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": [
+        "SSD NVMe M.2",
+        "SSD M.2 SATA",
+        "SSD SATA",
+        "HDD SATA",
+        "eMMC"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo Disco",
+              "Tecnología",
+              "Interface"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(nvme|m\\.2|sata|emmc)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(ssd|SSD)\\s+(nvme|m\\.2|sata)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(hdd|HDD)\\s+sata",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_PANTALLA",
+      "etiqueta": "Tamaño de Pantalla",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 14.0, 15.6, 17.3",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 10.0,
+        "max": 18.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pantalla",
+              "Display",
+              "Screen",
+              "Pulgadas"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{2}(?:\\.\\d)?)[\\\"]?\\s*(pulgadas|pulg|\\\"|inch)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_PANTALLA",
+      "etiqueta": "Resolución de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1920x1080, 1366x768, 3840x2160",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "Res"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{3,4})\\s*[xX×]\\s*(\\d{3,4})",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "fhd": "1920x1080",
+            "hd": "1366x768",
+            "4k": "3840x2160"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PANTALLA",
+      "etiqueta": "Tipo de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: IPS, TN, VA, OLED, Touch",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": [
+        "IPS",
+        "TN",
+        "VA",
+        "OLED",
+        "LED",
+        "LCD",
+        "Touch",
+        "IPS Touch"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo Pantalla",
+              "Panel",
+              "Display Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ips|tn|va|oled|touch|tactil)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "ips",
+              "tn",
+              "va",
+              "oled",
+              "touch",
+              "tactil",
+              "led",
+              "lcd"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TARJETA_GRAFICA",
+      "etiqueta": "Tarjeta Gráfica",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Intel UHD, NVIDIA GTX 1650, AMD Radeon",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "GPU",
+              "Gráfica",
+              "Video",
+              "Graphics"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(intel|nvidia|amd)\\s+(uhd|iris|gtx|rtx|radeon|mx)\\s*[\\w\\s]*",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_OPERATIVO",
+      "etiqueta": "Sistema Operativo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Windows 11, Windows 10, Linux",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "SO",
+              "OS",
+              "Sistema"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(windows|linux|chrome\\s*os|mac\\s*os)\\s*[\\d\\.]*",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "WEBCAM",
+      "etiqueta": "Cámara Web",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: HD 720p, FHD 1080p, Sí, No",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": [
+        "Sí",
+        "No",
+        "HD 720p",
+        "FHD 1080p",
+        "2MP",
+        "5MP"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Webcam",
+              "Cámara",
+              "Camera",
+              "Video"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(webcam|camara|camera)\\s*(hd|fhd|720p|1080p|\\d+mp)?\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hd|fhd|720p|1080p)\\s*(webcam|camara|camera)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "WIFI_VERSION",
+      "etiqueta": "Versión WiFi",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: WiFi 6, WiFi 5, 802.11ax, WiFi 6E",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "WiFi 6E (802.11ax)",
+        "WiFi 6 (802.11ax)",
+        "WiFi 5 (802.11ac)",
+        "WiFi 4 (802.11n)"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "WiFi",
+              "Wireless",
+              "WLAN"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi\\s*[56]e?|802\\.11[a-z]+)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "wifi6": "WiFi 6 (802.11ax)",
+            "wifi5": "WiFi 5 (802.11ac)",
+            "802.11ax": "WiFi 6 (802.11ax)",
+            "802.11ac": "WiFi 5 (802.11ac)"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BLUETOOTH_VERSION",
+      "etiqueta": "Versión Bluetooth",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 5.2, 5.0, 4.2",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Bluetooth",
+              "BT"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(bluetooth|bt)\\s*([45]\\.[0-2])\\b",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\bbt\\s*([45]\\.[0-2])\\b",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_USB_CANTIDAD",
+      "etiqueta": "Puertos USB (Detalle)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2x USB 3.2, 1x USB-C Thunderbolt",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "USB",
+              "Puertos USB",
+              "USB Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(usb\\s*[23]\\.[012]|usb[-\\s]*[abc]|type[-\\s]*[ac]|thunderbolt)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "usb\\s*[23]\\.[012]|usb[-\\s]*c|thunderbolt",
+            "multiple": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTO_ETHERNET",
+      "etiqueta": "Puerto Ethernet",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, RJ45 Gigabit",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "opciones": [
+        "Sí",
+        "No",
+        "RJ45 Gigabit",
+        "RJ45 10/100/1000"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Ethernet",
+              "RJ45",
+              "LAN"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ethernet|rj45|rj-45|lan)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(gigabit|10/100/1000)\\s*(ethernet|rj45)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LECTOR_TARJETAS",
+      "etiqueta": "Lector de Tarjetas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, SD, microSD",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "opciones": [
+        "Sí",
+        "No",
+        "SD",
+        "microSD",
+        "SD/microSD"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Lector",
+              "Card Reader",
+              "SD"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(sd|microsd|card\\s*reader|lector\\s*tarjetas)\\b",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Puertos Adicionales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HDMI, VGA, Audio Jack",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Puertos"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hdmi|vga|displayport|audio|jack)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECLADO_RETROILUMINADO",
+      "etiqueta": "Teclado Retroiluminado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, RGB",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "opciones": [
+        "Sí",
+        "No",
+        "RGB",
+        "Blanco"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Retroiluminado",
+              "Backlit",
+              "RGB"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(retroiluminado|backlit|rgb|iluminado)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "teclado\\s+(retroiluminado|backlit|rgb)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECLADO_NUMERICO",
+      "etiqueta": "Teclado Numérico",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "opciones": [
+        "Sí",
+        "No"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Numérico",
+              "Numeric Keypad",
+              "Numpad"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(numerico|numeric\\s*keypad|teclado\\s*numerico)\\b",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "UNIDAD_OPTICA",
+      "etiqueta": "Unidad Óptica",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, DVD, Blu-ray",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "opciones": [
+        "Sí",
+        "No",
+        "DVD-RW",
+        "DVD-ROM",
+        "Blu-ray"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Óptica",
+              "DVD",
+              "CD",
+              "Optical"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(dvd|cd|blu[-\\s]*ray|grabador|lector\\s*optico)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BATERIA",
+      "etiqueta": "Batería",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 48Wh, 6-cell, 4400mAh",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Bateria",
+              "Battery",
+              "Autonomia"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(wh|whr|mah|celda|cell)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Plata, Azul, Gris",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "azul",
+              "rojo",
+              "silver",
+              "black"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1.8, 2.2, 3.5",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "validacion": {
+        "min": 0.8,
+        "max": 5.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Kg"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d)\\s*(kg|kilogramos)",
+            "grupo": 1
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Laptop Toshiba básica",
+      "texto": "01 LAPTOP TOSHIBA S/N: 7F200509C MO: INTEL CORE i7- SATELLITE 15.6\" FHD IPS webcam HD WiFi 6 Bluetooth 5.0 teclado retroiluminado DVD-RW",
+      "extraccionEsperada": {
+        "MARCA": "TOSHIBA",
+        "MODELO": "SATELLITE",
+        "NUMERO_SERIE": "7F200509C",
+        "PROCESADOR": "INTEL CORE i7",
+        "TAMAÑO_PANTALLA": "15.6",
+        "RESOLUCION_PANTALLA": "1920x1080",
+        "TIPO_PANTALLA": "IPS",
+        "WEBCAM": "HD",
+        "WIFI_VERSION": "WiFi 6",
+        "BLUETOOTH_VERSION": "5.0",
+        "TECLADO_RETROILUMINADO": "Sí",
+        "UNIDAD_OPTICA": "DVD-RW"
+      }
+    },
+    {
+      "nombre": "Caso 2: Laptop en lenguaje natural",
+      "texto": "Laptop Dell Inspiron 15 3000 Intel Core i5-10210U 8GB RAM 256GB SSD NVMe 15.6\" FHD Touch Windows 10 webcam 1080p WiFi 5 802.11ac BT 4.2 2x USB 3.0 1x USB-C HDMI RJ45 Gigabit SD reader teclado numérico sin DVD",
+      "extraccionEsperada": {
+        "MARCA": "Dell",
+        "MODELO": "Inspiron 15 3000",
+        "PROCESADOR": "Intel Core i5-10210U",
+        "MEMORIA_RAM": "8GB RAM",
+        "ALMACENAMIENTO": "256GB SSD NVMe",
+        "TIPO_DISCO": "SSD NVMe",
+        "TAMAÑO_PANTALLA": "15.6",
+        "RESOLUCION_PANTALLA": "1920x1080",
+        "TIPO_PANTALLA": "Touch",
+        "SISTEMA_OPERATIVO": "Windows 10",
+        "WEBCAM": "1080p",
+        "WIFI_VERSION": "WiFi 5 (802.11ac)",
+        "BLUETOOTH_VERSION": "4.2",
+        "PUERTOS_USB_CANTIDAD": "2x USB 3.0, 1x USB-C",
+        "PUERTO_ETHERNET": "RJ45 Gigabit",
+        "LECTOR_TARJETAS": "SD",
+        "TECLADO_NUMERICO": "Sí",
+        "UNIDAD_OPTICA": "No"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "HP",
+        "Modelo": "Pavilion Gaming 15-dk1",
+        "Procesador": "Intel Core i7-10750H",
+        "RAM": "16GB DDR4",
+        "Almacenamiento": "512GB SSD M.2 NVMe",
+        "Tipo Disco": "SSD NVMe M.2",
+        "Pantalla": "15.6 FHD IPS",
+        "GPU": "NVIDIA GTX 1650",
+        "Webcam": "HD 720p",
+        "WiFi": "WiFi 6 802.11ax",
+        "Bluetooth": "5.0",
+        "USB": "3x USB 3.1, 1x USB-C",
+        "Ethernet": "RJ45",
+        "Retroiluminado": "RGB",
+        "Numérico": "Sí",
+        "Óptica": "No",
+        "Color": "Negro"
+      },
+      "extraccionEsperada": {
+        "MARCA": "HP",
+        "MODELO": "Pavilion Gaming 15-dk1",
+        "PROCESADOR": "Intel Core i7-10750H",
+        "MEMORIA_RAM": "16GB DDR4",
+        "ALMACENAMIENTO": "512GB SSD M.2 NVMe",
+        "TIPO_DISCO": "SSD NVMe M.2",
+        "TAMAÑO_PANTALLA": "15.6",
+        "TIPO_PANTALLA": "IPS",
+        "TARJETA_GRAFICA": "NVIDIA GTX 1650",
+        "WEBCAM": "HD 720p",
+        "WIFI_VERSION": "WiFi 6 (802.11ax)",
+        "BLUETOOTH_VERSION": "5.0",
+        "PUERTOS_USB_CANTIDAD": "3x USB 3.1, 1x USB-C",
+        "PUERTO_ETHERNET": "RJ45",
+        "TECLADO_RETROILUMINADO": "RGB",
+        "TECLADO_NUMERICO": "Sí",
+        "UNIDAD_OPTICA": "No",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

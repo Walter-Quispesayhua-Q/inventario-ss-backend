@@ -1,0 +1,105 @@
+"""
+Persona física registrada en el sistema.
+Puede ser un empleado, prestador o responsable de bienes.
+"""
+type PersonaDTO {
+    id: ID!
+    nombre: String!
+    apellido: String!
+    identificacion: String
+    codigo: String!
+    email: String
+    telefono: String
+    fechaCreacion: String!
+    fechaUltimaModificacion: String!
+    tieneUsuarioVinculado: Boolean
+    usuarioId: ID
+    usuarioEmail: String
+}
+
+"""
+Resumen de un bien para mostrar en listados.
+"""
+type BienResumenDTO {
+    id: ID!
+    nombreBien: String!
+    caf: String
+    categoriaNombre: String
+    ubicacionNombre: String
+}
+
+"""
+Persona con sus bienes a cargo.
+"""
+type PersonaConBienesDTO {
+    persona: PersonaDTO!
+    bienesACargo: [BienResumenDTO!]!
+    totalBienes: Int!
+}
+
+"""
+Datos para crear una nueva persona en el sistema.
+"""
+input PersonaCreacionInput {
+    nombre: String!
+    apellido: String!
+    identificacion: String
+    codigo: String!
+    email: String
+    telefono: String
+}
+
+"""
+Datos para actualizar una persona existente.
+"""
+input PersonaActualizacionInput {
+    nombre: String
+    apellido: String
+    identificacion: String
+    email: String
+    telefono: String
+}
+
+extend type Query {
+    """
+    Obtiene todas las personas registradas en el sistema.
+    """
+    personas: [PersonaDTO!]!
+    
+    """
+    Obtiene una persona específica por su ID.
+    """
+    personaPorId(id: ID!): PersonaDTO
+    
+    """
+    Obtiene una persona por su código único.
+    """
+    personaPorCodigo(codigo: String!): PersonaDTO
+    
+    """
+    Obtiene una persona con todos sus bienes a cargo.
+    """
+    personaConBienes(id: ID!): PersonaConBienesDTO
+    
+    """
+    Obtiene personas que no tienen un usuario vinculado.
+    """
+    personasSinUsuario: [PersonaDTO!]!
+}
+
+extend type Mutation {
+    """
+    Registra una nueva persona en el sistema.
+    """
+    crearPersona(persona: PersonaCreacionInput!): OperacionResultadoGenerico!
+    
+    """
+    Actualiza los datos de una persona existente.
+    """
+    actualizarPersona(id: ID!, persona: PersonaActualizacionInput!): OperacionResultadoGenerico!
+    
+    """
+    Elimina una persona del sistema.
+    """
+    eliminarPersona(id: ID!): OperacionResultadoGenerico!
+}

@@ -1,0 +1,526 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-CHR-2025-V1",
+    "version": "1.0",
+    "nombre": "Silla",
+    "categoriaSemantica": "MOBILIARIO_SILLA_ASIENTO",
+    "descripcion": "Plantilla ML de silla - Maneja columna única, múltiples columnas e híbrido para mobiliario de asientos y sillas de oficina"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIPO_ESPECIFICO",
+        "condicion": ".*(giratoria|fija|reclinable|ergonomica|sillon).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró tipo específico de silla"
+      },
+      {
+        "nombre": "BONUS_MODELO_OFICINA",
+        "condicion": ".*(gerencial|ejecutivo|aeropuerto|stefany|cajero).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró modelo específico de silla de oficina"
+      },
+      {
+        "nombre": "BONUS_MATERIAL_ESPECIFICO",
+        "condicion": ".*(cuero|malla|cuerina|ultra.*cuero|tapizado).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró material específico de tapizado"
+      },
+      {
+        "nombre": "BONUS_DIMENSIONES",
+        "condicion": ".*\\d+\\s*(cm|m).*x.*\\d+\\s*(cm|m).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron dimensiones específicas"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["silla", "sillon", "chair", "seat", "asiento"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["giratoria", "fija", "oficina", "ergonomica", "reclinable"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["tapizada", "cromada", "hidraulico", "neumatico", "regulable"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["mobiliario", "furniture", "base", "respaldo"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["giratoria", "fija", "reclinable", "ergonomica", "plegable", "apilable", "barstool"],
+      "modelos": ["gerencial", "ejecutivo", "aeropuerto", "stefany", "cajero", "estudiante", "viva-eco"],
+      "materiales": ["cuero", "ultra-cuero", "cuerina", "malla", "tela", "plastico", "vinilo", "mesh"],
+      "sistemas": ["hidraulico", "neumatico", "cromado", "metalico", "reforzado", "regulable"],
+      "caracteristicas": ["brazos", "apoyabrazos", "espaldar", "cabecera", "lumbar", "reposapies"],
+      "bases": ["5-ruedas", "4-patas", "central", "cromada", "negra", "metalica", "giratoria"],
+      "colores_comunes": ["negro", "gris", "blanco", "marron", "chocolate", "vino", "beige"],
+      "marcas_mobiliario": ["steelcase", "herman-miller", "haworth", "okamura", "humanscale"],
+      "tapizados": ["tapizado", "tapiz", "forrado", "recubierto", "acolchado"]
+    },
+    "marcas": {
+      "tier1": ["steelcase", "herman-miller", "haworth", "teknion", "okamura"],
+      "tier2": ["humanscale", "knoll", "global", "eurotech", "boss"],
+      "tier3": ["flash-furniture", "amazon-basics", "ikea", "office-depot", "staples"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["mesa", "escritorio", "estante", "archivador"],
+      "fuerte": ["monitor", "cpu", "teclado", "mouse"],
+      "media": ["sofa", "cama", "banco", "taburete"],
+      "debil": ["mueble", "furniture", "office", "trabajo"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(steelcase|herman-miller|haworth|teknion)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(gerencial|ejecutivo|aeropuerto|stefany|cajero|viva[-\\s]*eco)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_silla": "\\b(silla|sillon|chair|seat|asiento)\\b",
+      "tipo_mecanismo": "\\b(giratoria|fija|reclinable|ergonomica|plegable|apilable)\\b",
+      "modelo_oficina": "\\b(gerencial|ejecutivo|aeropuerto|stefany|cajero|estudiante|directivo)\\b",
+      "material_tapizado": "\\b(cuero|ultra[-\\s]*cuero|cuerina|malla|tela|plastico|vinilo|mesh)\\b",
+      "sistema_base": "\\b(hidraulico|neumatico|cromado|metalico|reforzado|regulable)\\b",
+      "caracteristicas_ergonomicas": "\\b(ergonomica|lumbar|cervical|reposabrazos|apoyabrazos|cabecera)\\b",
+      "tipo_base": "\\b(5[-\\s]*ruedas|4[-\\s]*patas|central|giratoria|fija)\\b",
+      "ajustes": "\\b(altura[-\\s]*regulable|regulable|ajustable|reclinable)\\b",
+      "respaldo": "\\b(espaldar|respaldo|backrest)\\s*(alto|bajo|medio|ergonomico|malla|tapizado)?",
+      "brazos": "\\b(con[-\\s]*brazos|sin[-\\s]*brazos|apoyabrazos|reposabrazos|ajustables)\\b",
+      "cantidad": "(\\d{1,2})\\s*(silla|sillas|sillones?)",
+      "capacidad_peso": "(\\d+)\\s*(kg|kilogramos?)\\s*(capacidad|peso|max)",
+      "dimensiones": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m))?",
+      "altura": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(alto|altura|height)",
+      "ancho": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(ancho|width|wide)",
+      "profundidad": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(profundo|fondo|depth)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Steelcase, Herman Miller, Nacional",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(steelcase|herman-miller|haworth|teknion)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Gerencial, Ejecutivo, Aeropuerto, Stefany",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(gerencial|ejecutivo|aeropuerto|stefany|cajero|viva[-\\s]*eco)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SILLA",
+      "etiqueta": "Tipo de Silla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Giratoria, Fija, Sillón, Ergonómica",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Giratoria", "Fija", "Sillón", "Reclinable", "Ergonómica", "Plegable", "Apilable"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Categoria"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(giratoria|fija|reclinable|ergonomica|plegable|apilable|sillon)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["giratoria", "fija", "sillon", "reclinable", "ergonomica"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_DESTINADO",
+      "etiqueta": "Uso Destinado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Oficina, Estudiante, Ejecutivo, Cajero",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Oficina", "Estudiante", "Ejecutivo", "Gerencial", "Cajero", "Recepción", "Sala de espera"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Uso", "Purpose", "Destino"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(oficina|estudiante|ejecutivo|gerencial|cajero|recepcion)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["oficina", "estudiante", "ejecutivo", "gerencial", "cajero"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_TAPIZADO",
+      "etiqueta": "Material de Tapizado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Cuero, Ultra cuero, Cuerina, Malla, Tela",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Cuero", "Ultra cuero", "Cuerina", "Malla", "Tela", "Plástico", "Vinilo", "Mesh"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Tapizado", "Upholstery"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cuero|ultra[-\\s]*cuero|cuerina|malla|tela|plastico|vinilo|mesh)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["cuero", "ultra", "cuerina", "malla", "tela", "plastico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_BASE",
+      "etiqueta": "Sistema de Base",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Hidráulico, Cromado, Neumático",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Base", "Sistema", "Mechanism"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(hidraulico|neumatico|cromado|metalico|reforzado|regulable)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_BASE",
+      "etiqueta": "Tipo de Base",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 5 ruedas, 4 patas, Base central",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["5 ruedas", "4 patas", "Base central", "Giratoria", "Fija", "Patín"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Base Type", "Ruedas", "Patas"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(5[-\\s]*ruedas|4[-\\s]*patas|central|giratoria|fija)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ruedas", "patas", "central", "giratoria", "fija"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "REGULACION_ALTURA",
+      "etiqueta": "Regulación de Altura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Hidráulica, Neumática",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["Sí", "No", "Hidráulica", "Neumática", "Manual", "Automática"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Altura", "Height", "Regulable"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(altura[-\\s]*regulable|regulable|ajustable|reclinable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["regulable", "ajustable", "altura", "reclinable"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESPALDO",
+      "etiqueta": "Tipo de Respaldo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Alto, Medio, Bajo, Ergonómico, Malla",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": ["Alto", "Medio", "Bajo", "Ergonómico", "Malla", "Tapizado", "Reforzado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Respaldo", "Backrest", "Espaldar"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(espaldar|respaldo|backrest)\\s*(alto|bajo|medio|ergonomico|malla|tapizado|reforzado)?", "grupo": 0},
+          {"tipo": "PALABRAS", "lista": ["espaldar", "respaldo", "alto", "medio", "bajo", "ergonomico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APOYABRAZOS",
+      "etiqueta": "Apoyabrazos",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Con brazos, Sin brazos, Ajustables",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Con brazos", "Sin brazos", "Ajustables", "Fijos", "Regulables", "Acolchados"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Brazos", "Arms", "Apoyabrazos"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(con[-\\s]*brazos|sin[-\\s]*brazos|apoyabrazos|reposabrazos|ajustables)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["con", "sin", "brazos", "apoyabrazos", "ajustables"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ERGONOMICAS",
+      "etiqueta": "Características Ergonómicas",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Soporte lumbar, Ajuste cervical, Reposacabezas",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ergonómico", "Ergonomic", "Features"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ergonomica|lumbar|cervical|reposabrazos|apoyabrazos|cabecera)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_PESO",
+      "etiqueta": "Capacidad de Peso (kg)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 100, 120, 150",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 50,
+        "max": 300
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Weight", "Peso Max"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(kg|kilogramos?)\\s*(capacidad|peso|max)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 4, 18, 32",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(silla|sillas|sillones?)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(silla|sillas|sillones?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTURA_TOTAL",
+      "etiqueta": "Altura Total (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 90, 110, 125",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 60,
+        "max": 150
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Altura", "Height", "Alto"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(alto|altura|height)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 48, 57, 67",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 30,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Wide"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(ancho|width|wide)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROFUNDIDAD",
+      "etiqueta": "Profundidad (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 48, 60, 79",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 30,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Profundidad", "Depth", "Fondo"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(profundo|fondo|depth)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 57x48x90 cm, 1.80mx0.67mx0.79m",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "DIM"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m))?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: ISO 9001, GREENGUARD, BIFMA",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(iso\\s*\\d+|greenguard|bifma|ansi|gs)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Gris, Chocolate, Vino",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "gris", "chocolate", "vino", "blanco", "marron"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Silla Gerencial del inventario real",
+      "texto": "32 SILLA GIRATORIA PARA ESTUDIANTE, ESPALDAR REFORZADO, BASE Y PISTON MODELO GERENCIAL, REGULABLE EN ALTURA. 50CM X 80 CMS.",
+      "extraccionEsperada": {
+        "MODELO": "GERENCIAL",
+        "TIPO_SILLA": "Giratoria",
+        "USO_DESTINADO": "Estudiante",
+        "RESPALDO": "Reforzado",
+        "REGULACION_ALTURA": "Sí",
+        "CANTIDAD": "32",
+        "DIMENSIONES": "50CM X 80 CMS"
+      }
+    },
+    {
+      "nombre": "Caso 2: Silla de oficina tapizada del inventario real",
+      "texto": "01 sillas de oficina giratoria de tapiz con respaldo tapizado en material ultra cuero con base cromado hidráulico Mo Gerencial Co Negro",
+      "extraccionEsperada": {
+        "MODELO": "Gerencial",
+        "TIPO_SILLA": "Giratoria",
+        "USO_DESTINADO": "Oficina",
+        "MATERIAL_TAPIZADO": "Ultra cuero",
+        "SISTEMA_BASE": ["Cromado", "Hidráulico"],
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 3: Silla fija aeropuerto del inventario real",
+      "texto": "01 Silla Fija triple cromada y tapizada en cuerina color negro Mo Aeropuerto DIM. aprox.1.80mx0.67mx0.79m",
+      "extraccionEsperada": {
+        "MODELO": "Aeropuerto",
+        "TIPO_SILLA": "Fija",
+        "MATERIAL_TAPIZADO": "Cuerina",
+        "SISTEMA_BASE": ["Cromado"],
+        "COLOR": "Negro",
+        "DIMENSIONES": "1.80mx0.67mx0.79m"
+      }
+    }
+  ]
+}

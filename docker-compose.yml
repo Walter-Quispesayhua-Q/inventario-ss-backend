@@ -1,0 +1,60 @@
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:17-alpine
+    container_name: inventario-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gestion_inventario_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-POSTGRES}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gestion_inventario_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - inventario-network
+
+  # Aplicacion Spring Boot
+  backend:
+    image: inventario:local
+    container_name: inventario-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Database - apunta al contenedor postgres, no a localhost
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestion_inventario_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-POSTGRES}
+      # JWT
+      JWT_SECRET: ${JWT_SECRET:-O0bKj6c44OPd+jLaBqxf9OCzjpql9mdcHfS+bLhVlsI=}
+      # Email (opcional - comenta si no lo necesitas, solo es para la recuperación de cuenta)
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      # JVM optimizations para contenedor
+      JAVA_TOOL_OPTIONS: "-XX:MaxRAMPercentage=75.0"
+      # Perfil de Spring - usa application-prod.properties
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
+    networks:
+      - inventario-network
+
+# Volumen persistente para la base de datos
+volumes:
+  postgres_data:
+    name: inventario-postgres-data
+
+# Red aislada para los contenedores
+networks:
+  inventario-network:
+    name: inventario-network
+    driver: bridge

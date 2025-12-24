@@ -1,0 +1,1070 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-TAB-2025-V1",
+    "version": "1.0",
+    "nombre": "Tablet",
+    "categoriaSemantica": "MOVIL_TABLET_TOUCHSCREEN",
+    "descripcion": "Plantilla ML de Tablet - Maneja columna única, múltiples columnas e híbrido para tablets, iPads y dispositivos móviles con pantalla táctil"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_SAMSUNG_GALAXY",
+        "condicion": ".*(ma.*samsung[-\\s]*galaxi|samsung.*galaxy.*tab).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Samsung Galaxy específico del inventario"
+      },
+      {
+        "nombre": "BONUS_ANDROID_SISTEMA",
+        "condicion": ".*(sistema.*operativo.*android|android.*de.*\\d+).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró sistema operativo Android específico"
+      },
+      {
+        "nombre": "BONUS_WIFI_802",
+        "condicion": ".*(wi[-\\s]*fi.*802|802.*2[,\\.]4.*ghz).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró WiFi 802.11 específico"
+      },
+      {
+        "nombre": "BONUS_TAMAÑO_PULGADAS",
+        "condicion": ".*(de\\s+\\d+[\\.,]\\d+|\\d+[\\.,]\\d+.*pulgadas).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró tamaño específico en pulgadas"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "tablet",
+          "ipad",
+          "galaxy",
+          "android",
+          "touchscreen"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "samsung",
+          "sistema",
+          "operativo",
+          "wifi",
+          "pulgadas"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "pantalla",
+          "tactil",
+          "movil",
+          "portatil",
+          "digital"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "device",
+          "mobile",
+          "computing",
+          "touch"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_principales": [
+        "samsung",
+        "apple",
+        "huawei",
+        "lenovo",
+        "xiaomi",
+        "amazon"
+      ],
+      "modelos_samsung": [
+        "galaxy-tab",
+        "galaxy-note",
+        "galaxy-book"
+      ],
+      "modelos_apple": [
+        "ipad",
+        "ipad-pro",
+        "ipad-air",
+        "ipad-mini"
+      ],
+      "modelos_huawei": [
+        "matepad",
+        "mediapad",
+        "honor-pad"
+      ],
+      "sistemas_operativos": [
+        "android",
+        "ios",
+        "ipados",
+        "windows",
+        "harmonyos"
+      ],
+      "procesadores": [
+        "snapdragon",
+        "mediatek",
+        "apple-a15",
+        "kirin",
+        "exynos"
+      ],
+      "tamaños_pantalla": [
+        "7",
+        "8",
+        "9.7",
+        "10.1",
+        "10.5",
+        "11",
+        "12.9",
+        "13"
+      ],
+      "resoluciones": [
+        "1920x1080",
+        "2560x1600",
+        "2048x1536",
+        "2732x2048"
+      ],
+      "conectividad": [
+        "wifi",
+        "bluetooth",
+        "4g",
+        "5g",
+        "lte",
+        "cellular"
+      ],
+      "almacenamiento": [
+        "32gb",
+        "64gb",
+        "128gb",
+        "256gb",
+        "512gb",
+        "1tb"
+      ],
+      "ram": [
+        "2gb",
+        "3gb",
+        "4gb",
+        "6gb",
+        "8gb",
+        "12gb",
+        "16gb"
+      ],
+      "caracteristicas": [
+        "touchscreen",
+        "stylus",
+        "keyboard",
+        "biometric",
+        "gps"
+      ],
+      "puertos": [
+        "usb-c",
+        "lightning",
+        "micro-usb",
+        "hdmi",
+        "sd-card"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "samsung",
+        "apple",
+        "huawei",
+        "lenovo",
+        "microsoft"
+      ],
+      "tier2": [
+        "xiaomi",
+        "amazon",
+        "asus",
+        "acer",
+        "hp"
+      ],
+      "tier3": [
+        "tcl",
+        "realme",
+        "oneplus",
+        "oppo",
+        "vivo"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "cpu",
+        "laptop",
+        "smartphone",
+        "procesador",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "escritorio",
+        "archivador"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(samsung|apple|huawei|lenovo)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(galaxy[-\\s]*tab|ipad|matepad)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_tablet": "\\b(tablet|ipad|galaxy\\s+tab|matepad|mediapad)\\b",
+      "sistema_operativo": "\\b(android|ios|ipados|harmonyos|windows)\\s*(\\d+(?:\\.\\d+)?)?\\b",
+      "tamaño_pantalla": "(\\d+(?:[\\.,]\\d+)?)\\s*(?:pulgadas?|inch|\"|de)",
+      "resolucion_pantalla": "(\\d+)\\s*x\\s*(\\d+)\\s*(pixeles?|px|resolution)?",
+      "ram_tablet": "(\\d+)\\s*gb\\s*(ram|memory|memoria)",
+      "almacenamiento_tablet": "(\\d+)\\s*(gb|tb)\\s*(almacenamiento|storage|interno)",
+      "conectividad_tablet": "\\b(wifi|wi[-\\s]*fi|bluetooth|4g|5g|lte|cellular)\\b",
+      "procesador_tablet": "\\b(snapdragon|mediatek|apple\\s+a\\d+|kirin|exynos)\\s*(\\d+)?\\b",
+      "bateria_tablet": "(\\d+)\\s*mah\\s*(battery|bateria|autonomia)?",
+      "camara_tablet": "(\\d+)\\s*mp\\s*(camera|camara|trasera|frontal)?",
+      "version_so": "\\b(android\\s+\\d+|ios\\s+\\d+|windows\\s+\\d+)\\b",
+      "frecuencia_wifi": "(\\d+[\\.,]\\d+)\\s*ghz",
+      "estandar_wifi": "\\b(802\\.11|wifi\\s*[4-6]|ac|ax|n|g)\\b",
+      "grosor_tablet": "(\\d+(?:\\.\\d+)?)\\s*mm\\s*(grosor|espesor|thick)",
+      "peso_tablet": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)",
+      "tipo_pantalla": "\\b(ips|oled|amoled|lcd|retina|qled)\\b",
+      "caracteristicas_especiales": "\\b(stylus|s[-\\s]*pen|keyboard|biometric|gps|nfc)\\b",
+      "puertos_conexion": "\\b(usb[-\\s]*c|lightning|micro[-\\s]*usb|hdmi|sd[-\\s]*card)\\b",
+      "cantidad": "(\\d{1,2})\\s*(tablet|ipad|galaxy\\s+tab)",
+      "certificaciones": "\\b(ip\\d+|mil[-\\s]*std|gorilla\\s*glass)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Samsung, Apple, Huawei, Lenovo",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(samsung|apple|huawei|lenovo)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Galaxy Tab, iPad Pro, MatePad",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(galaxy[-\\s]*tab|ipad|matepad)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_OPERATIVO",
+      "etiqueta": "Sistema Operativo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Android, iOS, iPadOS, Windows",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Android",
+        "iOS",
+        "iPadOS",
+        "Windows",
+        "HarmonyOS"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sistema",
+              "OS",
+              "Operating System"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(android|ios|ipados|harmonyos|windows)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "android",
+              "ios",
+              "ipados",
+              "windows",
+              "harmonyos"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VERSION_SO",
+      "etiqueta": "Versión del SO",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Android 12, iOS 15, Windows 11",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Versión SO",
+              "OS Version",
+              "Sistema"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(android\\s+\\d+|ios\\s+\\d+|windows\\s+\\d+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_PANTALLA",
+      "etiqueta": "Tamaño de Pantalla (pulgadas)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 7.0, 8.0, 10.1, 11.0, 12.9",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 5.0,
+        "max": 20.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tamaño",
+              "Size",
+              "Pantalla"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*(?:pulgadas?|inch|\"|de)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_PANTALLA",
+      "etiqueta": "Resolución de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1920x1080, 2560x1600, 2048x1536",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "Pixels"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*(pixeles?|px|resolution)?",
+            "grupo": "0"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RAM",
+      "etiqueta": "Memoria RAM (GB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2, 3, 4, 6, 8, 12",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 1,
+        "max": 32
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RAM",
+              "Memory",
+              "Memoria"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*gb\\s*(ram|memory|memoria)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALMACENAMIENTO",
+      "etiqueta": "Almacenamiento (GB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 32, 64, 128, 256, 512, 1024",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 16,
+        "max": 2048
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Almacenamiento",
+              "Storage",
+              "Memory"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(gb|tb)\\s*(almacenamiento|storage|interno)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WiFi, Bluetooth, 4G, 5G, LTE",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Network"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi|wi[-\\s]*fi|bluetooth|4g|5g|lte|cellular)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESTANDAR_WIFI",
+      "etiqueta": "Estándar WiFi",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 802.11, WiFi 4, WiFi 5, WiFi 6",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "802.11",
+        "WiFi 4",
+        "WiFi 5",
+        "WiFi 6",
+        "AC",
+        "AX"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "WiFi",
+              "Wireless",
+              "802"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(802\\.11|wifi\\s*[4-6]|ac|ax|n|g)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "802",
+              "wifi",
+              "ac",
+              "ax",
+              "n",
+              "g"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_WIFI",
+      "etiqueta": "Frecuencia WiFi (GHz)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.4, 5.0, 6.0",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 2.0,
+        "max": 10.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "Frequency",
+              "GHz"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+[\\.,]\\d+)\\s*ghz",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROCESADOR",
+      "etiqueta": "Procesador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Snapdragon 888, Apple A15, MediaTek",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Procesador",
+              "Processor",
+              "CPU"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(snapdragon|mediatek|apple\\s+a\\d+|kirin|exynos)\\s*(\\d+)?\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "snapdragon",
+              "mediatek",
+              "apple",
+              "kirin",
+              "exynos"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BATERIA",
+      "etiqueta": "Batería (mAh)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 5000, 7000, 8000, 10000",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 3000,
+        "max": 15000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Batería",
+              "Battery",
+              "mAh"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*mah\\s*(battery|bateria|autonomia)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAMARA_PRINCIPAL",
+      "etiqueta": "Cámara Principal (MP)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 8, 12, 13, 48, 64",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 2,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cámara",
+              "Camera",
+              "MP"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*mp\\s*(camera|camara|trasera|principal)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PANTALLA",
+      "etiqueta": "Tipo de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: IPS, OLED, AMOLED, LCD, Retina",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": [
+        "IPS",
+        "OLED",
+        "AMOLED",
+        "LCD",
+        "Retina",
+        "QLED"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pantalla",
+              "Display",
+              "Screen"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ips|oled|amoled|lcd|retina|qled)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "ips",
+              "oled",
+              "amoled",
+              "lcd",
+              "retina"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Stylus, S-Pen, Keyboard, Biometric, GPS",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Características",
+              "Features",
+              "Extras"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(stylus|s[-\\s]*pen|keyboard|biometric|gps|nfc)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_CONEXION",
+      "etiqueta": "Puertos de Conexión",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB-C, Lightning, Micro-USB, HDMI",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Puertos",
+              "Ports",
+              "Conexiones"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(usb[-\\s]*c|lightning|micro[-\\s]*usb|hdmi|sd[-\\s]*card)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (g)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 300, 450, 500, 680",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 200,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(tablet|ipad|galaxy\\s+tab)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(tablet|ipad|galaxy\\s+tab)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Dorado, Azul",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "dorado",
+              "azul",
+              "plata"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Samsung Galaxy del inventario real",
+      "texto": "1 TABLET MaSAMSUNG-GALAXI Sistema Operativo Android de 10.1 WI-FITM,802, 2,4GHz",
+      "extraccionEsperada": {
+        "MARCA": "SAMSUNG-GALAXI",
+        "MODELO": "Galaxy",
+        "SISTEMA_OPERATIVO": "Android",
+        "TAMAÑO_PANTALLA": "10.1",
+        "CONECTIVIDAD": [
+          "WiFi"
+        ],
+        "ESTANDAR_WIFI": "802.11",
+        "FRECUENCIA_WIFI": "2.4",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: iPad Pro con especificaciones",
+      "texto": "01 iPad Pro de 12.9 pulgadas 256GB WiFi + Cellular con iOS 15 y Apple A15",
+      "extraccionEsperada": {
+        "MARCA": "Apple",
+        "MODELO": "iPad Pro",
+        "TAMAÑO_PANTALLA": "12.9",
+        "ALMACENAMIENTO": "256",
+        "CONECTIVIDAD": [
+          "WiFi",
+          "Cellular"
+        ],
+        "SISTEMA_OPERATIVO": "iOS",
+        "VERSION_SO": "iOS 15",
+        "PROCESADOR": "Apple A15"
+      }
+    },
+    {
+      "nombre": "Caso 3: Huawei MatePad con HarmonyOS",
+      "texto": "02 Huawei MatePad 10.4 pulgadas HarmonyOS 64GB RAM 4GB WiFi Bluetooth",
+      "extraccionEsperada": {
+        "MARCA": "Huawei",
+        "MODELO": "MatePad",
+        "TAMAÑO_PANTALLA": "10.4",
+        "SISTEMA_OPERATIVO": "HarmonyOS",
+        "ALMACENAMIENTO": "64",
+        "RAM": "4",
+        "CONECTIVIDAD": [
+          "WiFi",
+          "Bluetooth"
+        ],
+        "CANTIDAD": "2"
+      }
+    }
+  ]
+}

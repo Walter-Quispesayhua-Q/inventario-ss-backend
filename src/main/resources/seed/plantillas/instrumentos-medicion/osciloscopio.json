@@ -1,0 +1,1253 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-OSC-2025-V1",
+    "version": "1.0",
+    "nombre": "Osciloscopio",
+    "categoriaSemantica": "EQUIPOS_OSCILOSCOPIO_OSCILLOSCOPE_MEDICION_ANALISIS",
+    "descripcion": "Plantilla ML de Osciloscopio - Maneja columna única, múltiples columnas e híbrido para osciloscopios digitales, analógicos y de señal mixta"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_OSCILOSCOPIO_BASICO",
+        "condicion": ".*(^\\d+\\s+osciloscopio$|osciloscopio\\s*$).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró osciloscopio básico del inventario sin especificaciones"
+      },
+      {
+        "nombre": "BONUS_DIGITAL_STORAGE",
+        "condicion": ".*(digital\\s+storage|dso|osciloscopio\\s+digital).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró osciloscopio digital de almacenamiento"
+      },
+      {
+        "nombre": "BONUS_MIXED_SIGNAL",
+        "condicion": ".*(mixed\\s+signal|mso|señal\\s+mixta).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró osciloscopio de señal mixta"
+      },
+      {
+        "nombre": "BONUS_LABORATORIO_ELECTRONICA",
+        "condicion": ".*(laboratorio|electronica|circuits|signals).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron términos de laboratorio electrónico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "osciloscopio",
+          "oscilloscope",
+          "scope",
+          "medicion",
+          "señales"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "digital",
+          "analogico",
+          "canales",
+          "bandwidth",
+          "mhz"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "trigger",
+          "sampling",
+          "storage",
+          "waveform",
+          "display"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "measurement",
+          "analysis",
+          "electronic",
+          "laboratory"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": [
+        "tektronix",
+        "keysight",
+        "rigol",
+        "siglent",
+        "owon",
+        "hantek"
+      ],
+      "tipos_osciloscopio": [
+        "digital",
+        "analogico",
+        "digital-storage",
+        "dso",
+        "mso",
+        "mixed-signal"
+      ],
+      "canales": [
+        "1-canal",
+        "2-canal",
+        "4-canal",
+        "8-canal",
+        "16-canal"
+      ],
+      "ancho_banda": [
+        "50mhz",
+        "100mhz",
+        "200mhz",
+        "350mhz",
+        "500mhz",
+        "1ghz",
+        "2ghz"
+      ],
+      "frecuencia_muestreo": [
+        "1gs/s",
+        "2gs/s",
+        "5gs/s",
+        "10gs/s",
+        "50gs/s"
+      ],
+      "profundidad_memoria": [
+        "1kpts",
+        "10kpts",
+        "100kpts",
+        "1mpts",
+        "10mpts",
+        "100mpts"
+      ],
+      "resolucion": [
+        "8-bit",
+        "10-bit",
+        "12-bit",
+        "14-bit",
+        "16-bit"
+      ],
+      "pantallas": [
+        "lcd",
+        "oled",
+        "color",
+        "monocromo",
+        "touch",
+        "tft"
+      ],
+      "triggers": [
+        "edge",
+        "pulse",
+        "slope",
+        "video",
+        "pattern",
+        "serial"
+      ],
+      "acoplamientos": [
+        "ac",
+        "dc",
+        "gnd",
+        "coupling"
+      ],
+      "conectividad": [
+        "usb",
+        "lan",
+        "wifi",
+        "rs232",
+        "gpib",
+        "ethernet"
+      ],
+      "funciones": [
+        "fft",
+        "math",
+        "cursor",
+        "measure",
+        "decode"
+      ],
+      "protocolos": [
+        "i2c",
+        "spi",
+        "uart",
+        "can",
+        "lin",
+        "rs232",
+        "usb"
+      ],
+      "aplicaciones": [
+        "laboratorio",
+        "desarrollo",
+        "reparacion",
+        "educacion",
+        "investigacion"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "tektronix",
+        "keysight",
+        "rigol",
+        "siglent",
+        "owon"
+      ],
+      "tier2": [
+        "hantek",
+        "uni-t",
+        "fnirsi",
+        "dso",
+        "lecroy"
+      ],
+      "tier3": [
+        "generic",
+        "no-brand",
+        "china",
+        "oem",
+        "local"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "multimetro",
+        "fuente",
+        "generador",
+        "analizador",
+        "procesador",
+        "microprocesador",
+        "processor",
+        "cpu",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "ryzen 3",
+        "ryzen 5",
+        "ryzen 7",
+        "ryzen 9",
+        "intel core",
+        "amd ryzen",
+        "xeon",
+        "threadripper",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "pizarra",
+        "escritorio",
+        "silla",
+        "archivador",
+        "nucleos",
+        "cores",
+        "threads",
+        "hilos",
+        "socket",
+        "lga",
+        "am4",
+        "am5",
+        "tdp",
+        "temperatura",
+        "calefaccion",
+        "potencia 1500w"
+      ],
+      "media": [
+        "mueble",
+        "furniture",
+        "office",
+        "mouse",
+        "teclado"
+      ],
+      "debil": [
+        "computer",
+        "software"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(tektronix|keysight|rigol|siglent)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(tds\\d+|mso\\d+|dso\\d+|sds\\d+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_osciloscopio": "\\b(osciloscopio|oscilloscope|scope)\\b",
+      "subtipo_osciloscopio": "\\b(digital|anal[oó]gico|digital[-\\s]*storage|dso|mso|mixed[-\\s]*signal)\\b",
+      "marca_osciloscopio": "\\b(tektronix|keysight|rigol|siglent|owon|hantek)\\b",
+      "modelo_osciloscopio": "\\b(tds\\d+|mso\\d+|dso\\d+|sds\\d+|tbs\\d+|dpo\\d+)\\b",
+      "canales_osciloscopio": "(\\d+)\\s*(canal|channel|ch)(?:es|s)?",
+      "ancho_banda": "(\\d+(?:\\.\\d+)?)\\s*(mhz|ghz)\\s*(ancho\\s+banda|bandwidth)?",
+      "frecuencia_muestreo": "(\\d+(?:\\.\\d+)?)\\s*(gs/s|ms/s|ks/s|samples?)\\s*(muestreo|sampling)?",
+      "profundidad_memoria": "(\\d+(?:\\.\\d+)?)\\s*(k|m|g)pts?\\s*(memoria|memory|depth)?",
+      "resolucion_vertical": "(\\d+)[-\\s]*(bit|bits?)\\s*(resoluci[oó]n|resolution)",
+      "pantalla_osciloscopio": "\\b(lcd|oled|color|monocromo|touch|tft)\\s*(pantalla|display|screen)?",
+      "voltaje_entrada": "(\\d+)\\s*v\\s*(entrada|input|range|max)",
+      "acoplamiento_osciloscopio": "\\b(ac|dc|gnd)\\s*(acoplamiento|coupling)?",
+      "trigger_osciloscopio": "\\b(edge|pulse|slope|video|pattern|serial)\\s*(trigger|disparo)?",
+      "conectividad_osciloscopio": "\\b(usb|lan|wifi|rs232|gpib|ethernet|bluetooth)\\b",
+      "forma_onda": "\\b(senoidal|cuadrada|triangular|rampa|ruido|sawtooth)\\s*(onda|wave)?",
+      "impedancia_entrada": "(\\d+)\\s*(ohm|ω|k\\s*ohm|m\\s*ohm)\\s*(impedancia|input)?",
+      "sensibilidad": "(\\d+)\\s*(mv|v)/div\\s*(sensibilidad|sensitivity)?",
+      "base_tiempo": "(\\d+(?:\\.\\d+)?)\\s*(ns|μs|ms|s)/div\\s*(base\\s+tiempo|timebase)?",
+      "funciones_matematicas": "\\b(fft|suma|resta|multiplicaci[oó]n|integraci[oó]n|derivaci[oó]n)\\b",
+      "protocolos_decodificacion": "\\b(i2c|spi|uart|can|lin|rs232|usb|ethernet)\\b",
+      "generador_senales": "\\b(generador|awg|arbitrary\\s+waveform)\\s*(se[ñn]ales|signals)?",
+      "mediciones_automaticas": "\\b(frecuencia|periodo|amplitud|rms|promedio|pico[-\\s]*pico)\\s*(medici[oó]n|measurement)?",
+      "calibracion_osciloscopio": "\\b(calibraci[oó]n|auto[-\\s]*calibration|self[-\\s]*test)\\b",
+      "alimentacion_osciloscopio": "(\\d+)\\s*v\\s*(ac|dc)\\s*(alimentaci[oó]n|power|supply)?",
+      "dimensiones_osciloscopio": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm|inch)",
+      "peso_osciloscopio": "(\\d+(?:\\.\\d+)?)\\s*(kg|g|lb)\\s*(peso|weight)?",
+      "temperatura_osciloscopio": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "certificaciones_osciloscopio": "\\b(ce|ul|csa|iec|iso|rohs)\\b",
+      "garantia_osciloscopio": "(\\d+)\\s*(a[ñn]os?|meses?|years?)\\s*(garant[ií]a|warranty)",
+      "cursors": "\\b(cursors?|marcadores?)\\s*(tiempo|voltaje|frecuencia)?",
+      "zoom": "\\b(zoom|magnificaci[oó]n|expansion)\\s*(horizontal|vertical)?",
+      "persistencia": "\\b(persistencia|persistence|infinite)\\s*(pantalla|display)?",
+      "xy_mode": "\\b(modo\\s+xy|xy\\s+mode|lissajous)\\b",
+      "roll_mode": "\\b(modo\\s+roll|roll\\s+mode|grabaci[oó]n)\\b",
+      "single_shot": "\\b(single\\s+shot|disparo\\s+[uú]nico|one[-\\s]*time)\\b",
+      "auto_set": "\\b(auto\\s+set|configuraci[oó]n\\s+autom[aá]tica)\\b",
+      "probe_compensation": "\\b(compensaci[oó]n\\s+sonda|probe\\s+compensation)\\b",
+      "data_logging": "\\b(registro\\s+datos|data\\s+logging|grabaci[oó]n)\\b",
+      "waveform_capture": "\\b(captura\\s+forma\\s+onda|waveform\\s+capture)\\s*(rate)?",
+      "nivel_ruido": "(\\d+)\\s*(mv|μv)\\s*rms\\s*(ruido|noise)?",
+      "jitter": "(\\d+)\\s*(ps|ns)\\s*(jitter|fluctuaci[oó]n)?",
+      "rise_time": "(\\d+(?:\\.\\d+)?)\\s*(ps|ns|μs)\\s*(rise\\s+time|tiempo\\s+subida)?",
+      "cantidad": "(\\d{1,2})\\s*(osciloscopio|oscilloscope|scope)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Tektronix, Keysight, Rigol, Siglent, Owon",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(tektronix|keysight|rigol|siglent)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: TDS2002B, MSO2024, DSO1014, SDS1104X-E",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(tds\\d+|mso\\d+|dso\\d+|sds\\d+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_OSCILOSCOPIO",
+      "etiqueta": "Tipo de Osciloscopio",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Digital, Analógico, Digital Storage, Mixed Signal",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Digital",
+        "Analógico",
+        "Digital Storage",
+        "DSO",
+        "Mixed Signal",
+        "MSO"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(digital|anal[oó]gico|digital[-\\s]*storage|dso|mso|mixed[-\\s]*signal)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "digital",
+              "analogico",
+              "storage",
+              "dso",
+              "mso",
+              "mixed"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANALES",
+      "etiqueta": "Número de Canales",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 4, 8, 16",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 1,
+        "max": 32
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Canales",
+              "Channels",
+              "CH"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(canal|channel|ch)(?:es|s)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO_BANDA",
+      "etiqueta": "Ancho de Banda",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100MHz, 200MHz, 1GHz, 2GHz",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Bandwidth",
+              "Ancho Banda",
+              "Frequency"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(mhz|ghz)\\s*(ancho\\s+banda|bandwidth)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_MUESTREO",
+      "etiqueta": "Frecuencia de Muestreo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1GS/s, 2GS/s, 5GS/s, 10GS/s",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sampling",
+              "Muestreo",
+              "Sample Rate"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(gs/s|ms/s|ks/s|samples?)\\s*(muestreo|sampling)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROFUNDIDAD_MEMORIA",
+      "etiqueta": "Profundidad de Memoria",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1Kpts, 10Kpts, 1Mpts, 10Mpts",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Memoria",
+              "Memory",
+              "Depth"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(k|m|g)pts?\\s*(memoria|memory|depth)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_VERTICAL",
+      "etiqueta": "Resolución Vertical",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 8-bit, 10-bit, 12-bit, 14-bit",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "Bits"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)[-\\s]*(bit|bits?)\\s*(resoluci[oó]n|resolution)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PANTALLA",
+      "etiqueta": "Tipo de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LCD, OLED, Color, Touch, TFT",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": [
+        "LCD",
+        "OLED",
+        "Color",
+        "Monocromo",
+        "Touch",
+        "TFT"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pantalla",
+              "Display",
+              "Screen"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(lcd|oled|color|monocromo|touch|tft)\\s*(pantalla|display|screen)?",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "lcd",
+              "oled",
+              "color",
+              "monocromo",
+              "touch",
+              "tft"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_VOLTAJE",
+      "etiqueta": "Rango de Voltaje de Entrada",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: ±100V, ±50V, ±10V",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje",
+              "Voltage",
+              "Input"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*v\\s*(entrada|input|range|max)",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPOS_ACOPLAMIENTO",
+      "etiqueta": "Tipos de Acoplamiento",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: AC, DC, GND",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Acoplamiento",
+              "Coupling",
+              "Input Mode"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ac|dc|gnd)\\s*(acoplamiento|coupling)?",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPOS_TRIGGER",
+      "etiqueta": "Tipos de Trigger",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Edge, Pulse, Slope, Video, Pattern",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Trigger",
+              "Disparo",
+              "Triggering"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(edge|pulse|slope|video|pattern|serial)\\s*(trigger|disparo)?",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, LAN, WiFi, RS232, GPIB",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Interface"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(usb|lan|wifi|rs232|gpib|ethernet|bluetooth)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "IMPEDANCIA_ENTRADA",
+      "etiqueta": "Impedancia de Entrada",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1MΩ, 50Ω, 75Ω",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Impedancia",
+              "Impedance",
+              "Input Z"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(ohm|ω|k\\s*ohm|m\\s*ohm)\\s*(impedancia|input)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_MATEMATICAS",
+      "etiqueta": "Funciones Matemáticas",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: FFT, Suma, Resta, Multiplicación, Integración",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Matemáticas",
+              "Math",
+              "Functions"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(fft|suma|resta|multiplicaci[oó]n|integraci[oó]n|derivaci[oó]n)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTOCOLOS_DECODIFICACION",
+      "etiqueta": "Protocolos de Decodificación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: I2C, SPI, UART, CAN, LIN, RS232",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Protocolos",
+              "Protocols",
+              "Decode"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(i2c|spi|uart|can|lin|rs232|usb|ethernet)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEDICIONES_AUTOMATICAS",
+      "etiqueta": "Mediciones Automáticas",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Frecuencia, Período, Amplitud, RMS, Promedio",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Mediciones",
+              "Measurements",
+              "Auto"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(frecuencia|periodo|amplitud|rms|promedio|pico[-\\s]*pico)\\s*(medici[oó]n|measurement)?",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100-240V AC, 12V DC, Batería",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Alimentación",
+              "Power",
+              "Supply"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*v\\s*(ac|dc)\\s*(alimentaci[oó]n|power|supply)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1.5, 2.8, 5.2, 10.5",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 0.5,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g|lb)\\s*(peso|weight)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0°C a 40°C, -10°C a 50°C",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Temperatura",
+              "Temperature",
+              "Operating"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, UL, CSA, IEC, ISO, RoHS",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Certificaciones",
+              "Certifications",
+              "Standards"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ce|ul|csa|iec|iso|rohs)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GARANTIA",
+      "etiqueta": "Garantía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1 año, 2 años, 3 años",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Garantía",
+              "Warranty",
+              "Guarantee"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(a[ñn]os?|meses?|years?)\\s*(garant[ií]a|warranty)",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION_PRINCIPAL",
+      "etiqueta": "Aplicación Principal",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Laboratorio, Desarrollo, Reparación, Educación",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aplicación",
+              "Application",
+              "Use"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(laboratorio|desarrollo|reparaci[oó]n|educaci[oó]n|investigaci[oó]n)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(osciloscopio|oscilloscope|scope)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(osciloscopio|oscilloscope|scope)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Azul, Gris",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "azul",
+              "gris",
+              "plateado"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Osciloscopio básico del inventario real",
+      "texto": "01 Osciloscopio",
+      "extraccionEsperada": {
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Osciloscopio digital 2 canales 100MHz",
+      "texto": "01 Osciloscopio digital Tektronix TDS2002B 2 canales 100MHz 1GS/s pantalla color",
+      "extraccionEsperada": {
+        "MARCA": "Tektronix",
+        "MODELO": "TDS2002B",
+        "TIPO_OSCILOSCOPIO": "Digital",
+        "CANALES": "2",
+        "ANCHO_BANDA": "100MHz",
+        "FRECUENCIA_MUESTREO": "1GS/s",
+        "TIPO_PANTALLA": "Color"
+      }
+    },
+    {
+      "nombre": "Caso 3: Osciloscopio de señal mixta MSO",
+      "texto": "02 Osciloscopio MSO Keysight DSOX3024T 4 canales 200MHz 16 canales digitales FFT",
+      "extraccionEsperada": {
+        "MARCA": "Keysight",
+        "MODELO": "DSOX3024T",
+        "TIPO_OSCILOSCOPIO": "MSO",
+        "CANALES": "4",
+        "ANCHO_BANDA": "200MHz",
+        "FUNCIONES_MATEMATICAS": [
+          "FFT"
+        ],
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Osciloscopio educativo con decodificación",
+      "texto": "01 Osciloscopio Rigol DS1054Z 4 canales 50MHz I2C SPI UART decode USB LAN",
+      "extraccionEsperada": {
+        "MARCA": "Rigol",
+        "MODELO": "DS1054Z",
+        "CANALES": "4",
+        "ANCHO_BANDA": "50MHz",
+        "PROTOCOLOS_DECODIFICACION": [
+          "I2C",
+          "SPI",
+          "UART"
+        ],
+        "CONECTIVIDAD": [
+          "USB",
+          "LAN"
+        ]
+      }
+    }
+  ]
+}

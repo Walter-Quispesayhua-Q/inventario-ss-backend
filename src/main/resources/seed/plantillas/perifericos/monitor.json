@@ -1,0 +1,641 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-MON-2025-V1",
+    "version": "1.0",
+    "nombre": "Monitor",
+    "categoriaSemantica": "DISPLAY",
+    "descripcion": "Plantilla ML de monitor - Maneja columna única, múltiples columnas e híbrido"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TEXTO_EXACTO_MONITOR",
+        "condicion": "^\\s*(monitor|pantalla|display)\\s*$",
+        "puntos": 0.35,
+        "descripcion": "El texto es exactamente MONITOR/PANTALLA/DISPLAY"
+      },
+      {
+        "nombre": "BONUS_TIENE_ETIQUETA_MARCA",
+        "condicion": ".*\\b(ma:|marca:)\\b.*",
+        "puntos": 0.10,
+        "descripcion": "El texto contiene una etiqueta explícita de marca"
+      },
+      {
+        "nombre": "BONUS_TIENE_RESOLUCION",
+        "condicion": ".*\\b\\d{3,4}\\s*[xX×]\\s*\\d{3,4}\\b.*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró un patrón de resolución (ej: 1920x1080)"
+      },
+      {
+        "nombre": "BONUS_TIENE_PULGADAS",
+        "condicion": ".*\\b\\d{2}(\\.\\d{1,2})?[\\s]*(\"|pulgadas|inch).*",
+        "puntos": 0.07,
+        "descripcion": "Se encontró un patrón de tamaño en pulgadas"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "monitor",
+          "pantalla",
+          "display",
+          "lcd monitor",
+          "led monitor"
+        ],
+        "peso": 15.0
+      },
+      "fuertes": {
+        "terminos": [
+          "screen",
+          "lcd",
+          "led",
+          "oled",
+          "p2722h",
+          "e2222h",
+          "s24e",
+          "u2422"
+        ],
+        "peso": 8.0
+      },
+      "medias": {
+        "terminos": [
+          "ips",
+          "va",
+          "tn",
+          "qled",
+          "curved",
+          "pulgadas",
+          "inch"
+        ],
+        "peso": 3.0
+      },
+      "debiles": {
+        "terminos": [
+          "visual",
+          "video",
+          "vista",
+          "imagen"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "conectividad": [
+        "hdmi",
+        "vga",
+        "dvi",
+        "displayport",
+        "dp",
+        "thunderbolt",
+        "usb-c"
+      ],
+      "resoluciones": [
+        "1920x1080",
+        "2560x1440",
+        "3840x2160",
+        "1920x1060",
+        "1366x768"
+      ],
+      "frecuencias": [
+        "60hz",
+        "75hz",
+        "120hz",
+        "144hz",
+        "165hz",
+        "240hz"
+      ],
+      "tecnologias": [
+        "hdr",
+        "freesync",
+        "g-sync",
+        "adaptive-sync"
+      ],
+      "caracteristicas": [
+        "curved",
+        "ultrawide",
+        "gaming",
+        "profesional",
+        "4k",
+        "uhd",
+        "fhd",
+        "qhd"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "dell",
+        "hp",
+        "samsung",
+        "lg",
+        "asus"
+      ],
+      "tier2": [
+        "acer",
+        "benq",
+        "msi",
+        "gigabyte",
+        "alienware"
+      ],
+      "tier3": [
+        "aoc",
+        "viewsonic",
+        "philips",
+        "lenovo",
+        "huawei"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "impresora",
+        "router",
+        "switch",
+        "servidor",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "laptop",
+        "notebook",
+        "telefono",
+        "tablet",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "teclado",
+        "mouse",
+        "ups"
+      ],
+      "debil": [
+        "cable",
+        "adaptador",
+        "soporte"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "pulgadas": "(\\d{2}(\\.\\d{1,2})?)[\\s]*(pulgadas|pulg|\"|\\'\\'\\'|inch)",
+      "resolucion": "(\\d{3,4})\\s*[xX×]\\s*(\\d{3,4})",
+      "frecuencia": "(\\d{2,3})\\s*[hH][zZ]",
+      "ratio": "(16:9|16:10|21:9|32:9|4:3)",
+      "tamanoCm": "(\\d{2,3})\\s*(cm|centimetros)"
+    },
+    "conectividad": {
+      "puertos": "\\b(hdmi|vga|dvi|displayport|dp|usb-c|thunderbolt)\\b",
+      "versionHdmi": "hdmi\\s*(1\\.4|2\\.0|2\\.1)",
+      "cantidadPuertos": "(\\d)\\s*x\\s*(hdmi|vga|usb)"
+    },
+    "caracteristicas": {
+      "tipoPanel": "\\b(ips|va|tn|oled|qled|amoled)\\b",
+      "curvatura": "\\b(\\d{3,4})r\\b",
+      "brillo": "(\\d{3})\\s*(nits?|cd/m2)",
+      "contraste": "(\\d{3,4}):1"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Lenovo, Dell, HP",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Manufacturer",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: ThinkVision S24e-20",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo",
+              "Tipo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "[A-Z][\\w]{1,3}\\d{3,4}[\\w]*"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_PULGADAS",
+      "etiqueta": "Tamaño (pulgadas)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 23.80",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 15.0,
+        "max": 49.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pulgadas",
+              "Tamaño",
+              "Size",
+              "Pantalla",
+              "Display Size",
+              "Inches"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{2}(?:\\.\\d{1,2})?)[\\s]*(pulgadas|pulg|\")",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "de\\s+(\\d{2}(?:\\.\\d{1,2})?)[\\s]*\"",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION",
+      "etiqueta": "Resolución",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1920x1080",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "formato": "\\d{3,4}x\\d{3,4}"
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "Res",
+              "Píxeles"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{3,4})\\s*[xX×]\\s*(\\d{3,4})",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "4k": "3840x2160",
+            "fhd": "1920x1080",
+            "qhd": "2560x1440"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Puertos/Conectores",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HDMI, VGA, DisplayPort",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectores",
+              "Puertos",
+              "Conectividad",
+              "Ports",
+              "Conexiones"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hdmi|vga|dvi|displayport|dp|usb-c)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "silver",
+              "black",
+              "white"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PANEL",
+      "etiqueta": "Tipo de Panel",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: IPS, VA, OLED",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "IPS",
+        "VA",
+        "TN",
+        "OLED",
+        "QLED"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo Panel",
+              "Panel",
+              "Tecnología",
+              "Panel Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ips|va|tn|oled|qled|amoled)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA",
+      "etiqueta": "Frecuencia (Hz)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 60, 75, 144",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 60,
+        "max": 360
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "Hz",
+              "Refresh Rate"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{2,3})\\s*[hH][zZ]",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ADICIONALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Curved, Gaming, HDR",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Características",
+              "Features",
+              "Extras"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "DETECTAR",
+            "palabras": [
+              "curved",
+              "gaming",
+              "ultrawide",
+              "hdr",
+              "freesync",
+              "g-sync"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Todo en una columna con etiquetas",
+      "texto": "CAF-MON-001 01 Monitor Ma: Lenovo Mo: ThinkVision S24e-20 Se: SVNA7BHPC de 23.80\" 1920x1060 HDMI, VGA Co: Negro",
+      "extraccionEsperada": {
+        "CAF": "CAF-MON-001",
+        "MARCA": "Lenovo",
+        "MODELO": "ThinkVision S24e-20",
+        "NUMERO_SERIE": "SVNA7BHPC",
+        "TAMAÑO_PULGADAS": "23.80",
+        "RESOLUCION": "1920x1060",
+        "CONECTIVIDAD": [
+          "HDMI",
+          "VGA"
+        ],
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 2: Todo en una columna sin etiquetas",
+      "texto": "Monitor Dell UltraSharp U2723DE 27\" QHD 2560x1440 IPS USB-C HDMI DP Hub",
+      "extraccionEsperada": {
+        "MARCA": "Dell",
+        "MODELO": "UltraSharp U2723DE",
+        "TAMAÑO_PULGADAS": "27",
+        "RESOLUCION": "2560x1440",
+        "TIPO_PANEL": "IPS",
+        "CONECTIVIDAD": [
+          "USB-C",
+          "HDMI",
+          "DP"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas (simulado)",
+      "columnas": {
+        "CAF": "CAF-2024-MON-003",
+        "Marca": "Samsung",
+        "Modelo": "Odyssey G9",
+        "Pulgadas": "49",
+        "Resolución": "5120x1440",
+        "Hz": "240",
+        "Panel": "QLED",
+        "Características": "Curved, Gaming"
+      },
+      "extraccionEsperada": {
+        "CAF": "CAF-2024-MON-003",
+        "MARCA": "Samsung",
+        "MODELO": "Odyssey G9",
+        "TAMAÑO_PULGADAS": "49",
+        "FRECUENCIA": "240",
+        "RESOLUCION": "5120x1440",
+        "TIPO_PANEL": "QLED",
+        "CARACTERISTICAS_ADICIONALES": [
+          "Curved",
+          "Gaming"
+        ]
+      }
+    }
+  ]
+}

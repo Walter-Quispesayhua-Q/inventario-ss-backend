@@ -1,0 +1,146 @@
+"""
+Usuario del sistema con información básica y de autenticación.
+"""
+type UsuarioDTO {
+    id: ID!
+    email: String
+    codigoUsuario: String
+    activo: Boolean
+    roles: [String!]!
+    fechaCreacion: String
+    fechaUltimaModificacion: String
+    ultimoLogin: String
+    fechaEliminacion: String
+    persona: PersonaDTO
+    departamentoNombre: String
+}
+
+"""
+Respuesta del login con tokens de acceso y datos del usuario.
+"""
+type UsuarioLoginResponseDTO {
+    id: ID!
+    accessToken: String!
+    refreshToken: String
+    firstName: String!
+    lastName: String!
+    email: String!
+    codigoUsuario: String!
+    activo: Boolean!
+    roles: [String!]!
+    departamentoNombre: String
+}
+
+"""
+Datos para crear un nuevo usuario en el sistema.
+"""
+input UsuarioCreacionInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    departamentoId: ID!
+}
+
+"""
+Credenciales para autenticación de usuario.
+"""
+input UsuarioLoginInput {
+    email: String!
+    password: String!
+    rememberMe: Boolean
+}
+
+"""
+Solicitud de reseteo de contraseña por email.
+"""
+input PasswordResetRequestInput {
+    email: String!
+}
+
+"""
+Confirmación de reseteo de contraseña con token.
+"""
+input PasswordResetConfirmInput {
+    token: String!
+    nuevaPassword: String!
+}
+
+"""
+Datos para crear un usuario desde una persona existente.
+Útil cuando una persona fue creada por importación y necesita acceso al sistema.
+Si no se especifica departamentoId, se usa el departamento por defecto del sistema.
+"""
+input UsuarioDesdePersonaInput {
+    idPersona: ID!
+    email: String!
+    password: String!
+    departamentoId: ID
+    rolInicial: String
+}
+
+extend type Query {
+    """
+    Obtiene todos los usuarios activos del sistema.
+    Útil para selectores de responsables en formularios.
+    """
+    usuarios: [UsuarioDTO!]!
+
+    """
+    Obtiene la lista de roles disponibles en el sistema.
+    Útil para poblar selectores de cambio de rol.
+    """
+    rolesDisponibles: [String!]!
+
+    """
+    Obtiene usuarios filtrados por estado.
+    Si activo es null, retorna todos los usuarios.
+    """
+    usuariosPorEstado(activo: Boolean): [UsuarioDTO!]!
+}
+
+extend type Mutation {
+    """
+    Registra un nuevo usuario en el sistema.
+    """
+    registrarUsuario(usuario: UsuarioCreacionInput!): OperacionResultadoUsuario!
+
+    """
+    Autentica un usuario y retorna tokens de acceso.
+    """
+    loginUser(credenciales: UsuarioLoginInput!): OperacionResultadoLoginUsuario!
+
+    """
+    Solicita un reseteo de contraseña enviando email con token.
+    """
+    solicitarReseteoPassword(request: PasswordResetRequestInput!): OperacionResultadoBoolean!
+
+    """
+    Confirma el reseteo de contraseña usando token recibido por email.
+    """
+    confirmarReseteoPassword(request: PasswordResetConfirmInput!): OperacionResultadoBoolean!
+
+    """
+    Cambia el rol de un usuario. Solo ADMIN puede ejecutar esta operación.
+    No permite quitar el rol ADMIN al único administrador activo.
+    Roles disponibles: ADMIN, USER_INTERNO, OBSERVADOR
+    """
+    cambiarRolUsuario(idUsuario: ID!, nuevoRol: String!): OperacionResultadoGenerico!
+
+    """
+    Crea un usuario para una persona que ya existe en el sistema.
+    Útil cuando una persona fue creada por importación y necesita acceso.
+    """
+    crearUsuarioDesdePersona(input: UsuarioDesdePersonaInput!): OperacionResultadoUsuario!
+
+    """
+    Desactiva un usuario. No puede desactivar al único ADMIN activo.
+    El usuario no podrá iniciar sesión hasta que sea reactivado.
+    """
+    desactivarUsuario(idUsuario: ID!): OperacionResultadoGenerico!
+
+    """
+    Reactiva un usuario previamente desactivado.
+    """
+    reactivarUsuario(idUsuario: ID!): OperacionResultadoGenerico!
+}

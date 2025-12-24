@@ -1,0 +1,98 @@
+"""
+Conteos generales del sistema para tarjetas principales del dashboard.
+"""
+type ConteoGeneral {
+    totalBienes: Int!
+    totalCategorias: Int!
+    totalEstaciones: Int!
+    totalPersonas: Int!
+    usuariosActivos: Int!
+    usuariosInactivos: Int!
+}
+
+"""
+Cantidad de bienes agrupados por categoría para gráficos.
+"""
+type BienesPorCategoria {
+    categoriaId: ID!
+    nombreCategoria: String!
+    cantidad: Int!
+}
+
+"""
+Resumen de la estructura física: edificios, pisos, ambientes, estaciones.
+"""
+type EstructuraResumen {
+    edificios: Int!
+    pisos: Int!
+    ambientes: Int!
+    estaciones: Int!
+    estacionesConBienes: Int!
+    estacionesVacias: Int!
+}
+
+"""
+Cantidad de estaciones agrupadas por ambiente.
+"""
+type EstacionesPorAmbiente {
+    ambienteId: ID!
+    nombreAmbiente: String!
+    nombrePiso: String!
+    nombreEdificio: String!
+    cantidadEstaciones: Int!
+}
+
+"""
+Alertas del sistema que requieren atención del administrador.
+"""
+type Alertas {
+    personasSinUsuario: Int!
+    usuariosInactivos: Int!
+}
+
+"""
+Resumen completo del dashboard con todos los datos.
+"""
+type DashboardResumen {
+    conteos: ConteoGeneral!
+    bienesPorCategoria: [BienesPorCategoria!]!
+    estructura: EstructuraResumen!
+    estacionesPorAmbiente: [EstacionesPorAmbiente!]!
+    ultimosBienes: [BienResumenDTO!]!
+    alertas: Alertas!
+}
+
+extend type Query {
+    """
+    Obtiene el resumen completo del dashboard.
+    Incluye conteos, gráficos, estructura y alertas.
+    """
+    dashboard: DashboardResumen!
+
+    """
+    Obtiene solo los conteos generales del dashboard.
+    Útil para actualización rápida de tarjetas.
+    """
+    dashboardConteos: ConteoGeneral!
+
+    """
+    Obtiene bienes agrupados por categoría.
+    Útil para gráficos de pastel o barras.
+    """
+    dashboardBienesPorCategoria: [BienesPorCategoria!]!
+
+    """
+    Obtiene resumen de la estructura física.
+    """
+    dashboardEstructura: EstructuraResumen!
+
+    """
+    Obtiene estaciones agrupadas por ambiente.
+    """
+    dashboardEstacionesPorAmbiente: [EstacionesPorAmbiente!]!
+
+    """
+    Obtiene las alertas del sistema.
+    """
+    dashboardAlertas: Alertas!
+}

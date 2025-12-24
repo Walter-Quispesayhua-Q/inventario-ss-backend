@@ -1,0 +1,1261 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-MUL-2025-V1",
+    "version": "1.0",
+    "nombre": "Multimetro",
+    "categoriaSemantica": "EQUIPOS_MULTIMETRO_MULTIMETER_TESTER_MEDICION",
+    "descripcion": "Plantilla ML de Multímetro - Maneja columna única, múltiples columnas e híbrido para multímetros digitales, analógicos y True RMS"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_YF_3503",
+        "condicion": ".*(yf\\s+3503|multimetro\\s+yf\\s+3503).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Multímetro YF 3503 específico del inventario"
+      },
+      {
+        "nombre": "BONUS_FLUKE_PROFESSIONAL",
+        "condicion": ".*(fluke\\s+\\d+|multimetro\\s+fluke|profesional).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró multímetro profesional Fluke"
+      },
+      {
+        "nombre": "BONUS_TRUE_RMS",
+        "condicion": ".*(true\\s+rms|trms|verdadero\\s+valor).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró multímetro True RMS"
+      },
+      {
+        "nombre": "BONUS_AUTO_RANGING",
+        "condicion": ".*(auto\\s+ranging|auto\\s+escala|digital).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró multímetro con auto-ranging"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "multimetro",
+          "multimeter",
+          "tester",
+          "dmm",
+          "medicion"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "yf",
+          "digital",
+          "voltaje",
+          "corriente",
+          "resistencia"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "fluke",
+          "true-rms",
+          "auto-ranging",
+          "precision",
+          "display"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "measurement",
+          "electrical",
+          "handheld",
+          "portable"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": [
+        "yf",
+        "fluke",
+        "keysight",
+        "uni-t",
+        "mastech",
+        "hioki"
+      ],
+      "tipos_multimetro": [
+        "digital",
+        "analogico",
+        "true-rms",
+        "auto-ranging",
+        "manual-ranging"
+      ],
+      "funciones": [
+        "voltaje",
+        "corriente",
+        "resistencia",
+        "capacitancia",
+        "frecuencia",
+        "temperatura"
+      ],
+      "rangos_voltaje": [
+        "200mv",
+        "2v",
+        "20v",
+        "200v",
+        "600v",
+        "1000v"
+      ],
+      "rangos_corriente": [
+        "200μa",
+        "2ma",
+        "20ma",
+        "200ma",
+        "10a",
+        "20a"
+      ],
+      "rangos_resistencia": [
+        "200ω",
+        "2kω",
+        "20kω",
+        "200kω",
+        "2mω",
+        "20mω"
+      ],
+      "precisiones": [
+        "±0.1%",
+        "±0.5%",
+        "±1.0%",
+        "±2.0%",
+        "±3.0%"
+      ],
+      "resoluciones": [
+        "3½-digit",
+        "4½-digit",
+        "5½-digit",
+        "6½-digit"
+      ],
+      "pantallas": [
+        "lcd",
+        "led",
+        "digital",
+        "backlight",
+        "dual-display"
+      ],
+      "alimentacion": [
+        "9v",
+        "aaa",
+        "bateria",
+        "usb",
+        "adaptador"
+      ],
+      "conectividad": [
+        "usb",
+        "bluetooth",
+        "rs232",
+        "ir",
+        "wifi"
+      ],
+      "funciones_especiales": [
+        "hold",
+        "rel",
+        "min",
+        "max",
+        "peak",
+        "auto-power-off"
+      ],
+      "categorias_seguridad": [
+        "cat-i",
+        "cat-ii",
+        "cat-iii",
+        "cat-iv"
+      ],
+      "aplicaciones": [
+        "electronica",
+        "automotriz",
+        "hvac",
+        "industrial",
+        "educacion"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "fluke",
+        "keysight",
+        "hioki",
+        "brymen",
+        "amprobe"
+      ],
+      "tier2": [
+        "yf",
+        "uni-t",
+        "mastech",
+        "klein",
+        "extech"
+      ],
+      "tier3": [
+        "generic",
+        "no-brand",
+        "china",
+        "oem",
+        "local"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "osciloscopio",
+        "fuente",
+        "generador",
+        "analizador",
+        "monitor",
+        "pantalla",
+        "display",
+        "lcd monitor",
+        "led monitor",
+        "procesador",
+        "microprocesador",
+        "processor",
+        "cpu",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "ryzen",
+        "intel",
+        "amd"
+      ],
+      "fuerte": [
+        "pizarra",
+        "escritorio",
+        "silla",
+        "archivador",
+        "dell monitor",
+        "hp monitor",
+        "samsung monitor",
+        "lg monitor",
+        "p2722h",
+        "nucleos",
+        "cores",
+        "threads",
+        "hilos",
+        "socket",
+        "ghz"
+      ],
+      "media": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage",
+        "hdmi",
+        "vga",
+        "displayport"
+      ],
+      "debil": [
+        "computer",
+        "software"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(yf|fluke|keysight|uni[-\\s]*t)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(yf\\s*\\d+|fluke\\s*\\d+|ut\\d+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_multimetro": "\\b(mult[ií]metro|multimeter|tester|dmm)\\b",
+      "subtipo_multimetro": "\\b(digital|anal[oó]gico|true[-\\s]*rms|auto[-\\s]*ranging)\\b",
+      "marca_multimetro": "\\b(yf|fluke|keysight|uni[-\\s]*t|mastech|hioki)\\b",
+      "modelo_multimetro": "\\b(yf\\s*\\d+|fluke\\s*\\d+|ut\\d+|ms\\d+|dt\\d+)\\b",
+      "funciones_multimetro": "\\b(voltaje|corriente|resistencia|capacitancia|frecuencia|temperatura)\\b",
+      "rango_voltaje": "(\\d+(?:\\.\\d+)?)\\s*(mv|v)\\s*(dc|ac|range|max)?",
+      "rango_corriente": "(\\d+(?:\\.\\d+)?)\\s*(μa|ma|a)\\s*(dc|ac|range|max)?",
+      "rango_resistencia": "(\\d+(?:\\.\\d+)?)\\s*(ω|ohm|kω|kohm|mω|mohm)\\s*(range|max)?",
+      "precision_multimetro": "(\\d+(?:\\.\\d+)?)%\\s*(precisi[oó]n|accuracy|error)?",
+      "resolucion_multimetro": "(\\d+½?)[-\\s]*(digit|digits?)\\s*(resoluci[oó]n|resolution)?",
+      "pantalla_multimetro": "\\b(lcd|led|digital|backlight|dual)\\s*(display|pantalla)?",
+      "alimentacion_multimetro": "\\b(bater[ií]a|9v|aaa|adaptador|usb)\\s*(power|alimentaci[oó]n)?",
+      "conectividad_multimetro": "\\b(usb|bluetooth|rs232|ir|wifi)\\b",
+      "proteccion_sobrecarga": "\\b(protecci[oó]n|fuse|fusible|overload)\\s*(sobrecarga|protection)?",
+      "categoria_seguridad": "\\b(cat\\s*i{1,4}|categor[ií]a\\s*[1-4])\\b",
+      "funciones_especiales": "\\b(diodo|continuidad|hold|rel|min|max|peak)\\b",
+      "medicion_temperatura": "\\b(temperatura|thermocouple|tc|rtd)\\s*(k|j|t)[-\\s]*(type)?",
+      "medicion_frecuencia": "(\\d+(?:\\.\\d+)?)\\s*(hz|khz|mhz)\\s*(frecuencia|frequency)?",
+      "medicion_capacitancia": "(\\d+(?:\\.\\d+)?)\\s*(pf|nf|μf|mf|f)\\s*(capacitancia|capacitance)?",
+      "true_rms": "\\b(true\\s+rms|trms|verdadero\\s+valor\\s+eficaz)\\b",
+      "auto_ranging": "\\b(auto[-\\s]*ranging|auto[-\\s]*escala|manual)\\b",
+      "puntas_prueba": "\\b(puntas\\s+prueba|test\\s+leads|probes)\\s*(incluidas|included)?",
+      "estuche_multimetro": "\\b(estuche|case|malet[ií]n)\\s*(incluido|included)?",
+      "durabilidad_multimetro": "(\\d+(?:\\.\\d+)?)\\s*m\\s*(ca[ií]da|drop|resistant)",
+      "ip_rating": "\\b(ip\\d+|waterproof|dustproof)\\b",
+      "certificaciones_multimetro": "\\b(ce|ul|csa|iec61010|rohs)\\b",
+      "garantia_multimetro": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)",
+      "dimensiones_multimetro": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "peso_multimetro": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+      "temperatura_multimetro": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "vida_util_bateria": "(\\d+)\\s*(horas?|hours?)\\s*(bater[ií]a|battery)",
+      "auto_power_off": "\\b(auto[-\\s]*power[-\\s]*off|apagado\\s+autom[aá]tico)\\b",
+      "data_hold": "\\b(data\\s+hold|retenci[oó]n\\s+datos|hold)\\b",
+      "relative_mode": "\\b(relative\\s+mode|modo\\s+relativo|rel)\\b",
+      "min_max_mode": "\\b(min\\s+max|m[ií]nimo\\s+m[aá]ximo|peak\\s+hold)\\b",
+      "continuity_test": "\\b(continuidad|continuity|beeper)\\s*(test|prueba)?",
+      "diode_test": "\\b(diodo|diode)\\s*(test|prueba)?",
+      "low_battery_indicator": "\\b(bater[ií]a\\s+baja|low\\s+battery|indicador)\\b",
+      "input_protection": "\\b(protecci[oó]n\\s+entrada|input\\s+protection|fused)\\b",
+      "display_count": "(\\d+)\\s*(counts?|cuentas?)\\s*(display|pantalla)?",
+      "update_rate": "(\\d+)\\s*(readings?|lecturas?)\\s*(por|per)\\s*(segundo|second)",
+      "cantidad": "(\\d{1,2})\\s*(mult[ií]metro|multimeter|tester)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: YF, Fluke, Keysight, UNI-T, Mastech",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(yf|fluke|keysight|uni[-\\s]*t)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: YF 3503, Fluke 117, UT139C, DT830B",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(yf\\s*\\d+|fluke\\s*\\d+|ut\\d+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MULTIMETRO",
+      "etiqueta": "Tipo de Multímetro",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Digital, Analógico, True RMS, Auto-ranging",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Digital",
+        "Analógico",
+        "True RMS",
+        "Auto-ranging",
+        "Manual"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(digital|anal[oó]gico|true[-\\s]*rms|auto[-\\s]*ranging)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "digital",
+              "analogico",
+              "true-rms",
+              "auto-ranging"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_MEDICION",
+      "etiqueta": "Funciones de Medición",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Voltaje, Corriente, Resistencia, Capacitancia, Frecuencia",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Funciones",
+              "Functions",
+              "Measurements"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(voltaje|corriente|resistencia|capacitancia|frecuencia|temperatura)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_VOLTAJE_DC",
+      "etiqueta": "Rango de Voltaje DC",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 200mV-600V, 0.1mV-1000V",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje DC",
+              "VDC",
+              "DC Voltage"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(mv|v)\\s*(dc|range|max)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_CORRIENTE_DC",
+      "etiqueta": "Rango de Corriente DC",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 200μA-10A, 1μA-20A",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente DC",
+              "ADC",
+              "DC Current"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(μa|ma|a)\\s*(dc|range|max)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_RESISTENCIA",
+      "etiqueta": "Rango de Resistencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 200Ω-20MΩ, 0.1Ω-50MΩ",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resistencia",
+              "Resistance",
+              "Ohm"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(ω|ohm|kω|kohm|mω|mohm)\\s*(range|max)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PRECISION",
+      "etiqueta": "Precisión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: ±0.5%, ±1.0%, ±2.0%",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Precisión",
+              "Accuracy",
+              "Error"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)%\\s*(precisi[oó]n|accuracy|error)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION",
+      "etiqueta": "Resolución",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 3½ digit, 4½ digit, 6000 counts",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "Display"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+½?)[-\\s]*(digit|digits?)\\s*(resoluci[oó]n|resolution)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PANTALLA",
+      "etiqueta": "Tipo de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LCD, LED, Digital, Backlight, Dual",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "LCD",
+        "LED",
+        "Digital",
+        "Backlight",
+        "Dual"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Pantalla",
+              "Display",
+              "Screen"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(lcd|led|digital|backlight|dual)\\s*(display|pantalla)?",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "lcd",
+              "led",
+              "digital",
+              "backlight",
+              "dual"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 9V, AAA, Batería, USB, Adaptador",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": [
+        "9V",
+        "AAA",
+        "Batería",
+        "USB",
+        "Adaptador"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Alimentación",
+              "Power",
+              "Supply"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(bater[ií]a|9v|aaa|adaptador|usb)\\s*(power|alimentaci[oó]n)?",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "bateria",
+              "9v",
+              "aaa",
+              "adaptador",
+              "usb"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, Bluetooth, RS232, IR, WiFi",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Interface"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(usb|bluetooth|rs232|ir|wifi)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CATEGORIA_SEGURIDAD",
+      "etiqueta": "Categoría de Seguridad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: CAT II, CAT III, CAT IV",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "CAT I",
+        "CAT II",
+        "CAT III",
+        "CAT IV"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Categoría",
+              "Safety",
+              "CAT"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(cat\\s*i{1,4}|categor[ií]a\\s*[1-4])\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "cat",
+              "categoria",
+              "seguridad"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_ESPECIALES",
+      "etiqueta": "Funciones Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Hold, REL, Min/Max, Peak, Continuidad, Diodo",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Funciones",
+              "Features",
+              "Special"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(diodo|continuidad|hold|rel|min|max|peak)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_FRECUENCIA",
+      "etiqueta": "Rango de Frecuencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10Hz-100MHz, 1Hz-10MHz",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "Frequency",
+              "Hz"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(hz|khz|mhz)\\s*(frecuencia|frequency)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_CAPACITANCIA",
+      "etiqueta": "Rango de Capacitancia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10nF-100mF, 1pF-10mF",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Capacitancia",
+              "Capacitance",
+              "Farad"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(pf|nf|μf|mf|f)\\s*(capacitancia|capacitance)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEDICION_TEMPERATURA",
+      "etiqueta": "Medición de Temperatura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Termopar K, Termopar J, RTD",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Temperatura",
+              "Temperature",
+              "Thermocouple"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(temperatura|thermocouple|tc|rtd)\\s*(k|j|t)[-\\s]*(type)?",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS_INCLUIDOS",
+      "etiqueta": "Accesorios Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Puntas de prueba, Estuche, Manual, Batería",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Accesorios",
+              "Accessories",
+              "Includes"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(puntas\\s+prueba|test\\s+leads|probes)\\s*(incluidas|included)?",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(estuche|case|malet[ií]n)\\s*(incluido|included)?",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DURABILIDAD",
+      "etiqueta": "Resistencia a Caídas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1.0m, 1.5m, 2.0m",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Durabilidad",
+              "Drop Resistance",
+              "Rugged"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*m\\s*(ca[ií]da|drop|resistant)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTECCION_IP",
+      "etiqueta": "Protección IP",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: IP54, IP67, Waterproof, Dustproof",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "IP Rating",
+              "Protection",
+              "Waterproof"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ip\\d+|waterproof|dustproof)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "ip",
+              "waterproof",
+              "dustproof",
+              "protection"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, UL, CSA, IEC61010, RoHS",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Certificaciones",
+              "Certifications",
+              "Standards"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ce|ul|csa|iec61010|rohs)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (g)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 200, 350, 500, 800",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "validacion": {
+        "min": 100,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GARANTIA",
+      "etiqueta": "Garantía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1 año, 2 años, 3 años",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Garantía",
+              "Warranty",
+              "Guarantee"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 4, 5",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(mult[ií]metro|multimeter|tester)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(mult[ií]metro|multimeter|tester)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Amarillo, Rojo, Azul, Gris",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "amarillo",
+              "rojo",
+              "azul",
+              "gris"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Multímetro YF 3503 del inventario real",
+      "texto": "04 Multimetro YF 3503",
+      "extraccionEsperada": {
+        "MODELO": "YF 3503",
+        "MARCA": "YF",
+        "CANTIDAD": "4"
+      }
+    },
+    {
+      "nombre": "Caso 2: Multímetro Fluke profesional",
+      "texto": "02 Multimetro Fluke 117 True RMS auto-ranging LCD backlight CAT III",
+      "extraccionEsperada": {
+        "MARCA": "Fluke",
+        "MODELO": "Fluke 117",
+        "TIPO_MULTIMETRO": "True RMS",
+        "TIPO_PANTALLA": "LCD backlight",
+        "CATEGORIA_SEGURIDAD": "CAT III",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Multímetro UNI-T digital",
+      "texto": "01 Multimetro digital UNI-T UT139C 6000 counts DC 600V AC 10A resistencia 40MΩ",
+      "extraccionEsperada": {
+        "MARCA": "UNI-T",
+        "MODELO": "UT139C",
+        "TIPO_MULTIMETRO": "Digital",
+        "RANGO_VOLTAJE_DC": "600V",
+        "RANGO_CORRIENTE_DC": "10A",
+        "RANGO_RESISTENCIA": "40MΩ"
+      }
+    },
+    {
+      "nombre": "Caso 4: Multímetro básico con funciones especiales",
+      "texto": "03 Tester Mastech MS8268 hold rel min max continuidad diodo temperatura",
+      "extraccionEsperada": {
+        "MARCA": "Mastech",
+        "MODELO": "MS8268",
+        "FUNCIONES_ESPECIALES": [
+          "Hold",
+          "REL",
+          "Min",
+          "Max",
+          "Continuidad",
+          "Diodo"
+        ],
+        "MEDICION_TEMPERATURA": "Temperatura",
+        "CANTIDAD": "3"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "campus": {
+    "codigo": "UPEU-JUL",
+    "universidad": "Universidad Peruana Unión",
+    "nombre": "Campus Juliaca",
+    "ubicacion": "Chullunquiani Km. 6, Juliaca, Puno, Perú",
+    "anioActualizacion": 2025,
+    "contacto": {
+      "telefono": "+51 51 123456",
+      "email": "campus.juliaca@upeu.edu.pe"
+    }
+  },
+  "configuracion": {
+    "autoDescubrir": true,
+    "carpetaEdificios": "edificios",
+    "extensionArchivos": ".json"
+  }
+}

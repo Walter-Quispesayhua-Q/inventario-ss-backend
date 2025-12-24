@@ -1,0 +1,380 @@
+{
+    "metadatos": {
+        "idPlantilla": "TPL-GPU-2025-V1",
+        "version": "1.0",
+        "nombre": "Tarjeta de Video",
+        "categoriaSemantica": "COMPONENTE_INTERNO",
+        "descripcion": "Plantilla ML para tarjetas gráficas/GPU - NVIDIA, AMD, Intel",
+        "indices": [
+            "T. Video",
+            "Tarjeta Video",
+            "Tarjeta Gráfica",
+            "GPU",
+            "Tarjeta de Video"
+        ]
+    },
+    "inteligencia": {
+        "modoAprendizaje": true,
+        "adaptacionAutomatica": true,
+        "reconocimientoPatrones": true,
+        "nivelConfianzaMinimo": 0.80,
+        "detectarEstructura": true,
+        "modoColumnas": "AUTO"
+    },
+    "scoring": {
+        "formula": "MULTI_DIMENSIONAL_ML",
+        "pesos": {
+            "palabrasClave": 0.30,
+            "palabrasTecnicas": 0.25,
+            "marcas": 0.15,
+            "patrones": 0.15,
+            "etiquetas": 0.10,
+            "contexto": 0.05
+        },
+        "umbrales": {
+            "rechazo": 0.50,
+            "dudoso": 0.70,
+            "probable": 0.85,
+            "seguro": 0.95,
+            "certeza": 0.99
+        }
+    },
+    "reconocimiento": {
+        "palabrasClave": {
+            "criticas": {
+                "terminos": [
+                    "gpu",
+                    "tarjeta video",
+                    "tarjeta grafica",
+                    "graphics card",
+                    "video card",
+                    "t. video",
+                    "vga",
+                    "adaptador de video"
+                ],
+                "peso": 8.0
+            },
+            "fuertes": {
+                "terminos": [
+                    "rtx",
+                    "gtx",
+                    "radeon",
+                    "geforce",
+                    "vega",
+                    "arc",
+                    "quadro",
+                    "titan"
+                ],
+                "peso": 4.0
+            },
+            "medias": {
+                "terminos": [
+                    "grafica",
+                    "video",
+                    "graphics",
+                    "display adapter"
+                ],
+                "peso": 2.0
+            },
+            "debiles": {
+                "terminos": [
+                    "tarjeta",
+                    "card",
+                    "pcie"
+                ],
+                "peso": 1.0
+            }
+        },
+        "palabrasTecnicas": {
+            "series_nvidia": [
+                "gtx",
+                "rtx",
+                "geforce",
+                "quadro",
+                "tesla",
+                "titan"
+            ],
+            "modelos_nvidia": [
+                "1050",
+                "1060",
+                "1070",
+                "1080",
+                "2060",
+                "2070",
+                "2080",
+                "3050",
+                "3060",
+                "3070",
+                "3080",
+                "3090",
+                "4060",
+                "4070",
+                "4080",
+                "4090"
+            ],
+            "series_amd": [
+                "radeon",
+                "rx",
+                "vega",
+                "r9",
+                "r7",
+                "r5"
+            ],
+            "modelos_amd": [
+                "5500",
+                "5600",
+                "5700",
+                "6500",
+                "6600",
+                "6700",
+                "6800",
+                "6900",
+                "7600",
+                "7700",
+                "7800",
+                "7900"
+            ],
+            "series_intel": [
+                "arc",
+                "a310",
+                "a380",
+                "a580",
+                "a750",
+                "a770",
+                "uhd",
+                "iris"
+            ],
+            "memoria_vram": [
+                "2gb",
+                "4gb",
+                "6gb",
+                "8gb",
+                "10gb",
+                "12gb",
+                "16gb",
+                "24gb"
+            ]
+        },
+        "marcas": {
+            "tier1": [
+                "nvidia",
+                "amd",
+                "intel",
+                "asus",
+                "msi"
+            ],
+            "tier2": [
+                "gigabyte",
+                "evga",
+                "sapphire",
+                "powercolor",
+                "xfx"
+            ],
+            "tier3": [
+                "zotac",
+                "pny",
+                "palit",
+                "gainward",
+                "galax"
+            ]
+        },
+        "palabrasExclusion": {
+            "absoluta": [
+                "monitor",
+                "teclado",
+                "impresora",
+                "cpu",
+                "termoventilador",
+                "convector",
+                "calefactor",
+                "fan heater",
+                "radiador",
+                "climatizacion",
+                "imaco"
+            ],
+            "fuerte": [
+                "ram",
+                "ssd",
+                "hdd",
+                "temperatura",
+                "calefaccion"
+            ],
+            "media": [
+                "usb",
+                "cable"
+            ],
+            "debil": []
+        }
+    },
+    "atributosExtraccion": [
+        {
+            "nombreCampo": "MARCA",
+            "etiqueta": "Marca",
+            "tipoDato": "TEXTO",
+            "requerido": true,
+            "placeholder": "Ej: NVIDIA, AMD, MSI, ASUS",
+            "prioridad": 1,
+            "orden_ui": 1,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Marca",
+                            "Brand"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "MARCA_CONOCIDA",
+                        "fuente": "marcas.*"
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "MODELO",
+            "etiqueta": "Modelo",
+            "tipoDato": "TEXTO",
+            "requerido": true,
+            "placeholder": "Ej: RTX 4070, RX 7800 XT",
+            "prioridad": 2,
+            "orden_ui": 2,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Modelo",
+                            "Model",
+                            "GPU"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(rtx|gtx|rx|radeon|arc)\\s*\\d{4}\\s*(ti|xt|super)?",
+                        "grupo": 0,
+                        "mayusculas": true
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "MEMORIA_VRAM",
+            "etiqueta": "Memoria VRAM",
+            "tipoDato": "TEXTO",
+            "requerido": false,
+            "placeholder": "Ej: 8GB GDDR6, 12GB GDDR6X",
+            "prioridad": 3,
+            "orden_ui": 3,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "VRAM",
+                            "Memoria",
+                            "Memory"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(\\d+)\\s*gb(?:/(\\d+)\\s*gb)?\\s*(gddr[56]x?|hbm2)?",
+                        "grupo": 0
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(\\d{1,2}GB/\\d{1,2}GB)",
+                        "grupo": 1
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "TIPO_MEMORIA",
+            "etiqueta": "Tipo Memoria",
+            "tipoDato": "TEXTO",
+            "requerido": false,
+            "placeholder": "Ej: GDDR6, GDDR6X, HBM2",
+            "prioridad": 4,
+            "orden_ui": 4,
+            "opciones": [
+                "GDDR5",
+                "GDDR6",
+                "GDDR6X",
+                "HBM2",
+                "HBM3"
+            ],
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(gddr[56]x?|hbm[23])",
+                        "grupo": 1,
+                        "mayusculas": true
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "CONECTORES_VIDEO",
+            "etiqueta": "Conectores de Video",
+            "tipoDato": "LISTA",
+            "requerido": false,
+            "placeholder": "Ej: HDMI 2.1, DisplayPort 1.4",
+            "prioridad": 5,
+            "orden_ui": 5,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Conectores",
+                            "Puertos",
+                            "Outputs"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(hdmi|displayport|dp|dvi|vga)\\s*(\\d\\.\\d)?",
+                        "multiple": true
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "TDP",
+            "etiqueta": "TDP (Watts)",
+            "tipoDato": "ENTERO",
+            "requerido": false,
+            "placeholder": "Ej: 200, 320",
+            "prioridad": 6,
+            "orden_ui": 6,
+            "validacion": {
+                "min": 30,
+                "max": 600
+            },
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "TDP",
+                            "Watts",
+                            "Consumo"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(\\d{2,3})\\s*(w|watts|tdp)",
+                        "grupo": 1
+                    }
+                ]
+            }
+        }
+    ]
+}

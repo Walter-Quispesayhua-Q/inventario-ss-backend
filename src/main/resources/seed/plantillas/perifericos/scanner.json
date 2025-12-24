@@ -1,0 +1,549 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SCN-2025-V1",
+    "version": "1.0",
+    "nombre": "Scanner",
+    "categoriaSemantica": "DISPOSITIVO_CAPTURA_SCANNER",
+    "descripcion": "Plantilla ML de scanner - Maneja columna única, múltiples columnas e híbrido para dispositivos de digitalización de documentos"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_RESOLUCION_DPI",
+        "condicion": ".*\\b\\d+\\s*(dpi|x.*dpi).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró resolución específica en DPI"
+      },
+      {
+        "nombre": "BONUS_TIPO_SCANNER",
+        "condicion": ".*(flatbed|alimentador|duplex|adf|portatil).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró tipo específico de scanner"
+      },
+      {
+        "nombre": "BONUS_FORMATO_PAPEL",
+        "condicion": ".*(a4|a3|legal|letter|carta).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró formato de papel soportado"
+      },
+      {
+        "nombre": "BONUS_MARCA_CONOCIDA",
+        "condicion": ".*(canon|epson|hp|brother|fujitsu|kodak).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró marca conocida de scanners"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["scanner", "escaner", "scaner", "digitalizador"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["flatbed", "alimentador", "adf", "duplex", "documento", "dpi"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["a4", "a3", "legal", "usb", "wifi", "color", "monocromo"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["digital", "optico", "ccd", "cis", "led"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["flatbed", "alimentador", "adf", "duplex", "portatil", "de-mano", "libro", "foto"],
+      "resoluciones": ["dpi", "600dpi", "1200dpi", "2400dpi", "4800dpi", "9600dpi"],
+      "formatos": ["a4", "a3", "legal", "letter", "carta", "oficio", "folio", "a5", "a6"],
+      "conectividad": ["usb", "usb-c", "wifi", "ethernet", "bluetooth", "wireless"],
+      "sensores": ["ccd", "cis", "led", "xenon", "fluorescent"],
+      "velocidades": ["ppm", "paginas", "minuto", "ipm", "images"],
+      "profundidad": ["24bit", "48bit", "16bit", "color", "grayscale", "monocromo"],
+      "marcas_comunes": ["canon", "epson", "hp", "brother", "fujitsu", "kodak", "avision", "plustek"],
+      "software": ["twain", "isis", "ocr", "pdf", "jpeg", "tiff", "bmp"],
+      "caracteristicas": ["duplex", "simplex", "batch", "ocr", "ice", "fare", "gice"]
+    },
+    "marcas": {
+      "tier1": ["canon", "epson", "hp", "brother", "fujitsu"],
+      "tier2": ["kodak", "avision", "plustek", "mustek", "xerox"],
+      "tier3": ["benq", "microtek", "umax", "visioneer", "panasonic"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["impresora", "printer", "camara", "monitor"],
+      "fuerte": ["disco", "memoria", "procesador", "teclado"],
+      "media": ["cable", "adaptador", "soporte", "bandeja"],
+      "debil": ["usb", "software", "digital", "optico"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(canon|epson|hp|brother|fujitsu|kodak)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "tipo_scanner": "\\b(scanner|escaner|scaner|digitalizador)\\b",
+      "resolucion_dpi": "(\\d+)\\s*x?\\s*(\\d+)?\\s*dpi",
+      "tipo_alimentacion": "\\b(flatbed|alimentador|adf|duplex|portatil|de[-\\s]*mano|libro|foto)\\b",
+      "formato_papel": "\\b(a4|a3|legal|letter|carta|oficio|folio|a5|a6)\\b",
+      "conectividad": "\\b(usb|usb[-\\s]*c|wifi|ethernet|bluetooth|wireless)\\b",
+      "profundidad_color": "\\b(24[-\\s]*bit|48[-\\s]*bit|16[-\\s]*bit|color|grayscale|monocromo)\\b",
+      "velocidad_escaneo": "(\\d+)\\s*(ppm|paginas.*minuto|ipm|images.*minuto)",
+      "sensor_tipo": "\\b(ccd|cis|led|xenon|fluorescent)\\b",
+      "tamaño_cristal": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm|inches?)",
+      "software_incluido": "\\b(twain|isis|ocr|pdf|jpeg|tiff|bmp)\\b",
+      "caracteristicas_especiales": "\\b(duplex|simplex|batch|ice|fare|gice|auto[-\\s]*crop)\\b",
+      "capacidad_alimentador": "(\\d+)\\s*(hojas?|sheets?|documentos?)",
+      "tiempo_calentamiento": "(\\d+)\\s*(segundos?|minutos?)\\s*(calentamiento|warm[-\\s]*up)",
+      "consumo_energia": "(\\d+(?:\\.\\d+)?)\\s*(w|watts?)\\s*(operacion|standby|idle)",
+      "temperatura": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c",
+      "dimensiones": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm)",
+      "peso": "(\\d+(?:\\.\\d+)?)\\s*(g|gramos?|kg|kilogramos?)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Canon, Epson, HP, Brother, Fujitsu",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(canon|epson|hp|brother|fujitsu|kodak)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: CanoScan LiDE 400, Perfection V600, ScanJet Pro 2500",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SCANNER",
+      "etiqueta": "Tipo de Scanner",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Flatbed, Alimentador, Duplex, Portátil",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Flatbed", "Alimentador (ADF)", "Duplex", "Portátil", "De mano", "Libro", "Foto"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Scanner Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(flatbed|alimentador|adf|duplex|portatil|de[-\\s]*mano|libro|foto)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["flatbed", "alimentador", "adf", "duplex", "portatil", "libro"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_OPTICA",
+      "etiqueta": "Resolución Óptica (DPI)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 600 DPI, 1200x2400 DPI, 4800 DPI",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Resolución", "DPI", "Resolution"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x?\\s*(\\d+)?\\s*dpi", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_INTERPOLADA",
+      "etiqueta": "Resolución Interpolada (DPI)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 19200 DPI, 9600x9600 DPI",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Interpolada", "Max DPI", "Enhanced"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x?\\s*(\\d+)?\\s*dpi\\s*(interpolada|enhanced|max)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO_PAPEL_MAXIMO",
+      "etiqueta": "Formato de Papel Máximo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: A4, A3, Legal, Letter",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": ["A3", "A4", "A5", "A6", "Legal", "Letter", "Carta", "Oficio", "Folio"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formato", "Paper Size", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(a4|a3|legal|letter|carta|oficio|folio|a5|a6)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["a4", "a3", "legal", "letter", "carta", "oficio"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, WiFi, Ethernet",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connection", "Interface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|usb[-\\s]*c|wifi|ethernet|bluetooth|wireless)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROFUNDIDAD_COLOR",
+      "etiqueta": "Profundidad de Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 24-bit, 48-bit, Color, Monocromo",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["16-bit", "24-bit", "48-bit", "Color", "Grayscale", "Monocromo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Profundidad", "Bit Depth"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(24[-\\s]*bit|48[-\\s]*bit|16[-\\s]*bit|color|grayscale|monocromo)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["24bit", "48bit", "color", "grayscale", "monocromo"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_ESCANEO",
+      "etiqueta": "Velocidad de Escaneo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 25 ppm, 12 ipm, 8 páginas/min",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Velocidad", "Speed", "PPM"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(ppm|paginas.*minuto|ipm|images.*minuto)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSOR",
+      "etiqueta": "Tipo de Sensor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: CCD, CIS, LED, Xenon",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["CCD", "CIS", "LED", "Xenon", "Fluorescent"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Sensor", "Technology", "Light Source"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ccd|cis|led|xenon|fluorescent)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ccd", "cis", "led", "xenon", "fluorescent"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_ALIMENTADOR",
+      "etiqueta": "Capacidad del Alimentador",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 300",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 1,
+        "max": 500
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["ADF", "Alimentador", "Capacity"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(hojas?|sheets?|documentos?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DUPLEX",
+      "etiqueta": "Escaneo Dúplex",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Automático, Manual",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Sí", "No", "Automático", "Manual", "Simplex"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Duplex", "Doble Cara", "Two-sided"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(duplex|simplex|doble[-\\s]*cara|two[-\\s]*sided)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["duplex", "simplex", "doble", "cara", "automatico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOFTWARE_INCLUIDO",
+      "etiqueta": "Software Incluido",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: TWAIN, OCR, PDF Creator",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Software", "Drivers", "Applications"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(twain|isis|ocr|pdf|jpeg|tiff|bmp)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Auto Crop, ICE, FARE, Batch Scan",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Special"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ice|fare|gice|auto[-\\s]*crop|batch|preview)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIEMPO_CALENTAMIENTO",
+      "etiqueta": "Tiempo de Calentamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10 segundos, 2 minutos, Instantáneo",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Calentamiento", "Warm-up", "Start Time"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(segundos?|minutos?)\\s*(calentamiento|warm[-\\s]*up)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 18W operación, 2W standby",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Consumo", "Power", "Watts"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(w|watts?)\\s*(operacion|standby|idle)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10°C a 35°C",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Temperature", "Operating"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 430 x 250 x 40 mm",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.1, 4.5, 8.2",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 0.5,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Kg"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(g|gramos?|kg|kilogramos?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w]+)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "plateado", "azul"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Scanner Canon básico",
+      "texto": "01 Scanner Ma Canon Mo CanoScan LiDE 400 flatbed USB 4800 DPI A4 color Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Canon",
+        "MODELO": "CanoScan LiDE 400",
+        "TIPO_SCANNER": "Flatbed",
+        "CONECTIVIDAD": ["USB"],
+        "RESOLUCION_OPTICA": "4800 DPI",
+        "FORMATO_PAPEL_MAXIMO": "A4",
+        "PROFUNDIDAD_COLOR": "Color",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 2: Scanner Epson profesional",
+      "texto": "Scanner Epson Perfection V850 Pro flatbed 6400x9600 DPI duplex A4 48-bit CCD",
+      "extraccionEsperada": {
+        "MARCA": "Epson",
+        "MODELO": "Perfection V850 Pro",
+        "TIPO_SCANNER": "Flatbed",
+        "RESOLUCION_OPTICA": "6400x9600 DPI",
+        "DUPLEX": "Sí",
+        "FORMATO_PAPEL_MAXIMO": "A4",
+        "PROFUNDIDAD_COLOR": "48-bit",
+        "SENSOR": "CCD"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "HP",
+        "Modelo": "ScanJet Pro 2500 f1",
+        "Tipo": "Alimentador",
+        "DPI": "1200x1200 DPI",
+        "Formato": "A4",
+        "Conectividad": "USB, WiFi",
+        "Color": "24-bit",
+        "Velocidad": "20 ppm",
+        "ADF": "50 hojas",
+        "Duplex": "Automático",
+        "Software": "TWAIN, OCR",
+        "Peso": "3.9kg",
+        "Color_Fisica": "Blanco"
+      },
+      "extraccionEsperada": {
+        "MARCA": "HP",
+        "MODELO": "ScanJet Pro 2500 f1",
+        "TIPO_SCANNER": "Alimentador (ADF)",
+        "RESOLUCION_OPTICA": "1200x1200 DPI",
+        "FORMATO_PAPEL_MAXIMO": "A4",
+        "CONECTIVIDAD": ["USB", "WiFi"],
+        "PROFUNDIDAD_COLOR": "24-bit",
+        "VELOCIDAD_ESCANEO": "20 ppm",
+        "CAPACIDAD_ALIMENTADOR": "50",
+        "DUPLEX": "Automático",
+        "SOFTWARE_INCLUIDO": ["TWAIN", "OCR"],
+        "PESO": "3.9",
+        "COLOR": "Blanco"
+      }
+    }
+  ]
+}

@@ -1,0 +1,529 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-TBL-2025-V1",
+    "version": "1.0",
+    "nombre": "Mesa",
+    "categoriaSemantica": "MOBILIARIO_MESA_TRABAJO",
+    "descripcion": "Plantilla ML de mesa - Maneja columna única, múltiples columnas e híbrido para mesas de trabajo, cómputo e impresión"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIPO_ESPECIFICO",
+        "condicion": ".*(computo|trabajo|impresora|individual|doble).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró tipo específico de mesa"
+      },
+      {
+        "nombre": "BONUS_CAPACIDAD_PERSONAS",
+        "condicion": ".*(individual|doble|dos\\s+personas|\\d+\\s+personas).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró capacidad específica de personas"
+      },
+      {
+        "nombre": "BONUS_DIMENSIONES_ESPECIFICAS",
+        "condicion": ".*\\d+\\s*(?:cm|cms).*[xX].*\\d+\\s*(?:cm|cms).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontraron dimensiones específicas en cm"
+      },
+      {
+        "nombre": "BONUS_MATERIAL_MELAMINA",
+        "condicion": ".*(melamina|melamine).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró material melamina específico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["mesa", "table", "superficie", "tablero"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["computo", "trabajo", "impresora", "individual", "doble"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["melamina", "madera", "porta-cpu", "cajones", "modular"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["mobiliario", "furniture", "work", "office"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["computo", "trabajo", "impresora", "conferencia", "reunion", "escritura", "dibujo"],
+      "capacidad": ["individual", "doble", "dos-personas", "triple", "multiple", "grupal"],
+      "materiales": ["melamina", "melamine", "madera", "mdf", "vidrio", "metal", "acero"],
+      "acabados": ["laminado", "enchapado", "lacado", "barnizado", "natural", "rustico"],
+      "formas": ["rectangular", "cuadrada", "circular", "ovalada", "l-shaped", "u-shaped"],
+      "caracteristicas": ["porta-cpu", "organizadores", "cajones", "ruedas", "plegable", "ajustable"],
+      "colores_comunes": ["chocolate", "haya", "nogal", "roble", "blanco", "negro", "natural"],
+      "estilos": ["moderna", "clasica", "industrial", "minimalista", "ejecutiva", "funcional"],
+      "marcas_mobiliario": ["steelcase", "herman-miller", "teknion", "haworth", "global"],
+      "medidas_estandar": ["80x78", "120x60", "140x80", "160x80", "180x90"]
+    },
+    "marcas": {
+      "tier1": ["steelcase", "herman-miller", "teknion", "haworth", "knoll"],
+      "tier2": ["global", "kimball", "humanscale", "okamura", "hon"],
+      "tier3": ["ikea", "office-depot", "staples", "flash-furniture", "boss"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["silla", "escritorio", "estante", "archivador"],
+      "fuerte": ["monitor", "cpu", "teclado", "mouse"],
+      "media": ["sofa", "cama", "banco", "taburete"],
+      "debil": ["mueble", "furniture", "office", "trabajo"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(steelcase|herman-miller|teknion)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_mesa": "\\b(mesa|table)\\s*(de\\s+)?(computo|trabajo|impresora|conferencia|reunion)?\\b",
+      "capacidad_uso": "\\b(individual|doble|dos\\s+personas|triple|multiple|grupal)\\b",
+      "material_principal": "\\b(melamina|melamine|madera|mdf|vidrio|metal|acero)\\b",
+      "forma_mesa": "\\b(rectangular|cuadrada|circular|ovalada|l[-\\s]*shaped|u[-\\s]*shaped)\\b",
+      "caracteristicas_especiales": "\\b(porta[-\\s]*cpu|organizadores|cajones|ruedas|plegable|ajustable|modular)\\b",
+      "acabado": "\\b(laminado|enchapado|lacado|barnizado|natural|rustico)\\b",
+      "cantidad": "(\\d{1,2})\\s*(mesa|mesas|table)",
+      "dimensiones_mesa": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*\\.?\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m))?",
+      "largo": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(largo|length|long)",
+      "ancho": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(ancho|width|wide)",
+      "alto": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(alto|height|high)",
+      "grosor_tablero": "(\\d+(?:\\.\\d+)?)\\s*(mm|cms?\\.?)\\s*(grosor|espesor|thick)",
+      "capacidad_peso": "(\\d+)\\s*(kg|kilogramos?)\\s*(capacidad|peso|max|soporte)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Steelcase, Herman Miller, Nacional",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(steelcase|herman-miller|teknion)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Executive, Modular, Workstation",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MESA",
+      "etiqueta": "Tipo de Mesa",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Cómputo, Trabajo, Impresora, Conferencia",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Cómputo", "Trabajo", "Impresora", "Conferencia", "Reunión", "Escritura", "Dibujo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Uso"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mesa|table)\\s*(de\\s+)?(computo|trabajo|impresora|conferencia|reunion)?\\b", "grupo": 3, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["computo", "trabajo", "impresora", "conferencia", "reunion"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_PERSONAS",
+      "etiqueta": "Capacidad de Personas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Individual, Doble, 2 personas, Múltiple",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Individual", "Doble", "2 personas", "3 personas", "4 personas", "Múltiple", "Grupal"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Persons", "Users"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(individual|doble|dos\\s+personas|triple|multiple|grupal)\\b", "mayusculas": true},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*personas?", "grupo": 0},
+          {"tipo": "PALABRAS", "lista": ["individual", "doble", "dos", "personas", "multiple"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_PRINCIPAL",
+      "etiqueta": "Material Principal",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Melamina, Madera, MDF, Vidrio, Metal",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Melamina", "Madera", "MDF", "Vidrio", "Metal", "Acero", "Laminado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Materials", "Superficie"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(melamina|melamine|madera|mdf|vidrio|metal|acero)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["melamina", "melamine", "madera", "mdf", "vidrio", "metal"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMA",
+      "etiqueta": "Forma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Rectangular, Cuadrada, Circular, En L",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": ["Rectangular", "Cuadrada", "Circular", "Ovalada", "En L", "En U"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Forma", "Shape", "Form"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(rectangular|cuadrada|circular|ovalada|l[-\\s]*shaped|u[-\\s]*shaped)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["rectangular", "cuadrada", "circular", "ovalada"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Porta CPU, Organizadores, Cajones",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Extras"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(porta[-\\s]*cpu|organizadores|cajones|ruedas|plegable|ajustable|modular)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACABADO",
+      "etiqueta": "Acabado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Laminado, Enchapado, Lacado, Natural",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["Laminado", "Enchapado", "Lacado", "Barnizado", "Natural", "Rústico"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Acabado", "Finish", "Surface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(laminado|enchapado|lacado|barnizado|natural|rustico)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["laminado", "enchapado", "lacado", "natural"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 5, 8, 12",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(mesa|mesas|table)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(mesa|mesas|table)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LARGO",
+      "etiqueta": "Largo (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 80, 120, 160, 200",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 50,
+        "max": 500
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Largo", "Length", "Long"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(largo|length|long)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 60, 78, 80, 90",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 40,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Wide"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(ancho|width|wide)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTO",
+      "etiqueta": "Alto (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 72, 75, 78, 80",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 60,
+        "max": 120
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alto", "Height", "High"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(alto|height|high)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 80x78 cm, 467x80x50 cms, 91x124x77 cm",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*\\.?\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m))?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GROSOR_TABLERO",
+      "etiqueta": "Grosor del Tablero (mm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 18, 25, 30",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 10,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Grosor", "Thickness", "Espesor"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(mm|cms?\\.?)\\s*(grosor|espesor|thick)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_PESO",
+      "etiqueta": "Capacidad de Peso (kg)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 80, 100, 150",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 20,
+        "max": 500
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Weight", "Peso Max"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(kg|kilogramos?)\\s*(capacidad|peso|max|soporte)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_CAJONES",
+      "etiqueta": "Número de Cajones",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 0, 2, 3, 4",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 0,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cajones", "Drawers", "Gavetas"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*cajones?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PATAS_SOPORTE",
+      "etiqueta": "Patas/Soporte",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4 patas, Base central, Pedestal",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "opciones": ["4 patas", "Base central", "Pedestal", "Caballete", "Panel lateral"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Patas", "Legs", "Support"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(4\\s*patas|base\\s*central|pedestal|caballete|panel)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["patas", "base", "pedestal", "caballete", "panel"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESTILO",
+      "etiqueta": "Estilo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Moderno, Clásico, Industrial, Minimalista",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "opciones": ["Moderno", "Clásico", "Industrial", "Minimalista", "Ejecutivo", "Funcional"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Estilo", "Style", "Design"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(moderna|clasica|industrial|minimalista|ejecutiva|funcional)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["moderna", "clasica", "industrial", "minimalista"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Chocolate, Haya, Nogal, Blanco",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["chocolate", "haya", "nogal", "blanco", "negro", "roble"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Mesa de cómputo individual del inventario real",
+      "texto": "08 MESA DE COMPUTO INDIVIDUAL 80 CMS. X 78 CMS.",
+      "extraccionEsperada": {
+        "TIPO_MESA": "Cómputo",
+        "CAPACIDAD_PERSONAS": "Individual",
+        "CANTIDAD": "8",
+        "DIMENSIONES": "80 CMS. X 78 CMS.",
+        "LARGO": "80",
+        "ANCHO": "78"
+      }
+    },
+    {
+      "nombre": "Caso 2: Mesa de trabajo para dos personas del inventario real",
+      "texto": "05 Mesa de trabajo para dos personas en melamina de 91cm. De largo x 124cm. De ancho y de fondo 77cm. Incluido el porta CPU.",
+      "extraccionEsperada": {
+        "TIPO_MESA": "Trabajo",
+        "CAPACIDAD_PERSONAS": "2 personas",
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "CANTIDAD": "5",
+        "LARGO": "91",
+        "ANCHO": "124",
+        "CARACTERISTICAS_ESPECIALES": ["Porta CPU"]
+      }
+    },
+    {
+      "nombre": "Caso 3: Mesa de impresora del inventario real",
+      "texto": "01 Mesa de impresora de color chocolate madera laminada rectangular",
+      "extraccionEsperada": {
+        "TIPO_MESA": "Impresora",
+        "MATERIAL_PRINCIPAL": "Madera",
+        "ACABADO": "Laminado",
+        "FORMA": "Rectangular",
+        "COLOR": "Chocolate"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1160 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-TRF-2025-V1",
+    "version": "1.0",
+    "nombre": "Transformador",
+    "categoriaSemantica": "ENERGIA_TRANSFORMADOR_VOLTAGE_CONVERSION",
+    "descripcion": "Plantilla ML de Transformador - Maneja columna única, múltiples columnas e híbrido para transformadores de aislamiento, reductores y elevadores"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TRANSFORMADOR_AISLAMIENTO",
+        "condicion": ".*(transformador.*aislamiento|aislamiento.*monofasico).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró transformador de aislamiento específico"
+      },
+      {
+        "nombre": "BONUS_MONOFASICO_7KVA",
+        "condicion": ".*(monofasico.*7kva|7kva.*monofasico).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró transformador monofásico de 7KVA específico"
+      },
+      {
+        "nombre": "BONUS_KVA_RATING",
+        "condicion": ".*(\\d+\\s*kva|potencia.*kva).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró rating en KVA específico"
+      },
+      {
+        "nombre": "BONUS_TIPO_CONFIGURACION",
+        "condicion": ".*(reductor|elevador|toroidal|autotransformador).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró tipo específico de transformador"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "transformador",
+          "transformer",
+          "aislamiento",
+          "monofasico",
+          "kva"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "voltaje",
+          "voltage",
+          "primario",
+          "secundario",
+          "potencia"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "reductor",
+          "elevador",
+          "toroidal",
+          "autotransformador"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "electrical",
+          "electronic",
+          "power",
+          "energy"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos_transformador": [
+        "aislamiento",
+        "reductor",
+        "elevador",
+        "toroidal",
+        "autotransformador"
+      ],
+      "configuraciones": [
+        "monofasico",
+        "trifasico",
+        "bifasico"
+      ],
+      "nucleos": [
+        "hierro",
+        "ferrita",
+        "toroidal",
+        "ei",
+        "ui",
+        "laminar"
+      ],
+      "aplicaciones": [
+        "aislamiento-galvanico",
+        "reduccion-voltaje",
+        "elevacion-voltaje",
+        "adaptacion"
+      ],
+      "potencias_kva": [
+        "1kva",
+        "2kva",
+        "3kva",
+        "5kva",
+        "7kva",
+        "10kva",
+        "15kva"
+      ],
+      "potencias_va": [
+        "100va",
+        "200va",
+        "300va",
+        "500va",
+        "750va",
+        "1000va"
+      ],
+      "voltajes_primario": [
+        "110v",
+        "220v",
+        "240v",
+        "380v",
+        "440v"
+      ],
+      "voltajes_secundario": [
+        "12v",
+        "24v",
+        "48v",
+        "110v",
+        "220v"
+      ],
+      "frecuencias": [
+        "50hz",
+        "60hz",
+        "400hz"
+      ],
+      "aislamientos": [
+        "aislado",
+        "no-aislado",
+        "galvanico",
+        "optico"
+      ],
+      "marcas_comunes": [
+        "schneider",
+        "abb",
+        "siemens",
+        "general-electric",
+        "eaton"
+      ],
+      "protecciones": [
+        "termica",
+        "magnetica",
+        "diferencial",
+        "sobretension"
+      ],
+      "refrigeracion": [
+        "aire",
+        "aceite",
+        "seco",
+        "liquido"
+      ],
+      "montaje": [
+        "piso",
+        "poste",
+        "interior",
+        "exterior",
+        "submarino"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "schneider",
+        "abb",
+        "siemens",
+        "general-electric",
+        "eaton"
+      ],
+      "tier2": [
+        "legrand",
+        "square-d",
+        "cutler-hammer",
+        "westinghouse"
+      ],
+      "tier3": [
+        "generic",
+        "chinese",
+        "no-name",
+        "oem",
+        "local"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "fuente",
+        "alimentacion",
+        "monitor",
+        "cpu",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "escritorio",
+        "archivador"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(schneider|abb|siemens|ge)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(trf[-\\s]*\\w+|tr[-\\s]*\\w+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_transformador": "\\b(transformador|transformer)\\b",
+      "clasificacion": "\\b(aislamiento|reductor|elevador|toroidal|autotransformador)\\b",
+      "configuracion": "\\b(monofasico|trifasico|bifasico)\\b",
+      "potencia_kva": "(\\d+(?:[\\.,]\\d+)?)\\s*kva",
+      "potencia_va": "(\\d+(?:[\\.,]\\d+)?)\\s*va",
+      "voltaje_primario": "(\\d+)\\s*v\\s*/\\s*(\\d+)\\s*v",
+      "voltaje_secundario": "\\b(\\d+)\\s*v\\s*[-–]\\s*0\\s*v\\s*[-–]\\s*(\\d+)\\s*v\\b",
+      "relacion_transformacion": "(\\d+(?:\\.\\d+)?)\\s*:\\s*(\\d+(?:\\.\\d+)?)",
+      "corriente_primaria": "(\\d+(?:[\\.,]\\d+)?)\\s*a\\s*(primario|primary|in)",
+      "corriente_secundaria": "(\\d+(?:[\\.,]\\d+)?)\\s*a\\s*(secundario|secondary|out)",
+      "frecuencia": "(\\d+)\\s*hz",
+      "tipo_aislamiento": "\\b(aislado|no\\s*aislado|galvanico|optico)\\b",
+      "tipo_nucleo": "\\b(hierro|ferrita|toroidal|ei|ui|laminar)\\b",
+      "refrigeracion": "\\b(aire|aceite|seco|liquido|natural|forzada)\\b",
+      "montaje": "\\b(piso|poste|interior|exterior|rack|panel)\\b",
+      "protecciones": "\\b(termica|magnetica|diferencial|sobretension)\\b",
+      "clase_aislamiento": "\\b(clase\\s+[abfh]|class\\s+[abfh])\\b",
+      "temperatura_operacion": "(-?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "eficiencia": "(\\d+(?:\\.\\d+)?)\\s*%\\s*(eficiencia|efficiency)",
+      "peso_transformador": "(\\d+(?:\\.\\d+)?)\\s*(kg|ton)\\s*(peso|weight)",
+      "dimensiones_transformador": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm|m)",
+      "cantidad": "(\\d{1,2})\\s*(transformador|transformer)",
+      "factor_potencia": "(\\d+(?:\\.\\d+)?)\\s*(fp|factor\\s+potencia|power\\s+factor)",
+      "regulacion": "(\\d+(?:\\.\\d+)?)\\s*%\\s*(regulacion|regulation)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Schneider, ABB, Siemens, GE",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(schneider|abb|siemens|ge)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: TRF-7000, TR-ISOL-7KVA, T-3000",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(trf[-\\s]*\\w+|tr[-\\s]*\\w+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_TRANSFORMADOR",
+      "etiqueta": "Tipo de Transformador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Aislamiento, Reductor, Elevador, Toroidal",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Aislamiento",
+        "Reductor",
+        "Elevador",
+        "Toroidal",
+        "Autotransformador"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Classification"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(aislamiento|reductor|elevador|toroidal|autotransformador)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "aislamiento",
+              "reductor",
+              "elevador",
+              "toroidal",
+              "autotransformador"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONFIGURACION",
+      "etiqueta": "Configuración",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Monofásico, Trifásico, Bifásico",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "Monofásico",
+        "Trifásico",
+        "Bifásico"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Configuración",
+              "Configuration",
+              "Phase"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(monofasico|trifasico|bifasico)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "monofasico",
+              "trifasico",
+              "bifasico"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA_KVA",
+      "etiqueta": "Potencia (KVA)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5, 7, 10, 15",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 0.1,
+        "max": 1000.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Potencia KVA",
+              "Power KVA",
+              "Rating"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*kva",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA_VA",
+      "etiqueta": "Potencia (VA)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 100, 300, 500, 750, 1000",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 50,
+        "max": 100000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Potencia VA",
+              "Power VA",
+              "Capacity"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*va",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_PRIMARIO",
+      "etiqueta": "Voltaje Primario (V)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 110, 220, 240, 380, 440",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 12,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje Primario",
+              "Primary Voltage",
+              "Input"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*v\\s*/\\s*(\\d+)\\s*v",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_SECUNDARIO",
+      "etiqueta": "Voltaje Secundario (V)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 12, 24, 48, 110, 220",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 6,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje Secundario",
+              "Secondary Voltage",
+              "Output"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*v\\s*/\\s*(\\d+)\\s*v",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(\\d+)\\s*v\\s*[-–]\\s*0\\s*v\\s*[-–]\\s*(\\d+)\\s*v\\b",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RELACION_TRANSFORMACION",
+      "etiqueta": "Relación de Transformación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1:1, 2:1, 10:1, 1:2",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Relación",
+              "Ratio",
+              "Turn Ratio"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*:\\s*(\\d+(?:\\.\\d+)?)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CORRIENTE_PRIMARIA",
+      "etiqueta": "Corriente Primaria (A)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 5, 10, 15, 20, 30",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 0.1,
+        "max": 1000.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente Primaria",
+              "Primary Current",
+              "Input Current"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*a\\s*(primario|primary|in)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CORRIENTE_SECUNDARIA",
+      "etiqueta": "Corriente Secundaria (A)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2, 5, 10, 25, 50",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 0.1,
+        "max": 2000.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente Secundaria",
+              "Secondary Current",
+              "Output Current"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*a\\s*(secundario|secondary|out)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA",
+      "etiqueta": "Frecuencia (Hz)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 60, 400",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 25,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "Frequency",
+              "Hz"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*hz",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_AISLAMIENTO",
+      "etiqueta": "Tipo de Aislamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Aislado, Galvánico, No aislado",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "Aislado",
+        "No aislado",
+        "Galvánico",
+        "Óptico"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aislamiento",
+              "Isolation",
+              "Insulation"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(aislado|no\\s*aislado|galvanico|optico)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "aislado",
+              "galvanico",
+              "optico",
+              "no",
+              "aislado"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_NUCLEO",
+      "etiqueta": "Tipo de Núcleo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Hierro, Ferrita, Toroidal, EI, UI",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": [
+        "Hierro",
+        "Ferrita",
+        "Toroidal",
+        "EI",
+        "UI",
+        "Laminar"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Núcleo",
+              "Core",
+              "Magnetic Core"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hierro|ferrita|toroidal|ei|ui|laminar)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "hierro",
+              "ferrita",
+              "toroidal",
+              "ei",
+              "ui"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "REFRIGERACION",
+      "etiqueta": "Tipo de Refrigeración",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Aire, Aceite, Seco, Líquido",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": [
+        "Aire",
+        "Aceite",
+        "Seco",
+        "Líquido",
+        "Natural",
+        "Forzada"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Refrigeración",
+              "Cooling",
+              "Heat Management"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(aire|aceite|seco|liquido|natural|forzada)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "aire",
+              "aceite",
+              "seco",
+              "liquido",
+              "natural"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MONTAJE",
+      "etiqueta": "Tipo de Montaje",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Piso, Poste, Interior, Exterior, Rack",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "opciones": [
+        "Piso",
+        "Poste",
+        "Interior",
+        "Exterior",
+        "Rack",
+        "Panel"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Montaje",
+              "Mounting",
+              "Installation"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(piso|poste|interior|exterior|rack|panel)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "piso",
+              "poste",
+              "interior",
+              "exterior",
+              "rack"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTECCIONES",
+      "etiqueta": "Protecciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Térmica, Magnética, Diferencial, Sobretensión",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Protecciones",
+              "Protection",
+              "Safety"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(termica|magnetica|diferencial|sobretension)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "EFICIENCIA",
+      "etiqueta": "Eficiencia (%)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 85, 90, 95, 98",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 70.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Eficiencia",
+              "Efficiency",
+              "Performance"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*%\\s*(eficiencia|efficiency)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 5, 10, 25, 50, 100",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 1.0,
+        "max": 10000.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|ton)\\s*(peso|weight)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: -20°C a 40°C, 0°C a 60°C",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Temperatura",
+              "Operating Temp",
+              "Range"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(-?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(transformador|transformer)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(transformador|transformer)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Gris, Negro, Azul, Verde",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "gris",
+              "negro",
+              "azul",
+              "verde",
+              "amarillo"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Transformador de aislamiento del inventario real",
+      "texto": "01 TRASFORMADOR DE AISLAMIENTO MONOFASICO DE 7KVA",
+      "extraccionEsperada": {
+        "TIPO_TRANSFORMADOR": "Aislamiento",
+        "CONFIGURACION": "Monofásico",
+        "POTENCIA_KVA": "7",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Transformador reductor con especificaciones",
+      "texto": "01 Transformador reductor 220V/24V 5A monofásico toroidal",
+      "extraccionEsperada": {
+        "TIPO_TRANSFORMADOR": "Reductor",
+        "VOLTAJE_PRIMARIO": "220",
+        "VOLTAJE_SECUNDARIO": "24",
+        "CORRIENTE_SECUNDARIA": "5",
+        "CONFIGURACION": "Monofásico",
+        "TIPO_NUCLEO": "Toroidal"
+      }
+    },
+    {
+      "nombre": "Caso 3: Transformador elevador industrial",
+      "texto": "02 Transformador elevador 110V/220V 1000VA trifásico con protección térmica",
+      "extraccionEsperada": {
+        "TIPO_TRANSFORMADOR": "Elevador",
+        "VOLTAJE_PRIMARIO": "110",
+        "VOLTAJE_SECUNDARIO": "220",
+        "POTENCIA_VA": "1000",
+        "CONFIGURACION": "Trifásico",
+        "PROTECCIONES": [
+          "Térmica"
+        ],
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Autotransformador variable",
+      "texto": "01 Autotransformador variable 0-250V 5A con núcleo de hierro",
+      "extraccionEsperada": {
+        "TIPO_TRANSFORMADOR": "Autotransformador",
+        "VOLTAJE_SECUNDARIO": "250",
+        "CORRIENTE_SECUNDARIA": "5",
+        "TIPO_NUCLEO": "Hierro"
+      }
+    }
+  ]
+}

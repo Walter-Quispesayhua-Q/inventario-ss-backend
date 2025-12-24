@@ -1,0 +1,1696 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-PRY-2025-V1",
+    "version": "1.0",
+    "nombre": "PROYECTOR",
+    "categoriaSemantica": "DISPOSITIVO_PROYECCION",
+    "descripcion": "Plantilla ML de proyector - Maneja columna única, múltiples columnas e híbrido para equipos de proyección multimedia"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_LUMENES",
+        "condicion": ".*\\b\\d+\\s*(lumenes?|lm|ansi).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró un patrón de brillo en lúmenes"
+      },
+      {
+        "nombre": "BONUS_TIENE_RESOLUCION",
+        "condicion": ".*\\b\\d{3,4}\\s*[xX×]\\s*\\d{3,4}\\b.*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró un patrón de resolución"
+      },
+      {
+        "nombre": "BONUS_TIENE_TECNOLOGIA",
+        "condicion": ".*(dlp|lcd|lcos|led|laser).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró una tecnología de proyección"
+      },
+      {
+        "nombre": "BONUS_TIENE_CONECTIVIDAD",
+        "condicion": ".*(hdmi|vga|usb|wifi|bluetooth|rs232|rca).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró conectividad específica"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "proyector",
+          "projector",
+          "beamer",
+          "cañon"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "multimedia",
+          "presentacion",
+          "cinema",
+          "epson",
+          "benq"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "portable",
+          "portatil",
+          "ultra",
+          "short",
+          "interactivo"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "video",
+          "imagen",
+          "pantalla",
+          "display"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tecnologia": [
+        "dlp",
+        "lcd",
+        "lcos",
+        "led",
+        "laser",
+        "3lcd",
+        "tri-chip"
+      ],
+      "brillo": [
+        "lumenes",
+        "lm",
+        "ansi",
+        "brillo",
+        "brightness",
+        "2000lm",
+        "3000lm",
+        "4000lm"
+      ],
+      "resolucion": [
+        "svga",
+        "xga",
+        "wxga",
+        "fhd",
+        "4k",
+        "uhd",
+        "1080p",
+        "720p"
+      ],
+      "aspectRatio": [
+        "16:9",
+        "4:3",
+        "16:10",
+        "21:9",
+        "aspecto",
+        "aspect"
+      ],
+      "contraste": [
+        "contraste",
+        "contrast",
+        "ratio",
+        "dinámico",
+        "dynamic"
+      ],
+      "conectividad": [
+        "hdmi",
+        "vga",
+        "usb",
+        "wifi",
+        "bluetooth",
+        "wireless",
+        "ethernet",
+        "rj45",
+        "rs232",
+        "rca",
+        "composite"
+      ],
+      "caracteristicas": [
+        "ultra",
+        "short",
+        "throw",
+        "interactivo",
+        "touch",
+        "3d",
+        "portable"
+      ],
+      "lampara": [
+        "lampara",
+        "lamp",
+        "led",
+        "laser",
+        "vida",
+        "horas",
+        "life"
+      ],
+      "zoom": [
+        "zoom",
+        "optico",
+        "digital",
+        "lente",
+        "lens"
+      ],
+      "distancia": [
+        "throw",
+        "distance",
+        "distancia",
+        "proyeccion",
+        "alcance"
+      ],
+      "modos": [
+        "dinamico",
+        "presentacion",
+        "pizarra",
+        "cine",
+        "teatro",
+        "video",
+        "gaming"
+      ],
+      "red": [
+        "usuarios",
+        "simultaneos",
+        "conectados",
+        "network",
+        "presentation"
+      ],
+      "energia": [
+        "220v",
+        "110v",
+        "60hz",
+        "50hz",
+        "voltaje",
+        "voltage"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "epson",
+        "benq",
+        "sony",
+        "panasonic",
+        "lg"
+      ],
+      "tier2": [
+        "optoma",
+        "viewsonic",
+        "acer",
+        "canon",
+        "nec"
+      ],
+      "tier3": [
+        "infocus",
+        "mitsubishi",
+        "sanyo",
+        "hitachi",
+        "casio"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "tv",
+        "televisor",
+        "pantalla",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "laptop",
+        "tablet",
+        "smartphone",
+        "cpu",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "impresora",
+        "scanner",
+        "router",
+        "switch"
+      ],
+      "debil": [
+        "cable",
+        "soporte",
+        "mount",
+        "bracket"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "lumenes": "(\\d+)\\s*(lumenes?|lm|ansi)",
+      "resolucion": "(\\d{3,4})\\s*[xX×]\\s*(\\d{3,4})",
+      "relacion_aspecto": "\\b(16:9|4:3|16:10|21:9)\\b",
+      "tamaño_proyeccion": "(\\d{2,3})[-~]?(\\d{2,3})?\\s*(pulgadas?|pulg|inch|\\\"|')",
+      "contraste": "(\\d{1,3}[\\,\\.]?\\d{3}?)\\s*:\\s*(1|\\d+)",
+      "tecnologia": "\\b(dlp|lcd|lcos|3lcd|led|laser)\\b",
+      "vida_lampara": "(\\d+[\\,\\.]?\\d{3}?)\\s*(horas?|hrs?|hours?)",
+      "zoom_optico": "(\\d{1,2}\\.\\d)\\s*x?\\s*(zoom|optico)",
+      "distancia_proyeccion": "(\\d{1,2}\\.\\d)\\s*[-~]\\s*(\\d{1,2}\\.\\d)\\s*(m|metros?|ft|feet)",
+      "modos_imagen": "\\b(dinamico|presentacion|pizarra|cine|teatro|video|gaming|eco)\\b",
+      "idioma": "\\b(español|ingles|english|spanish|portugues)\\b",
+      "voltaje": "\\b(220v|110v|100-240v)\\s*[/\\s]*(60hz|50hz)?\\b",
+      "usuarios_red": "(\\d+)\\s*(usuarios?|user|simultaneo)"
+    },
+    "conectividad": {
+      "hdmi": "\\b(hdmi)\\s*(\\d\\.\\d|\\d+)?\\b",
+      "vga": "\\b(vga|d-sub|dsub)\\b",
+      "usb": "\\b(usb)\\s*([23]\\.\\d|[abc]|type[-\\s]*[ac])?\\b",
+      "wireless": "\\b(wifi|wi-fi|wireless|bluetooth|bt)\\b",
+      "audio": "\\b(audio|jack|altavoces?|speakers?)\\b",
+      "ethernet": "\\b(ethernet|lan|rj45|rj-45)\\b",
+      "rs232": "\\b(rs[-\\s]*232[c]?|rs232c)\\b",
+      "rca": "\\b(rca|composite|video\\s*in)\\b"
+    },
+    "caracteristicas": {
+      "ultra_short": "\\b(ultra\\s*short|short\\s*throw)\\b",
+      "interactivo": "\\b(interactivo|interactive|touch)\\b",
+      "portable": "\\b(portable|portatil|mini|compacto)\\b",
+      "3d": "\\b(3d|tres\\s*d|dimensiones)\\b",
+      "keystone": "\\b(keystone|correcion|trapezoidal)\\b",
+      "ceiling": "\\b(techo|ceiling|mount|soporte)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Epson, BenQ, Sony",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: EB-735FI, MW632, VPL-VW295ES",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "[A-Z]{2,4}[-\\s]?[0-9]{3,4}[A-Z]*[I]?"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_PROYECCION",
+      "etiqueta": "Tecnología de Proyección",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: DLP, 3LCD, LCD, LED, Laser",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "DLP",
+        "3LCD",
+        "LCD",
+        "LCoS",
+        "LED",
+        "Laser",
+        "Tri-Chip DLP"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tecnología",
+              "Technology",
+              "Tipo",
+              "Engine"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(dlp|lcd|lcos|3lcd|led|laser|tri-chip)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "dlp",
+              "lcd",
+              "lcos",
+              "3lcd",
+              "led",
+              "laser"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BRILLO_LUMENES",
+      "etiqueta": "Brillo (Lúmenes)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2000, 3500, 4200",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 500,
+        "max": 30000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Lúmenes",
+              "Lumens",
+              "Brillo",
+              "ANSI"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(lumenes?|lm|ansi)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "brillo[:\\s]+(\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_NATIVA",
+      "etiqueta": "Resolución Nativa",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1920x1080, 1280x800, 3840x2160",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "Res"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{3,4})\\s*[xX×]\\s*(\\d{3,4})",
+            "grupo": 0
+          },
+          {
+            "tipo": "MAPEO",
+            "fhd": "1920x1080",
+            "4k": "3840x2160",
+            "uhd": "3840x2160",
+            "1080p": "1920x1080"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RELACION_ASPECTO",
+      "etiqueta": "Relación de Aspecto",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 16:9, 4:3, 16:10",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": [
+        "16:9",
+        "4:3",
+        "16:10",
+        "21:9"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aspecto",
+              "Aspect Ratio",
+              "Relación"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(16:9|4:3|16:10|21:9)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "aspecto[:\\s]+(\\d+:\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_MAXIMA",
+      "etiqueta": "Resolución Máxima Soportada",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4K UHD, 1920x1080, WUXGA",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Res Max",
+              "Max Resolution",
+              "Máxima"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "máxima[:\\s]+(\\d{3,4}\\s*x\\s*\\d{3,4})",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "hasta[:\\s]+(\\d{3,4}\\s*x\\s*\\d{3,4})",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_PROYECCION",
+      "etiqueta": "Tamaño de Proyección",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100 pulgadas, 250-300 pulgadas, 60-120\"",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tamaño",
+              "Size",
+              "Pantalla"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{2,3})[-~]?(\\d{2,3})?\\s*(pulgadas?|pulg|inch|\\\")",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "tamaño[:\\s]+(\\d+\\s*pulgadas?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RELACION_CONTRASTE",
+      "etiqueta": "Relación de Contraste",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10,000:1, 500,000:1, 2,000:1",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Contraste",
+              "Contrast",
+              "Ratio"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,3}[\\,\\.]?\\d{3}?)\\s*:\\s*(1|\\d+)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "contraste[:\\s]+(\\d+[\\,\\.]\\d+:\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_LAMPARA",
+      "etiqueta": "Tipo de Lámpara/Fuente de Luz",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LED, Laser, UHE, Hybrid",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "LED",
+        "Laser",
+        "UHE",
+        "Hybrid LED/Laser",
+        "RGB Laser",
+        "Mercury"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Lámpara",
+              "Lamp",
+              "Fuente",
+              "Light Source"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(led|laser|uhe|hybrid|mercury)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "led",
+              "laser",
+              "uhe",
+              "hybrid",
+              "mercury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VIDA_LAMPARA",
+      "etiqueta": "Vida de Lámpara (Horas)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 5000, 10000, 20000",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 1000,
+        "max": 50000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Vida",
+              "Life",
+              "Horas",
+              "Hours"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+[\\,\\.]?\\d{3}?)\\s*(horas?|hrs?|hours?)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "vida[:\\s]+(\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODO_IMAGEN",
+      "etiqueta": "Modos de Imagen",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Dinámico, Presentación, Pizarra, Cine",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modos",
+              "Image Modes",
+              "Modos Imagen"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(dinamico|presentacion|pizarra|cine|teatro|video|gaming|eco)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISTANCIA_PROYECCION",
+      "etiqueta": "Distancia de Proyección",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1.2-12m, 0.5-3.5m, Ultra Short",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Distancia",
+              "Distance",
+              "Throw"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d)\\s*[-~]\\s*(\\d{1,2}\\.\\d)\\s*(m|metros?)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "distancia[:\\s]+(\\d+\\.?\\d*\\s*m)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_THROW",
+      "etiqueta": "Tipo de Throw",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Ultra Short Throw, Short Throw, Standard",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": [
+        "Ultra Short Throw",
+        "Short Throw",
+        "Standard Throw",
+        "Long Throw"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Throw",
+              "Alcance",
+              "Tipo Throw"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ultra\\s*short|short\\s*throw|standard|long)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "ultra",
+              "short",
+              "throw",
+              "standard",
+              "long"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ZOOM_OPTICO",
+      "etiqueta": "Zoom Óptico",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1.6x, 2.1x, Sin zoom",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Zoom",
+              "Optical Zoom",
+              "Óptico"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d)\\s*x?\\s*(zoom|optico)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "zoom[:\\s]+(\\d\\.\\d+x?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_HDMI",
+      "etiqueta": "Puertos HDMI",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2x HDMI 2.0, 1x HDMI 1.4, 3x HDMI",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "HDMI",
+              "Puertos HDMI",
+              "HDMI Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(hdmi)\\s*(\\d\\.\\d)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hdmi)\\s*(\\d\\.\\d|\\d+)?\\b",
+            "multiple": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_VGA",
+      "etiqueta": "Puertos VGA",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1x VGA In, 2x VGA, VGA In/Out",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "VGA",
+              "D-Sub",
+              "RGB"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(vga|d-sub|dsub)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(vga|d-sub)\\s*(in|out)?\\b",
+            "multiple": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_USB",
+      "etiqueta": "Puertos USB",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2x USB-A, 1x USB-B, USB 2.0",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "USB",
+              "Puertos USB",
+              "USB Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(usb)\\s*([ab]|[23]\\.\\d)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(usb)\\s*([ab]|[23]\\.\\d|type[-\\s]*[ab])?\\b",
+            "multiple": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ENTRADA_RS232",
+      "etiqueta": "Puerto RS-232",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, RS-232C, 1x RS-232",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "opciones": [
+        "Sí",
+        "No",
+        "RS-232",
+        "RS-232C",
+        "1x RS-232"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RS232",
+              "RS-232",
+              "Serial"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(rs[-\\s]*232[c]?|rs232c)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(rs[-\\s]*232)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ENTRADA_RCA",
+      "etiqueta": "Entrada RCA/Composite",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, RCA Video, Composite In",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "opciones": [
+        "Sí",
+        "No",
+        "RCA Video",
+        "Composite",
+        "1x RCA"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RCA",
+              "Composite",
+              "Video In"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(rca|composite|video\\s*in)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(rca|composite)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_INALAMBRICA",
+      "etiqueta": "Conectividad Inalámbrica",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WiFi, Bluetooth, Miracast",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Wireless",
+              "WiFi",
+              "Bluetooth",
+              "Inalámbrica"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi|wi-fi|bluetooth|bt|miracast|airplay)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_ETHERNET",
+      "etiqueta": "Puerto Ethernet",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, RJ45, 10/100/1000",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "opciones": [
+        "Sí",
+        "No",
+        "RJ45",
+        "10/100",
+        "10/100/1000"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Ethernet",
+              "LAN",
+              "RJ45",
+              "Red"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ethernet|lan|rj45|rj-45)\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(10/100/1000|10/100)\\s*(ethernet|mbps)?",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PRESENTACION_RED",
+      "etiqueta": "Presentación en Red",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4 usuarios simultáneos, 8 conectados, Sí",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Red",
+              "Network",
+              "Usuarios",
+              "Simultáneos"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(usuarios?|user)\\s*(simultaneo|conectado)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "presentacion\\s+red[:\\s]+([\\w\\s]+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AUDIO_ALTAVOCES",
+      "etiqueta": "Altavoces/Audio",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2x 10W, Sí, No, Stereo 5W",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Audio",
+              "Altavoces",
+              "Speakers",
+              "Sonido"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(\\d+)\\s*w",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(stereo|mono)\\s*(\\d+w)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "stereo",
+              "mono",
+              "altavoces",
+              "speakers"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "IDIOMA_MENU",
+      "etiqueta": "Idioma del Menú",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Español, Inglés, Portugués",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Idioma",
+              "Language",
+              "Idiomas"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(español|ingles|english|spanish|portugues|frances)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ENERGIA_ELECTRICA",
+      "etiqueta": "Energía Eléctrica",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 220V/60Hz, 110V/60Hz, 100-240V",
+      "prioridad": 26,
+      "orden_ui": 26,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Energía",
+              "Voltaje",
+              "Power",
+              "Voltage"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(220v|110v|100-240v)\\s*[/\\s]*(60hz|50hz)?\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "voltaje[:\\s]+(\\d+v)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Interactivo, 3D, Keystone, Touch",
+      "prioridad": 27,
+      "orden_ui": 27,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Características",
+              "Features",
+              "Especiales"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "DETECTAR",
+            "palabras": [
+              "interactivo",
+              "interactive",
+              "3d",
+              "keystone",
+              "touch",
+              "portable"
+            ]
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOPORTE_3D",
+      "etiqueta": "Soporte 3D",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, DLP-Link, RF",
+      "prioridad": 28,
+      "orden_ui": 28,
+      "opciones": [
+        "Sí",
+        "No",
+        "DLP-Link",
+        "RF 3D",
+        "IR 3D"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "3D",
+              "Tres D",
+              "3D Support"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(3d|tres\\s*d|dlp-link|rf\\s*3d|ir\\s*3d)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "3d",
+              "dlp-link",
+              "rf",
+              "ir"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CORRECCION_KEYSTONE",
+      "etiqueta": "Corrección Keystone",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: ±30°, Vertical/Horizontal, Auto",
+      "prioridad": 29,
+      "orden_ui": 29,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Keystone",
+              "Corrección",
+              "Trapezoidal"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(±?\\d+)°?\\s*(vertical|horizontal)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(auto|manual)\\s*(keystone|correcion)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "keystone",
+              "vertical",
+              "horizontal",
+              "auto",
+              "manual"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MONTAJE",
+      "etiqueta": "Tipo de Montaje",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Mesa, Techo, Pared, Portable",
+      "prioridad": 30,
+      "orden_ui": 30,
+      "opciones": [
+        "Mesa",
+        "Techo",
+        "Pared",
+        "Portable",
+        "Trípode"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Montaje",
+              "Mount",
+              "Instalación"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(mesa|techo|pared|ceiling|wall|portable|tripode)\\b",
+            "multiple": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (A x L x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 302 x 242 x 87 mm",
+      "prioridad": 31,
+      "orden_ui": 31,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Medidas"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "dimensiones[:\\s]+(\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.5, 4.8, 12.3",
+      "prioridad": 32,
+      "orden_ui": 32,
+      "validacion": {
+        "min": 0.5,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Kg"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d)\\s*(kg|kilogramos|libras|lb)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "peso[:\\s]+(\\d+\\.?\\d*)\\s*kg",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Negro, Gris",
+      "prioridad": 33,
+      "orden_ui": 33,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "blanco",
+              "negro",
+              "gris",
+              "plateado",
+              "white",
+              "black",
+              "grey"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Proyector Epson interactivo completo",
+      "texto": "01 Proyector Ma:Epson Mo:EB-735FI Se: X8VW2400106 Co:Blanco DLP 3600 lúmenes 1920x1080 FHD 16:9 tamaño 100 pulgadas contraste 16000:1 LED 20000 horas modos dinámico presentación pizarra cine ultra short throw 0.5m zoom 1.0x incluye wall mount Ma: Epson Mo: ELPMB62, Modulo touch Ma: Epson Mo: ELPFT01 Co:Blanco 2x HDMI 2.0 1x VGA 2x USB-A RS-232 RCA WiFi Bluetooth 4 usuarios simultáneos español inglés 220V/60Hz dimensiones 458 x 397 x 169 mm peso 8.2 kg",
+      "extraccionEsperada": {
+        "MARCA": "Epson",
+        "MODELO": "EB-735FI",
+        "NUMERO_SERIE": "X8VW2400106",
+        "COLOR": "Blanco",
+        "TECNOLOGIA_PROYECCION": "DLP",
+        "BRILLO_LUMENES": "3600",
+        "RESOLUCION_NATIVA": "1920x1080",
+        "RELACION_ASPECTO": "16:9",
+        "TAMAÑO_PROYECCION": "100 pulgadas",
+        "RELACION_CONTRASTE": "16000:1",
+        "TIPO_LAMPARA": "LED",
+        "VIDA_LAMPARA": "20000",
+        "MODO_IMAGEN": [
+          "Dinámico",
+          "Presentación",
+          "Pizarra",
+          "Cine"
+        ],
+        "TIPO_THROW": "Ultra Short Throw",
+        "DISTANCIA_PROYECCION": "0.5m",
+        "ZOOM_OPTICO": "1.0x",
+        "CONECTIVIDAD_HDMI": "2x HDMI 2.0",
+        "CONECTIVIDAD_VGA": "1x VGA",
+        "CONECTIVIDAD_USB": "2x USB-A",
+        "ENTRADA_RS232": "RS-232",
+        "ENTRADA_RCA": "RCA",
+        "CONECTIVIDAD_INALAMBRICA": [
+          "WiFi",
+          "Bluetooth"
+        ],
+        "PRESENTACION_RED": "4 usuarios simultáneos",
+        "IDIOMA_MENU": [
+          "Español",
+          "Inglés"
+        ],
+        "ENERGIA_ELECTRICA": "220V/60Hz",
+        "CARACTERISTICAS_ESPECIALES": [
+          "Interactivo",
+          "Touch",
+          "Wall Mount"
+        ],
+        "DIMENSIONES": "458 x 397 x 169 mm",
+        "PESO": "8.2"
+      }
+    },
+    {
+      "nombre": "Caso 2: Proyector en lenguaje natural",
+      "texto": "Proyector BenQ MW632 DLP 3200 lúmenes WXGA 1280x800 16:10 250 pulgadas contraste 13000:1 lámpara UHE 6000 horas modos presentación video dinámico gaming standard throw 1.2-10.8m zoom óptico 1.6x 2x HDMI 1.4 1x VGA USB-B RS-232C RCA audio stereo 2x2W keystone ±40° montaje techo/mesa 8 usuarios conectados inglés español portugués 110V/60Hz blanco 2.8 kg",
+      "extraccionEsperada": {
+        "MARCA": "BenQ",
+        "MODELO": "MW632",
+        "TECNOLOGIA_PROYECCION": "DLP",
+        "BRILLO_LUMENES": "3200",
+        "RESOLUCION_NATIVA": "1280x800",
+        "RELACION_ASPECTO": "16:10",
+        "TAMAÑO_PROYECCION": "250 pulgadas",
+        "RELACION_CONTRASTE": "13000:1",
+        "TIPO_LAMPARA": "UHE",
+        "VIDA_LAMPARA": "6000",
+        "MODO_IMAGEN": [
+          "Presentación",
+          "Video",
+          "Dinámico",
+          "Gaming"
+        ],
+        "TIPO_THROW": "Standard Throw",
+        "DISTANCIA_PROYECCION": "1.2-10.8m",
+        "ZOOM_OPTICO": "1.6x",
+        "CONECTIVIDAD_HDMI": "2x HDMI 1.4",
+        "CONECTIVIDAD_VGA": "1x VGA",
+        "CONECTIVIDAD_USB": "USB-B",
+        "ENTRADA_RS232": "RS-232C",
+        "ENTRADA_RCA": "RCA",
+        "AUDIO_ALTAVOCES": "2x2W",
+        "PRESENTACION_RED": "8 usuarios conectados",
+        "IDIOMA_MENU": [
+          "Inglés",
+          "Español",
+          "Portugués"
+        ],
+        "ENERGIA_ELECTRICA": "110V/60Hz",
+        "CORRECCION_KEYSTONE": "±40°",
+        "MONTAJE": [
+          "Techo",
+          "Mesa"
+        ],
+        "COLOR": "Blanco",
+        "PESO": "2.8"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "Sony",
+        "Modelo": "VPL-VW295ES",
+        "Tecnología": "3LCD",
+        "Lúmenes": "1500",
+        "Resolución": "4096x2160",
+        "Aspecto": "16:9",
+        "Tamaño": "300 pulgadas",
+        "Contraste": "350000:1",
+        "Fuente Luz": "Laser",
+        "Vida": "20000",
+        "Modos": "Cine, Teatro, Dinámico, Gaming",
+        "Throw": "Long Throw",
+        "Zoom": "2.06x",
+        "HDMI": "2x HDMI 2.0",
+        "RS232": "RS-232",
+        "RCA": "Composite In",
+        "Red": "4 usuarios simultáneos",
+        "Idioma": "Español, Inglés",
+        "Voltaje": "220V/60Hz",
+        "3D": "RF 3D",
+        "Keystone": "Auto",
+        "Peso": "19.5"
+      },
+      "extraccionEsperada": {
+        "MARCA": "Sony",
+        "MODELO": "VPL-VW295ES",
+        "TECNOLOGIA_PROYECCION": "3LCD",
+        "BRILLO_LUMENES": "1500",
+        "RESOLUCION_NATIVA": "4096x2160",
+        "RELACION_ASPECTO": "16:9",
+        "TAMAÑO_PROYECCION": "300 pulgadas",
+        "RELACION_CONTRASTE": "350000:1",
+        "TIPO_LAMPARA": "Laser",
+        "VIDA_LAMPARA": "20000",
+        "MODO_IMAGEN": [
+          "Cine",
+          "Teatro",
+          "Dinámico",
+          "Gaming"
+        ],
+        "TIPO_THROW": "Long Throw",
+        "ZOOM_OPTICO": "2.06x",
+        "CONECTIVIDAD_HDMI": "2x HDMI 2.0",
+        "ENTRADA_RS232": "RS-232",
+        "ENTRADA_RCA": "Composite In",
+        "PRESENTACION_RED": "4 usuarios simultáneos",
+        "IDIOMA_MENU": [
+          "Español",
+          "Inglés"
+        ],
+        "ENERGIA_ELECTRICA": "220V/60Hz",
+        "SOPORTE_3D": "RF 3D",
+        "CORRECCION_KEYSTONE": "Auto",
+        "PESO": "19.5"
+      }
+    }
+  ]
+}

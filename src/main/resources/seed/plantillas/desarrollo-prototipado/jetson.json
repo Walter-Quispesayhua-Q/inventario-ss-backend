@@ -1,0 +1,991 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-JTS-2025-V1",
+    "version": "1.0",
+    "nombre": "Jetson",
+    "categoriaSemantica": "IA_JETSON_GPU_COMPUTING",
+    "descripcion": "Plantilla ML de Jetson - Maneja columna única, múltiples columnas e híbrido para dispositivos NVIDIA Jetson y desarrollo de IA"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_YAHBOOM_JETBOT",
+        "condicion": ".*(ma\\s+yahboom.*jetbot|jetbot.*yahboom).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Yahboom Jetbot específico del inventario"
+      },
+      {
+        "nombre": "BONUS_DOFBOT_AI_VISION",
+        "condicion": ".*(dofbot.*ai\\s+vision|ai\\s+vision.*robotic\\s+arm).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró DOFBOT con AI Vision específico"
+      },
+      {
+        "nombre": "BONUS_JETSON_NANO",
+        "condicion": ".*(jetson\\s+nano|compatible\\s+para\\s+jetson).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró compatibilidad específica con JETSON NANO"
+      },
+      {
+        "nombre": "BONUS_PYTHON_ROS",
+        "condicion": ".*(python\\s+programming|ros\\s+python).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró programación Python o ROS específica"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "jetson",
+          "jetbot",
+          "dofbot",
+          "nvidia",
+          "gpu"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "yahboom",
+          "robot",
+          "ai",
+          "vision",
+          "python",
+          "ros"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "nano",
+          "tx2",
+          "nx",
+          "programming",
+          "camera",
+          "robotic"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "computing",
+          "learning",
+          "machine",
+          "development"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "plataformas": [
+        "jetson-nano",
+        "tx2-nx",
+        "agx-xavier",
+        "orin",
+        "xavier-nx"
+      ],
+      "tipos_dispositivo": [
+        "jetbot",
+        "dofbot",
+        "robot",
+        "brazo-robotico",
+        "robotic-arm"
+      ],
+      "programacion": [
+        "python-programming",
+        "ros",
+        "ai-vision",
+        "machine-learning",
+        "opencv"
+      ],
+      "hardware": [
+        "hd-camera",
+        "vision-sensor",
+        "servo-motor",
+        "gpio",
+        "csi-camera"
+      ],
+      "caracteristicas": [
+        "ai-vision",
+        "object-detection",
+        "autonomous",
+        "navigation",
+        "slam"
+      ],
+      "marcas_comunes": [
+        "yahboom",
+        "nvidia",
+        "waveshare",
+        "seeedstudio",
+        "adafruit"
+      ],
+      "memoria": [
+        "4gb",
+        "8gb",
+        "16gb",
+        "32gb"
+      ],
+      "conectividad": [
+        "wifi",
+        "bluetooth",
+        "ethernet",
+        "usb",
+        "gpio"
+      ],
+      "sensores": [
+        "camera",
+        "lidar",
+        "ultrasonic",
+        "imu",
+        "gyroscope"
+      ],
+      "aplicaciones": [
+        "robotics",
+        "ai-inference",
+        "computer-vision",
+        "iot",
+        "edge-computing"
+      ],
+      "sistemas": [
+        "ubuntu",
+        "jetpack",
+        "ros",
+        "docker",
+        "tensorrt"
+      ],
+      "lenguajes": [
+        "python",
+        "cpp",
+        "cuda",
+        "opencv",
+        "tensorflow"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "nvidia",
+        "yahboom",
+        "waveshare",
+        "seeedstudio"
+      ],
+      "tier2": [
+        "adafruit",
+        "sparkfun",
+        "dfrobot",
+        "elegoo"
+      ],
+      "tier3": [
+        "jetsonhacks",
+        "dustynv",
+        "stereolabs",
+        "luxonis"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "cpu",
+        "impresora",
+        "laptop",
+        "procesador",
+        "intel",
+        "amd",
+        "ryzen",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "xeon",
+        "threadripper"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "escritorio",
+        "ghz",
+        "nucleos",
+        "cores"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "archivador",
+        "estante"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(yahboom|nvidia|waveshare)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(jetbot|dofbot|tx2[-\\s]*nx)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_jetson": "\\b(jetson|jetbot|dofbot)\\s*(nano|tx2|nx|agx|xavier|orin)?\\b",
+      "plataforma": "\\b(jetson\\s+nano|tx2\\s*nx|agx\\s+xavier|orin|xavier\\s*nx)\\b",
+      "tipo_dispositivo": "\\b(jetbot|dofbot|robot|brazo\\s+robotico|robotic\\s+arm)\\b",
+      "programacion": "\\b(python\\s+programming|ros|ai\\s+vision|machine\\s+learning|opencv)\\b",
+      "hardware_incluido": "\\b(hd\\s+camera|vision\\s+sensor|servo\\s+motor|gpio|csi\\s+camera)\\b",
+      "caracteristicas_ai": "\\b(ai\\s+vision|object\\s+detection|autonomous|navigation|slam)\\b",
+      "memoria_gb": "(\\d+)\\s*gb\\s*(ram|memory|ddr4)?",
+      "conectividad": "\\b(wifi|bluetooth|ethernet|usb|gpio|i2c|spi)\\b",
+      "sensores_incluidos": "\\b(camera|lidar|ultrasonic|imu|gyroscope|accelerometer)\\b",
+      "compatibilidad": "\\b(compatible\\s+para|para\\s+jetson|jetson\\s+compatible)\\b",
+      "sistema_operativo": "\\b(ubuntu|jetpack|linux|ros|docker)\\b",
+      "lenguajes_soporte": "\\b(python|cpp|c\\+\\+|cuda|tensorflow|pytorch)\\b",
+      "aplicaciones": "\\b(robotics|ai[-\\s]*inference|computer[-\\s]*vision|iot|edge[-\\s]*computing)\\b",
+      "cantidad": "(\\d{1,2})\\s*(jetson|jetbot|dofbot|robot)",
+      "voltaje": "(\\d+(?:\\.\\d+)?)\\s*v\\s*(power|input|supply)?",
+      "corriente": "(\\d+(?:\\.\\d+)?)\\s*(?:ma|amp)\\s*(max|consumption)?",
+      "dimensiones_jetson": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:x\\s*(\\d+(?:\\.\\d+)?))\\s*(?:mm|cm)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Yahboom, NVIDIA, Waveshare",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(yahboom|nvidia|waveshare)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Jetbot, DOFBOT, TX2 NX",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(jetbot|dofbot|tx2[-\\s]*nx)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PLATAFORMA",
+      "etiqueta": "Plataforma Jetson",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: JETSON NANO, TX2 NX, AGX Xavier",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "JETSON NANO",
+        "TX2 NX",
+        "AGX Xavier",
+        "Orin",
+        "Xavier NX"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Plataforma",
+              "Platform",
+              "Board"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(jetson\\s+nano|tx2\\s*nx|agx\\s+xavier|orin|xavier\\s*nx)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "jetson",
+              "nano",
+              "tx2",
+              "nx",
+              "agx",
+              "xavier",
+              "orin"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DISPOSITIVO",
+      "etiqueta": "Tipo de Dispositivo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Jetbot, DOFBOT, Robot, Brazo robótico",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "Jetbot",
+        "DOFBOT",
+        "Robot",
+        "Brazo robótico",
+        "Kit desarrollo",
+        "Módulo"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Device"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(jetbot|dofbot|robot|brazo\\s+robotico|robotic\\s+arm)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "jetbot",
+              "dofbot",
+              "robot",
+              "brazo",
+              "robotico",
+              "kit"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LENGUAJES_PROGRAMACION",
+      "etiqueta": "Lenguajes de Programación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Python, ROS, C++, CUDA",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Programación",
+              "Languages",
+              "Programming"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(python\\s+programming|ros|ai\\s+vision|machine\\s+learning|opencv)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "HARDWARE_INCLUIDO",
+      "etiqueta": "Hardware Incluido",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HD Camera, Vision Sensor, Servo Motor",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Hardware",
+              "Components",
+              "Includes"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hd\\s+camera|vision\\s+sensor|servo\\s+motor|gpio|csi\\s+camera)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_AI",
+      "etiqueta": "Características de IA",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: AI Vision, Object Detection, Navigation",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "AI",
+              "Vision",
+              "Features"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ai\\s+vision|object\\s+detection|autonomous|navigation|slam)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_GB",
+      "etiqueta": "Memoria (GB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 4, 8, 16, 32",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 1,
+        "max": 64
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Memoria",
+              "RAM",
+              "Memory"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*gb\\s*(ram|memory|ddr4)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WiFi, Bluetooth, Ethernet, USB",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Interfaces"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi|bluetooth|ethernet|usb|gpio|i2c|spi)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSORES_INCLUIDOS",
+      "etiqueta": "Sensores Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Camera, Ultrasonic, IMU, Gyroscope",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sensores",
+              "Sensors",
+              "Detection"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(camera|lidar|ultrasonic|imu|gyroscope|accelerometer)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPATIBILIDAD",
+      "etiqueta": "Compatibilidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Compatible para JETSON NANO 4GB",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Compatibilidad",
+              "Compatible",
+              "Support"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(compatible\\s+para|para\\s+jetson|jetson\\s+compatible)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "compatible",
+              "para",
+              "jetson",
+              "support"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_OPERATIVO",
+      "etiqueta": "Sistema Operativo",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Ubuntu, JetPack, ROS, Docker",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sistema",
+              "OS",
+              "Software"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ubuntu|jetpack|linux|ros|docker)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACIONES",
+      "etiqueta": "Aplicaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Robotics, AI Inference, Computer Vision",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aplicaciones",
+              "Applications",
+              "Uses"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(robotics|ai[-\\s]*inference|computer[-\\s]*vision|iot|edge[-\\s]*computing)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(jetson|jetbot|dofbot|robot)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(jetson|jetbot|dofbot|robot)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE",
+      "etiqueta": "Voltaje (V)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 5, 12, 19, 24",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 3,
+        "max": 48
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje",
+              "Voltage",
+              "Power"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*v\\s*(power|input|supply)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CORRIENTE",
+      "etiqueta": "Corriente (mA)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 500, 1000, 2000, 3000",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 100,
+        "max": 10000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente",
+              "Current",
+              "Amperage"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:ma|amp)\\s*(max|consumption)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (mm)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100x69x25 mm",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:x\\s*(\\d+(?:\\.\\d+)?))\\s*(?:mm|cm)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Verde, Azul, Gris",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "verde",
+              "azul",
+              "gris",
+              "dorado"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Yahboom Jetbot del inventario real",
+      "texto": "01 Ma Yahboom Jetbot Al robot Python programming with HD camera compatible para JETSON NANO 4GBA02B01SUB MAS JETSON NANO 4GB",
+      "extraccionEsperada": {
+        "MARCA": "Yahboom",
+        "MODELO": "Jetbot",
+        "PLATAFORMA": "JETSON NANO",
+        "TIPO_DISPOSITIVO": "Robot",
+        "LENGUAJES_PROGRAMACION": [
+          "Python programming"
+        ],
+        "HARDWARE_INCLUIDO": [
+          "HD camera"
+        ],
+        "MEMORIA_GB": "4",
+        "COMPATIBILIDAD": "Compatible para JETSON NANO"
+      }
+    },
+    {
+      "nombre": "Caso 2: DOFBOT AI Vision del inventario real",
+      "texto": "01 Ma Yahboom DOFBOT AI Vision Robotic Arm with ROS Python programming compatible para Jetson NANO 4GB B01SUB",
+      "extraccionEsperada": {
+        "MARCA": "Yahboom",
+        "MODELO": "DOFBOT",
+        "PLATAFORMA": "JETSON NANO",
+        "TIPO_DISPOSITIVO": "Brazo robótico",
+        "LENGUAJES_PROGRAMACION": [
+          "ROS",
+          "Python programming"
+        ],
+        "CARACTERISTICAS_AI": [
+          "AI Vision"
+        ],
+        "MEMORIA_GB": "4",
+        "COMPATIBILIDAD": "Compatible para Jetson NANO"
+      }
+    },
+    {
+      "nombre": "Caso 3: Jetson TX2 NX del inventario real",
+      "texto": "01 Jetson Mo TX2 NX con módulo central oficial para programación de aprendizaje Ma Nvidia",
+      "extraccionEsperada": {
+        "MARCA": "Nvidia",
+        "MODELO": "TX2 NX",
+        "PLATAFORMA": "TX2 NX",
+        "TIPO_DISPOSITIVO": "Módulo",
+        "APLICACIONES": [
+          "Programación de aprendizaje"
+        ]
+      }
+    }
+  ]
+}

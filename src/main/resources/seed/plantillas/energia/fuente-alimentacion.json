@@ -1,0 +1,1140 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-PSU-2025-V1",
+    "version": "1.0",
+    "nombre": "FuenteAlimentacion",
+    "categoriaSemantica": "ENERGIA_FUENTE_ALIMENTACION_POWER_SUPPLY",
+    "descripcion": "Plantilla ML de Fuente de Alimentación - Maneja columna única, múltiples columnas e híbrido para fuentes de poder, adaptadores y power supplies"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_FUENTES_EZ",
+        "condicion": ".*(02\\s+fuentes\\s+ez|fuentes\\s+ez\\s+0[-–]30).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontraron fuentes EZ específicas del inventario"
+      },
+      {
+        "nombre": "BONUS_EZ_GP4303D",
+        "condicion": ".*(ma\\s+ez.*mo\\s+gp[-\\s]*4303d|gp[-\\s]*4303d.*ez).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró modelo GP-4303D específico"
+      },
+      {
+        "nombre": "BONUS_CC_DC",
+        "condicion": ".*(fuente.*cc|fuente.*dc|corriente\\s+continua).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró fuente de corriente continua"
+      },
+      {
+        "nombre": "BONUS_LEYBOLD_DIDACTIC",
+        "condicion": ".*(ma\\s+leybold\\s+didactic|leybold.*didactic).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró marca Leybold Didactic específica"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "fuente",
+          "alimentacion",
+          "power",
+          "supply",
+          "adaptador"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "voltaje",
+          "corriente",
+          "regulada",
+          "variable",
+          "cc",
+          "dc"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "tension",
+          "estabilizada",
+          "proteccion",
+          "lineal",
+          "conmutada"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "energia",
+          "electrical",
+          "electronic",
+          "circuit"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": [
+        "ez",
+        "leybold-didactic",
+        "mean-well",
+        "corsair",
+        "seasonic"
+      ],
+      "tipos_fuente": [
+        "cc",
+        "dc",
+        "ac",
+        "conmutada",
+        "lineal",
+        "regulada",
+        "variable"
+      ],
+      "formatos": [
+        "atx",
+        "micro-atx",
+        "sfx",
+        "flex-atx",
+        "industrial",
+        "bench"
+      ],
+      "caracteristicas": [
+        "variable",
+        "fija",
+        "regulada",
+        "estabilizada",
+        "proteccion"
+      ],
+      "voltajes_comunes": [
+        "3.3v",
+        "5v",
+        "12v",
+        "24v",
+        "48v",
+        "110v",
+        "220v",
+        "240v"
+      ],
+      "corrientes": [
+        "1a",
+        "2a",
+        "3a",
+        "5a",
+        "10a",
+        "20a",
+        "30a"
+      ],
+      "potencias": [
+        "60w",
+        "300w",
+        "500w",
+        "650w",
+        "750w",
+        "1000w"
+      ],
+      "certificaciones": [
+        "80-plus",
+        "ce",
+        "ul",
+        "fcc",
+        "rohs"
+      ],
+      "displays": [
+        "lcd",
+        "led",
+        "digital",
+        "analogico",
+        "7-segment"
+      ],
+      "protecciones": [
+        "ovp",
+        "ocp",
+        "otp",
+        "uvp",
+        "scp"
+      ],
+      "aplicaciones": [
+        "laboratorio",
+        "bench",
+        "industrial",
+        "pc",
+        "laptop"
+      ],
+      "conectores": [
+        "barrel",
+        "molex",
+        "sata",
+        "pcie",
+        "usb"
+      ],
+      "modularidad": [
+        "modular",
+        "semi-modular",
+        "no-modular",
+        "fully-modular"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "ez",
+        "leybold-didactic",
+        "mean-well",
+        "corsair",
+        "seasonic"
+      ],
+      "tier2": [
+        "evga",
+        "thermaltake",
+        "cooler-master",
+        "antec",
+        "be-quiet"
+      ],
+      "tier3": [
+        "generic",
+        "no-name",
+        "oem",
+        "china",
+        "aliexpress"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "cpu",
+        "laptop",
+        "transformador",
+        "procesador",
+        "microprocesador",
+        "processor",
+        "patch panel",
+        "patchera",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "ryzen 3",
+        "ryzen 5",
+        "ryzen 7",
+        "ryzen 9",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "nucleos",
+        "cores",
+        "threads",
+        "hilos",
+        "socket",
+        "lga",
+        "am4",
+        "am5",
+        "rj45",
+        "cat5",
+        "cat6",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "escritorio",
+        "archivador",
+        "rack"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(ez|leybold|mean[-\\s]*well|corsair)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(gp[-\\s]*\\d+[a-z]*|psu[-\\s]*\\w+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_fuente": "\\b(fuente\\s+de\\s+alimentaci[oó]n|power\\s+supply|fuentes?|adaptador)\\b",
+      "tipo_corriente": "\\b(cc|dc|ac|conmutada|lineal|regulada|variable|fija)\\b",
+      "voltaje_salida": "(\\d+(?:[\\.,]\\d+)?)\\s*v\\s*(salida|output|out)?",
+      "voltaje_entrada": "(\\d+(?:[\\.,]\\d+)?)\\s*v\\s*(entrada|input|in|ac)",
+      "corriente_salida": "(\\d+(?:[\\.,]\\d+)?)\\s*a\\s*(max|maximo|output|salida)?",
+      "potencia_watts": "(\\d+(?:[\\.,]\\d+)?)\\s*w\\s*(max|potencia|power)?",
+      "rango_voltaje": "(\\d+)[-–](\\d+)\\s*v",
+      "rango_corriente": "(\\d+)[-–](\\d+)\\s*a",
+      "eficiencia": "(\\d+(?:\\.\\d+)?)\\s*%\\s*(eficiencia|efficiency)?",
+      "caracteristicas_fuente": "\\b(variable|fija|regulada|estabilizada|proteccion|baja\\s+tension)\\b",
+      "display_tipo": "\\b(display|pantalla|lcd|led|digital|analogico|7[-\\s]*segment)\\b",
+      "certificaciones": "\\b(80\\s*plus|ce|ul|fcc|rohs|energy\\s*star)\\b",
+      "formato_fuente": "\\b(atx|micro\\s*atx|sfx|flex\\s*atx|industrial|bench|desktop)\\b",
+      "protecciones": "\\b(ovp|ocp|otp|uvp|scp|proteccion|protection)\\b",
+      "modularidad": "\\b(modular|semi[-\\s]*modular|no[-\\s]*modular|fully[-\\s]*modular)\\b",
+      "conectores": "\\b(barrel|molex|sata|pcie|usb|jack|plug)\\b",
+      "aplicacion": "\\b(laboratorio|bench|industrial|pc|laptop|arduino|raspberry)\\b",
+      "cantidad": "(\\d{1,2})\\s*(fuente|fuentes|power\\s+supply|adaptador)",
+      "temperatura_operacion": "(-?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "peso_fuente": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)",
+      "dimensiones_fuente": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "ruido": "(\\d+(?:\\.\\d+)?)\\s*dba?\\s*(ruido|noise|fan)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: EZ, Leybold Didactic, Mean Well, Corsair",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ez|leybold|mean[-\\s]*well|corsair)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: GP-4303D, PSU-500W, EZ-30V",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(gp[-\\s]*\\d+[a-z]*|psu[-\\s]*\\w+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_FUENTE",
+      "etiqueta": "Tipo de Fuente",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Fuente de alimentación, Power Supply, Adaptador",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Fuente de alimentación",
+        "Power Supply",
+        "Adaptador",
+        "Fuente de laboratorio",
+        "Fuente regulada"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(fuente\\s+de\\s+alimentaci[oó]n|power\\s+supply|fuentes?|adaptador)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "fuente",
+              "alimentacion",
+              "power",
+              "supply",
+              "adaptador"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CORRIENTE",
+      "etiqueta": "Tipo de Corriente",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: CC, DC, AC, Regulada, Variable",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "CC",
+        "DC",
+        "AC",
+        "Regulada",
+        "Variable",
+        "Conmutada",
+        "Lineal"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente",
+              "Current",
+              "Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(cc|dc|ac|conmutada|lineal|regulada|variable|fija)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "cc",
+              "dc",
+              "ac",
+              "regulada",
+              "variable",
+              "conmutada"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_SALIDA",
+      "etiqueta": "Voltaje de Salida (V)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 3.3, 5, 12, 24, 30",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 1.0,
+        "max": 1000.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje Salida",
+              "Output Voltage",
+              "Vout"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*v\\s*(salida|output|out)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_ENTRADA",
+      "etiqueta": "Voltaje de Entrada (V)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 110, 220, 240, 100-240",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 85.0,
+        "max": 300.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje Entrada",
+              "Input Voltage",
+              "Vin"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*v\\s*(entrada|input|in|ac)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CORRIENTE_SALIDA",
+      "etiqueta": "Corriente de Salida (A)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5, 10, 30",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 0.1,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente Salida",
+              "Output Current",
+              "Iout"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*a\\s*(max|maximo|output|salida)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA",
+      "etiqueta": "Potencia (W)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 60, 300, 500, 650, 1000",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 10,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Potencia",
+              "Power",
+              "Watts"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*w\\s*(max|potencia|power)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_VOLTAJE",
+      "etiqueta": "Rango de Voltaje",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0-30V, 0-50V, 3.3-15V",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Rango Voltaje",
+              "Voltage Range",
+              "Range"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)[-–](\\d+)\\s*v",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_CORRIENTE",
+      "etiqueta": "Rango de Corriente",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0-10A, 0-30A, 1-20A",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Rango Corriente",
+              "Current Range",
+              "Amperage"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)[-–](\\d+)\\s*a",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "EFICIENCIA",
+      "etiqueta": "Eficiencia (%)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 80, 85, 90, 95",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 50.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Eficiencia",
+              "Efficiency",
+              "Performance"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*%\\s*(eficiencia|efficiency)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS",
+      "etiqueta": "Características",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Variable, Regulada, Protección, Baja tensión",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Características",
+              "Features",
+              "Properties"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(variable|fija|regulada|estabilizada|proteccion|baja\\s+tension)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISPLAY_TIPO",
+      "etiqueta": "Tipo de Display",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LCD, LED, Digital, Analógico",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "LCD",
+        "LED",
+        "Digital",
+        "Analógico",
+        "7-Segment",
+        "OLED"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Display",
+              "Pantalla",
+              "Interface"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(display|pantalla|lcd|led|digital|analogico|7[-\\s]*segment)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "lcd",
+              "led",
+              "display",
+              "digital",
+              "analogico"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: 80 Plus, CE, UL, FCC, RoHS",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Certificaciones",
+              "Certifications",
+              "Standards"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(80\\s*plus|ce|ul|fcc|rohs|energy\\s*star)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO",
+      "etiqueta": "Formato",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: ATX, Micro ATX, SFX, Industrial, Bench",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": [
+        "ATX",
+        "Micro ATX",
+        "SFX",
+        "Flex ATX",
+        "Industrial",
+        "Bench",
+        "Desktop"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Formato",
+              "Format",
+              "Form Factor"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(atx|micro\\s*atx|sfx|flex\\s*atx|industrial|bench|desktop)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "atx",
+              "micro",
+              "sfx",
+              "flex",
+              "industrial",
+              "bench"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTECCIONES",
+      "etiqueta": "Protecciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: OVP, OCP, OTP, UVP, SCP",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Protecciones",
+              "Protection",
+              "Safety"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ovp|ocp|otp|uvp|scp|proteccion|protection)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION",
+      "etiqueta": "Aplicación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Laboratorio, Bench, Industrial, PC, Arduino",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aplicación",
+              "Application",
+              "Use"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(laboratorio|bench|industrial|pc|laptop|arduino|raspberry)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0°C a 40°C, -10°C a 60°C",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Temperatura",
+              "Operating Temp",
+              "Range"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(-?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (g)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 500, 1000, 1500, 2000",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 100,
+        "max": 10000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 5, 10",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(fuente|fuentes|power\\s+supply|adaptador)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(fuente|fuentes|power\\s+supply|adaptador)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Gris, Plateado, Azul",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "gris",
+              "plateado",
+              "azul",
+              "blanco"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Fuentes EZ del inventario real",
+      "texto": "02 Fuentes EZ 0-30 para laboratorio de electrónica",
+      "extraccionEsperada": {
+        "MARCA": "EZ",
+        "RANGO_VOLTAJE": "0-30V",
+        "CANTIDAD": "2",
+        "APLICACION": [
+          "Laboratorio"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 2: Fuente EZ modelo GP-4303D del inventario real",
+      "texto": "02 Fuente de alimentación de CC Ma EZ Mo GP-4303D",
+      "extraccionEsperada": {
+        "MARCA": "EZ",
+        "MODELO": "GP-4303D",
+        "TIPO_FUENTE": "Fuente de alimentación",
+        "TIPO_CORRIENTE": "CC",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Fuente Leybold Didactic del inventario real",
+      "texto": "01 Fuente de alimentación de baja tensión Ma Leybold Didactic",
+      "extraccionEsperada": {
+        "MARCA": "Leybold Didactic",
+        "TIPO_FUENTE": "Fuente de alimentación",
+        "CARACTERISTICAS": [
+          "Baja tensión"
+        ],
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 4: Adaptadores específicos del inventario real",
+      "texto": "05 Adaptadores 240v a 12 v para proyectos electrónicos",
+      "extraccionEsperada": {
+        "TIPO_FUENTE": "Adaptador",
+        "VOLTAJE_ENTRADA": "240",
+        "VOLTAJE_SALIDA": "12",
+        "CANTIDAD": "5",
+        "APLICACION": [
+          "Proyectos electrónicos"
+        ]
+      }
+    }
+  ]
+}

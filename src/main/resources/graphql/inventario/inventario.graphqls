@@ -1,0 +1,383 @@
+"""
+Bien o activo inventariado en el sistema.
+Representa cualquier bien físico registrado con sus atributos, ubicación y responsable.
+"""
+type BienDTO {
+    id: ID
+    nombreBien: String
+    caf: String
+    numeroSerie: String
+    observaciones: String
+    estadoFisico: String
+    estadoOperacional: String
+    fechaCreacion: String
+    usuarioCreacionNombre: String
+    fechaUltimaModificacion: String
+    usuarioUltimaModificacionNombre: String
+    categoriaId: ID
+    categoriaNombre: String
+    categoriaIcono: String
+    categoriaColor: String
+    ubicacionActual: UbicacionDTO
+    estaEnEstacion: Boolean
+    estacionActualId: ID
+    estacionActualNombre: String
+    estacionActualCodigo: String
+    responsableActualId: ID
+    responsableActualNombre: String
+    departamentoId: ID
+    departamentoNombre: String
+    atributosValores: [BienAtributoValorDTO!]
+    bienesHijos: [BienDTO]
+}
+
+"""
+Valor de un atributo personalizado de un bien.
+"""
+type BienAtributoValorDTO {
+    id: ID!
+    tipoAtributoId: ID!
+    nombreAtributo: String
+    tipoDato: String
+    valor: String
+    etiqueta: String
+}
+
+type PaginacionInfo {
+    paginaActual: Int!
+    totalPaginas: Int!
+    totalElementos: Long!
+    elementosPorPagina: Int!
+    tienePaginaSiguiente: Boolean!
+    tienePaginaAnterior: Boolean!
+}
+
+type CategoriasPaginadas {
+    data: [CategoriaDTO!]!
+    paginacion: PaginacionInfo!
+}
+
+type BienesPaginados {
+    data: [BienDTO!]!
+    paginacion: PaginacionInfo!
+}
+
+"""
+Categoría de clasificación para bienes.
+Puede ser manual o inteligente (con plantilla ML asociada).
+"""
+type CategoriaDTO {
+    id: ID!
+    nombreCategoria: String!
+    descripcion: String
+    fechaCreacion: String!
+    usuarioCreacionNombre: String
+    fechaUltimaModificacion: String
+    usuarioUltimaModificacionNombre: String
+    icono: String
+    color: String
+    estado: Boolean!
+    esInteligente: Boolean!
+    cantidadBienes: Int!
+}
+
+type CategoriaSimpleDTO {
+    id: ID!
+    nombreCategoria: String!
+    esInteligente: Boolean!
+}
+
+"""
+Registro de historial de ubicaciones de un bien.
+"""
+type HistorialUbicacionDTO {
+    id: ID!
+    fechaEntrada: String!
+    fechaSalida: String
+    fechaRegistro: String!
+    bienId: ID!
+    bienNombre: String
+    bienCaf: String
+    ubicacionId: ID!
+    ubicacionNombre: String
+    usuarioRegistroId: ID!
+    usuarioRegistroNombre: String
+}
+
+"""
+Atributo configurado para un formulario de creación/edición de bien.
+"""
+type AtributoFormularioDTO {
+    tipoAtributoId: ID
+    nombreTipoAtributo: String!
+    etiqueta: String!
+    tipoDato: String!
+    requerido: Boolean!
+    valorDefecto: String
+    orden: Int!
+    placeholder: String
+    opciones: [String!]
+}
+
+"""
+Plantilla de machine learning para categorización automática.
+"""
+type PlantillaCategoriaDTO {
+    id: ID!
+    nombrePlantilla: String!
+    plantillaAtributos: [PlantillaAtributoDTO!]!
+}
+
+type PlantillaAtributoDTO {
+    id: ID
+    idPlantilla: ID
+    idTipoAtributo: ID
+    etiqueta: String
+    esRequerido: Boolean
+    ordenUI: Int
+    jsonExtraccion: JSON
+    nombreAtributo: String
+    tipoDato: String
+}
+
+type ModeloProductoDTO {
+    id: ID!
+    nombreModelo: String!
+    descripcionModelo: String
+    marca: String
+    categoriaId: ID!
+    categoriaNombre: String
+}
+
+"""
+Tipo de atributo personalizable para bienes.
+Define la estructura y tipo de dato que puede almacenar.
+"""
+type TipoAtributoDTO {
+    id: ID!
+    nombreAtributo: String!
+    tipoDato: String!
+}
+
+"""
+Grupo de filas analizadas que el sistema sugiere pertenecen a la misma categoría.
+Usado en el proceso de importación masiva.
+"""
+type GrupoAnalizadoDTO {
+    nombreCategoriaSugerida: String!
+    idPlantillaSugerida: ID
+    esSugerenciaNueva: Boolean!
+    items: [JSON!]!
+    totalItems: Int!
+}
+
+"""
+Error específico en una fila durante importación.
+"""
+type FilaErrorDTO {
+    numeroFila: Int!
+    valorFila: String!
+    error: String!
+}
+
+"""
+Resultado consolidado de una operación de importación masiva.
+"""
+type ImportacionResultadoDTO {
+    bienesCreados: Int!
+    bienesActualizados: Int!
+    filasConError: Int!
+    mensaje: String!
+    errores: [FilaErrorDTO!]
+}
+
+type BienEliminacionResultadoDTO {
+    exito: Boolean!
+    mensaje: String!
+    bienesHijosDesagrupados: Int
+}
+
+input AtributoValorInput {
+    tipoAtributoId: ID!
+    valor: String!
+}
+
+input KeyValueInput {
+    clave: String!
+    valor: String!
+}
+
+"""
+Grupo confirmado por el usuario para importación final.
+Debe proporcionar una categoría existente o el nombre de una nueva.
+"""
+input GrupoConfirmadoInput {
+    categoriaId: ID
+    nombreNuevaCategoria: String
+    items: [JSON!]!
+}
+
+input BienCreacionInput {
+    categoriaId: ID
+    nombreNuevaCategoria: String
+    ubicacion: UbicacionCreacionInput!
+    responsableActualId: ID!
+    campos: [KeyValueInput!]!
+}
+
+input BienActualizacionInput {
+    categoriaId: ID
+    nombreNuevaCategoria: String
+    ubicacion: UbicacionCreacionInput
+    responsableActualId: ID
+    campos: [KeyValueInput!]!
+}
+
+input CategoriaCreacionInput {
+    nombreCategoria: String!
+    descripcion: String
+    icono: String
+    color: String
+    estado: Boolean!
+}
+
+input CategoriaActualizacionInput {
+    nombreCategoria: String
+    descripcion: String
+    icono: String
+    color: String
+    estado: Boolean
+}
+
+input ModeloProductoCreacionInput {
+    nombreModelo: String!
+    descripcionModelo: String
+    marca: String
+    categoriaId: ID!
+}
+
+input ModeloProductoActualizacionInput {
+    nombreModelo: String
+    descripcionModelo: String
+    marca: String
+    categoriaId: ID
+}
+
+input TipoAtributoCreacionInput {
+    nombreAtributo: String!
+    tipoDato: String!
+}
+
+input TipoAtributoActualizacionInput {
+    nombreAtributo: String
+    tipoDato: String
+}
+
+extend type Query {
+    """
+    Obtiene bienes con paginación, filtros y ordenamiento.
+    Optimizado para grandes volúmenes de datos.
+    """
+    obtenerBienes(
+        page: Int = 1
+        limit: Int = 20
+        buscar: String
+        categoriaId: ID
+        ubicacionId: ID
+        estadoOperacional: String
+        estadoFisico: String
+        departamentoId: ID
+        responsableId: ID
+        ordenarPor: String = "fechaCreacion"
+        orden: String = "DESC"
+    ): BienesPaginados!
+    
+    """
+    Obtiene un bien específico por su ID.
+    """
+    bienPorId(id: ID!): BienDTO
+
+    """
+    Busca bienes por término de búsqueda en múltiples campos.
+    """
+    buscarBienes(termino: String!): [BienDTO!]!
+    
+    """
+    Obtiene todos los bienes de una categoría específica.
+    """
+    bienesPorCategoria(categoriaId: ID!): [BienDTO!]!
+
+    """
+    Obtiene categorías con paginación, filtros y ordenamiento.
+    Optimizado para grandes volúmenes de datos.
+    """
+    categorias(
+        page: Int = 1
+        limit: Int = 12
+        estado: Boolean
+        ordenarPor: String = "nombreCategoria"
+        orden: String = "ASC"
+        buscar: String
+    ): CategoriasPaginadas!
+    
+    """
+    Obtiene categorías visibles disponibles para asignación.
+    """
+    categoriasSimplesDisponibles: [CategoriaSimpleDTO!]!
+
+    modelosProducto: [ModeloProductoDTO!]!
+    modeloProductoPorId(id: ID!): ModeloProductoDTO
+    tiposAtributo: [TipoAtributoDTO!]!
+    tipoAtributoPorId(id: ID!): TipoAtributoDTO
+
+    """
+    Obtiene los atributos configurados para el formulario de una categoría.
+    Si se proporciona nombreCategoria, busca plantillas ML sugeridas.
+    """
+    atributosParaFormularioPorCategoria(categoriaId: ID, buscarNombrePlantilla: String): [AtributoFormularioDTO!]!
+    
+    """
+    Sugiere plantillas ML para una categoría basándose en su nombre.
+    """
+    sugerirPlantillasParaCategoria(nombreCategoria: String!): [PlantillaCategoriaDTO!]!
+}
+
+extend type Mutation {
+    """
+    Crea un nuevo bien en el inventario.
+    """
+    crearBien(bien: BienCreacionInput!): OperacionResultadoBien!
+    
+    """
+    Actualiza los datos de un bien existente.
+    """
+    actualizarBien(id: ID!, bien: BienActualizacionInput!): OperacionResultadoBien!
+    
+    """
+    Elimina un bien del inventario.
+    Si tiene bienes hijos agrupados, los desagrupa primero.
+    """
+    eliminarBien(id: ID!): OperacionResultadoGenerico!
+
+    """
+    Ejecuta la importación masiva final con los grupos confirmados por el usuario.
+    Fase 2 del proceso de importación.
+    """
+    ejecutarImportacionConfirmada(grupos: [GrupoConfirmadoInput!]!): ImportacionResultadoDTO!
+
+    crearCategoria(categoria: CategoriaCreacionInput!): OperacionResultadoCategoria!
+    actualizarCategoria(id: ID!, categoria: CategoriaActualizacionInput!): OperacionResultadoCategoria!
+    eliminarCategoria(id: ID!): OperacionResultadoBoolean!
+    
+    """
+    Aplica todos los atributos de una plantilla ML a una categoría automáticamente.
+    """
+    aplicarPlantillaACategoria(categoriaId: ID!, plantillaId: ID!): OperacionResultadoCategoria!
+
+    crearModeloProducto(modelo: ModeloProductoCreacionInput!): ModeloProductoDTO!
+    actualizarModeloProducto(id: ID!, modelo: ModeloProductoActualizacionInput!): ModeloProductoDTO!
+    eliminarModeloProducto(id: ID!): Boolean!
+    crearTipoAtributo(atributo: TipoAtributoCreacionInput!): TipoAtributoDTO!
+    actualizarTipoAtributo(id: ID!, atributo: TipoAtributoActualizacionInput!): TipoAtributoDTO!
+    eliminarTipoAtributo(id: ID!): Boolean!
+}

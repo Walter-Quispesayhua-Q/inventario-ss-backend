@@ -1,0 +1,25 @@
+"""
+Departamento académico o administrativo de la institución.
+"""
+type DepartamentoDTO {
+    id: ID!
+    nombreDepartamento: String!
+    descripcion: String
+    fechaCreacion: String
+    fechaUltimaModificacion: String
+}
+
+"""
+Versión simplificada de departamento para listas y selects.
+"""
+type DepartamentoSimpleDTO {
+    id: ID!
+    nombreDepartamento: String!
+}
+
+extend type Query {
+    """
+    Obtiene todos los departamentos disponibles para asignación.
+    """
+    departamentosDisponibles: [DepartamentoSimpleDTO!]!
+}

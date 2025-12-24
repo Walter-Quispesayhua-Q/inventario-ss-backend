@@ -1,0 +1,519 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-FIL-2025-V1",
+    "version": "1.0",
+    "nombre": "Archivador",
+    "categoriaSemantica": "MOBILIARIO_ARCHIVADOR_FILING",
+    "descripcion": "Plantilla ML de archivador - Maneja columna única, múltiples columnas e híbrido para archivadores y gabinetes de archivo"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_ARCHIVERO_COLGANTE",
+        "condicion": ".*(archivero\\s+colgante|filing\\s+cabinet|colgante).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró archivador colgante específico"
+      },
+      {
+        "nombre": "BONUS_CAJONES_ESPECIFICOS",
+        "condicion": ".*\\d+\\s*cajones?.*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró número específico de cajones"
+      },
+      {
+        "nombre": "BONUS_CHAPA_TRAMPA",
+        "condicion": ".*(chapa.*trampa|trampa.*chapa|cerradura).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró sistema de seguridad específico"
+      },
+      {
+        "nombre": "BONUS_CAJONES_CORREDIZOS",
+        "condicion": ".*(cajones?\\s+corredizos|sliding\\s+drawers?).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron cajones corredizos específicos"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["archivador", "archivero", "filing", "cabinet", "gabinete"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["colgante", "armario", "cajones", "corredizos", "chapa"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["trampa", "melamina", "puertas", "vertical", "horizontal"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["archivo", "documentos", "files", "storage"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["colgante", "armario", "con-puertas", "vertical", "horizontal", "lateral", "frontal"],
+      "materiales": ["melamina", "melamine", "metal", "acero", "madera", "mdf", "laminado"],
+      "acabados": ["cedro", "nogal", "chocolate", "blanco", "natural", "enchapado"],
+      "cajones": ["corredizos", "sliding", "fijos", "extraibles", "telescopicos", "suaves"],
+      "seguridad": ["chapa", "trampa", "lock", "cerradura", "llave", "combinacion"],
+      "tamaños_papel": ["carta", "oficio", "legal", "a4", "a3", "folio"],
+      "caracteristicas": ["ignifugo", "anti-tip", "full-extension", "soft-close", "modular"],
+      "capacidades": ["2-cajones", "3-cajones", "4-cajones", "5-cajones"],
+      "marcas_mobiliario": ["steelcase", "herman-miller", "hon", "global", "teknion"],
+      "ubicaciones": ["oficina", "hogar", "biblioteca", "juridico", "medico"]
+    },
+    "marcas": {
+      "tier1": ["steelcase", "herman-miller", "hon", "global", "teknion"],
+      "tier2": ["kimball", "haworth", "knoll", "okamura", "humanscale"],
+      "tier3": ["bush", "sauder", "office-depot", "staples", "ikea"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["estante", "mesa", "escritorio", "silla"],
+      "fuerte": ["monitor", "cpu", "impresora", "scanner"],
+      "media": ["sofa", "cama", "armario", "closet"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(steelcase|herman-miller|hon|global)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_archivador": "\\b(archivador|archivero|filing\\s+cabinet|gabinete)\\s*(colgante|armario|con\\s+puertas)?\\b",
+      "configuracion_archivador": "\\b(colgante|armario|con\\s+puertas|vertical|horizontal|lateral)\\b",
+      "material_archivador": "\\b(melamina|melamine|metal|acero|madera|mdf|laminado)\\b",
+      "numero_cajones": "(\\d+)\\s*cajones?\\s*(corredizos|fijos|extraibles)?",
+      "tipo_cajones": "\\b(corredizos|sliding|fijos|extraibles|telescopicos|suaves)\\b",
+      "sistema_seguridad": "\\b(chapa|trampa|lock|cerradura|llave|combinacion)\\b",
+      "tamaño_papel_soportado": "\\b(carta|oficio|legal|a4|a3|folio)\\b",
+      "caracteristicas_especiales": "\\b(ignifugo|anti[-\\s]*tip|full[-\\s]*extension|soft[-\\s]*close|modular)\\b",
+      "cantidad": "(\\d{1,2})\\s*(archivador|archiveros|filing)",
+      "dimensiones_archivador": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m))?",
+      "capacidad_documentos": "(\\d+)\\s*(carpetas?|folders?|documentos?)\\s*(por\\s+cajon)?",
+      "peso_maximo": "(\\d+)\\s*(kg|kilogramos?)\\s*(por\\s+cajon|total|max)",
+      "departamento": "\\b(ep|departamento)\\s*\\.?\\s*([\\w\\s\\.]+?)(?=\\s|$)",
+      "ubicacion_especifica": "\\b(oficina|biblioteca|juridico|medico|contabilidad|rrhh)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Steelcase, Herman Miller, HON, Global",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(steelcase|herman-miller|hon|global)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Lateral 4-Drawer, Vertical 2-Drawer",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_ARCHIVADOR",
+      "etiqueta": "Tipo de Archivador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Colgante, Armario, Con puertas, Vertical",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Colgante", "Armario", "Con puertas", "Vertical", "Horizontal", "Lateral", "Frontal"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Configuración"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(archivador|archivero)\\s*(colgante|armario|con\\s+puertas)?\\b", "grupo": 2, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["colgante", "armario", "con", "puertas", "vertical", "horizontal"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONFIGURACION",
+      "etiqueta": "Configuración",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Vertical, Horizontal, Lateral, Frontal",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Vertical", "Horizontal", "Lateral", "Frontal", "Modular", "Torre"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Configuración", "Configuration", "Layout"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(vertical|horizontal|lateral|frontal|modular|torre)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["vertical", "horizontal", "lateral", "frontal", "modular"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_PRINCIPAL",
+      "etiqueta": "Material Principal",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Melamina, Metal, Acero, Madera",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Melamina", "Metal", "Acero", "Madera", "MDF", "Laminado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Materials", "Construction"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(melamina|melamine|metal|acero|madera|mdf|laminado)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["melamina", "melamine", "metal", "acero", "madera"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_CAJONES",
+      "etiqueta": "Número de Cajones",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2, 3, 4, 5",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cajones", "Drawers", "Gavetas"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*cajones?\\s*(corredizos|fijos|extraibles)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CAJONES",
+      "etiqueta": "Tipo de Cajones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Corredizos, Telescópicos, Suaves",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo Cajones", "Drawer Type", "Slides"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(corredizos|sliding|fijos|extraibles|telescopicos|suaves)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_SEGURIDAD",
+      "etiqueta": "Sistema de Seguridad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Chapa, Trampa, Cerradura, Llave",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Seguridad", "Security", "Lock"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(chapa|trampa|lock|cerradura|llave|combinacion)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_PAPEL",
+      "etiqueta": "Tamaño de Papel Soportado",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Carta, Oficio, Legal, A4",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Papel", "Paper Size", "Format"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(carta|oficio|legal|a4|a3|folio)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Ignífugo, Anti-tip, Full extension",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Special"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ignifugo|anti[-\\s]*tip|full[-\\s]*extension|soft[-\\s]*close|modular)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(archivador|archiveros|filing)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(archivador|archiveros|filing)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LARGO",
+      "etiqueta": "Largo (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 40, 60, 80",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 30,
+        "max": 150
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Largo", "Length", "Width"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(largo|length|width)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho/Profundidad (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 40, 60, 70",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 30,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Depth"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(ancho|width|depth)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTO",
+      "etiqueta": "Alto (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 60, 100, 130",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 40,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alto", "Height", "High"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*(alto|height|high)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 40x60x130 cm",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m)(?:\\s*[xX]\\s*(\\d+(?:\\.\\d+)?)\\s*(?:cms?\\.?|cm|m))?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_DOCUMENTOS",
+      "etiqueta": "Capacidad de Documentos",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100 carpetas por cajón, 500 documentos",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Documents", "Files"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(carpetas?|folders?|documentos?)\\s*(por\\s+cajon)?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO_MAXIMO",
+      "etiqueta": "Peso Máximo (kg)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 40, 60, 80 por cajón",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 20,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso Max", "Weight", "Load"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(kg|kilogramos?)\\s*(por\\s+cajon|total|max)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DEPARTAMENTO_UBICACION",
+      "etiqueta": "Departamento/Ubicación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: EP. Ing. Ambiental, Oficina de Contabilidad",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Departamento", "Location", "Department"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ep|departamento)\\s*\\.?\\s*([\\w\\s\\.]+?)(?=\\s|$)", "grupo": 2, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ing", "ambiental", "alimentos", "sistemas", "contabilidad"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Cedro, Blanco, Chocolate, Nogal",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["cedro", "blanco", "chocolate", "nogal", "gris", "negro"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Archivero colgante del inventario real",
+      "texto": "01 Archivero colgante de melamine, con 4 cajones corredizos y chapa de trampa Color cedro EP. Ing. Ambiental",
+      "extraccionEsperada": {
+        "TIPO_ARCHIVADOR": "Colgante",
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "NUMERO_CAJONES": "4",
+        "TIPO_CAJONES": ["Corredizos"],
+        "SISTEMA_SEGURIDAD": ["Chapa", "Trampa"],
+        "COLOR": "Cedro",
+        "DEPARTAMENTO_UBICACION": "Ing. Ambiental"
+      }
+    },
+    {
+      "nombre": "Caso 2: Archivador con puertas del inventario real",
+      "texto": "01 Archivador con puertas de color chocolate melamina 18mm vertical",
+      "extraccionEsperada": {
+        "TIPO_ARCHIVADOR": "Con puertas",
+        "CONFIGURACION": "Vertical",
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "COLOR": "Chocolate"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples archivadores del inventario real",
+      "texto": "02 archivadores de melamina Co blanco con 4 cajones corredizos filing cabinet",
+      "extraccionEsperada": {
+        "MATERIAL_PRINCIPAL": "Melamina",
+        "NUMERO_CAJONES": "4",
+        "TIPO_CAJONES": ["Corredizos"],
+        "COLOR": "Blanco",
+        "CANTIDAD": "2"
+      }
+    }
+  ]
+}

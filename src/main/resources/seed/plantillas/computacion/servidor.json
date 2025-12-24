@@ -1,0 +1,1134 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SRV-2025-V1",
+    "version": "1.0",
+    "nombre": "Servidor",
+    "categoriaSemantica": "SERVIDOR_COMPUTACION",
+    "descripcion": "Plantilla ML de servidor - Maneja columna única, múltiples columnas e híbrido para servidores de rack, torre y blade"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_PROCESADOR_SERVIDOR",
+        "condicion": ".*(xeon|epyc|opteron|server|servidor).*",
+        "puntos": 0.05,
+        "descripcion": "Se encontró un procesador o término específico de servidor"
+      },
+      {
+        "nombre": "BONUS_FACTOR_FORMA_SERVIDOR",
+        "condicion": ".*(rack|tower|blade|\\d+u|proliant|poweredge).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró un factor de forma típico de servidor"
+      },
+      {
+        "nombre": "BONUS_ALTA_MEMORIA",
+        "condicion": ".*(\\d{2,3})\\s*(gb|GB)\\s*(ram|memoria).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró configuración de memoria de servidor"
+      },
+      {
+        "nombre": "BONUS_CONFIGURACION_RED",
+        "condicion": ".*(ip|mac|hostname|ethernet|nic).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró configuración de red"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "servidor",
+          "server",
+          "proliant",
+          "poweredge",
+          "primergy"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "rack",
+          "tower",
+          "blade",
+          "enterprise",
+          "datacenter"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "raid",
+          "redundant",
+          "hot-swap",
+          "bmc",
+          "idrac",
+          "ilo"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "enterprise",
+          "business",
+          "corporate",
+          "data"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "procesadores": [
+        "xeon",
+        "epyc",
+        "opteron",
+        "quad-core",
+        "octa-core",
+        "dual",
+        "socket",
+        "cache",
+        "l2",
+        "l3"
+      ],
+      "memoria": [
+        "ddr3",
+        "ddr4",
+        "ddr5",
+        "ecc",
+        "registered",
+        "unbuffered",
+        "dimm",
+        "rdimm",
+        "udimm",
+        "slots"
+      ],
+      "almacenamiento": [
+        "sas",
+        "sata",
+        "nvme",
+        "raid",
+        "hot-swap",
+        "redundant",
+        "tb",
+        "gb"
+      ],
+      "conectividad": [
+        "gigabit",
+        "10gbe",
+        "ethernet",
+        "ilo",
+        "idrac",
+        "ipmi",
+        "bmc",
+        "nic"
+      ],
+      "red": [
+        "ip",
+        "mac",
+        "hostname",
+        "dhcp",
+        "static",
+        "ipv4",
+        "ipv6",
+        "vlan"
+      ],
+      "factorForma": [
+        "1u",
+        "2u",
+        "4u",
+        "rack",
+        "tower",
+        "blade",
+        "mini"
+      ],
+      "expansion": [
+        "pcie",
+        "pci-e",
+        "slots",
+        "expansion",
+        "x8",
+        "x16"
+      ],
+      "fuentes": [
+        "redundant",
+        "hot-plug",
+        "psu",
+        "power",
+        "efficiency",
+        "80plus"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "dell",
+        "hp",
+        "ibm",
+        "lenovo",
+        "cisco"
+      ],
+      "tier2": [
+        "supermicro",
+        "fujitsu",
+        "huawei",
+        "inspur",
+        "asus"
+      ],
+      "tier3": [
+        "tyan",
+        "asrock",
+        "gigabyte",
+        "msi",
+        "qnap"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "desktop",
+        "laptop",
+        "notebook",
+        "tablet",
+        "procesador intel",
+        "procesador amd",
+        "cpu intel",
+        "cpu amd",
+        "disco duro",
+        "memoria ram",
+        "modulo memoria",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "monitor",
+        "impresora",
+        "router",
+        "switch",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "ryzen",
+        "temperatura",
+        "calefaccion",
+        "potencia 1500w"
+      ],
+      "media": [
+        "ups",
+        "teclado",
+        "mouse",
+        "webcam",
+        "optiplex",
+        "compaq"
+      ],
+      "debil": [
+        "cable",
+        "adaptador"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)",
+      "color": "(co:|color:)\\s*([\\w]+)",
+      "hostname": "(hostname|host|nombre):\\s*([\\w\\-\\.]+)"
+    },
+    "especificaciones": {
+      "procesador_xeon": "(intel\\s+)?(xeon\\s+)(quad-core\\s+)?([A-Z]\\d+-\\d{4}[A-Z]*)",
+      "procesador_epyc": "(amd\\s+)?(epyc\\s+)(\\d{4}[A-Z]*)",
+      "memoria_servidor": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(ram|RAM|memoria|ecc|ddr[345])",
+      "tipo_memoria": "\\b(ecc|registered|unbuffered|rdimm|udimm)\\b",
+      "slots_memoria": "(\\d+)\\s*(de|/)\\s*(\\d+)\\s*(slots?|dimm)",
+      "capacidad_max_ram": "(hasta|max|máximo)\\s*(\\d+)\\s*(gb|GB|tb|TB)",
+      "cache_cpu": "(\\d+(?:\\.\\d+)?)\\s*(mb|MB|gb|GB)\\s*(cache|caché|l[23])",
+      "almacenamiento_servidor": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(sas|sata|nvme|raid)",
+      "factor_forma": "\\b(\\d+u|rack|tower|blade)\\b",
+      "frecuencia": "(\\d{1,2}\\.\\d{1,2})\\s*(ghz|GHz)",
+      "slots_pcie": "(\\d+)\\s*x?\\s*(pcie|pci-e)\\s*(x[1-9][0-6]?|slots?)?"
+    },
+    "red": {
+      "ip_address": "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b",
+      "ipv6_address": "\\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\b",
+      "mac_address": "\\b(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\\b",
+      "hostname": "\\b[a-zA-Z][a-zA-Z0-9\\-]{0,62}(?:\\.[a-zA-Z][a-zA-Z0-9\\-]{0,62})*\\b"
+    },
+    "conectividad": {
+      "red_servidor": "\\b(gigabit|10gbe|ethernet|nic)\\s*(\\d+)?\\s*(puertos?|ports?)?",
+      "gestion": "\\b(ilo|idrac|ipmi|bmc|remote)\\b",
+      "expansion": "\\b(pcie|pci-e|expansion|slots?)\\b"
+    },
+    "caracteristicas": {
+      "redundancia": "\\b(redundant|hot-swap|hot-plug|dual)\\b",
+      "raid": "\\b(raid\\s*[0156]|raid\\s*controller)\\b",
+      "cache": "(\\d+)\\s*(mb|MB|gb|GB)\\s*(cache|caché)",
+      "fuente": "(\\d+)\\s*(w|watts|vatios)\\s*(psu|fuente|power)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: HP, Dell, IBM, Lenovo",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: ProLiant ML310e Gen8, PowerEdge R740",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo",
+              "Serie"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(proliant|poweredge|primergy|thinkserver)\\s*[\\w\\s\\-]+"
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NOMBRE_HOST",
+      "etiqueta": "Nombre de Host (Hostname)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: srv-web01, db-server-prod",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Hostname",
+              "Host",
+              "Nombre Host",
+              "Server Name"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(hostname|host|nombre):\\s*([\\w\\-\\.]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b[a-zA-Z][a-zA-Z0-9\\-]{0,62}(?:\\.[a-zA-Z][a-zA-Z0-9\\-]{0,62})*\\b"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROCESADOR",
+      "etiqueta": "Procesador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Intel Xeon E3-1220v2, AMD EPYC 7301",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Procesador",
+              "CPU",
+              "Processor"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(intel\\s+)?(xeon\\s+)(quad-core\\s+)?([A-Z]\\d+-\\d{4}[A-Z]*)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(amd\\s+)?(epyc\\s+)(\\d{4}[A-Z]*)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_PROCESADORES",
+      "etiqueta": "Cantidad de Procesadores",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 4",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 1,
+        "max": 8
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "CPUs",
+              "Procesadores",
+              "Sockets"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(socket|cpu|procesador)",
+            "grupo": 1
+          },
+          {
+            "tipo": "MAPEO",
+            "single": "1",
+            "dual": "2",
+            "quad": "4"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CACHE_CPU",
+      "etiqueta": "Caché del Procesador",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 8MB L3, 22.5MB, 16MB",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cache",
+              "Caché",
+              "L2",
+              "L3"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(mb|MB|gb|GB)\\s*(cache|caché|l[23])",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "cache\\s+(\\d+\\s*mb)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_CPU",
+      "etiqueta": "Frecuencia CPU (GHz)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.8, 3.1, 2.4",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 1.0,
+        "max": 4.5
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "GHz",
+              "Clock"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2}\\.\\d{1,2})\\s*(ghz|GHz)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_RAM",
+      "etiqueta": "Memoria RAM",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 8GB ECC, 32GB DDR4, 128GB Registered",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RAM",
+              "Memoria",
+              "Memory"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(ram|RAM|memoria|ecc|ddr[345])",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MEMORIA",
+      "etiqueta": "Tipo de Memoria",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: ECC Registered, DDR4 RDIMM, ECC Unbuffered",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": [
+        "ECC Registered (RDIMM)",
+        "ECC Unbuffered (UDIMM)",
+        "Non-ECC",
+        "DDR4 ECC",
+        "DDR5 ECC"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo Memoria",
+              "Memory Type",
+              "RAM Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ecc|registered|unbuffered|rdimm|udimm)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(ecc)\\s+(registered|unbuffered)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SLOTS_MEMORIA",
+      "etiqueta": "Slots de Memoria",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4 de 8, 8/16 ocupados, 12 slots",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Slots",
+              "DIMM Slots",
+              "Ranuras"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(de|/)\\s*(\\d+)\\s*(slots?|dimm)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(slots?|dimm)\\s*(disponibles|total)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_MAXIMA_RAM",
+      "etiqueta": "Capacidad Máxima RAM",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 128GB, 512GB, 2TB, 8TB DDR5",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Max RAM",
+              "Capacidad Máxima",
+              "Maximum Memory"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(hasta|max|máximo)\\s*(\\d+)\\s*(gb|GB|tb|TB)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "capacidad\\s+máxima[:\\s]+(\\d+\\s*[gt]b)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALMACENAMIENTO",
+      "etiqueta": "Almacenamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1TB SATA, 2x600GB SAS, RAID 5",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Almacenamiento",
+              "Storage",
+              "Disco"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(gb|GB|tb|TB)\\s*(sas|sata|nvme)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "disco\\s+duro\\s+(\\d+\\s*tb)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FACTOR_FORMA",
+      "etiqueta": "Factor de Forma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1U Rack, Torre 4U, Mini Tower",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "1U Rack",
+        "2U Rack",
+        "4U Rack",
+        "Torre",
+        "Mini Torre",
+        "Blade"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Factor",
+              "Forma",
+              "Chassis"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(\\d+u|rack|tower|blade)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "formato\\s+(torre|rack)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIRECCION_IP",
+      "etiqueta": "Dirección IP",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 192.168.1.100, 10.0.0.50",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "IP",
+              "Dirección IP",
+              "IP Address",
+              "IPv4"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "ip[:\\s]+((?:\\d{1,3}\\.){3}\\d{1,3})",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIRECCION_MAC",
+      "etiqueta": "Dirección MAC",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 00:1A:2B:3C:4D:5E, A0-B1-C2-D3-E4-F5",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "MAC",
+              "Dirección MAC",
+              "MAC Address"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\\b",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "mac[:\\s]+([0-9A-Fa-f:]{17})",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_RED",
+      "etiqueta": "Conectividad de Red",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2x Gigabit Ethernet, 10GbE, Dual NIC",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Red",
+              "Network",
+              "Ethernet",
+              "NIC"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(gigabit|10gbe|ethernet)\\s*(\\d+)?\\s*(puertos?)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "controlador\\s+de\\s+red\\s+([\\w\\s]+)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUENTE_ALIMENTACION",
+      "etiqueta": "Fuente de Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 550W, Redundante 750W, Hot-Plug PSU",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "PSU",
+              "Fuente",
+              "Power",
+              "Alimentacion"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(w|watts|vatios)",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(redundant|hot-plug|dual)\\s*(psu|power|fuente)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SLOTS_PCIE",
+      "etiqueta": "Slots PCIe",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 3x PCIe x16, 2x PCIe x8, 4 slots",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "PCIe",
+              "Slots",
+              "Expansion"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*(pcie|pci-e)\\s*(x[1-9][0-6]?|slots?)?",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(slots?)\\s*(pcie|expansion)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_OPERATIVO",
+      "etiqueta": "Sistema Operativo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Windows Server 2019, Linux RHEL, VMware",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "SO",
+              "OS",
+              "Sistema"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(windows\\s+server|linux|vmware|hyper-v|esxi)\\s*[\\d\\.]*",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GESTION_REMOTA",
+      "etiqueta": "Gestión Remota",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: iLO, iDRAC, IPMI, BMC",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Gestion",
+              "Management",
+              "Remote"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ilo|idrac|ipmi|bmc)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RAID_CONTROLLER",
+      "etiqueta": "Controlador RAID",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: RAID 0/1/5/10, Hardware RAID",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "RAID",
+              "Controlador",
+              "Controller"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(raid\\s*[0156]|raid\\s*controller)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Gris, Plateado",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "silver",
+              "black",
+              "white"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Servidor HP ProLiant completo",
+      "texto": "01 Servidor HP ProLiant ML 310e Gen8 hostname: srv-web01 Intel Xeon Quad-Core E3-1220v2 3.1GHz 8MB Caché, 8GB RAM DDR3 ECC 4 de 8 slots máximo 32GB Disco Duro 1TB SATA, DVD-RW, Controlador de red gigabit 2 puertos IP: 192.168.1.100 MAC: 00:1A:2B:3C:4D:5E 3x PCIe x8 Formato Torre convertible 4U. S/N BRC2482BS5",
+      "extraccionEsperada": {
+        "MARCA": "HP",
+        "MODELO": "ProLiant ML 310e Gen8",
+        "NUMERO_SERIE": "BRC2482BS5",
+        "NOMBRE_HOST": "srv-web01",
+        "PROCESADOR": "Intel Xeon Quad-Core E3-1220v2",
+        "FRECUENCIA_CPU": "3.1",
+        "CACHE_CPU": "8MB",
+        "MEMORIA_RAM": "8GB RAM DDR3 ECC",
+        "TIPO_MEMORIA": "ECC",
+        "SLOTS_MEMORIA": "4 de 8 slots",
+        "CAPACIDAD_MAXIMA_RAM": "32GB",
+        "ALMACENAMIENTO": "1TB SATA",
+        "CONECTIVIDAD_RED": "gigabit 2 puertos",
+        "DIRECCION_IP": "192.168.1.100",
+        "DIRECCION_MAC": "00:1A:2B:3C:4D:5E",
+        "SLOTS_PCIE": "3x PCIe x8",
+        "FACTOR_FORMA": "Torre 4U"
+      }
+    },
+    {
+      "nombre": "Caso 2: Servidor Dell lenguaje natural",
+      "texto": "Servidor Dell PowerEdge R740 host: db-server-prod Dual Intel Xeon Silver 4214 2.2GHz 16.5MB cache 64GB RAM ECC Registered RDIMM 8/24 slots max 3TB DDR4 2x600GB SAS RAID 5 2U Rack iDRAC9 IP 10.0.0.50 MAC A0:B1:C2:D3:E4:F5 4x PCIe x16",
+      "extraccionEsperada": {
+        "MARCA": "Dell",
+        "MODELO": "PowerEdge R740",
+        "NOMBRE_HOST": "db-server-prod",
+        "PROCESADOR": "Intel Xeon Silver 4214",
+        "NUMERO_PROCESADORES": "2",
+        "FRECUENCIA_CPU": "2.2",
+        "CACHE_CPU": "16.5MB",
+        "MEMORIA_RAM": "64GB RAM ECC Registered",
+        "TIPO_MEMORIA": "ECC Registered (RDIMM)",
+        "SLOTS_MEMORIA": "8/24 slots",
+        "CAPACIDAD_MAXIMA_RAM": "3TB DDR4",
+        "ALMACENAMIENTO": "2x600GB SAS",
+        "FACTOR_FORMA": "2U Rack",
+        "DIRECCION_IP": "10.0.0.50",
+        "DIRECCION_MAC": "A0:B1:C2:D3:E4:F5",
+        "SLOTS_PCIE": "4x PCIe x16",
+        "GESTION_REMOTA": "iDRAC",
+        "RAID_CONTROLLER": "RAID 5"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "IBM",
+        "Modelo": "System x3650 M5",
+        "Hostname": "app-server-01",
+        "Procesador": "Intel Xeon E5-2620v4",
+        "Cache": "20MB L3",
+        "RAM": "32GB DDR4 ECC",
+        "Tipo Memoria": "ECC Registered",
+        "Slots": "4/16 DIMM",
+        "Max RAM": "hasta 512GB",
+        "Storage": "4x1TB RAID 10",
+        "Network": "Dual Gigabit Ethernet",
+        "IP": "172.16.0.100",
+        "MAC": "B0:C1:D2:E3:F4:05",
+        "PCIe": "3x PCIe x8",
+        "Form": "2U Rack",
+        "Management": "IMM2"
+      },
+      "extraccionEsperada": {
+        "MARCA": "IBM",
+        "MODELO": "System x3650 M5",
+        "NOMBRE_HOST": "app-server-01",
+        "PROCESADOR": "Intel Xeon E5-2620v4",
+        "CACHE_CPU": "20MB L3",
+        "MEMORIA_RAM": "32GB DDR4 ECC",
+        "TIPO_MEMORIA": "ECC Registered",
+        "SLOTS_MEMORIA": "4/16 DIMM",
+        "CAPACIDAD_MAXIMA_RAM": "512GB",
+        "ALMACENAMIENTO": "4x1TB",
+        "CONECTIVIDAD_RED": "Dual Gigabit Ethernet",
+        "DIRECCION_IP": "172.16.0.100",
+        "DIRECCION_MAC": "B0:C1:D2:E3:F4:05",
+        "SLOTS_PCIE": "3x PCIe x8",
+        "FACTOR_FORMA": "2U Rack",
+        "GESTION_REMOTA": "IMM2",
+        "RAID_CONTROLLER": "RAID 10"
+      }
+    }
+  ]
+}

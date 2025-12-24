@@ -1,0 +1,297 @@
+{
+  "tipoFormato": "MATRIZ",
+  "descripcion": "Formato de fichas de inventario con titulo, metadatos y tabla de componentes",
+
+  "hojas": {
+    "indices": [0],
+    "detectarTodas": true,
+    "nombresPorIndice": {},
+    "nombresFichasEsperados": ["Fichas", "Inventario", "Bienes"]
+  },
+
+  "deteccionFicha": {
+    "habilitada": true,
+    "analizarHojaCompleta": true,
+    "estrategias": ["PATRON", "CELDA_COMBINADA", "ESTILO"],
+    "prioridadEstrategia": "PATRON_PRIMERO",
+
+    "porPatron": {
+      "habilitado": true,
+      "columna": "A",
+      "patrones": [
+        "^PC-\\d{1,3}$",
+        "^PC\\d{1,3}$",
+        "^[A-Z]{2,5}-\\d{1,5}$",
+        "^[A-Z]{2,5}_\\d{1,5}$",
+        "^ESTACION-?\\d+$",
+        "^FICHA[_-]?\\d+$",
+        "^EST-?\\d{1,4}$",
+        "^INV-\\d{4}-\\d{3,5}$"
+      ],
+      "textoExacto": []
+    },
+
+    "porCeldaCombinada": {
+      "habilitado": true,
+      "minimoColumnasAbarcadas": 2,
+      "considerarComoTitulo": true,
+      "ignorarSiVacia": true
+    },
+
+    "porEstilo": {
+      "habilitado": true,
+      "detectarNegrita": true,
+      "detectarFondoColor": true,
+      "detectarFuenteGrande": true,
+      "tamanoFuenteMinimo": 12
+    }
+  },
+
+  "estructuraFicha": {
+    "titulo": {
+      "ubicacion": "PRIMERA_FILA_FICHA",
+      "esOpcional": true,
+      "extraerComo": "CODIGO_FICHA",
+      "columnaEsperada": "A",
+      "puedeSerCeldaCombinada": true
+    },
+
+    "metadatos": {
+      "habilitado": true,
+      "ubicacion": "DESPUES_DE_TITULO",
+      "formato": "CLAVE_VALOR",
+      "columnasClave": ["A"],
+      "columnasValor": ["B", "C", "D"],
+      "separadorClaveValor": ":",
+
+      "camposEsperados": [
+        {
+          "clave": "UBICACION",
+          "alias": ["ubicacion", "ubicación", "lugar", "ambiente", "laboratorio", "aula", "oficina","ubicación actual", "ubicacion actual"],
+          "requerido": false,
+          "extraerPara": "AMBIENTE"
+        },
+        {
+          "clave": "RESPONSABLE",
+          "alias": ["responsable", "encargado", "custodio", "usuario", "asignado"],
+          "requerido": false,
+          "extraerPara": "USUARIO"
+        },
+        {
+          "clave": "DEPARTAMENTO",
+          "alias": ["departamento", "area", "área", "unidad", "dependencia", "dpto"],
+          "requerido": false,
+          "extraerPara": "DEPARTAMENTO"
+        },
+        {
+          "clave": "FECHA",
+          "alias": ["fecha", "fecha_inventario", "fecha_registro", "fecha inventario"],
+          "requerido": false,
+          "extraerPara": "FECHA_REGISTRO"
+        },
+        {
+          "clave": "OBSERVACIONES",
+          "alias": ["observaciones", "notas", "comentarios", "obs"],
+          "requerido": false,
+          "extraerPara": "OBSERVACIONES"
+        },
+        {
+          "clave": "DESCRIPCION_BIEN",
+          "alias": ["descripcion del bien", "descripción del bien", "descripcion bien", "descripción bien", "desc. bien", "equipo", "nombre equipo"],
+          "requerido": false,
+          "extraerPara": "NOMBRE_ESTACION"
+        }
+      ],
+
+      "finalizaCuando": {
+        "detectarHeadersTabla": true,
+        "maximoFilasMetadatos": 10,
+        "filaVacia": false
+      }
+    },
+
+    "tablaComponentes": {
+      "habilitada": true,
+      "ubicacion": "DESPUES_DE_METADATOS",
+
+      "deteccionHeaders": {
+        "metodo": "BUSCAR_PALABRAS_CLAVE",
+        "palabrasClave": [
+          "descripcion", "descripción", "nombre", "bien", "equipo",
+          "cantidad", "cant", "qty",
+          "estado", "condicion", "condición",
+          "serie", "numero_serie", "n_serie", "serial",
+          "caf", "codigo", "código", "cod",
+          "marca", "fabricante",
+          "modelo", "model",
+          "observaciones", "obs", "notas"
+        ],
+        "minimoCoincidencias": 2,
+        "buscarEnFilas": 5
+      },
+
+      "columnas": {
+        "deteccionAutomatica": true,
+        "minimoColumnas": 2,
+        "maximoColumnas": 20
+      },
+
+      "finalizaCuando": {
+        "filasVaciasConsecutivas": 1,
+        "nuevaFichaDetectada": true,
+        "finDeHoja": true
+      }
+    }
+  },
+
+  "fichasMultiples": {
+    "habilitadas": true,
+    "detectarAutomatico": true,
+    "analizarHojaCompleta": true,
+
+    "separadores": {
+      "porPatron": {
+        "habilitado": true,
+        "patrones": [
+          "^PC-?\\d{1,3}$",
+          "^[A-Z]{2,10}-\\d{1,5}$",
+          "^[A-Z]{2,10}_\\d{1,5}$",
+          "^\\d{4,12}$",
+          "^ESTACION[_-]?\\d+$",
+          "^FICHA[_-]?\\d+$",
+          "^INV-\\d{4}-\\d{3,5}$",
+          "^[A-Z]+-[A-Z]+-\\d+$"
+        ],
+        "detectarEnColumna": "A",
+        "textoExacto": []
+      },
+
+      "porFilasVacias": {
+        "habilitado": true,
+        "minimoFilasVacias": 1,
+        "maximoFilasVacias": 5
+      },
+
+      "porCeldaCombinada": {
+        "habilitado": true,
+        "minimoColumnasAbarcadas": 2,
+        "considerarComoNuevaFicha": true
+      },
+
+      "porEstiloCelda": {
+        "habilitado": true,
+        "detectarNegrita": true,
+        "detectarFondoColoreado": true
+      }
+    },
+
+    "validacion": {
+      "minimoFilasPorFicha": 2,
+      "maximoFilasPorFicha": 200,
+      "ignorarFichasVacias": true,
+      "minimoComponentesPorFicha": 1
+    }
+  },
+
+  "heuristicas": {
+    "habilitadas": true,
+
+    "deteccionFormato": {
+      "analizarFilasMinimo": 100,
+      "analizarFilasMaximo": null,
+      "analizarHojaCompleta": true,
+      "umbralConfianza": 0.6
+    },
+
+    "patrones": {
+      "titulosFicha": {
+        "usarRegex": true,
+        "usarCeldasCombinadas": true,
+        "usarEstilos": true,
+        "priorizarPor": "REGEX_PRIMERO"
+      },
+
+      "finDeSeccion": {
+        "filasVacias": 1,
+        "cambioDePatron": true,
+        "nuevaCeldaCombinada": true
+      },
+
+      "metadatosVsTabla": {
+        "metadatosTienen2Columnas": true,
+        "tablaTieneMasColumnas": true
+      }
+    },
+
+    "fallback": {
+      "siNoDetectaFichas": "PROCESAR_COMO_TABULAR",
+      "siErrorEnFicha": "CONTINUAR_CON_SIGUIENTE",
+      "siMetadatosVacios": "USAR_VALORES_DEFAULT"
+    }
+  },
+
+  "celdasCombinadas": {
+    "soportar": true,
+    "detectarAutomatico": true,
+    "propagarValor": "HACIA_ABAJO",
+    "usarComoAgrupador": true,
+    "usarComoTituloFicha": true
+  },
+
+  "mapeoAtributos": {
+    "habilitado": true,
+    "ignorarMayusculas": true,
+    "usarAlias": true,
+
+    "atributosBase": {
+      "NOMBRE_BIEN": ["descripcion", "descripción", "nombre", "bien", "equipo", "articulo"],
+      "CAF": ["caf", "codigo_activo", "codigo activo", "cod_activo"],
+      "NUMERO_SERIE": ["serie", "numero_serie", "n_serie", "serial", "s/n"],
+      "MARCA": ["marca", "fabricante", "brand"],
+      "MODELO": ["modelo", "model", "mod"],
+      "ESTADO_FISICO": ["estado", "condicion", "condición", "estado_fisico"],
+      "ESTADO_OPERACIONAL": ["operativo", "funcionamiento", "estado_operacional"],
+      "OBSERVACIONES": ["observaciones", "obs", "notas", "comentarios"]
+    }
+  },
+
+  "preservarCoordenadas": {
+    "habilitado": true,
+    "incluirCeldasVacias": false,
+    "formatoCoordenada": "A1",
+    "incluirInfoFicha": true
+  },
+
+  "vistaPrevia": {
+    "mostrarCoordenadasOriginal": true,
+    "mostrarComoTabla": true,
+    "resaltarEncabezados": true,
+    "resaltarTitulosFicha": true,
+    "resaltarMetadatos": true,
+    "mostrarAgrupaciones": true,
+    "mostrarSeparadoresFicha": true,
+    "maxFilasPreview": 100,
+    "maxColumnasPreview": 20,
+    "mostrarHojasDisponibles": true,
+    "mostrarResumenFichas": true
+  },
+
+  "paginacion": {
+    "habilitada": true,
+    "elementosPorPaginaDefault": 25,
+    "opcionesElementosPorPagina": [10, 25, 50, 100],
+    "maxElementosSinPaginar": 50,
+    "paginarPorFicha": true
+  },
+
+  "salida": {
+    "agruparPorFicha": true,
+    "incluirMetadatosFicha": true,
+    "incluirCodigoFicha": true,
+    "formatoEstacion": {
+      "generarCodigoAutomatico": true,
+      "prefijoEstacion": "EST",
+      "usarCodigoFichaComoNombre": true
+    }
+  }
+}

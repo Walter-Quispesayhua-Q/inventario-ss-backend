@@ -1,0 +1,1238 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-CNV-2025-V1",
+    "version": "1.0",
+    "nombre": "Convector",
+    "categoriaSemantica": "CLIMATIZACION_CONVECTOR_RADIADOR_ELECTRICO",
+    "descripcion": "Plantilla ML de Convector - Maneja columna única, múltiples columnas e híbrido para convectores eléctricos, radiadores convectores y paneles calefactores"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_ORANGE_NDK15_15",
+        "condicion": ".*(ma\\s+orange.*mo\\s+ndk15[-\\s]*15|orange.*ndk15[-\\s]*15).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Convector Orange NDK15-15 específico del inventario"
+      },
+      {
+        "nombre": "BONUS_DIMENSIONES_ESPECIFICAS",
+        "condicion": ".*(altura.*53\\.5.*ancho.*27\\.20.*fondo.*66\\.6|53\\.5.*27\\.20.*66\\.6).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontraron dimensiones específicas del inventario"
+      },
+      {
+        "nombre": "BONUS_1500W_PLASTICO",
+        "condicion": ".*(potencia\\s+1500w.*material\\s+plastico|1500w.*plastico).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró convector 1500W con material plástico"
+      },
+      {
+        "nombre": "BONUS_7KG_RED_ELECTRICA",
+        "condicion": ".*(peso.*7kg.*red\\s+electrica|7kg.*red\\s+electrica).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró peso y alimentación específicos"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "convector",
+          "radiador",
+          "panel",
+          "calefactor",
+          "electrico"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "orange",
+          "potencia",
+          "altura",
+          "ancho",
+          "fondo",
+          "material"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "termostato",
+          "timer",
+          "digital",
+          "programable",
+          "ruedas"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "heating",
+          "warming",
+          "electric",
+          "thermal"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": [
+        "orange",
+        "philips",
+        "orbegozo",
+        "ufesa",
+        "stiebel-eltron"
+      ],
+      "tipos": [
+        "convector",
+        "radiador-convector",
+        "panel-convector",
+        "calefactor-electrico"
+      ],
+      "potencias": [
+        "750w",
+        "1000w",
+        "1200w",
+        "1500w",
+        "1800w",
+        "2000w",
+        "2500w"
+      ],
+      "materiales": [
+        "plastico",
+        "metal",
+        "acero",
+        "aluminio",
+        "ceramico"
+      ],
+      "colores": [
+        "negro",
+        "blanco",
+        "gris",
+        "plateado",
+        "beige"
+      ],
+      "montaje": [
+        "pared",
+        "suelo",
+        "mesa",
+        "ruedas",
+        "portatil"
+      ],
+      "caracteristicas": [
+        "termostato",
+        "timer",
+        "digital",
+        "programable",
+        "control-remoto"
+      ],
+      "protecciones": [
+        "sobrecalentamiento",
+        "vuelco",
+        "ip24",
+        "clase-ii"
+      ],
+      "certificaciones": [
+        "ce",
+        "rohs",
+        "energy-star",
+        "class-ii"
+      ],
+      "eficiencia": [
+        "clase-a",
+        "clase-b",
+        "eco-mode",
+        "energy-saving"
+      ],
+      "dimensiones": [
+        "compacto",
+        "slim",
+        "grande",
+        "mini",
+        "panel"
+      ],
+      "alimentacion": [
+        "red-electrica",
+        "220v",
+        "110v",
+        "corriente-alterna"
+      ],
+      "instalacion": [
+        "pared",
+        "suelo",
+        "mesa",
+        "ruedas",
+        "fijo",
+        "portatil"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "orange",
+        "philips",
+        "orbegozo",
+        "ufesa",
+        "stiebel-eltron"
+      ],
+      "tier2": [
+        "delonghi",
+        "taurus",
+        "rowenta",
+        "equation",
+        "cecotec"
+      ],
+      "tier3": [
+        "generic",
+        "no-brand",
+        "china",
+        "oem",
+        "local"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "termoventilador",
+        "fan-heater",
+        "aire-acondicionado",
+        "ventilador",
+        "procesador",
+        "cpu",
+        "microprocesador",
+        "intel",
+        "amd",
+        "ryzen",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "laptop",
+        "computadora",
+        "pc",
+        "desktop",
+        "servidor",
+        "memoria ram",
+        "ssd",
+        "disco duro",
+        "tarjeta video",
+        "gpu"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "monitor",
+        "teclado",
+        "mouse"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "escritorio",
+        "archivador"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(orange|philips|orbegozo|ufesa)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(ndk[-\\s]*\\d+[-\\s]*\\d+|cvt[-\\s]*\\d+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_convector": "\\b(convector|radiador\\s+convector|panel\\s+convector|calefactor\\s+electrico)\\b",
+      "potencia_convector": "potencia\\s+(\\d+)\\s*w",
+      "dimensiones_altura": "altura\\s+(\\d+(?:\\.\\d+)?)\\s*cm",
+      "dimensiones_ancho": "ancho\\s+(\\d+(?:\\.\\d+)?)\\s*cm",
+      "dimensiones_fondo": "fondo\\s+(\\d+(?:\\.\\d+)?)\\s*cm",
+      "dimensiones_generales": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "material_convector": "Material\\s+([A-Za-zÁ-ú]+)",
+      "color_convector": "Co\\s+([A-Za-z]+)",
+      "peso_convector": "Peso\\s+Aproximado\\s+de\\s+(\\d+(?:\\.\\d+)?)\\s*kg",
+      "alimentacion_convector": "\\b(red\\s+electrica|220v|110v|corriente\\s+alterna)\\b",
+      "voltaje_convector": "(\\d+)\\s*v\\s*(voltaje|voltage|input)?",
+      "termostato_convector": "\\b(termostato|thermostat|control\\s+temperatura)\\b",
+      "timer_convector": "\\b(timer|temporizador|programable|schedule)\\b",
+      "control_remoto_convector": "\\b(control\\s+remoto|remote\\s+control)\\b",
+      "display_convector": "\\b(display|pantalla|lcd|led|digital)\\b",
+      "proteccion_convector": "\\b(sobrecalentamiento|vuelco|ip\\d+|proteccion|clase\\s+ii)\\b",
+      "certificacion_convector": "\\b(ce|ul|rohs|energy\\s+star|class\\s+ii)\\b",
+      "instalacion_convector": "\\b(pared|suelo|mesa|ruedas|montaje|fijo|portatil)\\b",
+      "eficiencia_convector": "\\b(clase\\s+[a-g]|eficiencia\\s+energetica|eco\\s+mode)\\b",
+      "temperatura_trabajo": "(\\d+)\\s*°?c\\s*(max|trabajo|operacion)?",
+      "area_cobertura_convector": "(\\d+)\\s*(m2|metros?\\s*cuadrados?)",
+      "consumo_convector": "(\\d+(?:\\.\\d+)?)\\s*kwh?\\s*(consumo|consumption)?",
+      "ruido_convector": "(\\d+(?:\\.\\d+)?)\\s*dba?\\s*(ruido|noise|silencioso)?",
+      "garantia_convector": "(\\d+)\\s*(años?|meses?)\\s*(garantia|warranty)",
+      "cantidad": "(\\d{1,2})\\s*(convector|radiador\\s+convector|panel\\s+convector)",
+      "modo_funcionamiento": "\\b(eco|comfort|anti[-\\s]*frost|boost|manual|automatico)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Orange, Philips, Orbegozo, Ufesa",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(orange|philips|orbegozo|ufesa)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: NDK15-15 MR, CVT-3650, Panel-2000",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ndk[-\\s]*\\d+[-\\s]*\\d+|cvt[-\\s]*\\d+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CONVECTOR",
+      "etiqueta": "Tipo de Convector",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Convector, Radiador convector, Panel convector",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Convector",
+        "Radiador convector",
+        "Panel convector",
+        "Calefactor eléctrico"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(convector|radiador\\s+convector|panel\\s+convector|calefactor\\s+electrico)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "convector",
+              "radiador",
+              "panel",
+              "calefactor",
+              "electrico"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA",
+      "etiqueta": "Potencia (W)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 750, 1000, 1500, 2000, 2500",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 500,
+        "max": 5000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Potencia",
+              "Power",
+              "Watts"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "potencia\\s+(\\d+)\\s*w",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTURA",
+      "etiqueta": "Altura (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 45.0, 53.5, 60.0, 70.0",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 20.0,
+        "max": 150.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Altura",
+              "Height",
+              "Alto"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "altura\\s+(\\d+(?:\\.\\d+)?)\\s*cm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 25.0, 27.20, 30.0, 40.0",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 15.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Ancho",
+              "Width",
+              "Anchura"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "ancho\\s+(\\d+(?:\\.\\d+)?)\\s*cm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FONDO",
+      "etiqueta": "Fondo (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 10.0, 15.0, 20.0, 66.6",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 5.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Fondo",
+              "Depth",
+              "Profundidad"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "fondo\\s+(\\d+(?:\\.\\d+)?)\\s*cm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL",
+      "etiqueta": "Material",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Plástico, Metal, Acero, Aluminio",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "Plástico",
+        "Metal",
+        "Acero",
+        "Aluminio",
+        "Cerámico"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Material",
+              "Construction",
+              "Build"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Material\\s+([A-Za-zÁ-ú]+)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "plastico",
+              "metal",
+              "acero",
+              "aluminio",
+              "ceramico"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 3.0, 5.0, 7.0, 10.0",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 1.0,
+        "max": 30.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Peso\\s+Aproximado\\s+de\\s+(\\d+(?:\\.\\d+)?)\\s*kg",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Red eléctrica, 220V, 110V, Corriente alterna",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "Red eléctrica",
+        "220V",
+        "110V",
+        "Corriente alterna"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Alimentación",
+              "Power Supply",
+              "Voltage"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(red\\s+electrica|220v|110v|corriente\\s+alterna)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "red",
+              "electrica",
+              "220v",
+              "110v",
+              "corriente",
+              "alterna"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE",
+      "etiqueta": "Voltaje (V)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 110, 220, 240",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 100,
+        "max": 250
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje",
+              "Voltage",
+              "Input"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*v\\s*(voltaje|voltage|input)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TERMOSTATO",
+      "etiqueta": "Termostato",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Termostato",
+              "Thermostat",
+              "Temperature Control"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(termostato|thermostat|control\\s+temperatura)\\b",
+            "booleano": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIMER",
+      "etiqueta": "Timer/Programable",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Timer",
+              "Programable",
+              "Schedule"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(timer|temporizador|programable|schedule)\\b",
+            "booleano": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONTROL_REMOTO",
+      "etiqueta": "Control Remoto",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Control Remoto",
+              "Remote",
+              "Remote Control"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(control\\s+remoto|remote\\s+control)\\b",
+            "booleano": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISPLAY",
+      "etiqueta": "Tipo de Display",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Digital, LCD, LED, Sin display",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": [
+        "Digital",
+        "LCD",
+        "LED",
+        "Analógico",
+        "Sin display"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Display",
+              "Pantalla",
+              "Interface"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(display|pantalla|lcd|led|digital)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "display",
+              "lcd",
+              "led",
+              "digital",
+              "pantalla"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTECCIONES",
+      "etiqueta": "Protecciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Sobrecalentamiento, Vuelco, IP24, Clase II",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Protecciones",
+              "Safety",
+              "Protection"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(sobrecalentamiento|vuelco|ip\\d+|proteccion|clase\\s+ii)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, UL, RoHS, Energy Star, Class II",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Certificaciones",
+              "Certifications",
+              "Standards"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(ce|ul|rohs|energy\\s+star|class\\s+ii)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INSTALACION",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Pared, Suelo, Mesa, Ruedas, Portátil",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Instalación",
+              "Mounting",
+              "Installation"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(pared|suelo|mesa|ruedas|montaje|fijo|portatil)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "EFICIENCIA_ENERGETICA",
+      "etiqueta": "Eficiencia Energética",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Clase A, Clase B, Eco Mode, Energy Star",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "opciones": [
+        "Clase A",
+        "Clase B",
+        "Clase C",
+        "Eco Mode",
+        "Energy Star"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Eficiencia",
+              "Energy Class",
+              "Rating"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(clase\\s+[a-g]|eficiencia\\s+energetica|eco\\s+mode)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "clase",
+              "eficiencia",
+              "energetica",
+              "eco",
+              "mode"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AREA_COBERTURA",
+      "etiqueta": "Área de Cobertura (m²)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 15, 20, 25, 30, 40",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "validacion": {
+        "min": 5,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Área",
+              "Coverage",
+              "Room Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(m2|metros?\\s*cuadrados?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía (kWh)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1.0, 1.5, 2.0, 2.5",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "validacion": {
+        "min": 0.5,
+        "max": 5.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Consumo",
+              "Energy",
+              "kWh"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*kwh?\\s*(consumo|consumption)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RUIDO",
+      "etiqueta": "Nivel de Ruido (dB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 30, 35, 40, Silencioso",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "validacion": {
+        "min": 25,
+        "max": 60
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Ruido",
+              "Noise",
+              "Sound"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*dba?\\s*(ruido|noise|silencioso)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(convector|radiador\\s+convector|panel\\s+convector)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(convector|radiador\\s+convector|panel\\s+convector)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Plateado",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Co\\s+([A-Za-z]+)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "beige"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Convector Orange del inventario real",
+      "texto": "01 Convector de altura 53.5cm x ancho 27.20cm y fondo 66.6cm Ma Orange Mo NDK15-15 MR de potencia 1500W Material Plástico Co Negro Peso Aproximado de 7kg de red eléctrica.",
+      "extraccionEsperada": {
+        "MARCA": "Orange",
+        "MODELO": "NDK15-15 MR",
+        "TIPO_CONVECTOR": "Convector",
+        "POTENCIA": "1500",
+        "ALTURA": "53.5",
+        "ANCHO": "27.20",
+        "FONDO": "66.6",
+        "MATERIAL": "Plástico",
+        "COLOR": "Negro",
+        "PESO": "7",
+        "ALIMENTACION": "Red eléctrica",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Convector eléctrico con termostato",
+      "texto": "02 Convector eléctrico Philips 2000W con termostato digital y control remoto",
+      "extraccionEsperada": {
+        "MARCA": "Philips",
+        "TIPO_CONVECTOR": "Convector",
+        "POTENCIA": "2000",
+        "TERMOSTATO": true,
+        "DISPLAY": "Digital",
+        "CONTROL_REMOTO": true,
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Radiador convector con ruedas",
+      "texto": "01 Radiador convector Orbegozo CVT-3650 2500W con timer programable y ruedas",
+      "extraccionEsperada": {
+        "MARCA": "Orbegozo",
+        "MODELO": "CVT-3650",
+        "TIPO_CONVECTOR": "Radiador convector",
+        "POTENCIA": "2500",
+        "TIMER": true,
+        "INSTALACION": [
+          "Ruedas"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 4: Panel convector de pared",
+      "texto": "03 Panel convector Stiebel Eltron 750W montaje pared con protección sobrecalentamiento",
+      "extraccionEsperada": {
+        "MARCA": "Stiebel Eltron",
+        "TIPO_CONVECTOR": "Panel convector",
+        "POTENCIA": "750",
+        "INSTALACION": [
+          "Pared"
+        ],
+        "PROTECCIONES": [
+          "Sobrecalentamiento"
+        ],
+        "CANTIDAD": "3"
+      }
+    }
+  ]
+}

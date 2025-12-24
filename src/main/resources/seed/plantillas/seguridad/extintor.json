@@ -1,0 +1,591 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-EXT-2025-V1",
+    "version": "1.0",
+    "nombre": "Extintor",
+    "categoriaSemantica": "SEGURIDAD_EXTINTOR_FIRE_EXTINGUISHER_SAFETY",
+    "descripcion": "Plantilla ML de Extintor - Maneja columna única, múltiples columnas e híbrido para extintores de polvo químico, CO2, espuma y agua"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_EXTINTOR_SIMPLE",
+        "condicion": ".*(^\\d+\\s+extintor$|extintor\\s*$).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró extintor básico del inventario sin especificaciones"
+      },
+      {
+        "nombre": "BONUS_POLVO_QUIMICO_ABC",
+        "condicion": ".*(polvo\\s+qu[ií]mico|clase\\s+abc|abc\\s+extintor).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró extintor de polvo químico clase ABC"
+      },
+      {
+        "nombre": "BONUS_CO2_CLASE_BC",
+        "condicion": ".*(co2|di[oó]xido\\s+carbono|clase\\s+bc).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró extintor de CO2 clase BC"
+      },
+      {
+        "nombre": "BONUS_SEGURIDAD_INCENDIOS",
+        "condicion": ".*(seguridad|incendio|fire|emergency).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron términos de seguridad contra incendios"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["extintor", "extinguisher", "fire", "incendio", "seguridad"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["polvo", "quimico", "co2", "espuma", "agua"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["clase", "abc", "presion", "recargable", "portable"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["emergency", "safety", "protection", "suppression"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": ["amerex", "ansul", "kidde", "buckeye", "fire-gone", "badger"],
+      "tipos_extintor": ["polvo-quimico", "co2", "espuma", "agua", "halon", "clase-abc"],
+      "clases_fuego": ["clase-a", "clase-b", "clase-c", "clase-abc", "clase-d", "clase-k"],
+      "capacidades": ["1kg", "2kg", "3kg", "4kg", "5kg", "6kg", "9kg", "12kg"],
+      "agentes": ["polvo-seco", "dioxido-carbono", "espuma-afff", "agua-pulverizada", "halon-1211"],
+      "presiones": ["12bar", "15bar", "25bar", "pressure-stored"],
+      "aplicaciones": ["oficina", "hogar", "vehicular", "industrial", "cocina"],
+      "ubicaciones": ["pared", "wall-mount", "vehicular", "portatil", "fijo"],
+      "mantenimiento": ["anual", "semestral", "trimestral", "recarga"],
+      "certificaciones": ["ul", "fm", "ce", "nfpa", "iram", "approved"],
+      "componentes": ["manometro", "valvula", "manguera", "boquilla", "etiqueta"],
+      "colores": ["rojo", "red", "amarillo", "yellow", "verde", "green"]
+    },
+    "marcas": {
+      "tier1": ["amerex", "ansul", "kidde", "buckeye", "fire-gone"],
+      "tier2": ["badger", "strike-first", "pyro-chem", "sea-fire", "halotron"],
+      "tier3": ["generic", "no-brand", "china", "oem", "local"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "cpu", "laptop", "impresora"],
+      "fuerte": ["pizarra", "escritorio", "silla", "archivador"],
+      "media": ["mueble", "furniture", "office", "storage"],
+      "debil": ["electronic", "computer", "digital", "software"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(amerex|ansul|kidde|buckeye)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(b\\d+|fe\\d+|pro\\d+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_extintor": "\\b(extintor|extinguisher|fire\\s+extinguisher)\\b",
+      "tipo_agente": "\\b(polvo\\s+qu[ií]mico|co2|espuma|agua|halon|clase\\s+[abc])\\b",
+      "capacidad_extintor": "(\\d+(?:\\.\\d+)?)\\s*(kg|lb|litros?)\\s*(capacidad|capacity)?",
+      "clase_fuego": "\\b(clase\\s+a|clase\\s+b|clase\\s+c|clase\\s+abc|clase\\s+d|clase\\s+k)\\b",
+      "presion_extintor": "(\\d+(?:\\.\\d+)?)\\s*(bar|psi)\\s*(presi[oó]n|pressure)?",
+      "agente_extintor": "\\b(polvo\\s+seco|di[oó]xido\\s+carbono|espuma\\s+afff|agua\\s+pulverizada|halon\\s+1211)\\b",
+      "marca_extintor": "\\b(amerex|ansul|kidde|buckeye|fire\\s+gone|badger)\\b",
+      "recarga_extintor": "\\b(recargable|desechable|uso\\s+[uú]nico|pressure\\s+stored)\\b",
+      "alcance_extintor": "(\\d+)\\s*m\\s*(alcance|range|reach|effective)",
+      "tiempo_descarga": "(\\d+)\\s*(segundos?|minutos?)\\s*(descarga|discharge|duration)",
+      "temperatura_extintor": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "certificaciones_extintor": "\\b(ul|fm|ce|nfpa|iram|approval|approved|listed)\\b",
+      "mantenimiento_extintor": "\\b(anual|semestral|trimestral|monthly|yearly)\\s*(mantenimiento|maintenance|service)",
+      "ubicacion_extintor": "\\b(pared|wall\\s+mount|vehicular|portatil|portable|fixed)\\b",
+      "valvula_extintor": "\\b(v[aá]lvula\\s+de\\s+descarga|discharge\\s+valve|squeeze\\s+grip)\\b",
+      "manometro_extintor": "\\b(man[oó]metro|pressure\\s+gauge|indicador\\s+presi[oó]n)\\b",
+      "manguera_extintor": "(\\d+(?:\\.\\d+)?)\\s*m\\s*(manguera|hose|discharge\\s+hose)",
+      "boquilla_extintor": "\\b(boquilla|nozzle|difusor|horn)\\b",
+      "peso_extintor": "(\\d+(?:\\.\\d+)?)\\s*(kg|lb)\\s*(peso|weight|total)?",
+      "dimensiones_extintor": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm|inch|in)",
+      "color_extintor": "\\b(rojo|red|amarillo|yellow|verde|green|blanco|white)\\b",
+      "etiqueta_extintor": "\\b(etiqueta|label|instrucciones|instructions|pictograph)\\b",
+      "soporte_extintor": "\\b(soporte|bracket|mount|hanger|strap)\\b",
+      "inspeccion": "\\b(inspecci[oó]n|inspection|monthly\\s+check|visual)\\b",
+      "garantia_extintor": "(\\d+)\\s*(a[ñn]os?|years?)\\s*(garant[ií]a|warranty)",
+      "norma_extintor": "\\b(nfpa\\s+10|ul\\s+711|fm|en\\s+3|iso\\s+7165)\\b",
+      "aplicacion_extintor": "\\b(oficina|hogar|vehicular|industrial|cocina|marine)\\b",
+      "contenido_neto": "(\\d+(?:\\.\\d+)?)\\s*(kg|lb)\\s*(contenido|net\\s+content|agent)",
+      "cantidad": "(\\d{1,2})\\s*(extintor|extinguisher)",
+      "pintura_extintor": "\\b(pintura\\s+roja|red\\s+paint|powder\\s+coat)\\b",
+      "instalacion_extintor": "\\b(instalaci[oó]n|installation|mounting\\s+height)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Amerex, Ansul, Kidde, Buckeye, Fire Gone",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(amerex|ansul|kidde|buckeye)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: B456, FE36, PRO5, ABC10",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(b\\d+|fe\\d+|pro\\d+)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_AGENTE",
+      "etiqueta": "Tipo de Agente",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Polvo químico, CO2, Espuma, Agua, Halon",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Polvo químico", "CO2", "Espuma", "Agua", "Halon", "Clase ABC"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Agente", "Agent", "Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(polvo\\s+qu[ií]mico|co2|espuma|agua|halon|clase\\s+[abc])\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["polvo", "quimico", "co2", "espuma", "agua", "halon"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD",
+      "etiqueta": "Capacidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1kg, 2kg, 5kg, 9kg, 12kg",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Capacity", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|lb|litros?)\\s*(capacidad|capacity)?", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CLASE_FUEGO",
+      "etiqueta": "Clase de Fuego",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Clase A, Clase B, Clase C, Clase ABC",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Clase", "Fire Class", "Rating"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(clase\\s+a|clase\\s+b|clase\\s+c|clase\\s+abc|clase\\s+d|clase\\s+k)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PRESION",
+      "etiqueta": "Presión (bar/psi)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 12 bar, 15 bar, 175 psi",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Presión", "Pressure", "PSI"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(bar|psi)\\s*(presi[oó]n|pressure)?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_RECARGA",
+      "etiqueta": "Tipo de Recarga",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Recargable, Desechable, Uso único",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["Recargable", "Desechable", "Uso único", "Pressure stored"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Recarga", "Refill", "Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(recargable|desechable|uso\\s+[uú]nico|pressure\\s+stored)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["recargable", "desechable", "unico", "pressure"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALCANCE",
+      "etiqueta": "Alcance Efectivo (m)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 3, 5, 8, 10",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alcance", "Range", "Reach"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*m\\s*(alcance|range|reach|effective)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIEMPO_DESCARGA",
+      "etiqueta": "Tiempo de Descarga",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 15 segundos, 30 segundos, 2 minutos",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Descarga", "Discharge", "Duration"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(segundos?|minutos?)\\s*(descarga|discharge|duration)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: -20°C a 60°C, 0°C a 55°C",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Temperature", "Operating"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: UL, FM, CE, NFPA, IRAM",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Approvals"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ul|fm|ce|nfpa|iram|approval|approved|listed)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MANTENIMIENTO",
+      "etiqueta": "Frecuencia de Mantenimiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Anual, Semestral, Trimestral, Mensual",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Anual", "Semestral", "Trimestral", "Mensual"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Mantenimiento", "Maintenance", "Service"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(anual|semestral|trimestral|monthly|yearly)\\s*(mantenimiento|maintenance|service)", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["anual", "semestral", "trimestral", "mensual"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "UBICACION_INSTALACION",
+      "etiqueta": "Ubicación de Instalación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Pared, Wall mount, Vehicular, Portátil",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ubicación", "Location", "Mount"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(pared|wall\\s+mount|vehicular|portatil|portable|fixed)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPONENTES",
+      "etiqueta": "Componentes Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Manómetro, Válvula, Manguera, Boquilla",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Componentes", "Components", "Parts"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(man[oó]metro|v[aá]lvula|manguera|boquilla|etiqueta)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO_TOTAL",
+      "etiqueta": "Peso Total (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.5, 4.0, 6.5, 15.0",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 1.0,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Total"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|lb)\\s*(peso|weight|total)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION",
+      "etiqueta": "Aplicación Principal",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Oficina, Hogar, Vehicular, Industrial, Cocina",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Aplicación", "Application", "Use"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(oficina|hogar|vehicular|industrial|cocina|marine)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NORMAS",
+      "etiqueta": "Normas Técnicas",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: NFPA 10, UL 711, FM, EN 3, ISO 7165",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Normas", "Standards", "Norms"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(nfpa\\s+10|ul\\s+711|fm|en\\s+3|iso\\s+7165)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS",
+      "etiqueta": "Accesorios",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Soporte, Bracket, Mount, Hanger, Strap",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Accesorios", "Accessories", "Mounting"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(soporte|bracket|mount|hanger|strap)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INSPECCION",
+      "etiqueta": "Tipo de Inspección",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Mensual, Visual, Anual, Profesional",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "opciones": ["Mensual", "Visual", "Anual", "Profesional", "Automática"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Inspección", "Inspection", "Check"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(inspecci[oó]n|inspection|monthly\\s+check|visual)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["inspeccion", "mensual", "visual", "anual", "profesional"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GARANTIA",
+      "etiqueta": "Garantía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1 año, 2 años, 5 años",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Garantía", "Warranty", "Guarantee"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(a[ñn]os?|years?)\\s*(garant[ií]a|warranty)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(extintor|extinguisher)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(extintor|extinguisher)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Rojo, Amarillo, Verde, Blanco",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(rojo|red|amarillo|yellow|verde|green|blanco|white)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["rojo", "red", "amarillo", "verde", "blanco"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Extintor básico del inventario real",
+      "texto": "01 Extintor",
+      "extraccionEsperada": {
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Extintor de polvo químico ABC 6kg",
+      "texto": "02 Extintor polvo químico ABC 6kg recargable Amerex B456 pared rojo",
+      "extraccionEsperada": {
+        "MARCA": "Amerex",
+        "MODELO": "B456",
+        "TIPO_AGENTE": "Polvo químico",
+        "CAPACIDAD": "6kg",
+        "CLASE_FUEGO": ["Clase ABC"],
+        "TIPO_RECARGA": "Recargable",
+        "UBICACION_INSTALACION": ["Pared"],
+        "COLOR": "Rojo",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Extintor CO2 para clase BC",
+      "texto": "01 Extintor CO2 5kg Clase BC Ansul modelo FE36 175 psi portátil",
+      "extraccionEsperada": {
+        "MARCA": "Ansul",
+        "MODELO": "FE36",
+        "TIPO_AGENTE": "CO2",
+        "CAPACIDAD": "5kg",
+        "CLASE_FUEGO": ["Clase BC"],
+        "PRESION": "175 psi",
+        "UBICACION_INSTALACION": ["Portátil"]
+      }
+    },
+    {
+      "nombre": "Caso 4: Extintor vehicular compacto",
+      "texto": "01 Extintor vehicular Kidde PRO5 2kg ABC desechable soporte incluido",
+      "extraccionEsperada": {
+        "MARCA": "Kidde",
+        "MODELO": "PRO5",
+        "CAPACIDAD": "2kg",
+        "CLASE_FUEGO": ["ABC"],
+        "TIPO_RECARGA": "Desechable",
+        "APLICACION": ["Vehicular"],
+        "ACCESORIOS": ["Soporte"]
+      }
+    }
+  ]
+}

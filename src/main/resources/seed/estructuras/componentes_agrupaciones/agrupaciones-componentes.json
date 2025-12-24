@@ -1,0 +1,189 @@
+{
+    "version": "1.0",
+    "descripcion": "Configuración de agrupaciones de componentes para equipos de cómputo",
+    "agrupaciones": [
+        {
+            "id": "AGR-PC-001",
+            "nombreComponente": "PC",
+            "tipo": "EQUIPO_COMPLETO",
+            "categoriaBase": "Computador",
+            "descripcion": "Computadora de escritorio con sus componentes internos",
+            "orden": 1,
+            "componentesQueAgrupa": [
+                "Mainboard",
+                "Motherboard",
+                "Placa Base",
+                "Placa Madre",
+                "Procesador",
+                "CPU",
+                "Processor",
+                "Memoria RAM",
+                "RAM",
+                "Memoria",
+                "Disco Duro",
+                "HDD",
+                "Hard Drive",
+                "SSD",
+                "Unidad Estado Solido",
+                "Solid State",
+                "Tarjeta Video",
+                "T. Video",
+                "GPU",
+                "Tarjeta Grafica",
+                "Graphics Card",
+                "Fuente Poder",
+                "Fuente",
+                "PSU",
+                "Power Supply",
+                "Case",
+                "Gabinete",
+                "Chasis",
+                "Torre"
+            ],
+            "palabrasClaveDeteccion": [
+                "pc",
+                "computadora",
+                "computador",
+                "desktop",
+                "cpu",
+                "torre"
+            ],
+            "configuracion": {
+                "permitirMultiplesInstancias": false,
+                "requiereTodosComponentes": false,
+                "minimoComponentes": 2
+            }
+        },
+        {
+            "id": "AGR-LAPTOP-001",
+            "nombreComponente": "Laptop",
+            "tipo": "EQUIPO_COMPLETO",
+            "categoriaBase": "Laptop",
+            "descripcion": "Computadora portátil",
+            "orden": 2,
+            "componentesQueAgrupa": [
+                "Procesador",
+                "CPU",
+                "Memoria RAM",
+                "RAM",
+                "SSD",
+                "Disco Duro",
+                "HDD",
+                "Pantalla",
+                "Display",
+                "Screen",
+                "Bateria",
+                "Battery",
+                "Teclado Integrado",
+                "Keyboard",
+                "Touchpad",
+                "Trackpad"
+            ],
+            "palabrasClaveDeteccion": [
+                "laptop",
+                "notebook",
+                "portatil",
+                "portátil"
+            ],
+            "configuracion": {
+                "permitirMultiplesInstancias": false,
+                "requiereTodosComponentes": false,
+                "minimoComponentes": 1
+            }
+        },
+        {
+            "id": "AGR-PERIFERICOS-001",
+            "nombreComponente": "Periféricos",
+            "tipo": "PERIFERICO",
+            "categoriaBase": "Periférico",
+            "descripcion": "Dispositivos externos de entrada/salida",
+            "orden": 10,
+            "componentesQueAgrupa": [
+                "Teclado",
+                "Keyboard",
+                "Mouse",
+                "Raton",
+                "Ratón",
+                "Monitor",
+                "Pantalla",
+                "Display",
+                "LCD",
+                "LED",
+                "Webcam",
+                "Camara",
+                "Cámara",
+                "Camera",
+                "Audifonos",
+                "Audífonos",
+                "Auriculares",
+                "Headset",
+                "Parlantes",
+                "Altavoces",
+                "Speaker",
+                "Speakers",
+                "Microfono",
+                "Micrófono",
+                "Microphone",
+                "UPS",
+                "Regulador",
+                "Estabilizador",
+                "Hub USB",
+                "Lector Tarjetas",
+                "Docking Station"
+            ],
+            "palabrasClaveDeteccion": [
+                "periferico",
+                "periférico",
+                "accesorio"
+            ],
+            "configuracion": {
+                "permitirMultiplesInstancias": true,
+                "requiereTodosComponentes": false,
+                "minimoComponentes": 1,
+                "agruparTodosComoUno": true
+            }
+        },
+        {
+            "id": "AGR-IMPRESORA-001",
+            "nombreComponente": "Impresora Completa",
+            "tipo": "EQUIPO_COMPLETO",
+            "categoriaBase": "Impresora",
+            "descripcion": "Impresora con accesorios y consumibles",
+            "orden": 4,
+            "componentesQueAgrupa": [
+                "Cartucho",
+                "Toner",
+                "Tinta",
+                "Cabezal",
+                "Bandeja",
+                "Alimentador",
+                "Fusor",
+                "Tambor",
+                "Drum"
+            ],
+            "palabrasClaveDeteccion": [
+                "impresora",
+                "printer",
+                "multifuncional"
+            ],
+            "configuracion": {
+                "permitirMultiplesInstancias": true,
+                "requiereTodosComponentes": false,
+                "minimoComponentes": 2,
+                "noAgruparSiEsIndividual": true
+            }
+        }
+    ],
+    "grupoPerifericosPorDefecto": {
+        "id": "AGR-PERIFERICOS-001",
+        "nombreComponente": "Periféricos",
+        "descripcion": "Grupo por defecto para bienes que no pertenecen a un equipo completo"
+    },
+    "reglas": {
+        "prioridadAgrupacion": "PRIMERO_EQUIPO_COMPLETO",
+        "permitirBienEnMultiplesComponentes": false,
+        "detectarPorNumeroFila": true,
+        "numerosQueIndicanNuevaFicha": true,
+        "agruparPerifericosSueltos": true
+    }
+}

@@ -1,0 +1,659 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SISCTRL-2025-V1",
+    "version": "1.0",
+    "nombre": "Sistema de Control",
+    "categoriaSemantica": "SISTEMA_CONTROL_AUTOMATIZACION_PLC_SCADA",
+    "descripcion": "Plantilla ML de Sistema de Control - Maneja columna única, múltiples columnas e híbrido para sistemas PLC, SCADA, HMI y automatización industrial",
+    "grupoMaestro": "GRPO-IND-2025",
+    "nombreGrupo": "EQUIPOS_INDUSTRIALES"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.75,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.30,
+      "palabrasTecnicas": 0.25,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.10,
+      "contexto": 0.05
+    },
+    "umbrales": {
+      "rechazo": 0.40,
+      "dudoso": 0.60,
+      "probable": 0.80,
+      "seguro": 0.90,
+      "certeza": 0.95
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TICO_AVANZADO_COMPLETO",
+        "condicion": ".*(tico.*avanzado.*componentes|control.*automatico.*tico|sistema.*tico.*completo).*",
+        "puntos": 0.20,
+        "descripcion": "Sistema TICO avanzado completo específico del inventario"
+      },
+      {
+        "nombre": "BONUS_TODO_COMPONENTES",
+        "condicion": ".*(con\\s+todos?\\s+sus\\s+componentes|kit\\s+completo|sistema\\s+completo).*",
+        "puntos": 0.15,
+        "descripcion": "Sistema completo con todos sus componentes incluidos"
+      },
+      {
+        "nombre": "BONUS_LABORATORIO_REDES",
+        "condicion": ".*(lab\\.\\s*redes|laboratorio\\s+redes|lab.*automatizacion).*",
+        "puntos": 0.12,
+        "descripcion": "Sistema ubicado en laboratorio de redes o automatización"
+      },
+      {
+        "nombre": "BONUS_CONTROL_AUTOMATICO",
+        "condicion": ".*(control\\s+autom[aá]tico|sistema\\s+de\\s+control|automatizaci[oó]n).*",
+        "puntos": 0.10,
+        "descripcion": "Sistema de control automático o automatización"
+      },
+      {
+        "nombre": "BONUS_PLC_SCADA",
+        "condicion": ".*(plc|scada|hmi|controlador\\s+l[oó]gico).*",
+        "puntos": 0.08,
+        "descripcion": "Sistema PLC, SCADA o HMI identificado"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["sistema", "control", "automatico", "plc", "scada", "automatizacion"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["tico", "avanzado", "componentes", "hmi", "industrial"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["laboratorio", "modbus", "profibus", "ethernet", "sensores"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["programable", "interfaz", "comunicacion", "proceso", "redes"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_tier1": ["siemens", "allen-bradley", "schneider-electric", "abb", "rockwell-automation"],
+      "marcas_tier2": ["omron", "mitsubishi", "honeywell", "yokogawa", "emerson"],
+      "marcas_tier3": ["delta", "tico", "unitronics", "fatek", "kinco", "xinje", "koyo"],
+      "marcas_tier4": ["wecon", "haiwell", "vigor", "kebo", "samkoon"],
+      "tipos_sistema": ["plc", "scada", "hmi", "dcs", "pac", "rtu", "cnc", "motion-control"],
+      "componentes": ["cpu", "modulos-io", "fuente-alimentacion", "rack", "hmi-pantalla", "cables", "software"],
+      "protocolos_ethernet": ["ethernet-ip", "modbus-tcp", "opc-ua", "profinet"],
+      "protocolos_serial": ["modbus-rtu", "profibus-dp", "devicenet", "canopen"],
+      "voltajes": ["24vdc", "110vac", "220vac", "380vac", "480vac"],
+      "tipos_salida": ["relay", "transistor", "triac", "analog-output"],
+      "aplicaciones": ["manufactura", "proceso", "educacion", "laboratorio", "automatizacion"],
+      "certificaciones": ["ce", "ul", "csa", "iec61131", "sil", "nema"],
+      "niveles": ["basico", "intermedio", "avanzado", "profesional", "industrial"]
+    },
+    "marcas": {
+      "tier1": ["siemens", "allen-bradley", "schneider-electric", "abb", "rockwell-automation"],
+      "tier2": ["omron", "mitsubishi", "honeywell", "yokogawa", "emerson"],
+      "tier3": ["delta", "tico", "unitronics", "fatek", "kinco", "xinje"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["dispensador", "monitor", "impresora", "mouse", "teclado"],
+      "fuerte": ["router", "switch", "access-point", "telefono"],
+      "media": ["computadora", "servidor", "laptop", "tablet"],
+      "debil": ["mueble", "silla", "mesa", "archivador"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(tico|siemens|allen[-\\s]*bradley|schneider)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b([a-z]{2,4}[-\\s]*\\d{3,6}[a-z]?)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "sistema_control_principal": "\\b(sistema\\s+de\\s+control|control\\s+autom[aá]tico|plc|scada|hmi|dcs|pac)\\b",
+      "nivel_sistema": "\\b(b[aá]sico|intermedio|avanzado|profesional|industrial|educativo)\\b",
+      "completitud_componentes": "\\b(con\\s+todos?\\s+sus\\s+componentes|kit\\s+completo|sistema\\s+completo|componentes\\s+incluidos)\\b",
+      "marca_tier1": "\\b(siemens|allen[-\\s]*bradley|schneider[-\\s]*electric|abb|rockwell[-\\s]*automation)\\b",
+      "marca_tier2": "\\b(omron|mitsubishi|honeywell|yokogawa|emerson)\\b",
+      "marca_tier3": "\\b(delta|tico|unitronics|fatek|kinco|xinje|koyo)\\b",
+      "marca_tier4": "\\b(wecon|haiwell|vigor|kebo|samkoon)\\b",
+      "componente_cpu": "\\b(cpu|procesador|unidad\\s+central)\\s*(plc|control)?\\b",
+      "componente_io": "\\b(m[oó]dulos?\\s+i/?o|entradas?\\s+salidas?|digital|anal[oó]gic[oa])\\b",
+      "componente_hmi": "\\b(hmi|pantalla\\s+t[aá]ctil|interfaz\\s+operador|display)\\b",
+      "componente_fuente": "\\b(fuente\\s+alimentaci[oó]n|power\\s+supply|24vdc|220vac)\\b",
+      "componente_rack": "\\b(rack|bastidor|chasis|mounting)\\b",
+      "protocolo_ethernet": "\\b(ethernet[-\\s]*ip|modbus[-\\s]*tcp|profinet|opc[-\\s]*ua)\\b",
+      "protocolo_serial": "\\b(modbus[-\\s]*rtu|profibus|rs[-\\s]*485|canopen)\\b",
+      "protocolo_inalambrico": "\\b(wifi|bluetooth|zigbee|lora)\\b",
+      "aplicacion_educativa": "\\b(lab\\.|laboratorio|educaci[oó]n|ense[ñn]anza|pr[aá]cticas?)\\s*([\\w\\s]+)",
+      "aplicacion_industrial": "\\b(manufactura|proceso|producci[oó]n|automatizaci[oó]n)\\b",
+      "voltaje_alimentacion": "(\\d+)\\s*v\\s*(dc|ac)",
+      "tipo_salida": "\\b(relay|transistor|triac)\\s*(output|salida)?\\b",
+      "proteccion_ip": "\\b(ip\\d{2}|nema[-\\s]*\\d+x?)\\b",
+      "certificacion": "\\b(ce|ul|csa|iec\\d+|sil[-\\s]*\\d)\\b",
+      "funcion_especial": "\\b(servo\\s+control|motion\\s+control|pid|fuzzy|neural)\\b",
+      "software_incluido": "\\b(software|programaci[oó]n|ladder|scada)\\s*(incluido|included)?\\b",
+      "conectividad_pc": "\\b(usb|ethernet|serial)\\s*(programaci[oó]n|programming)?\\b",
+      "modelo_plc": "\\b([a-z]{2,4}[-\\s]*\\d{3,6}[a-z]?)\\b",
+      "serie_sistema": "\\b(s[nº]?:?\\s*)?([a-z0-9]{8,})\\b",
+      "temperatura_operacion": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "memoria_programa": "(\\d+)\\s*(k|kb|mb)\\s*(memoria|program|data)",
+      "entradas_digitales": "(\\d+)\\s*(di|entradas?\\s+digitales?|digital\\s+inputs?)",
+      "salidas_digitales": "(\\d+)\\s*(do|salidas?\\s+digitales?|digital\\s+outputs?)",
+      "entradas_analogicas": "(\\d+)\\s*(ai|entradas?\\s+anal[oó]gicas?|analog\\s+inputs?)",
+      "salidas_analogicas": "(\\d+)\\s*(ao|salidas?\\s+anal[oó]gicas?|analog\\s+outputs?)",
+      "velocidad_procesamiento": "(\\d+(?:\\.\\d+)?)\\s*(ms|μs|ns)\\s*(ciclo|cycle|scan)",
+      "puertos_comunicacion": "(\\d+)\\s*(puertos?|ports?)\\s*(ethernet|serial|usb)",
+      "consumo_energia": "(\\d+(?:\\.\\d+)?)\\s*(w|va|watts?)\\s*(consumo|power)",
+      "cantidad": "(\\d{1,2})\\s*(sistema|control|plc)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: TICO, Siemens, Allen-Bradley, Schneider",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(tico|siemens|allen[-\\s]*bradley|schneider)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: S7-1200, CompactLogix, TM221CE16R",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b([a-z]{2,4}[-\\s]*\\d{3,6}[a-z]?)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SISTEMA",
+      "etiqueta": "Tipo de Sistema",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sistema de Control, PLC, SCADA, HMI, DCS",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Sistema de Control", "PLC", "SCADA", "HMI", "DCS", "PAC", "RTU", "CNC"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "System"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(sistema\\s+de\\s+control|control\\s+autom[aá]tico|plc|scada|hmi|dcs|pac)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["sistema", "control", "plc", "scada", "hmi", "dcs"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NIVEL_SISTEMA",
+      "etiqueta": "Nivel del Sistema",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Básico, Intermedio, Avanzado, Profesional",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Básico", "Intermedio", "Avanzado", "Profesional", "Industrial", "Educativo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Nivel", "Level", "Grade"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(b[aá]sico|intermedio|avanzado|profesional|industrial|educativo)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["basico", "intermedio", "avanzado", "profesional", "industrial"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESTADO_COMPONENTES",
+      "etiqueta": "Estado de Componentes",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Completo, Kit completo, Componentes incluidos",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Completo", "Kit completo", "Componentes incluidos", "Parcial", "Solo CPU"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Componentes", "Components", "Kit"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(con\\s+todos?\\s+sus\\s+componentes|kit\\s+completo|sistema\\s+completo|componentes\\s+incluidos)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["completo", "kit", "componentes", "incluidos", "todos"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPONENTES_INCLUIDOS",
+      "etiqueta": "Componentes Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CPU, Módulos I/O, HMI, Fuente, Software",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Incluye", "Includes", "Parts"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cpu|m[oó]dulos?\\s+i/?o|hmi|fuente|software|cables|rack)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_ALIMENTACION",
+      "etiqueta": "Voltaje de Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 24VDC, 110VAC, 220VAC, 380VAC",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Voltaje", "Voltage", "Power"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*v\\s*(dc|ac)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ENTRADAS_DIGITALES",
+      "etiqueta": "Entradas Digitales",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 8, 16, 24, 32",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 1,
+        "max": 128
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Entradas", "DI", "Digital Input"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(di|entradas?\\s+digitales?|digital\\s+inputs?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SALIDAS_DIGITALES",
+      "etiqueta": "Salidas Digitales",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 6, 12, 16, 24",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 1,
+        "max": 128
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Salidas", "DO", "Digital Output"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(do|salidas?\\s+digitales?|digital\\s+outputs?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SALIDA",
+      "etiqueta": "Tipo de Salida",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Relay, Transistor, Triac",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo Salida", "Output Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(relay|transistor|triac)\\s*(output|salida)?\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTOCOLOS_COMUNICACION",
+      "etiqueta": "Protocolos de Comunicación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Modbus RTU, Ethernet/IP, Profibus, OPC-UA",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Protocolos", "Protocols", "Communication"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(modbus[-\\s]*rtu|ethernet[-\\s]*ip|profibus|opc[-\\s]*ua|canopen)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD_PC",
+      "etiqueta": "Conectividad con PC",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, Ethernet, Serial, RS485",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "PC Connection"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|ethernet|serial|rs485|rs232)\\s*(programaci[oó]n|programming)?\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOFTWARE_INCLUIDO",
+      "etiqueta": "Software Incluido",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Software de programación, Ladder, SCADA",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Software", "Programming", "Incluye Software"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(software|programaci[oó]n|ladder|scada)\\s*(incluido|included)?\\b", "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_PROGRAMA",
+      "etiqueta": "Memoria de Programa",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 8KB, 16KB, 32KB, 64KB",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Memoria", "Memory", "Program Memory"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(k|kb|mb)\\s*(memoria|program|data)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: -20°C a 60°C, 0°C a 55°C",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Temperature", "Operating"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTECCION_IP",
+      "etiqueta": "Protección IP",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: IP20, IP54, IP65, NEMA 4X",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["IP Rating", "Protection", "Enclosure"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ip\\d{2}|nema[-\\s]*\\d+x?)\\b", "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, UL, CSA, IEC61131, SIL",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ce|ul|csa|iec\\d+|sil[-\\s]*\\d)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION_PRINCIPAL",
+      "etiqueta": "Aplicación Principal",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Educación, Manufactura, Proceso, Automatización",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Aplicación", "Application", "Use"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(educaci[oó]n|manufactura|proceso|automatizaci[oó]n|laboratorio)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "UBICACION_LABORATORIO",
+      "etiqueta": "Ubicación/Laboratorio",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Lab. Redes, Lab. Automatización, Lab. Control",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ubicación", "Location", "Lab"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(lab\\.|laboratorio)\\s*([\\w\\s]+)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_ESPECIALES",
+      "etiqueta": "Funciones Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Control PID, Motion Control, Servo Control",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Funciones", "Features", "Special"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(servo\\s+control|motion\\s+control|pid|fuzzy|neural)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_PROCESAMIENTO",
+      "etiqueta": "Velocidad de Procesamiento",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0.5ms, 1ms, 10ms ciclo",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Velocidad", "Speed", "Scan Time"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(ms|μs|ns)\\s*(ciclo|cycle|scan)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 15W, 25W, 50W, 100VA",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Consumo", "Power", "Energy"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(w|va|watts?)\\s*(consumo|power)", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIER_MARCA",
+      "etiqueta": "Nivel de Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Tier1 Premium, Tier2 Profesional, Tier3 Comercial",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "opciones": ["Tier1 Premium", "Tier2 Profesional", "Tier3 Comercial", "Tier4 Económico"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "PATRON", "patron": "\\b(siemens|allen[-\\s]*bradley|schneider[-\\s]*electric|abb|rockwell[-\\s]*automation)\\b", "valorFijo": "Tier1 Premium"},
+          {"tipo": "PATRON", "patron": "\\b(omron|mitsubishi|honeywell|yokogawa|emerson)\\b", "valorFijo": "Tier2 Profesional"},
+          {"tipo": "PATRON", "patron": "\\b(delta|tico|unitronics|fatek|kinco|xinje|koyo)\\b", "valorFijo": "Tier3 Comercial"},
+          {"tipo": "PATRON", "patron": "\\b(wecon|haiwell|vigor|kebo|samkoon)\\b", "valorFijo": "Tier4 Económico"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(sistema|control|plc)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(sistema|control|plc)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Azul, Verde",
+      "prioridad": 25,
+      "orden_ui": 25,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "azul", "verde"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.75,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Sistema TICO del inventario real",
+      "texto": "01 SISTEMA DE CONTROL AUTOMATICO AVANZADO CON TODO SUS COMPONENTES Lab. Redes TICO",
+      "extraccionEsperada": {
+        "TIPO_SISTEMA": "SISTEMA DE CONTROL AUTOMATICO",
+        "MARCA": "TICO",
+        "NIVEL_SISTEMA": "AVANZADO",
+        "ESTADO_COMPONENTES": "CON TODO SUS COMPONENTES",
+        "UBICACION_LABORATORIO": "Lab. Redes",
+        "TIER_MARCA": "Tier3 Comercial",
+        "APLICACION_PRINCIPAL": ["Educación"],
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: PLC Siemens S7-1200 industrial",
+      "texto": "02 PLC Siemens S7-1200 CPU 1214C 14DI/10DO relay 24VDC Ethernet Modbus-TCP",
+      "extraccionEsperada": {
+        "MARCA": "Siemens",
+        "MODELO": "S7-1200",
+        "TIPO_SISTEMA": "PLC",
+        "ENTRADAS_DIGITALES": "14",
+        "SALIDAS_DIGITALES": "10",
+        "TIPO_SALIDA": ["Relay"],
+        "VOLTAJE_ALIMENTACION": "24VDC",
+        "PROTOCOLOS_COMUNICACION": ["Ethernet", "Modbus-TCP"],
+        "TIER_MARCA": "Tier1 Premium",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Sistema SCADA completo con HMI",
+      "texto": "01 Sistema SCADA avanzado Delta DVP28SV11T2 28 I/O HMI DOP-B07S411 Ethernet/IP",
+      "extraccionEsperada": {
+        "MARCA": "Delta",
+        "MODELO": "DVP28SV11T2",
+        "TIPO_SISTEMA": "SCADA",
+        "NIVEL_SISTEMA": "Avanzado",
+        "COMPONENTES_INCLUIDOS": ["HMI"],
+        "PROTOCOLOS_COMUNICACION": ["Ethernet/IP"],
+        "TIER_MARCA": "Tier3 Comercial"
+      }
+    },
+    {
+      "nombre": "Caso 4: Controlador Allen-Bradley CompactLogix",
+      "texto": "01 PLC Allen-Bradley CompactLogix 5380 16DI/12DO transistor 1769-L16ER-BB1B IP20",
+      "extraccionEsperada": {
+        "MARCA": "Allen-Bradley",
+        "MODELO": "CompactLogix 5380",
+        "TIPO_SISTEMA": "PLC",
+        "ENTRADAS_DIGITALES": "16",
+        "SALIDAS_DIGITALES": "12",
+        "TIPO_SALIDA": ["Transistor"],
+        "PROTECCION_IP": "IP20",
+        "TIER_MARCA": "Tier1 Premium"
+      }
+    }
+  ]
+}

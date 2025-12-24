@@ -1,0 +1,616 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-MIC-2025-V1",
+    "version": "1.0",
+    "nombre": "Microfono",
+    "categoriaSemantica": "AUDIO_MICROFONO_MICROPHONE_RECORDING",
+    "descripcion": "Plantilla ML de Micrófono - Maneja columna única, múltiples columnas e híbrido para micrófonos inalámbricos, con cable, de escritorio y profesionales"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_HOCO_S31_STREAM",
+        "condicion": ".*(ma\\s+hoco.*mo\\s+s31\\s+stream|hoco.*s31.*stream).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Micrófono Hoco S31 Stream específico del inventario"
+      },
+      {
+        "nombre": "BONUS_LIGHTNING_2_4G",
+        "condicion": ".*(receptor\\s+lightning.*2\\.4g|lightning.*2\\.4g.*120m).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró receptor Lightning y frecuencia 2.4G específicos"
+      },
+      {
+        "nombre": "BONUS_120M_70MAH",
+        "condicion": ".*(120m.*distancia.*70mah|70mah.*estuche.*carga).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontraron especificaciones de distancia y batería"
+      },
+      {
+        "nombre": "BONUS_INALAMBRICO",
+        "condicion": ".*(micr[oó]fono\\s+inal[aá]mbrico|wireless\\s+microphone).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró tipo inalámbrico específico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["microfono", "microphone", "mic", "inalambrico", "wireless"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["hoco", "receptor", "lightning", "distancia", "estuche"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["bateria", "carga", "conexion", "frecuencia", "audio"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["recording", "sound", "voice", "professional"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": ["hoco", "shure", "audio-technica", "rode", "blue", "samson"],
+      "tipos_microfono": ["inalambrico", "con-cable", "usb", "xlr", "lavalier", "shotgun"],
+      "patrones_polares": ["cardioide", "omnidireccional", "bidireccional", "supercaridoide"],
+      "conectividad": ["lightning", "usb-c", "usb", "xlr", "jack", "bluetooth", "2.4ghz"],
+      "receptores": ["lightning", "usb", "xlr", "wireless", "rf", "digital"],
+      "frecuencias": ["2.4ghz", "5.8ghz", "uhf", "vhf"],
+      "distancias": ["10m", "30m", "50m", "100m", "120m", "200m"],
+      "baterias": ["70mah", "100mah", "200mah", "500mah", "1000mah"],
+      "accesorios": ["estuche", "soporte", "tripode", "adaptador", "cable", "parabrisas"],
+      "aplicaciones": ["podcast", "streaming", "entrevistas", "musica", "conferencias"],
+      "sensibilidades": ["-30db", "-40db", "-50db", "-60db"],
+      "impedancias": ["150ohm", "200ohm", "600ohm"],
+      "respuesta_freq": ["20hz-20khz", "50hz-15khz", "80hz-18khz"],
+      "spl_max": ["120db", "130db", "140db", "150db"],
+      "alimentacion": ["phantom-power", "usb-power", "bateria", "aa", "aaa"]
+    },
+    "marcas": {
+      "tier1": ["hoco", "shure", "audio-technica", "rode", "blue"],
+      "tier2": ["samson", "akg", "sennheiser", "behringer", "zoom"],
+      "tier3": ["generic", "no-brand", "china", "oem", "local"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["altavoz", "speaker", "audifonos", "headphones"],
+      "fuerte": ["pizarra", "ecran", "rotuladora", "impresora"],
+      "media": ["silla", "mesa", "escritorio", "archivador"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(hoco|shure|audio[-\\s]*technica|rode)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(s\\d+\\s+stream|sm\\d+|ath[-\\s]*\\w+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_microfono": "\\b(micr[oó]fono|microphone|mic)\\b",
+      "tipo_conexion": "\\b(inal[aá]mbrico|wireless|wired|con\\s+cable|usb|xlr)\\b",
+      "receptor": "receptor\\s+(\\w+)",
+      "frecuencia_operacion": "(\\d+(?:[\\.,]\\d+)?)\\s*g?hz\\s*(frecuencia|frequency|conexi[oó]n)?",
+      "distancia_operacion": "(\\d+)\\s*m\\s+de\\s+distancia",
+      "bateria_microfono": "(\\d+)\\s*mah\\s*(bateria|battery)?",
+      "color_microfono": "Co\\s+([A-Za-z]+)",
+      "accesorios_microfono": "\\b(estuche|cable|adaptador|soporte|tr[ií]pode|parabrisas)\\b",
+      "conectividad_microfono": "\\b(lightning|usb[-\\s]*c|usb|xlr|jack|bluetooth|2\\.4g)\\b",
+      "patron_polar": "\\b(cardioide|omnidireccional|bidireccional|supercaridoide|hipercardioide)\\b",
+      "sensibilidad": "([-]?\\d+(?:\\.\\d+)?)\\s*dbv?\\s*(sensitivity|sensibilidad)?",
+      "respuesta_frecuencia": "(\\d+)\\s*hz\\s*[-–]\\s*(\\d+)\\s*k?hz\\s*(respuesta|response)?",
+      "spl_maximo": "(\\d+)\\s*db\\s*(spl|max|maximo)",
+      "ruido_microfono": "(\\d+(?:\\.\\d+)?)\\s*dba?\\s*(ruido|noise|snr)?",
+      "alimentacion_microfono": "\\b(phantom\\s+power|usb\\s+power|bateria|battery|48v)\\b",
+      "impedancia": "(\\d+)\\s*(ohm|ω)\\s*(impedancia|impedance)?",
+      "dimensiones_microfono": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "peso_microfono": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+      "tiempo_carga": "(\\d+(?:\\.\\d+)?)\\s*(horas?|hours?)\\s*(carga|charging)",
+      "autonomia_microfono": "(\\d+(?:\\.\\d+)?)\\s*(horas?|hours?)\\s*(autonom[ií]a|uso|playback)",
+      "temperatura_operacion": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "uso_aplicacion": "\\b(podcast|streaming|entrevistas|musica|conferencias|gaming)\\b",
+      "certificaciones_mic": "\\b(ce|fcc|rohs|ul)\\b",
+      "cantidad": "(\\d{1,2})\\s*(micr[oó]fono|microphone|mic)",
+      "canales_disponibles": "(\\d+)\\s*(canales?|channels?)\\s*(disponibles|available)?",
+      "formato_audio": "\\b(pcm|mp3|wav|aac)\\b",
+      "latencia": "(\\d+(?:\\.\\d+)?)\\s*ms\\s*(latencia|latency|delay)?",
+      "alcance_pickup": "(\\d+(?:\\.\\d+)?)\\s*m\\s*(pickup|captaci[oó]n|alcance)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Hoco, Shure, Audio-Technica, Rode",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(hoco|shure|audio[-\\s]*technica|rode)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: S31 Stream, SM58, ATH-M50x, PodMic",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(s\\d+\\s+stream|sm\\d+|ath[-\\s]*\\w+)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CONEXION",
+      "etiqueta": "Tipo de Conexión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Inalámbrico, Con cable, USB, XLR",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Inalámbrico", "Con cable", "USB", "XLR", "Bluetooth"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Connection", "Conectividad"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(inal[aá]mbrico|wireless|wired|con\\s+cable|usb|xlr)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["inalambrico", "wireless", "cable", "usb", "xlr"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RECEPTOR",
+      "etiqueta": "Tipo de Receptor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Lightning, USB, XLR, Wireless",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Lightning", "USB", "XLR", "Wireless", "RF", "Digital"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Receptor", "Receiver", "Input"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "receptor\\s+(\\w+)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["lightning", "usb", "xlr", "wireless", "rf"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_OPERACION",
+      "etiqueta": "Frecuencia de Operación (GHz)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.4, 5.8, 24.0",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 0.1,
+        "max": 30.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Frecuencia", "Frequency", "GHz"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*g?hz\\s*(frecuencia|frequency|conexi[oó]n)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISTANCIA_OPERACION",
+      "etiqueta": "Distancia de Operación (m)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 10, 30, 50, 100, 120, 200",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 5,
+        "max": 500
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Distancia", "Range", "Distance"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*m\\s+de\\s+distancia", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BATERIA",
+      "etiqueta": "Capacidad de Batería (mAh)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 70, 100, 200, 500, 1000",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 50,
+        "max": 5000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Batería", "Battery", "mAh"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*mah\\s*(bateria|battery)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS",
+      "etiqueta": "Accesorios",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Estuche de carga, Cable, Adaptador, Soporte",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Accesorios", "Accessories", "Incluye"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(estuche|cable|adaptador|soporte|tr[ií]pode|parabrisas)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Lightning, USB-C, USB, XLR, Jack, Bluetooth",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "Ports"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(lightning|usb[-\\s]*c|usb|xlr|jack|bluetooth|2\\.4g)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PATRON_POLAR",
+      "etiqueta": "Patrón Polar",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Cardioide, Omnidireccional, Bidireccional",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Cardioide", "Omnidireccional", "Bidireccional", "Supercaridoide", "Hipercaridoide"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Patrón", "Pattern", "Directivity"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cardioide|omnidireccional|bidireccional|supercaridoide|hipercardioide)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["cardioide", "omnidireccional", "bidireccional", "supercaridoide"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSIBILIDAD",
+      "etiqueta": "Sensibilidad (dB)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: -30, -40, -50, -60",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": -80.0,
+        "max": -10.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Sensibilidad", "Sensitivity", "dB"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "([-]?\\d+(?:\\.\\d+)?)\\s*dbv?\\s*(sensitivity|sensibilidad)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESPUESTA_FRECUENCIA",
+      "etiqueta": "Respuesta de Frecuencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 20Hz-20kHz, 50Hz-15kHz, 80Hz-18kHz",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Respuesta", "Frequency Response", "Range"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*hz\\s*[-–]\\s*(\\d+)\\s*k?hz\\s*(respuesta|response)?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SPL_MAXIMO",
+      "etiqueta": "SPL Máximo (dB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 120, 130, 140, 150",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 100,
+        "max": 180
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["SPL", "Max SPL", "Sound Pressure"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*db\\s*(spl|max|maximo)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RUIDO",
+      "etiqueta": "Nivel de Ruido (dB)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 15, 20, 25, 30",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 10.0,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ruido", "Noise", "SNR"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*dba?\\s*(ruido|noise|snr)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Phantom Power, USB Power, Batería, 48V",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": ["Phantom Power", "USB Power", "Batería", "48V", "AA", "AAA"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alimentación", "Power", "Supply"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(phantom\\s+power|usb\\s+power|bateria|battery|48v)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["phantom", "power", "usb", "bateria", "48v"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "IMPEDANCIA",
+      "etiqueta": "Impedancia (Ohm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 150, 200, 600",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 50,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Impedancia", "Impedance", "Ohm"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(ohm|ω)\\s*(impedancia|impedance)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (g)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 200, 300",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 10,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Mass"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AUTONOMIA",
+      "etiqueta": "Autonomía (horas)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 4, 6, 8, 12, 24",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 1.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Autonomía", "Battery Life", "Usage"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(horas?|hours?)\\s*(autonom[ií]a|uso|playback)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_APLICACION",
+      "etiqueta": "Uso/Aplicación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Podcast, Streaming, Entrevistas, Música",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Uso", "Application", "Purpose"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(podcast|streaming|entrevistas|musica|conferencias|gaming)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, FCC, RoHS, UL",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ce|fcc|rohs|ul)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(micr[oó]fono|microphone|mic)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(micr[oó]fono|microphone|mic)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Plateado",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Co\\s+([A-Za-z]+)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "plateado", "azul"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Micrófono Hoco del inventario real",
+      "texto": "01 Micrófono inalámbrico Ma Hoco Mo S31 Stream con receptor Lightning de conexión 2.4G hasta 120m de distancia de 70mAh con estuche de carga Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Hoco",
+        "MODELO": "S31 Stream",
+        "TIPO_CONEXION": "Inalámbrico",
+        "RECEPTOR": "Lightning",
+        "FRECUENCIA_OPERACION": "2.4",
+        "DISTANCIA_OPERACION": "120",
+        "BATERIA": "70",
+        "ACCESORIOS": ["Estuche de carga"],
+        "COLOR": "Negro",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Micrófono Shure profesional",
+      "texto": "02 Micrófono Shure SM58 dinámico cardioide con cable XLR de 6m",
+      "extraccionEsperada": {
+        "MARCA": "Shure",
+        "MODELO": "SM58",
+        "TIPO_CONEXION": "Con cable",
+        "PATRON_POLAR": "Cardioide",
+        "CONECTIVIDAD": ["XLR"],
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Micrófono USB para podcast",
+      "texto": "01 Micrófono USB Audio-Technica ATH-2020USB+ para podcast y streaming",
+      "extraccionEsperada": {
+        "MARCA": "Audio-Technica",
+        "MODELO": "ATH-2020USB+",
+        "TIPO_CONEXION": "USB",
+        "USO_APLICACION": ["Podcast", "Streaming"]
+      }
+    },
+    {
+      "nombre": "Caso 4: Micrófono lavalier inalámbrico",
+      "texto": "01 Micrófono lavalier inalámbrico 2.4GHz con 50m de alcance y batería 200mAh",
+      "extraccionEsperada": {
+        "TIPO_CONEXION": "Inalámbrico",
+        "FRECUENCIA_OPERACION": "2.4",
+        "DISTANCIA_OPERACION": "50",
+        "BATERIA": "200"
+      }
+    }
+  ]
+}

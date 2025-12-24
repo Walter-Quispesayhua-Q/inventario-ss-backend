@@ -1,0 +1,553 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-CAB-2025-V1",
+    "version": "1.0",
+    "nombre": "Gabinete",
+    "categoriaSemantica": "INFRAESTRUCTURA_GABINETE_RACK",
+    "descripcion": "Plantilla ML de gabinete - Maneja columna única, múltiples columnas e híbrido para gabinetes, racks y armarios de equipos"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_RACK_UPS",
+        "condicion": ".*(gabitene|gabinete).*rack.*(ups|kva).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró gabinete rack específico para UPS"
+      },
+      {
+        "nombre": "BONUS_CAPACIDAD_RU",
+        "condicion": ".*\\d+\\s*ru\\b.*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró capacidad específica en RU (Rack Units)"
+      },
+      {
+        "nombre": "BONUS_ESTRUCTURA_COLUMNAS",
+        "condicion": ".*(\\d+\\s*columnas?|estructura\\s+metalica).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró estructura específica con columnas"
+      },
+      {
+        "nombre": "BONUS_MARCA_MODELO",
+        "condicion": ".*(ma\\s+tecni[-\\s]*lan|mo\\s+std\\w+).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró marca y modelo específico del inventario"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["gabinete", "gabitene", "rack", "cabinet", "armario"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["ups", "networking", "server", "telecomunicaciones", "pared"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["ru", "columnas", "abatible", "ruedas", "metalico"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["enclosure", "estructura", "tomas", "vidrio"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["rack", "de-pared", "de-piso", "torre", "desktop", "server", "network"],
+      "usos": ["para-ups", "networking", "server", "telecomunicaciones", "patch", "switching"],
+      "capacidades_ru": ["6ru", "10ru", "12ru", "18ru", "24ru", "42ru", "47ru"],
+      "capacidades_electricas": ["3kva", "6kva", "10kva", "15kva", "20kva"],
+      "materiales": ["metalico", "metalica", "acero", "aluminio", "chapa", "fibra"],
+      "caracteristicas": ["abatible", "con-ruedas", "fijas", "movil", "ventilado", "climatizado"],
+      "puertas": ["vidrio", "solida", "perforada", "sin-puerta", "doble-puerta"],
+      "alturas": ["media-altura", "altura-completa", "bajo", "alto"],
+      "marcas_comunes": ["tecni-lan", "schneider", "apc", "tripp-lite", "panduit"],
+      "modelos_especificos": ["std19x24ur", "netshelter", "smartrack"],
+      "accesorios": ["bandejas", "rieles", "ventiladores", "pdu", "organizadores"]
+    },
+    "marcas": {
+      "tier1": ["schneider-electric", "apc", "tripp-lite", "panduit", "black-box"],
+      "tier2": ["tecni-lan", "startech", "rackmount", "kendall-howard", "middle-atlantic"],
+      "tier3": ["cyberpower", "belkin", "vertiv", "eaton", "chatsworth"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["silla", "mesa", "escritorio", "estante"],
+      "fuerte": ["monitor", "cpu", "impresora", "archivador"],
+      "media": ["sofa", "cama", "mueble", "mobiliario"],
+      "debil": ["storage", "furniture", "office", "desk"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(tecni[-\\s]*lan|schneider|apc|tripp[-\\s]*lite)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(std\\w+|netshelter\\w*|smartrack\\w*)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_gabinete": "\\b(gabitene|gabinete|rack|cabinet|enclosure|armario)\\s*(de\\s+)?(pared|piso|torre)?\\b",
+      "uso_especifico": "\\b(para\\s+ups|networking|server|telecomunicaciones|patch|switching|storage)\\b",
+      "capacidad_ru": "(\\d+)\\s*ru\\b",
+      "capacidad_electrica": "(\\d+)\\s*kva\\b",
+      "estructura_columnas": "\\b(\\d+)\\s*columnas?\\b",
+      "material_construccion": "\\b(metalico|metalica|acero|aluminio|chapa|fibra)\\b",
+      "caracteristicas_movilidad": "\\b(con\\s+ruedas|ruedas\\s+fijas|movil|fijo|abatible)\\b",
+      "tipo_puerta": "\\b(puerta\\s+de\\s+vidrio|puerta\\s+solida|puerta\\s+perforada|sin\\s+puerta|doble\\s+puerta)\\b",
+      "altura_gabinete": "\\b(media\\s+altura|altura\\s+completa|bajo|alto|\\d+u)\\b",
+      "tomas_electricas": "(\\d+)\\s*(?:power\\s+)?tomas?",
+      "ventilacion": "\\b(ventilado|climatizado|con\\s+ventiladores|sin\\s+ventilacion)\\b",
+      "dimensiones_gabinete": "(\\d+)\\s*x\\s*(\\d+)(?:\\s*x\\s*(\\d+))?\\s*(?:cms?|mm)",
+      "dimensiones_compactas": "(\\d{2,3})(\\d{2})(\\d{2})\\s*cms?",
+      "profundidad": "(\\d+)\\s*(?:cms?|mm)\\s*(profundidad|depth|prof)",
+      "ancho_estandar": "\\b(19\\s*inch|19\\s*pulgadas|23\\s*inch)\\b",
+      "accesorios": "\\b(bandejas|rieles|ventiladores|pdu|organizadores|patch\\s+panel)\\b",
+      "nivel_proteccion": "\\b(ip\\d{2}|nema\\s*\\d+|indoor|outdoor)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Tecni-Lan, Schneider, APC, Tripp Lite",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(tecni[-\\s]*lan|schneider|apc|tripp[-\\s]*lite)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: STD19x24UR, NetShelter SX, SmartRack",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(std\\w+|netshelter\\w*|smartrack\\w*)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_GABINETE",
+      "etiqueta": "Tipo de Gabinete",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Rack, De pared, De piso, Torre",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Rack", "De pared", "De piso", "Torre", "Desktop", "Server", "Network"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Categoria"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(gabitene|gabinete|rack|cabinet|enclosure)\\s*(de\\s+)?(pared|piso|torre)?\\b", "grupo": 3, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["rack", "pared", "piso", "torre", "desktop", "server"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_ESPECIFICO",
+      "etiqueta": "Uso Específico",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Para UPS, Networking, Server, Telecomunicaciones",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Para UPS", "Networking", "Server", "Telecomunicaciones", "Patch", "Switching", "Storage"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Uso", "Purpose", "Application"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(para\\s+ups|networking|server|telecomunicaciones|patch|switching|storage)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["para", "ups", "networking", "server", "telecomunicaciones", "patch"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_RU",
+      "etiqueta": "Capacidad (RU)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 6, 10, 12, 18, 24, 42",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["RU", "Rack Units", "Capacidad"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*ru\\b", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_ELECTRICA",
+      "etiqueta": "Capacidad Eléctrica (KVA)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 3, 6, 10, 15, 20",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["KVA", "Capacidad Eléctrica", "Power"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*kva\\b", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESTRUCTURA",
+      "etiqueta": "Estructura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 2 Columnas, 4 Columnas, Estructura metálica",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Estructura", "Structure", "Frame"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(\\d+)\\s*columnas?\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["columnas", "estructura", "metalica", "acero", "aluminio"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_CONSTRUCCION",
+      "etiqueta": "Material de Construcción",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Metálico, Acero, Aluminio, Chapa",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["Metálico", "Acero", "Aluminio", "Chapa", "Fibra de vidrio"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Construction", "Build"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(metalico|metalica|acero|aluminio|chapa|fibra)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["metalico", "metalica", "acero", "aluminio", "chapa"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MOVILIDAD",
+      "etiqueta": "Características de Movilidad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Con ruedas, Ruedas fijas, Móvil, Abatible",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Movilidad", "Mobility", "Wheels"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(con\\s+ruedas|ruedas\\s+fijas|movil|fijo|abatible)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PUERTA",
+      "etiqueta": "Tipo de Puerta",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: De vidrio, Sólida, Perforada, Sin puerta",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["De vidrio", "Sólida", "Perforada", "Sin puerta", "Doble puerta"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Puerta", "Door", "Front"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(puerta\\s+de\\s+vidrio|puerta\\s+solida|puerta\\s+perforada|sin\\s+puerta|doble\\s+puerta)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["puerta", "vidrio", "solida", "perforada", "doble"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTURA_GABINETE",
+      "etiqueta": "Altura del Gabinete",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Media altura, Altura completa, Bajo, Alto",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": ["Media altura", "Altura completa", "Bajo", "Alto", "Estándar"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Altura", "Height", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(media\\s+altura|altura\\s+completa|bajo|alto|\\d+u)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["media", "altura", "completa", "bajo", "alto"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TOMAS_ELECTRICAS",
+      "etiqueta": "Tomas Eléctricas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 4, 6, 8, 12, 16",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 0,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tomas", "Outlets", "Power"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(?:power\\s+)?tomas?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VENTILACION",
+      "etiqueta": "Sistema de Ventilación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Ventilado, Climatizado, Con ventiladores",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": ["Ventilado", "Climatizado", "Con ventiladores", "Sin ventilación", "Pasiva"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ventilación", "Cooling", "Airflow"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ventilado|climatizado|con\\s+ventiladores|sin\\s+ventilacion)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ventilado", "climatizado", "ventiladores", "cooling"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(gabinete|gabitene|rack|cabinet)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(gabinete|gabitene|rack|cabinet)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LARGO",
+      "etiqueta": "Largo (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 50, 60, 70, 80",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 30,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Largo", "Length", "Width"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)(?:\\s*x\\s*(\\d+))?\\s*(?:cms?|mm)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 50, 60, 70, 80",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 30,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Depth"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)(?:\\s*x\\s*(\\d+))?\\s*(?:cms?|mm)", "grupo": 2}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALTO",
+      "etiqueta": "Alto (cm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 40, 50, 60, 200",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 20,
+        "max": 300
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alto", "Height", "High"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)(?:\\s*x\\s*(\\d+))?\\s*(?:cms?|mm)", "grupo": 3}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 50x60x51 cm, 506051CM",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)(?:\\s*x\\s*(\\d+))?\\s*(?:cms?|mm)", "grupo": 0},
+          {"tipo": "PATRON", "patron": "(\\d{2,3})(\\d{2})(\\d{2})\\s*cms?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS",
+      "etiqueta": "Accesorios Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Bandejas, Rieles, Ventiladores, PDU",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Accesorios", "Accessories", "Includes"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(bandejas|rieles|ventiladores|pdu|organizadores|patch\\s+panel)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Gris, Blanco, Beige",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "gris", "blanco", "beige", "plateado"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Gabinete UPS del inventario real",
+      "texto": "01 GABITENE RACK PARA UPS DE 6KVA estructura metálica",
+      "extraccionEsperada": {
+        "TIPO_GABINETE": "Rack",
+        "USO_ESPECIFICO": "Para UPS",
+        "CAPACIDAD_ELECTRICA": "6",
+        "MATERIAL_CONSTRUCCION": "Metálico"
+      }
+    },
+    {
+      "nombre": "Caso 2: Rack Tecni-Lan del inventario real",
+      "texto": "01 Rack de 2 Columnas de estructura Metálica con ruedas fijas pgabinete de media altura Ma Tecni-Lan Mo STD19x24UR Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Tecni-Lan",
+        "MODELO": "STD19x24UR",
+        "TIPO_GABINETE": "Rack",
+        "ESTRUCTURA": "2 Columnas",
+        "MATERIAL_CONSTRUCCION": "Metálica",
+        "MOVILIDAD": ["Con ruedas", "Ruedas fijas"],
+        "ALTURA_GABINETE": "Media altura",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 3: Gabinete de pared del inventario real",
+      "texto": "01 GABINETE DE PARED DE 10 RU ABATIBLE 506051CM PUERTA DE VIDRIO2POWER RACK 8 TOMAS",
+      "extraccionEsperada": {
+        "TIPO_GABINETE": "De pared",
+        "CAPACIDAD_RU": "10",
+        "MOVILIDAD": ["Abatible"],
+        "DIMENSIONES": "506051CM",
+        "LARGO": "50",
+        "ANCHO": "60",
+        "ALTO": "51",
+        "TIPO_PUERTA": "De vidrio",
+        "TOMAS_ELECTRICAS": "8"
+      }
+    }
+  ]
+}

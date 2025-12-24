@@ -1,0 +1,513 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SCR-2025-V1",
+    "version": "1.0",
+    "nombre": "Ecran",
+    "categoriaSemantica": "PROYECCION_ECRAN_PANTALLA",
+    "descripcion": "Plantilla ML de ecran - Maneja columna única, múltiples columnas e híbrido para pantallas de proyección y ecrans"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_RETRACTIL_TECHO_PARED",
+        "condicion": ".*(retractil|retrctil).*(techo.*pared|pared.*techo).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró ecran retráctil específico techo/pared del inventario"
+      },
+      {
+        "nombre": "BONUS_MANUAL_PULGADAS",
+        "condicion": ".*(ecran.*manual.*\\d+|manual.*\\d+.*ecran).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró ecran manual con tamaño específico"
+      },
+      {
+        "nombre": "BONUS_EVISION_VUTEC",
+        "condicion": ".*(ma\\s+evision|vutec).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró marca específica EVISION o Vutec"
+      },
+      {
+        "nombre": "BONUS_DIMENSIONES_METROS",
+        "condicion": ".*\\d+[,.]\\d+\\s*[xX]\\s*\\d+[,.]\\d+\\s*m.*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron dimensiones específicas en metros"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["ecran", "ecram", "screen", "pantalla", "proyeccion"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["proyector", "retractil", "retrctil", "proyeccion", "evision"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["techo", "pared", "tripode", "portable", "vutec"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["projection", "display", "cinema", "theater"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos_operacion": ["manual", "electrico", "motorizado", "retractil", "retrctil"],
+      "instalaciones": ["techo", "pared", "tripode", "portable", "fijo", "empotrado"],
+      "tamaños_pulgadas": ["60", "72", "84", "100", "120", "133", "150", "180"],
+      "formatos": ["16:9", "4:3", "16:10", "2.35:1", "cinemascope"],
+      "materiales_superficie": ["matte-white", "pearl", "gray", "black", "silver"],
+      "características": ["tensioned", "tab", "border", "borderless", "curved"],
+      "marcas_comunes": ["evision", "vutec", "elite", "da-lite", "draper", "optoma"],
+      "tipos_superficie": ["acoustically-transparent", "rear-projection", "front-projection"],
+      "sistemas_tension": ["spring-roller", "tab-tensioned", "electric-tensioned"],
+      "controles": ["wall-switch", "remote", "rs232", "trigger"],
+      "gain_valores": ["1.0", "1.3", "2.4", "0.8", "0.6"],
+      "viewing_angles": ["160-degrees", "120-degrees", "180-degrees"]
+    },
+    "marcas": {
+      "tier1": ["evision", "da-lite", "draper", "elite", "stewart"],
+      "tier2": ["vutec", "optoma", "epson", "benq", "projecta"],
+      "tier3": ["amazon-basics", "visual-apex", "celexon", "homegear", "pyle"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["roller", "cortina", "persiana", "blackout", "estor", "toldo"],
+      "fuerte": ["monitor", "televisor", "laptop", "dispensador","ventana"],
+      "media": ["pizarra", "rotuladora", "mesa", "silla"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(evision|vutec|da[-\\s]*lite|draper)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(elite|manual|electric)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_ecran": "\\b(ecran|ecram|screen|pantalla\\s+proyeccion)\\s*(manual|electrico|motorizado|retractil)?\\b",
+      "tipo_operacion": "\\b(manual|electrico|motorizado|retractil|retrctil)\\b",
+      "instalacion_tipo": "\\b(techo|pared|tripode|portable|fijo|empotrado)\\s*([-\\s]*pared|[-\\s]*techo)?\\b",
+      "tamaño_pulgadas": "\\b(\\d+)\\s*(?:pulgadas?|inch|\")\\b",
+      "dimensiones_ecran": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:m|cms?)\\b",
+      "formato_aspecto": "\\b(16:9|4:3|16:10|2\\.35:1|cinemascope)\\b",
+      "material_superficie": "\\b(matte\\s+white|pearl|gray|grey|black|silver)\\b",
+      "características_especiales": "\\b(tensioned|tab|border|borderless|curved|acoustically\\s+transparent)\\b",
+      "tipo_superficie": "\\b(acoustically[-\\s]*transparent|rear[-\\s]*projection|front[-\\s]*projection)\\b",
+      "sistema_tension": "\\b(spring[-\\s]*roller|tab[-\\s]*tensioned|electric[-\\s]*tensioned)\\b",
+      "control_tipo": "\\b(wall[-\\s]*switch|remote|rs232|trigger|manual)\\b",
+      "gain_superficie": "\\b(gain\\s+)?(\\d\\.\\d)\\s*(gain)?\\b",
+      "angulo_vision": "(\\d+)[-\\s]*degrees?",
+      "cantidad": "(\\d{1,2})\\s*(ecran|ecram|screen|pantalla)",
+      "altura_instalacion": "(\\d+(?:\\.\\d+)?)\\s*(?:m|cms?)\\s*(altura|alto|height)",
+      "ancho_pantalla": "(\\d+(?:\\.\\d+)?)\\s*(?:m|cms?)\\s*(ancho|width|wide)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: EVISION, Vutec, Da-Lite, Elite",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(evision|vutec|da[-\\s]*lite|draper)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Elite, Manual 150, Electric",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(elite|manual|electric)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_OPERACION",
+      "etiqueta": "Tipo de Operación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Manual, Eléctrico, Motorizado, Retráctil",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Manual", "Eléctrico", "Motorizado", "Retráctil", "Automático"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Operación", "Operation", "Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(manual|electrico|motorizado|retractil|retrctil)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["manual", "electrico", "motorizado", "retractil", "retrctil"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_INSTALACION",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Techo, Pared, Techo/Pared, Trípode",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Techo", "Pared", "Techo/Pared", "Trípode", "Portable", "Fijo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Instalación", "Installation", "Mount"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(techo|pared|tripode|portable|fijo|empotrado)\\s*([-\\s]*pared|[-\\s]*techo)?\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["techo", "pared", "tripode", "portable", "fijo"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_PULGADAS",
+      "etiqueta": "Tamaño (pulgadas)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 60, 84, 100, 120, 150",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 40,
+        "max": 300
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Pulgadas", "Inches", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(\\d+)\\s*(?:pulgadas?|inch|\")\\b", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LARGO",
+      "etiqueta": "Largo (m)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.4, 3.05, 4.0",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 1.0,
+        "max": 10.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Largo", "Length", "Width"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:m|cms?)\\b", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANCHO",
+      "etiqueta": "Ancho (m)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.29, 2.4, 3.0",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 1.0,
+        "max": 8.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ancho", "Width", "Height"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:m|cms?)\\b", "grupo": 2}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 3.05x2.29m, 2,4x2,4m",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+|,\\d+)?)\\s*[xX]\\s*(\\d+(?:\\.\\d+|,\\d+)?)\\s*(?:m|cms?)\\b", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO_ASPECTO",
+      "etiqueta": "Formato de Aspecto",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 16:9, 4:3, 16:10, 2.35:1",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "opciones": ["16:9", "4:3", "16:10", "2.35:1", "Cinemascope"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formato", "Aspect", "Ratio"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(16:9|4:3|16:10|2\\.35:1|cinemascope)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["16:9", "4:3", "16:10", "cinemascope"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL_SUPERFICIE",
+      "etiqueta": "Material de Superficie",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Matte White, Pearl, Gray, Silver",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Matte White", "Pearl", "Gray", "Black", "Silver"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Surface", "Fabric"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(matte\\s+white|pearl|gray|grey|black|silver)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["matte", "white", "pearl", "gray", "black", "silver"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Tensioned, Tab, Border, Curved",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Special"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(tensioned|tab|border|borderless|curved|acoustically\\s+transparent)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SUPERFICIE",
+      "etiqueta": "Tipo de Superficie",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Front Projection, Rear Projection",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Front Projection", "Rear Projection", "Acoustically Transparent"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Superficie", "Surface Type", "Projection"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(acoustically[-\\s]*transparent|rear[-\\s]*projection|front[-\\s]*projection)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["front", "rear", "projection", "acoustically", "transparent"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_TENSION",
+      "etiqueta": "Sistema de Tensión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Spring Roller, Tab Tensioned, Electric",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": ["Spring Roller", "Tab Tensioned", "Electric Tensioned", "Manual"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tensión", "Tension", "System"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(spring[-\\s]*roller|tab[-\\s]*tensioned|electric[-\\s]*tensioned)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["spring", "roller", "tab", "tensioned", "electric"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CONTROL",
+      "etiqueta": "Tipo de Control",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Remote, Wall Switch, RS232, Manual",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Control", "Controls", "Operation"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(wall[-\\s]*switch|remote|rs232|trigger|manual)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GAIN_SUPERFICIE",
+      "etiqueta": "Gain de Superficie",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1.0, 1.3, 2.4, 0.8",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 0.1,
+        "max": 5.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Gain", "Reflectance", "Brightness"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(gain\\s+)?(\\d\\.\\d)\\s*(gain)?\\b", "grupo": 2}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANGULO_VISION",
+      "etiqueta": "Ángulo de Visión (grados)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 120, 160, 180",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 90,
+        "max": 360
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ángulo", "Viewing", "Degrees"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)[-\\s]*degrees?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(ecran|ecram|screen|pantalla)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(ecran|ecram|screen|pantalla)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Negro, Gris",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["blanco", "negro", "gris", "plateado"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Ecran EVISION del inventario real",
+      "texto": "01 Ecran Manual 150 3.05x2.29m Ma EVISION - Retrctil Techo Pared Co Blanco",
+      "extraccionEsperada": {
+        "MARCA": "EVISION",
+        "TIPO_OPERACION": "Manual",
+        "TAMAÑO_PULGADAS": "150",
+        "DIMENSIONES": "3.05x2.29m",
+        "LARGO": "3.05",
+        "ANCHO": "2.29",
+        "TIPO_INSTALACION": "Techo/Pared",
+        "COLOR": "Blanco"
+      }
+    },
+    {
+      "nombre": "Caso 2: Ecran Vutec del inventario real",
+      "texto": "01 Ecram retractil vutec de pared techo 2,4x2,4m formato 16:9",
+      "extraccionEsperada": {
+        "MARCA": "Vutec",
+        "TIPO_OPERACION": "Retráctil",
+        "TIPO_INSTALACION": "Pared/Techo",
+        "DIMENSIONES": "2,4x2,4m",
+        "LARGO": "2.4",
+        "ANCHO": "2.4",
+        "FORMATO_ASPECTO": "16:9"
+      }
+    },
+    {
+      "nombre": "Caso 3: Ecran pequeño del inventario real",
+      "texto": "01 Ecran Pequeo Co Blanco portátil trípode",
+      "extraccionEsperada": {
+        "TIPO_INSTALACION": "Trípode",
+        "COLOR": "Blanco"
+      }
+    }
+  ]
+}

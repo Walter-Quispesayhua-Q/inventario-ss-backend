@@ -1,0 +1,501 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-MOU-2025-V1",
+    "version": "1.0",
+    "nombre": "Mouse",
+    "categoriaSemantica": "DISPOSITIVO_ENTRADA_MOUSE",
+    "descripcion": "Plantilla ML de mouse - Maneja columna única, múltiples columnas e híbrido para dispositivos de entrada de puntero"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_TECNOLOGIA",
+        "condicion": ".*(optical|laser|wireless|bluetooth|basic|ready).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró tecnología específica del mouse"
+      },
+      {
+        "nombre": "BONUS_TIENE_DPI",
+        "condicion": ".*\\b\\d+\\s*(dpi|dots.*inch).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró información de DPI/resolución"
+      },
+      {
+        "nombre": "BONUS_GAMING",
+        "condicion": ".*(gaming|gamer|rgb|programmable|pro).*",
+        "puntos": 0.08,
+        "descripcion": "Se identificó como mouse gaming"
+      },
+      {
+        "nombre": "BONUS_MARCA_CONOCIDA",
+        "condicion": ".*(microsoft|logitech|dell|cybertel|mega).*",
+        "puntos": 0.06,
+        "descripcion": "Se encontró marca conocida de mouse"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["mouse", "raton", "mice"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["optical", "laser", "wireless", "bluetooth", "usb", "basic", "ready"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["gaming", "ergonomico", "scroll", "botones", "dpi"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["entrada", "puntero", "click", "rueda"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tecnologia": ["optical", "laser", "trackball", "touch", "capacitive", "basic", "ready"],
+      "conectividad": ["usb", "usb-c", "wireless", "bluetooth", "ps2", "2.4ghz"],
+      "sensores": ["pixart", "avago", "hero", "truemove", "flawless"],
+      "caracteristicas": ["gaming", "ergonomico", "ambidextrous", "vertical", "travel"],
+      "iluminacion": ["rgb", "led", "backlight", "chroma", "mystic"],
+      "botones": ["programmable", "macro", "side", "thumb", "dpi"],
+      "superficies": ["precision", "fabric", "hard", "hybrid", "speed"],
+      "marcas_comunes": ["microsoft", "logitech", "dell", "cybertel", "mega"]
+    },
+    "marcas": {
+      "tier1": ["logitech", "microsoft", "razer", "corsair", "steelseries"],
+      "tier2": ["dell", "hp", "asus", "cooler-master", "hyperx"],
+      "tier3": ["genius", "trust", "cybertel", "redragon", "havit", "mega"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["teclado", "keyboard", "monitor", "pantalla"],
+      "fuerte": ["impresora", "scanner", "webcam", "microfono"],
+      "media": ["cable", "adaptador", "hub", "dock"],
+      "debil": ["usb", "wireless", "bluetooth"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|mouse\\s+(basic\\s+)?optical\\s+ma\\s+([\\w\\-]+)|Ma([\\w\\-]+)",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))|ready\\s+mouse|Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "tecnologia": "\\b(optical|laser|basic|trackball|ready)\\b",
+      "conectividad": "\\b(usb|usb[-\\s]*c|wireless|bluetooth|ps2|2\\.4ghz)\\b",
+      "dpi": "(\\d{3,5})\\s*(dpi|dots.*inch)",
+      "botones": "(\\d+)\\s*(botones?|buttons?)",
+      "sensor": "\\b(pixart|avago|hero|truemove|flawless)\\b",
+      "velocidad": "(\\d+)\\s*(ips|inch.*second)",
+      "aceleracion": "(\\d+)\\s*(g|gravity|aceleracion)",
+      "gaming": "\\b(gaming|gamer|esports|rgb|pro)\\b",
+      "ergonomico": "\\b(ergonomico|vertical|comfort|ambidextrous)\\b",
+      "iluminacion": "\\b(rgb|led|chroma|backlight|mystic)\\b",
+      "programable": "\\b(programmable|macro|customizable)\\b",
+      "scroll": "\\b(scroll|wheel|rueda|tactil|magspeed|hyperscroll)\\b",
+      "bateria": "(\\d+)\\s*(meses?|horas?|días?)\\s*(bateria|battery|aaa|aa|recargable)?",
+      "dimensiones": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+      "peso": "(\\d{1,3})\\s*(g|gramos|kg)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Microsoft, Logitech, Dell, Cybertel",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "mouse\\s+(basic\\s+)?optical\\s+ma\\s+([\\w\\-]+)", "grupo": 3},
+          {"tipo": "PATRON", "patron": "Ma([\\w\\-]+)", "grupo": 1},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: M90, MS116t1, Ready Mouse, CYB-M10K",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "ready\\s+mouse", "grupo": 0},
+          {"tipo": "PATRON", "patron": "Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_SENSOR",
+      "etiqueta": "Tecnología del Sensor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Óptico, Láser, Trackball, Basic",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Óptico", "Láser", "Trackball", "Touch", "Capacitivo", "Basic"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tecnología", "Sensor", "Technology"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(optical|laser|basic|trackball|touch|capacitive|ready)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["optical", "laser", "optico", "trackball", "basic", "ready"]},
+          {"tipo": "MAPEO", "optical": "Óptico", "laser": "Láser", "basic": "Basic", "ready": "Ready"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Tipo de Conectividad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: USB, USB-C, Bluetooth, Inalámbrico",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["USB", "USB-C", "Bluetooth", "Inalámbrico 2.4GHz", "PS/2", "USB + Bluetooth"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connection", "Interface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|usb[-\\s]*c|wireless|bluetooth|ps2|2\\.4ghz)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["usb", "bluetooth", "wireless", "inalambrico"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_DPI",
+      "etiqueta": "Resolución (DPI)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1000 DPI, 800-4000 DPI, 16000 DPI",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["DPI", "Resolution", "Resolución"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d{3,5})\\s*(dpi|dots.*inch)", "grupo": 0},
+          {"tipo": "PATRON", "patron": "(\\d{3,5})\\s*[-~]\\s*(\\d{3,5})\\s*dpi", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_BOTONES",
+      "etiqueta": "Número de Botones",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 3, 5, 7, 12",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 2,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Botones", "Buttons", "Número"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(botones?|buttons?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SENSOR",
+      "etiqueta": "Marca/Tipo de Sensor",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: PixArt PAW3327, HERO 25K, TrueMove Core",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Sensor", "Chip", "Engine"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(pixart|avago|hero|truemove|flawless)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["pixart", "hero", "truemove", "avago"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_TRACKING",
+      "etiqueta": "Velocidad de Tracking (IPS)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 100, 250, 400",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 30,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["IPS", "Tracking", "Velocidad"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(ips|inch.*second)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACELERACION_MAXIMA",
+      "etiqueta": "Aceleración Máxima (G)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 20, 40, 50",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 10,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Aceleración", "G", "Acceleration"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(g|gravity|aceleracion)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GAMING",
+      "etiqueta": "Mouse Gaming",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Gaming RGB, Pro Gaming",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Sí", "No", "Gaming RGB", "Pro Gaming", "Esports"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Gaming", "Gamer", "Juegos"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(gaming|gamer|esports|rgb|pro)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["gaming", "gamer", "esports", "rgb", "pro"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ILUMINACION",
+      "etiqueta": "Iluminación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: RGB, LED Azul, Sin iluminación",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": ["RGB", "LED Azul", "LED Rojo", "LED Blanco", "Chroma RGB", "Sin iluminación"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Iluminación", "LED", "RGB"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(rgb|led|backlight|chroma|mystic)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["rgb", "led", "chroma", "backlight"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ERGONOMICO",
+      "etiqueta": "Diseño Ergonómico",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Vertical, Ambidiestro",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Sí", "No", "Vertical", "Ambidiestro", "Para zurdos", "Para diestros"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ergonómico", "Ergonomic", "Design"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ergonomico|ergonomic|vertical|ambidextrous|comfort)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ergonomico", "vertical", "ambidextrous", "comfort"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BOTONES_PROGRAMABLES",
+      "etiqueta": "Botones Programables",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, 6 programables, Macros",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Programables", "Macros", "Custom"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(programmable|macro|customizable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["programmable", "macro", "customizable"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RUEDA_SCROLL",
+      "etiqueta": "Rueda de Scroll",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Estándar, Táctil, Horizontal + Vertical",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": ["Estándar", "Táctil", "Horizontal + Vertical", "MagSpeed", "HyperScroll"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Scroll", "Rueda", "Wheel"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(scroll|wheel|rueda|tactil|magspeed|hyperscroll)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["scroll", "wheel", "tactil", "magspeed"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BATERIA_AUTONOMIA",
+      "etiqueta": "Batería/Autonomía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: No aplica, 12 meses, 250 horas",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Batería", "Battery", "Autonomía"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(meses?|horas?|días?)\\s*(bateria|battery|aaa|aa|recargable)?", "grupo": 0},
+          {"tipo": "PATRON", "patron": "\\b(aa|aaa|recargable|lithium)\\b", "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 113 x 66 x 38 mm",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.08, 0.12, 0.15",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 0.05,
+        "max": 0.5
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Kg"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,3})\\s*(g|gramos|kg)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w]+)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "plateado", "black", "white"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Mouse Microsoft básico del inventario real",
+      "texto": "10 Mouse Basic Optical Ma Microsoft Mo Ready Mouse USB óptico Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Microsoft",
+        "MODELO": "Ready Mouse",
+        "TECNOLOGIA_SENSOR": "Óptico",
+        "CONECTIVIDAD": "USB",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 2: Mouse Logitech del inventario real",
+      "texto": "01 Mouse Ma Logitech Mo M90 Se 1951HS08Q918 óptico 1000 DPI USB Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Logitech",
+        "MODELO": "M90",
+        "TECNOLOGIA_SENSOR": "Óptico",
+        "CONECTIVIDAD": "USB",
+        "RESOLUCION_DPI": "1000 DPI",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 3: Mouse Dell del inventario real",
+      "texto": "01 Mouse Ma Dell Mo MS116t1 Se CN-065K5F-LO300-31G-0CJ3 USB básico Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Dell",
+        "MODELO": "MS116t1",
+        "TECNOLOGIA_SENSOR": "Basic",
+        "CONECTIVIDAD": "USB",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

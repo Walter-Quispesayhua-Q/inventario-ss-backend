@@ -1,0 +1,303 @@
+{
+    "metadatos": {
+        "idPlantilla": "TPL-SSD-2025-V1",
+        "version": "1.0",
+        "nombre": "SSD",
+        "categoriaSemantica": "COMPONENTE_INTERNO",
+        "descripcion": "Plantilla ML para unidades de almacenamiento SSD - NVMe, SATA, M.2",
+        "indices": [
+            "SSD",
+            "Disco SSD",
+            "Unidad Estado Sólido"
+        ]
+    },
+    "inteligencia": {
+        "modoAprendizaje": true,
+        "adaptacionAutomatica": true,
+        "reconocimientoPatrones": true,
+        "nivelConfianzaMinimo": 0.80,
+        "detectarEstructura": true,
+        "modoColumnas": "AUTO"
+    },
+    "scoring": {
+        "formula": "MULTI_DIMENSIONAL_ML",
+        "pesos": {
+            "palabrasClave": 0.30,
+            "palabrasTecnicas": 0.25,
+            "marcas": 0.15,
+            "patrones": 0.15,
+            "etiquetas": 0.10,
+            "contexto": 0.05
+        },
+        "umbrales": {
+            "rechazo": 0.50,
+            "dudoso": 0.70,
+            "probable": 0.85,
+            "seguro": 0.95,
+            "certeza": 0.99
+        }
+    },
+    "reconocimiento": {
+        "palabrasClave": {
+            "criticas": {
+                "terminos": [
+                    "ssd",
+                    "solid state",
+                    "estado solido",
+                    "nvme",
+                    "almacenamiento"
+                ],
+                "peso": 8.0
+            },
+            "fuertes": {
+                "terminos": [
+                    "m.2",
+                    "sata",
+                    "pcie",
+                    "unidad"
+                ],
+                "peso": 3.0
+            },
+            "medias": {
+                "terminos": [
+                    "disco",
+                    "storage",
+                    "drive"
+                ],
+                "peso": 2.0
+            },
+            "debiles": {
+                "terminos": [
+                    "interno",
+                    "componente"
+                ],
+                "peso": 1.0
+            }
+        },
+        "palabrasTecnicas": {
+            "tipos": [
+                "nvme",
+                "sata",
+                "m.2",
+                "2.5",
+                "pcie",
+                "pcie4",
+                "pcie5"
+            ],
+            "capacidades": [
+                "128gb",
+                "256gb",
+                "512gb",
+                "1tb",
+                "2tb",
+                "4tb"
+            ],
+            "velocidades": [
+                "read",
+                "write",
+                "mb/s",
+                "mb",
+                "lectura",
+                "escritura"
+            ]
+        },
+        "marcas": {
+            "tier1": [
+                "samsung",
+                "kingston",
+                "crucial",
+                "western digital",
+                "wd"
+            ],
+            "tier2": [
+                "seagate",
+                "sandisk",
+                "adata",
+                "corsair",
+                "sabrent",
+                "kioxia"
+            ],
+            "tier3": [
+                "pny",
+                "patriot",
+                "teamgroup",
+                "silicon power"
+            ]
+        },
+        "palabrasExclusion": {
+            "absoluta": [
+                "monitor",
+                "teclado",
+                "impresora",
+                "hdd",
+                "termoventilador",
+                "convector",
+                "calefactor",
+                "fan heater",
+                "radiador",
+                "climatizacion",
+                "imaco"
+            ],
+            "fuerte": [
+                "ram",
+                "memoria",
+                "tarjeta",
+                "temperatura",
+                "calefaccion"
+            ],
+            "media": [
+                "usb",
+                "cable",
+                "externo"
+            ],
+            "debil": []
+        }
+    },
+    "atributosExtraccion": [
+        {
+            "nombreCampo": "MARCA",
+            "etiqueta": "Marca",
+            "tipoDato": "TEXTO",
+            "requerido": true,
+            "placeholder": "Ej: Samsung, Kingston, WD",
+            "prioridad": 1,
+            "orden_ui": 1,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Marca",
+                            "Brand"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "MARCA_CONOCIDA",
+                        "fuente": "marcas.*"
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "MODELO",
+            "etiqueta": "Modelo",
+            "tipoDato": "TEXTO",
+            "requerido": true,
+            "placeholder": "Ej: 970 EVO Plus, A2000",
+            "prioridad": 2,
+            "orden_ui": 2
+        },
+        {
+            "nombreCampo": "CAPACIDAD",
+            "etiqueta": "Capacidad",
+            "tipoDato": "TEXTO",
+            "requerido": true,
+            "placeholder": "Ej: 512GB, 1TB",
+            "prioridad": 3,
+            "orden_ui": 3,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Capacidad",
+                            "Storage",
+                            "Size"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(\\d+)\\s*(gb|tb)",
+                        "grupo": 0
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "TIPO_INTERFAZ",
+            "etiqueta": "Tipo Interfaz",
+            "tipoDato": "TEXTO",
+            "requerido": false,
+            "placeholder": "Ej: NVMe M.2, SATA",
+            "prioridad": 4,
+            "orden_ui": 4,
+            "opciones": [
+                "NVMe M.2",
+                "SATA M.2",
+                "SATA 2.5",
+                "PCIe 4.0",
+                "PCIe 5.0"
+            ],
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Tipo",
+                            "Interfaz",
+                            "Interface"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(nvme|sata|pcie)\\s*(m\\.?2|2\\.5)?",
+                        "grupo": 0,
+                        "mayusculas": true
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "VELOCIDAD_LECTURA",
+            "etiqueta": "Velocidad Lectura (MB/s)",
+            "tipoDato": "ENTERO",
+            "requerido": false,
+            "placeholder": "Ej: 3500, 7000",
+            "prioridad": 5,
+            "orden_ui": 5,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Lectura",
+                            "Read",
+                            "Read Speed"
+                        ],
+                        "prioridad": 1
+                    },
+                    {
+                        "tipo": "PATRON",
+                        "patron": "(\\d{3,5})\\s*(mb|mb/s)\\s*(lectura|read)?",
+                        "grupo": 1
+                    }
+                ]
+            }
+        },
+        {
+            "nombreCampo": "VELOCIDAD_ESCRITURA",
+            "etiqueta": "Velocidad Escritura (MB/s)",
+            "tipoDato": "ENTERO",
+            "requerido": false,
+            "placeholder": "Ej: 3000, 5000",
+            "prioridad": 6,
+            "orden_ui": 6,
+            "extraccion": {
+                "estrategias": [
+                    {
+                        "tipo": "COLUMNA_MAPEADA",
+                        "nombresColumna": [
+                            "Escritura",
+                            "Write",
+                            "Write Speed"
+                        ],
+                        "prioridad": 1
+                    }
+                ]
+            }
+        }
+    ]
+}

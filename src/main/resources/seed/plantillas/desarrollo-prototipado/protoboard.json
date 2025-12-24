@@ -1,0 +1,1036 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-PRT-2025-V1",
+    "version": "1.0",
+    "nombre": "Protoboard",
+    "categoriaSemantica": "ELECTRONICA_PROTOBOARD_BREADBOARD",
+    "descripcion": "Plantilla ML de Protoboard - Maneja columna única, múltiples columnas e híbrido para protoboards, breadboards y placas de prototipado"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_18_PROTOBOARD",
+        "condicion": ".*(18\\s+protoboard|protoboard.*18).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontraron 18 protoboards específicos del inventario"
+      },
+      {
+        "nombre": "BONUS_BREADBOARD_TERM",
+        "condicion": ".*(breadboard|proto\\s*board).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró término breadboard específico"
+      },
+      {
+        "nombre": "BONUS_PUNTOS_CONEXION",
+        "condicion": ".*(\\d+\\s+puntos|puntos.*conexi[oó]n).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró especificación de puntos de conexión"
+      },
+      {
+        "nombre": "BONUS_ELECTRONICA_USO",
+        "condicion": ".*(arduino|raspberry.*pi|electronica|prototipado).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró uso específico para electrónica"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "protoboard",
+          "breadboard",
+          "proto",
+          "board",
+          "conexion"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "puntos",
+          "electronica",
+          "arduino",
+          "raspberry",
+          "prototipado"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "contactos",
+          "filas",
+          "columnas",
+          "lineas",
+          "circuitos"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "solderless",
+          "experimental",
+          "testing",
+          "prototype"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos_tamaño": [
+        "mini",
+        "pequeño",
+        "mediano",
+        "grande",
+        "full",
+        "half"
+      ],
+      "puntos_conexion": [
+        "170",
+        "400",
+        "830",
+        "1650",
+        "2420"
+      ],
+      "marcas_comunes": [
+        "elegoo",
+        "arduino",
+        "sparkfun",
+        "adafruit",
+        "breadboard"
+      ],
+      "colores": [
+        "blanco",
+        "negro",
+        "verde",
+        "azul",
+        "rojo",
+        "amarillo",
+        "transparente"
+      ],
+      "materiales": [
+        "plastico",
+        "bakelita",
+        "fibra-de-vidrio",
+        "abs"
+      ],
+      "usos_comunes": [
+        "arduino",
+        "raspberry-pi",
+        "electronica",
+        "prototipado",
+        "educativo"
+      ],
+      "características": [
+        "sin-soldadura",
+        "reutilizable",
+        "modular",
+        "conectores"
+      ],
+      "alimentacion": [
+        "con-fuente",
+        "sin-fuente",
+        "powered",
+        "alimentacion-integrada"
+      ],
+      "distribuciones": [
+        "half+",
+        "half-",
+        "full",
+        "tie-points",
+        "power-rails"
+      ],
+      "dimensiones_mm": [
+        "55x83",
+        "65x100",
+        "84x174",
+        "175x184",
+        "184x300"
+      ],
+      "lineas_filas": [
+        "2",
+        "4",
+        "6",
+        "10",
+        "15",
+        "30",
+        "60"
+      ],
+      "columnas": [
+        "5",
+        "10",
+        "30",
+        "65",
+        "100"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "elegoo",
+        "arduino",
+        "sparkfun",
+        "adafruit"
+      ],
+      "tier2": [
+        "breadboard",
+        "sunfounder",
+        "dfrobot",
+        "seeedstudio"
+      ],
+      "tier3": [
+        "osoyoo",
+        "kuman",
+        "lafvin",
+        "miuzei"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "cpu",
+        "laptop",
+        "tablet",
+        "switch",
+        "rack",
+        "router",
+        "procesador",
+        "intel",
+        "amd",
+        "ryzen",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "xeon",
+        "threadripper"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "d-link",
+        "cisco",
+        "24ptos",
+        "ghz",
+        "nucleos",
+        "cores"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "escritorio",
+        "archivador"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(elegoo|arduino|sparkfun|adafruit)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(breadboard|proto[-\\s]*board)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_protoboard": "\\b(protoboard|breadboard|proto\\s*board)\\b",
+      "puntos_conexion": "(\\d+)\\s*(puntos?|points?|tie\\s*points?)\\s*(de\\s*conexi[oó]n)?",
+      "tipo_tamaño": "\\b(mini|pequeño|mediano|grande|full|half)\\s*(protoboard|breadboard)",
+      "tamaño_mm": "(\\d+)\\s*x\\s*(\\d+)\\s*(?:x\\s*(\\d+))?\\s*mm",
+      "lineas_filas": "(\\d+)\\s*(lineas?|filas?|rows?)",
+      "columnas": "(\\d+)\\s*(columnas?|columns?)",
+      "material_protoboard": "\\b(plastico|bakelita|fibra\\s*de\\s*vidrio|abs)\\b",
+      "color_protoboard": "\\b(blanco|negro|verde|azul|rojo|amarillo|transparente)\\b",
+      "uso_especifico": "\\b(arduino|raspberry\\s*pi|electronica|prototipado|educativo|circuitos)\\b",
+      "alimentacion_protoboard": "\\b(con\\s*fuente|sin\\s*fuente|powered|alimentaci[oó]n)\\b",
+      "caracteristicas_protoboard": "\\b(sin\\s*soldadura|reutilizable|modular|conectores)\\b",
+      "distribucion": "\\b(half\\+|half[-\\s]|full|tie[-\\s]*points|power[-\\s]*rails)\\b",
+      "voltaje_operacion": "(\\d+(?:\\.\\d+)?)\\s*v\\s*(operacion|max|working)",
+      "corriente_maxima": "(\\d+(?:\\.\\d+)?)\\s*(?:ma|amp)\\s*(max|maximo)",
+      "temperatura_operacion": "(-?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "cantidad": "(\\d{1,3})\\s*(protoboard|breadboard|proto\\s*board)",
+      "peso_protoboard": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight|cada)",
+      "kit_protoboard": "\\b(kit\\s*de\\s*protoboard|protoboard\\s*kit|set\\s*protoboard)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Elegoo, Arduino, SparkFun, Adafruit",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(elegoo|arduino|sparkfun|adafruit)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Breadboard, Proto Board, MB-102",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(breadboard|proto[-\\s]*board)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_TAMAÑO",
+      "etiqueta": "Tipo/Tamaño",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Mini, Pequeño, Mediano, Grande, Full",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Mini",
+        "Pequeño",
+        "Mediano",
+        "Grande",
+        "Full",
+        "Half"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Tamaño",
+              "Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(mini|pequeño|mediano|grande|full|half)\\s*(protoboard|breadboard)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "mini",
+              "pequeño",
+              "mediano",
+              "grande",
+              "full",
+              "half"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUNTOS_CONEXION",
+      "etiqueta": "Puntos de Conexión",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 170, 400, 830, 1650",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 50,
+        "max": 5000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Puntos",
+              "Points",
+              "Tie Points"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(puntos?|points?|tie\\s*points?)\\s*(de\\s*conexi[oó]n)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_MM",
+      "etiqueta": "Dimensiones (mm)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 55x83, 84x174, 175x184",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Size",
+              "Medidas"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*(?:x\\s*(\\d+))?\\s*mm",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LINEAS_FILAS",
+      "etiqueta": "Líneas/Filas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2, 4, 6, 10, 30",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Líneas",
+              "Filas",
+              "Rows"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(lineas?|filas?|rows?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLUMNAS",
+      "etiqueta": "Columnas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 5, 10, 30, 65",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 1,
+        "max": 200
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Columnas",
+              "Columns",
+              "Cols"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(columnas?|columns?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL",
+      "etiqueta": "Material",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Plástico, Bakelita, Fibra de vidrio",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": [
+        "Plástico",
+        "Bakelita",
+        "Fibra de vidrio",
+        "ABS"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Material",
+              "Construction",
+              "Build"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(plastico|bakelita|fibra\\s*de\\s*vidrio|abs)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "plastico",
+              "bakelita",
+              "fibra",
+              "vidrio",
+              "abs"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Negro, Verde, Azul, Rojo",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(blanco|negro|verde|azul|rojo|amarillo|transparente)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "blanco",
+              "negro",
+              "verde",
+              "azul",
+              "rojo",
+              "amarillo"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_ESPECIFICO",
+      "etiqueta": "Uso Específico",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Arduino, Raspberry Pi, Electrónica, Educativo",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Uso",
+              "Application",
+              "Purpose"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(arduino|raspberry\\s*pi|electronica|prototipado|educativo|circuitos)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Con fuente, Sin fuente, Powered",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": [
+        "Con fuente",
+        "Sin fuente",
+        "Powered",
+        "Alimentación integrada"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Alimentación",
+              "Power",
+              "Supply"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(con\\s*fuente|sin\\s*fuente|powered|alimentaci[oó]n)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "con",
+              "fuente",
+              "sin",
+              "powered",
+              "alimentacion"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS",
+      "etiqueta": "Características",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Sin soldadura, Reutilizable, Modular",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Características",
+              "Features",
+              "Properties"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(sin\\s*soldadura|reutilizable|modular|conectores)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISTRIBUCION",
+      "etiqueta": "Distribución",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Half+, Half-, Full, Tie Points",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "Half+",
+        "Half-",
+        "Full",
+        "Tie Points",
+        "Power Rails"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Distribución",
+              "Layout",
+              "Configuration"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(half\\+|half[-\\s]|full|tie[-\\s]*points|power[-\\s]*rails)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "half",
+              "full",
+              "tie",
+              "points",
+              "power",
+              "rails"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE_OPERACION",
+      "etiqueta": "Voltaje de Operación (V)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 3.3, 5.0, 12.0, 24.0",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "validacion": {
+        "min": 1.0,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje",
+              "Voltage",
+              "Operating"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*v\\s*(operacion|max|working)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CORRIENTE_MAXIMA",
+      "etiqueta": "Corriente Máxima (mA)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 100, 500, 1000, 2000",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "validacion": {
+        "min": 10,
+        "max": 5000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Corriente",
+              "Current",
+              "Max"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:ma|amp)\\s*(max|maximo)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: -10°C a 85°C, 0°C a 70°C",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Temperatura",
+              "Operating Temp",
+              "Range"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(-?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "KIT_PROTOBOARD",
+      "etiqueta": "Kit de Protoboard",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Kit",
+              "Set",
+              "Package"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(kit\\s*de\\s*protoboard|protoboard\\s*kit|set\\s*protoboard)\\b",
+            "booleano": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (g)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 200, 300",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 10,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight|cada)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 5, 10, 18",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,3})\\s*(protoboard|breadboard|proto\\s*board)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,3})\\s*(protoboard|breadboard|proto\\s*board)",
+            "grupo": 1
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: 18 Protoboards del inventario real",
+      "texto": "18 Protoboard para proyectos de electrónica y Arduino",
+      "extraccionEsperada": {
+        "CANTIDAD": "18",
+        "USO_ESPECIFICO": [
+          "Electrónica",
+          "Arduino"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 2: Protoboard con especificaciones completas",
+      "texto": "05 Protoboard 830 puntos de conexión blanco para Arduino y Raspberry Pi 84x174mm",
+      "extraccionEsperada": {
+        "CANTIDAD": "5",
+        "PUNTOS_CONEXION": "830",
+        "COLOR": "Blanco",
+        "USO_ESPECIFICO": [
+          "Arduino",
+          "Raspberry Pi"
+        ],
+        "TAMAÑO_MM": "84x174mm"
+      }
+    },
+    {
+      "nombre": "Caso 3: Kit de protoboards variados",
+      "texto": "01 Kit de protoboards Elegoo con breadboard grande 1650 puntos y mini 170 puntos",
+      "extraccionEsperada": {
+        "MARCA": "Elegoo",
+        "KIT_PROTOBOARD": true,
+        "TIPO_TAMAÑO": "Grande",
+        "PUNTOS_CONEXION": "1650"
+      }
+    },
+    {
+      "nombre": "Caso 4: Protoboard con alimentación",
+      "texto": "02 Breadboard MB-102 con fuente de alimentación 3.3V y 5V para proyectos",
+      "extraccionEsperada": {
+        "CANTIDAD": "2",
+        "MODELO": "MB-102",
+        "ALIMENTACION": "Con fuente",
+        "VOLTAJE_OPERACION": "5.0"
+      }
+    }
+  ]
+}

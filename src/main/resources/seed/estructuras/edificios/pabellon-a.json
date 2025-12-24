@@ -1,0 +1,86 @@
+{
+  "edificio": {
+    "nombre": "Pabellón A - Laboratorios de Cómputo",
+    "codigo": "PAB-A",
+    "tipoEstructura": "PAB-ACAD",
+    "direccion": "Campus UPeU Juliaca - Zona Tecnológica",
+    "numeroPisos": 4,
+    "idResponsableMantenimiento": 1,
+    "observaciones": "Centro de Simulación y Laboratorios de Cómputo especializados",
+    "pisos": [
+      {
+        "nombre": "Piso 1 - Pab. A",
+        "codigo": "PAB-A-P1",
+        "numeroPiso": 1,
+        "tipoEstructura": "PISO-STD",
+        "idResponsableMantenimiento": 1,
+        "observaciones": "Laboratorios de cómputo básico",
+        "ambientes": [
+          {
+            "nombre": "Lab. Cómputo A-101",
+            "codigo": "A-101",
+            "tipoEstructura": "AMB-LAB",
+            "capacidadPersonas": 40,
+            "idResponsable": 1,
+            "observaciones": "Laboratorio de cómputo general",
+            "palabrasClaveUbicacion": []
+          },
+          {
+            "nombre": "Lab. Cómputo A-102",
+            "codigo": "A-102",
+            "tipoEstructura": "AMB-LAB",
+            "capacidadPersonas": 40,
+            "idResponsable": 1
+          }
+        ]
+      },
+      {
+        "nombre": "Piso 2 - Pab. A",
+        "codigo": "PAB-A-P2",
+        "numeroPiso": 2,
+        "tipoEstructura": "PISO-STD",
+        "idResponsableMantenimiento": 1,
+        "observaciones": "Laboratorios de cómputo intermedio",
+        "ambientes": [
+          {
+            "nombre": "Lab. Redes y Telecomunicaciones A-201",
+            "codigo": "A-201",
+            "tipoEstructura": "AMB-LAB",
+            "capacidadPersonas": 35,
+            "idResponsable": 1,
+            "observaciones": "Laboratorio especializado en redes",
+            "palabrasClaveUbicacion": []
+          }
+        ]
+      },
+      {
+        "nombre": "Piso 3 - Pab. A",
+        "codigo": "PAB-A-P3",
+        "numeroPiso": 3,
+        "tipoEstructura": "PISO-STD",
+        "idResponsableMantenimiento": 1,
+        "observaciones": "Laboratorios especializados",
+        "ambientes": [
+          {
+            "nombre": "Laboratorio Especializado de Ciencia de Datos",
+            "codigo": "A-301",
+            "tipoEstructura": "AMB-LAB",
+            "capacidadPersonas": 30,
+            "idResponsable": 1,
+            "observaciones": "Laboratorio de Big Data, Machine Learning e Inteligencia Artificial",
+            "palabrasClaveUbicacion": []
+          }
+        ]
+      },
+      {
+        "nombre": "Piso 4 - Pab. A",
+        "codigo": "PAB-A-P4",
+        "numeroPiso": 4,
+        "tipoEstructura": "PISO-STD",
+        "idResponsableMantenimiento": 1,
+        "observaciones": "Laboratorios avanzados",
+        "ambientes": []
+      }
+    ]
+  }
+}

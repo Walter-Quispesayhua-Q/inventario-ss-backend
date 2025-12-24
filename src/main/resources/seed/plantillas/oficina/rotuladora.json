@@ -1,0 +1,469 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-LBL-2025-V1",
+    "version": "1.0",
+    "nombre": "Rotuladora",
+    "categoriaSemantica": "OFICINA_ROTULADORA_ETIQUETADO",
+    "descripcion": "Plantilla ML de rotuladora - Maneja columna única, múltiples columnas e híbrido para rotuladoras portátiles y etiquetadoras"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_BROTHER_PORTATIL",
+        "condicion": ".*(rotuladora.*portatil.*brother|brother.*pt).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró rotuladora Brother portátil específica del inventario"
+      },
+      {
+        "nombre": "BONUS_CARTUCHOS_BROTHER",
+        "condicion": ".*(cartuchos.*rotuladora.*brother|brother.*tape).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontraron cartuchos Brother específicos"
+      },
+      {
+        "nombre": "BONUS_TAMAÑO_MM",
+        "condicion": ".*\\d+\\s*mm.*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró tamaño específico en mm"
+      },
+      {
+        "nombre": "BONUS_MODELO_PT",
+        "condicion": ".*(mo\\s+pt|modelo\\s+pt).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró modelo PT específico de Brother"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["rotuladora", "label", "maker", "etiquetadora", "labeladora"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["portatil", "portátil", "brother", "cartuchos", "tape"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["termica", "desktop", "industrial", "cinta", "mm"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["oficina", "etiquetas", "labels", "printing"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["portatil", "portátil", "desktop", "industrial", "termica", "transferencia"],
+      "marcas_comunes": ["brother", "dymo", "casio", "epson", "zebra", "tape"],
+      "modelos_brother": ["pt-e300vp", "pt-d210", "pt-h110", "pt-1010", "pt-2730"],
+      "tamaños_cinta": ["6mm", "9mm", "12mm", "18mm", "24mm", "36mm"],
+      "tipos_cinta": ["laminated", "fabric", "metallic", "transparent", "fluorescent", "cable"],
+      "conectividad": ["usb", "wifi", "bluetooth", "pc-connect", "standalone"],
+      "características": ["teclado", "pantalla", "bateria", "adaptador", "memoria"],
+      "usos": ["oficina", "industrial", "electricista", "laboratorio", "archivo"],
+      "colores_cinta": ["blanco", "amarillo", "azul", "rojo", "verde", "negro", "transparente"],
+      "formatos_texto": ["bold", "italic", "underline", "frames", "symbols"],
+      "fuentes": ["arial", "times", "courier", "helvetica", "script"]
+    },
+    "marcas": {
+      "tier1": ["brother", "dymo", "casio", "epson", "zebra"],
+      "tier2": ["tape", "label-manager", "rhino", "letratag", "p-touch"],
+      "tier3": ["amazon-basics", "officemate", "avery", "staples", "office-depot"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["impresora", "scanner", "monitor", "cpu"],
+      "fuerte": ["pizarra", "ecran", "proyector", "pantalla"],
+      "media": ["mesa", "silla", "escritorio", "estante"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(brother|dymo|casio|tape)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(pt[-\\s]*\\w+|letratag|rhino)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_rotuladora": "\\b(rotuladora|label\\s+maker|etiquetadora|labeladora)\\s*(portatil|portátil|desktop|industrial)?\\b",
+      "tipo_dispositivo": "\\b(portatil|portátil|desktop|industrial|termica|transferencia)\\b",
+      "marca_rotuladora": "\\b(brother|dymo|casio|epson|zebra|tape)\\b",
+      "modelo_especifico": "\\b(pt[-\\s]*\\w+|letratag|rhino|label[-\\s]*manager)\\b",
+      "tamaño_cinta": "(\\d+)\\s*mm\\s*(cinta|tape|width)?",
+      "tipo_cinta": "\\b(laminated|fabric|metallic|transparent|fluorescent|cable|adhesive)\\b",
+      "conectividad": "\\b(usb|wifi|bluetooth|pc\\s+connect|standalone|wireless)\\b",
+      "características_dispositivo": "\\b(teclado|pantalla|bateria|adaptador|memoria|qwerty)\\b",
+      "cantidad": "(\\d{1,2})\\s*(rotuladora|rotuladoras|cartuchos?)",
+      "numero_cartuchos": "(\\d+)\\s*cartuchos?",
+      "colores_disponibles": "\\b(blanco|amarillo|azul|rojo|verde|negro|transparente|multicolor)\\b",
+      "fuentes_texto": "\\b(arial|times|courier|helvetica|script|gothic)\\b",
+      "formatos_texto": "\\b(bold|italic|underline|frames|symbols|borders)\\b",
+      "alimentacion": "\\b(bateria|aa|adaptador|usb\\s+power|recargable)\\b",
+      "uso_específico": "\\b(oficina|industrial|electricista|laboratorio|archivo|cable)\\b",
+      "impresion": "\\b(termica|thermal|transfer|direct|resolution)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Brother, DYMO, Casio, TAPE",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(brother|dymo|casio|tape)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: PT E300VP, LabelManager, Rhino",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(pt[-\\s]*\\w+|letratag|rhino)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_ROTULADORA",
+      "etiqueta": "Tipo de Rotuladora",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Portátil, Desktop, Industrial, Térmica",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Portátil", "Desktop", "Industrial", "Térmica", "Transferencia", "Cartuchos"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Category"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(rotuladora|cartuchos?)\\s*(portatil|portátil|desktop|industrial)?\\b", "grupo": 2, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["portatil", "portátil", "desktop", "industrial", "termica", "cartuchos"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_CINTA",
+      "etiqueta": "Tamaño de Cinta (mm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 6, 9, 12, 18, 24, 36",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 3,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tamaño", "Width", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*mm\\s*(cinta|tape|width)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CINTA",
+      "etiqueta": "Tipo de Cinta",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Laminada, Tela, Metálica, Transparente",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cinta", "Tape", "Material"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(laminated|fabric|metallic|transparent|fluorescent|cable|adhesive)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, WiFi, Bluetooth, PC Connect",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "Connection"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|wifi|bluetooth|pc\\s+connect|standalone|wireless)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS",
+      "etiqueta": "Características",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Teclado, Pantalla, Batería, Memoria",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Specs"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(teclado|pantalla|bateria|adaptador|memoria|qwerty)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 4, 6, 12",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(rotuladora|rotuladoras|cartuchos?)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(rotuladora|rotuladoras|cartuchos?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_CARTUCHOS",
+      "etiqueta": "Número de Cartuchos",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 4, 6, 12",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cartuchos", "Cartridges", "Tapes"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*cartuchos?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLORES_DISPONIBLES",
+      "etiqueta": "Colores Disponibles",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Amarillo, Azul, Rojo",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Colores", "Colors", "Available"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(blanco|amarillo|azul|rojo|verde|negro|transparente|multicolor)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUENTES_TEXTO",
+      "etiqueta": "Fuentes de Texto",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Arial, Times, Courier, Helvetica",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Fuentes", "Fonts", "Typography"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(arial|times|courier|helvetica|script|gothic)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATOS_TEXTO",
+      "etiqueta": "Formatos de Texto",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Bold, Italic, Underline, Frames",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formatos", "Formats", "Styles"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(bold|italic|underline|frames|symbols|borders)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Tipo de Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Batería, AA, Adaptador, USB Power",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": ["Batería", "AA", "Adaptador", "USB Power", "Recargable"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alimentación", "Power", "Battery"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(bateria|aa|adaptador|usb\\s+power|recargable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["bateria", "aa", "adaptador", "usb", "recargable"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_ESPECIFICO",
+      "etiqueta": "Uso Específico",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Oficina, Industrial, Electricista, Laboratorio",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": ["Oficina", "Industrial", "Electricista", "Laboratorio", "Archivo", "Cable"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Uso", "Use", "Application"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(oficina|industrial|electricista|laboratorio|archivo|cable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["oficina", "industrial", "electricista", "laboratorio", "archivo"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_IMPRESION",
+      "etiqueta": "Tipo de Impresión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Térmica, Thermal Transfer, Direct",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": ["Térmica", "Thermal Transfer", "Direct", "Inkjet", "Laser"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Impresión", "Print", "Technology"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(termica|thermal|transfer|direct|resolution)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["termica", "thermal", "transfer", "direct", "laser"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Anaranjado, Amarillo, Negro, Blanco",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["anaranjado", "amarillo", "negro", "blanco", "azul", "rojo"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Rotuladora Brother del inventario real",
+      "texto": "01 Rotuladora portátil Ma Brother Mo PT E300VP Co Anaranjado con teclado QWERTY",
+      "extraccionEsperada": {
+        "MARCA": "Brother",
+        "MODELO": "PT E300VP",
+        "TIPO_ROTULADORA": "Portátil",
+        "CARACTERISTICAS": ["Teclado"],
+        "COLOR": "Anaranjado"
+      }
+    },
+    {
+      "nombre": "Caso 2: Cartuchos Brother del inventario real",
+      "texto": "04 Cartuchos de rotuladora Brother 18mm Ma TAPE Co Amarillo adhesivos laminados",
+      "extraccionEsperada": {
+        "MARCA": "TAPE",
+        "TIPO_ROTULADORA": "Cartuchos",
+        "TAMAÑO_CINTA": "18",
+        "NUMERO_CARTUCHOS": "4",
+        "TIPO_CINTA": ["Laminados"],
+        "COLOR": "Amarillo"
+      }
+    },
+    {
+      "nombre": "Caso 3: Rotuladora con conectividad del inventario real",
+      "texto": "01 Rotuladora desktop Ma DYMO Mo LabelManager con conectividad USB y pantalla LCD",
+      "extraccionEsperada": {
+        "MARCA": "DYMO",
+        "MODELO": "LabelManager",
+        "TIPO_ROTULADORA": "Desktop",
+        "CONECTIVIDAD": ["USB"],
+        "CARACTERISTICAS": ["Pantalla"]
+      }
+    }
+  ]
+}

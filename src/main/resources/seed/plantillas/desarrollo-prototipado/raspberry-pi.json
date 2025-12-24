@@ -1,0 +1,1014 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-RPI-2025-V1",
+    "version": "1.0",
+    "nombre": "Raspberry Pi",
+    "categoriaSemantica": "DESARROLLO_RASPBERRY_PI_SBC",
+    "descripcion": "Plantilla ML de Raspberry Pi - Maneja columna única, múltiples columnas e híbrido para placas Raspberry Pi y kits de desarrollo"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_HEXAPOD_ROBOT",
+        "condicion": ".*(18dof\\s+hexapod|hexapod.*spider\\s+robot).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró robot hexápodo específico del inventario"
+      },
+      {
+        "nombre": "BONUS_KIT_PROGRAMACION",
+        "condicion": ".*(nueva\\s+generacion.*kit.*programacion|kit.*raspberry\\s+pi\\s+4).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró kit de programación nueva generación"
+      },
+      {
+        "nombre": "BONUS_KEYESTUDIO",
+        "condicion": ".*(ma\\s+keyestudio|keyestudio.*raspberry).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró marca Keyestudio específica"
+      },
+      {
+        "nombre": "BONUS_ACCESORIOS_COMPLETOS",
+        "condicion": ".*(adaptador\\s+ac\\s+dc.*memoria.*sd|hdmi.*vga.*audio).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontraron accesorios completos incluidos"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "raspberry",
+          "pi",
+          "hexapod",
+          "spider",
+          "robot"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "keyestudio",
+          "kit",
+          "programacion",
+          "nueva",
+          "generacion"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "dof",
+          "ptz",
+          "adaptador",
+          "memoria",
+          "sd"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "desarrollo",
+          "electronics",
+          "maker",
+          "diy"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "versiones_pi": [
+        "pi-1",
+        "pi-2",
+        "pi-3",
+        "pi-3b",
+        "pi-3b+",
+        "pi-4",
+        "pi-4b",
+        "pi-zero",
+        "pi-zero-w"
+      ],
+      "tipos_kit": [
+        "kit-programacion",
+        "kit-proyectos",
+        "hexapod-robot",
+        "spider-robot",
+        "rover"
+      ],
+      "grados_libertad": [
+        "18dof",
+        "12dof",
+        "6dof",
+        "4dof",
+        "2dof"
+      ],
+      "generaciones": [
+        "nueva-generacion",
+        "version-avanzada",
+        "pro",
+        "basic"
+      ],
+      "accesorios": [
+        "adaptador-ac-dc",
+        "memoria-sd",
+        "hdmi",
+        "vga",
+        "audio",
+        "gpio"
+      ],
+      "conectividad": [
+        "wifi",
+        "bluetooth",
+        "ethernet",
+        "usb",
+        "i2c",
+        "spi"
+      ],
+      "sensores": [
+        "camera",
+        "ultrasonic",
+        "servo",
+        "motor",
+        "led"
+      ],
+      "marcas_comunes": [
+        "keyestudio",
+        "raspberry-foundation",
+        "adafruit",
+        "sparkfun"
+      ],
+      "sistemas": [
+        "raspbian",
+        "ubuntu",
+        "noobs",
+        "linux",
+        "python"
+      ],
+      "aplicaciones": [
+        "iot",
+        "robotics",
+        "automation",
+        "learning",
+        "prototyping"
+      ],
+      "memoria_sd": [
+        "8gb",
+        "16gb",
+        "32gb",
+        "64gb",
+        "128gb"
+      ],
+      "alimentacion": [
+        "5v",
+        "3a",
+        "2.5a",
+        "micro-usb",
+        "usb-c"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "keyestudio",
+        "raspberry-foundation",
+        "adafruit",
+        "sparkfun"
+      ],
+      "tier2": [
+        "elegoo",
+        "sunfounder",
+        "freenove",
+        "kuman"
+      ],
+      "tier3": [
+        "miuzei",
+        "labists",
+        "canakit",
+        "vilros"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "jetson",
+        "arduino",
+        "monitor",
+        "cpu",
+        "procesador",
+        "intel",
+        "amd",
+        "ryzen",
+        "core i3",
+        "core i5",
+        "core i7",
+        "core i9",
+        "xeon",
+        "threadripper",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "ghz",
+        "nucleos",
+        "cores",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "archivador",
+        "escritorio"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(keyestudio|raspberry|adafruit)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(spider\\s+robot|pi\\s+\\d+|hexapod)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_raspberry": "\\b(raspberry\\s+pi|pi\\s+\\d+|hexapod\\s+robot|spider\\s+robot)\\b",
+      "version_pi": "raspberry\\s+pi\\s+(\\d+[A-Z]*|\\d+[A-Z]\\d*|zero|zero\\s*w)",
+      "tipo_kit": "\\b(kit\\s+de\\s+programacion|kit\\s+de\\s+proyectos|hexapod\\s+robot|spider\\s+robot|rover)\\b",
+      "grados_libertad": "(\\d+)dof\\s*(hexapod|robot|ptz)?",
+      "generacion": "\\b(nueva\\s+generacion|version\\s+avanzada|pro|basic)\\b",
+      "accesorios_incluidos": "\\b(adaptador\\s+ac\\s+dc|memoria\\s+sd|hdmi|vga|audio|gpio|cable)\\b",
+      "conectividad_pi": "\\b(wifi|bluetooth|ethernet|usb|i2c|spi|uart)\\b",
+      "sensores_incluidos": "\\b(camera|ultrasonic|servo|motor|led|sensor)\\b",
+      "sistema_operativo": "\\b(raspbian|ubuntu|noobs|linux|python|scratch)\\b",
+      "aplicaciones_pi": "\\b(iot|robotics|automation|learning|prototyping|education)\\b",
+      "memoria_sd_gb": "(\\d+)\\s*gb\\s*(sd|memory|card)",
+      "alimentacion_pi": "(\\d+(?:\\.\\d+)?)\\s*[va]\\s*(power|supply|input)",
+      "cantidad": "(\\d{1,2})\\s*(raspberry|pi|kit|hexapod)",
+      "compatibilidad_pi": "\\b(para\\s+raspberry\\s+pi|pi\\s+\\d+[AB]*\\s*compatible)\\b",
+      "clase_sd": "\\b(class\\s+\\d+|cls\\s+\\d+|uhs[-\\s]*\\d+)\\b",
+      "formato_video": "\\b(hdmi|vga|composite|dsi)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Keyestudio, Raspberry Foundation, Adafruit",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(keyestudio|raspberry|adafruit)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Raspberry Pi 4, Spider Robot, Hexapod",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(spider\\s+robot|pi\\s+\\d+|hexapod)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VERSION_PI",
+      "etiqueta": "Versión Raspberry Pi",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Pi 4, Pi 3B, Pi Zero W, 4B2G",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Pi 4",
+        "Pi 3B",
+        "Pi 3B+",
+        "Pi Zero",
+        "Pi Zero W",
+        "4B2G"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Versión",
+              "Version",
+              "Pi"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "raspberry\\s+pi\\s+(\\d+[A-Z]*|\\d+[A-Z]\\d*|zero|zero\\s*w)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "pi",
+              "3b",
+              "4b",
+              "zero",
+              "4b2g"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_KIT",
+      "etiqueta": "Tipo de Kit",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Kit de programación, Hexapod Robot, Kit de proyectos",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "Kit de programación",
+        "Kit de proyectos",
+        "Hexapod Robot",
+        "Spider Robot",
+        "Rover"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Kit",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(kit\\s+de\\s+programacion|kit\\s+de\\s+proyectos|hexapod\\s+robot|spider\\s+robot|rover)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "kit",
+              "programacion",
+              "proyectos",
+              "hexapod",
+              "spider",
+              "robot"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GRADOS_LIBERTAD",
+      "etiqueta": "Grados de Libertad (DOF)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 18, 12, 6, 4, 2",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "DOF",
+              "Grados",
+              "Freedom"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)dof\\s*(hexapod|robot|ptz)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GENERACION",
+      "etiqueta": "Generación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Nueva generación, Versión avanzada, Pro",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": [
+        "Nueva generación",
+        "Versión avanzada",
+        "Pro",
+        "Basic",
+        "Standard"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Generación",
+              "Generation",
+              "Level"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(nueva\\s+generacion|version\\s+avanzada|pro|basic)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "nueva",
+              "generacion",
+              "version",
+              "avanzada",
+              "pro"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS_INCLUIDOS",
+      "etiqueta": "Accesorios Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Adaptador AC/DC, Memoria SD, HDMI, VGA",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Accesorios",
+              "Accessories",
+              "Includes"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(adaptador\\s+ac\\s+dc|memoria\\s+sd|hdmi|vga|audio|gpio|cable)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WiFi, Bluetooth, Ethernet, USB",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Connectivity",
+              "Interfaces"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wifi|bluetooth|ethernet|usb|i2c|spi|uart)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSORES_INCLUIDOS",
+      "etiqueta": "Sensores Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Camera, Ultrasonic, Servo, Motor, LED",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sensores",
+              "Sensors",
+              "Components"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(camera|ultrasonic|servo|motor|led|sensor)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SISTEMA_OPERATIVO",
+      "etiqueta": "Sistema Operativo",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Raspbian, Ubuntu, Python, Linux",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Sistema",
+              "OS",
+              "Software"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(raspbian|ubuntu|noobs|linux|python|scratch)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACIONES",
+      "etiqueta": "Aplicaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: IoT, Robotics, Automation, Learning",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Aplicaciones",
+              "Applications",
+              "Uses"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(iot|robotics|automation|learning|prototyping|education)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MEMORIA_SD_GB",
+      "etiqueta": "Memoria SD (GB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 8, 16, 32, 64, 128",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 4,
+        "max": 512
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "SD",
+              "Memory",
+              "Storage"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*gb\\s*(sd|memory|card)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CLASE_SD",
+      "etiqueta": "Clase de SD",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Class 10, UHS-1, CLS 10",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Clase",
+              "Class",
+              "Speed"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(class\\s+\\d+|cls\\s+\\d+|uhs[-\\s]*\\d+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 5V 3A, Micro-USB, USB-C",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Alimentación",
+              "Power",
+              "Supply"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*[va]\\s*(power|supply|input)",
+            "grupo": 0,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO_VIDEO",
+      "etiqueta": "Formato de Video",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HDMI, VGA, Composite",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Video",
+              "Display",
+              "Output"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hdmi|vga|composite|dsi)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPATIBILIDAD",
+      "etiqueta": "Compatibilidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Para Raspberry Pi 3B o 4B2G",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Compatibilidad",
+              "Compatible",
+              "Support"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(para\\s+raspberry\\s+pi|pi\\s+\\d+[AB]*\\s*compatible)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "para",
+              "raspberry",
+              "pi",
+              "compatible"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 1,
+        "max": 20
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(raspberry|pi|kit|hexapod)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(raspberry|pi|kit|hexapod)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Verde, Rojo, Azul, Negro",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "verde",
+              "rojo",
+              "azul",
+              "negro",
+              "blanco"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Hexapod Robot del inventario real",
+      "texto": "01 18DOF Hexapod Robot Mo Spider Robot 2DOF PTZ con placa principal para Ma Raspberry Pi 3B o 4B2G",
+      "extraccionEsperada": {
+        "MARCA": "Raspberry",
+        "MODELO": "Spider Robot",
+        "VERSION_PI": "3B",
+        "TIPO_KIT": "Hexapod Robot",
+        "GRADOS_LIBERTAD": "18",
+        "COMPATIBILIDAD": "Para Raspberry Pi 3B o 4B2G"
+      }
+    },
+    {
+      "nombre": "Caso 2: Kit Raspberry completo del inventario real",
+      "texto": "01 kit raspberry pib mas adaptador ac dc memoria SGB SD CLS 10 adaptador VGA HDMI con audio",
+      "extraccionEsperada": {
+        "ACCESORIOS_INCLUIDOS": [
+          "Adaptador AC DC",
+          "Memoria SD",
+          "VGA",
+          "HDMI",
+          "Audio"
+        ],
+        "CLASE_SD": "CLS 10",
+        "FORMATO_VIDEO": [
+          "VGA",
+          "HDMI"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 3: Kit programación Keyestudio del inventario real",
+      "texto": "01 Nueva generación del Kit de programación en versión avanzada que incluye Tarjeta Mo Raspberry Pi 4 Ma Keyestudio",
+      "extraccionEsperada": {
+        "MARCA": "Keyestudio",
+        "MODELO": "Raspberry Pi 4",
+        "VERSION_PI": "4",
+        "TIPO_KIT": "Kit de programación",
+        "GENERACION": "Nueva generación"
+      }
+    },
+    {
+      "nombre": "Caso 4: Kit de proyectos del inventario real",
+      "texto": "02 Kit de proyectos para Raspberry Pi con sensores y componentes",
+      "extraccionEsperada": {
+        "CANTIDAD": "2",
+        "TIPO_KIT": "Kit de proyectos",
+        "COMPATIBILIDAD": "Para Raspberry Pi",
+        "SENSORES_INCLUIDOS": [
+          "Sensores"
+        ]
+      }
+    }
+  ]
+}

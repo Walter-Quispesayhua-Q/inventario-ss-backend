@@ -1,0 +1,1228 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-MWV-2025-V1",
+    "version": "1.0",
+    "nombre": "HornoMicroondas",
+    "categoriaSemantica": "ELECTRODOMESTICO_MICROONDAS_MICROWAVE_OVEN",
+    "descripcion": "Plantilla ML de Horno Microondas - Maneja columna única, múltiples columnas e híbrido para hornos microondas, microondas con grill y combinados"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_PANASONIC_NN_SB34HMRPK",
+        "condicion": ".*(ma\\s+panasonic.*monn[-\\s]*sb34hmrpk|panasonic.*nn[-\\s]*sb34hmrpk).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Horno Panasonic NN-SB34HMRPK específico del inventario"
+      },
+      {
+        "nombre": "BONUS_DIMENSIONES_315_349_227",
+        "condicion": ".*(dimensiones.*315.*349.*227|315.*349.*227.*mm).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontraron dimensiones específicas del inventario"
+      },
+      {
+        "nombre": "BONUS_800W_12_7KG",
+        "condicion": ".*(potencia.*800.*w.*peso.*12\\.7|800.*w.*12\\.7.*kg).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontraron especificaciones de potencia y peso específicas"
+      },
+      {
+        "nombre": "BONUS_MICROONDAS_NEGRO",
+        "condicion": ".*(horno\\s+microondas.*co\\s+negro|microondas.*negro).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró horno microondas color negro"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "horno",
+          "microondas",
+          "microwave",
+          "oven"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "panasonic",
+          "potencia",
+          "dimensiones",
+          "peso",
+          "watts"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "grill",
+          "conveccion",
+          "digital",
+          "programas",
+          "timer"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "cooking",
+          "kitchen",
+          "heating",
+          "defrost"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": [
+        "panasonic",
+        "lg",
+        "samsung",
+        "sharp",
+        "toshiba",
+        "whirlpool"
+      ],
+      "tipos_microondas": [
+        "solo-microondas",
+        "grill",
+        "conveccion",
+        "combinado",
+        "integrable"
+      ],
+      "potencias": [
+        "600w",
+        "700w",
+        "800w",
+        "900w",
+        "1000w",
+        "1200w",
+        "1500w"
+      ],
+      "capacidades": [
+        "17l",
+        "20l",
+        "23l",
+        "25l",
+        "28l",
+        "30l",
+        "32l",
+        "42l"
+      ],
+      "controles": [
+        "digital",
+        "tactil",
+        "botones",
+        "perillas",
+        "touch"
+      ],
+      "funciones": [
+        "descongelar",
+        "recalentar",
+        "grill",
+        "conveccion",
+        "vapor",
+        "crisp"
+      ],
+      "programas": [
+        "auto-cook",
+        "sensor-cook",
+        "quick-start",
+        "eco-mode"
+      ],
+      "niveles_potencia": [
+        "5-niveles",
+        "8-niveles",
+        "10-niveles",
+        "variable"
+      ],
+      "interiores": [
+        "acero-inoxidable",
+        "ceramico",
+        "esmalte",
+        "easy-clean"
+      ],
+      "puertas": [
+        "cristal",
+        "espejo",
+        "tintado",
+        "transparente"
+      ],
+      "seguridad": [
+        "bloqueo-ninos",
+        "sensor-puerta",
+        "auto-stop"
+      ],
+      "displays": [
+        "led",
+        "lcd",
+        "digital",
+        "analogico",
+        "clock"
+      ],
+      "colores": [
+        "negro",
+        "blanco",
+        "gris",
+        "plateado",
+        "acero"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "panasonic",
+        "lg",
+        "samsung",
+        "sharp",
+        "toshiba"
+      ],
+      "tier2": [
+        "whirlpool",
+        "ge",
+        "kenmore",
+        "frigidaire",
+        "bosch"
+      ],
+      "tier3": [
+        "generic",
+        "no-brand",
+        "china",
+        "oem",
+        "local"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "horno-convencional",
+        "tostadora",
+        "freidora",
+        "plancha",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "pizarra",
+        "ecran",
+        "rotuladora",
+        "impresora",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "silla",
+        "mesa",
+        "escritorio",
+        "archivador"
+      ],
+      "debil": [
+        "mueble",
+        "furniture",
+        "office",
+        "storage"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(panasonic|lg|samsung|sharp)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(nn[-\\s]*[a-z0-9]+|ms[-\\s]*[a-z0-9]+|me[-\\s]*[a-z0-9]+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_microondas": "\\b(horno\\s+microondas|microondas|microwave\\s+oven)\\b",
+      "marca_microondas": "Ma\\s+([\\w\\-]+)",
+      "modelo_microondas": "Mo([A-Z0-9\\-]+)",
+      "dimensiones_microondas": "Dimensiones\\s+(\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+)\\s*mm",
+      "peso_microondas": "peso\\s+(\\d+(?:\\.\\d+)?)\\s*kg",
+      "potencia_microondas": "potencia\\s+de\\s+(\\d+)\\s*W",
+      "color_microondas": "Co\\s+([A-Za-z]+)",
+      "capacidad_microondas": "(\\d+(?:[\\.,]\\d+)?)\\s*(litros?|lt?)\\s*(capacidad|volumen)?",
+      "niveles_potencia_micro": "(\\d+)\\s*(niveles?|levels?)\\s*(potencia|power)",
+      "funciones_microondas": "\\b(descongelar|grill|conveccion|vapor|reheat|crisp)\\b",
+      "display_microondas": "\\b(display|pantalla|lcd|led|digital|clock)\\b",
+      "control_microondas": "\\b(tactil|botones|perillas|digital|analogico|touch)\\b",
+      "timer_microondas": "\\b(timer|temporizador|reloj|clock)\\b",
+      "interior_microondas": "\\b(acero\\s+inoxidable|ceramico|esmalte|easy[-\\s]*clean)\\b",
+      "puerta_microondas": "\\b(cristal|vidrio|espejo|transparente|tintado)\\b",
+      "seguridad_microondas": "\\b(bloqueo\\s+ni[ñn]os|child\\s+lock|sensor\\s+puerta|auto[-\\s]*stop)\\b",
+      "ventilacion_micro": "\\b(ventilador|ventilacion|extractor|turbo)\\b",
+      "programas_microondas": "\\b(auto[-\\s]*cook|sensor[-\\s]*cook|quick[-\\s]*start|eco[-\\s]*mode)\\b",
+      "frecuencia_microondas": "(\\d+(?:\\.\\d+)?)\\s*ghz\\s*(frecuencia|frequency)?",
+      "consumo_microondas": "(\\d+)\\s*w\\s*(consumo|consumption|standby)?",
+      "voltaje_microondas": "(\\d+)\\s*v\\s*(voltaje|voltage|input)?",
+      "instalacion_microondas": "\\b(sobremesa|integrable|empotrable|portatil)\\b",
+      "apertura_puerta": "\\b(lateral|abatible|hacia\\s+abajo|pull[-\\s]*down)\\b",
+      "plato_giratorio": "\\b(plato\\s+giratorio|turntable|rotating\\s+plate)\\s*(\\d+)?\\s*cm?",
+      "grill_potencia": "grill\\s+(\\d+)\\s*w",
+      "conveccion_temp": "convecci[oó]n\\s+(\\d+)\\s*°?c",
+      "memoria_programas": "(\\d+)\\s*(programas?|memory|preset)",
+      "cantidad": "(\\d{1,2})\\s*(horno\\s+microondas|microondas|microwave)",
+      "eficiencia_energetica": "\\b(clase\\s+[a-g]|energy\\s+class|eficiencia\\s+[a-g])\\b",
+      "ruido_microondas": "(\\d+(?:\\.\\d+)?)\\s*db\\s*(ruido|noise|sound)?",
+      "garantia_microondas": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Panasonic, LG, Samsung, Sharp, Toshiba",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z\\-]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(panasonic|lg|samsung|sharp)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: NN-SB34HMRPK, MS23F301TAK, ME6194ST",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([A-Z0-9\\-]+)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(nn[-\\s]*[a-z0-9]+|ms[-\\s]*[a-z0-9]+|me[-\\s]*[a-z0-9]+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MICROONDAS",
+      "etiqueta": "Tipo de Microondas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Solo microondas, Grill, Convección, Combinado",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": [
+        "Solo microondas",
+        "Grill",
+        "Convección",
+        "Combinado",
+        "Integrable"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Type",
+              "Category"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(horno\\s+microondas|microondas|microwave\\s+oven)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "microondas",
+              "grill",
+              "conveccion",
+              "combinado",
+              "integrable"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA",
+      "etiqueta": "Potencia (W)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 600, 700, 800, 900, 1000, 1200",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 500,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Potencia",
+              "Power",
+              "Watts"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "potencia\\s+de\\s+(\\d+)\\s*W",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (mm)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 315 x 349 x 227 mm, 461 x 368 x 280 mm",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Dimensiones\\s+(\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+)\\s*mm",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 10.5, 12.7, 15.2, 18.0",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 8.0,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Mass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "peso\\s+(\\d+(?:\\.\\d+)?)\\s*kg",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD",
+      "etiqueta": "Capacidad (L)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 17, 20, 23, 25, 28, 30",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 10.0,
+        "max": 60.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Capacidad",
+              "Volume",
+              "Litros"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*(litros?|lt?)\\s*(capacidad|volumen)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NIVELES_POTENCIA",
+      "etiqueta": "Niveles de Potencia",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 5, 8, 10, Variable",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 3,
+        "max": 15
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Niveles",
+              "Power Levels",
+              "Settings"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(niveles?|levels?)\\s*(potencia|power)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES",
+      "etiqueta": "Funciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Descongelar, Grill, Convección, Vapor",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Funciones",
+              "Functions",
+              "Features"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(descongelar|grill|conveccion|vapor|reheat|crisp)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISPLAY",
+      "etiqueta": "Tipo de Display",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Digital, LCD, LED, Analógico",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "Digital",
+        "LCD",
+        "LED",
+        "Analógico",
+        "Clock"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Display",
+              "Pantalla",
+              "Screen"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(display|pantalla|lcd|led|digital|clock)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "digital",
+              "lcd",
+              "led",
+              "analogico",
+              "clock"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_CONTROL",
+      "etiqueta": "Tipo de Control",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Táctil, Botones, Perillas, Digital",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": [
+        "Táctil",
+        "Botones",
+        "Perillas",
+        "Digital",
+        "Touch"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Control",
+              "Interface",
+              "Input"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(tactil|botones|perillas|digital|analogico|touch)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "tactil",
+              "botones",
+              "perillas",
+              "digital",
+              "touch"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INTERIOR",
+      "etiqueta": "Material Interior",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Acero inoxidable, Cerámico, Esmalte",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": [
+        "Acero inoxidable",
+        "Cerámico",
+        "Esmalte",
+        "Easy-clean"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Interior",
+              "Inside",
+              "Cavity"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(acero\\s+inoxidable|ceramico|esmalte|easy[-\\s]*clean)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "acero",
+              "inoxidable",
+              "ceramico",
+              "esmalte"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PUERTA",
+      "etiqueta": "Tipo de Puerta",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Cristal, Espejo, Transparente, Tintado",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": [
+        "Cristal",
+        "Espejo",
+        "Transparente",
+        "Tintado",
+        "Vidrio"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Puerta",
+              "Door",
+              "Glass"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(cristal|vidrio|espejo|transparente|tintado)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "cristal",
+              "espejo",
+              "transparente",
+              "tintado",
+              "vidrio"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SEGURIDAD",
+      "etiqueta": "Características de Seguridad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Bloqueo niños, Sensor puerta, Auto-stop",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Seguridad",
+              "Safety",
+              "Protection"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(bloqueo\\s+ni[ñn]os|child\\s+lock|sensor\\s+puerta|auto[-\\s]*stop)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROGRAMAS",
+      "etiqueta": "Programas Automáticos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Auto-cook, Sensor-cook, Quick-start, Eco-mode",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Programas",
+              "Programs",
+              "Auto"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(auto[-\\s]*cook|sensor[-\\s]*cook|quick[-\\s]*start|eco[-\\s]*mode)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA",
+      "etiqueta": "Frecuencia (GHz)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.45",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 2.0,
+        "max": 3.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "Frequency",
+              "GHz"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*ghz\\s*(frecuencia|frequency)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO",
+      "etiqueta": "Consumo de Energía (W)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1200, 1350, 1500",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 800,
+        "max": 2500
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Consumo",
+              "Power Consumption",
+              "Energy"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*w\\s*(consumo|consumption|standby)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE",
+      "etiqueta": "Voltaje (V)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 110, 220, 240",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 110,
+        "max": 250
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Voltaje",
+              "Voltage",
+              "Input"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*v\\s*(voltaje|voltage|input)?",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INSTALACION",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sobremesa, Integrable, Empotrable, Portátil",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "opciones": [
+        "Sobremesa",
+        "Integrable",
+        "Empotrable",
+        "Portátil"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Instalación",
+              "Installation",
+              "Mounting"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(sobremesa|integrable|empotrable|portatil)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "sobremesa",
+              "integrable",
+              "empotrable",
+              "portatil"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PLATO_GIRATORIO",
+      "etiqueta": "Plato Giratorio (cm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 24, 27, 31, 35",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "validacion": {
+        "min": 20,
+        "max": 40
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Plato",
+              "Turntable",
+              "Rotating"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(plato\\s+giratorio|turntable|rotating\\s+plate)\\s*(\\d+)?\\s*cm?",
+            "grupo": 2
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "EFICIENCIA_ENERGETICA",
+      "etiqueta": "Eficiencia Energética",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Clase A, Clase B, Energy Class",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "opciones": [
+        "Clase A",
+        "Clase B",
+        "Clase C",
+        "Energy Class"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Eficiencia",
+              "Energy Class",
+              "Rating"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(clase\\s+[a-g]|energy\\s+class|eficiencia\\s+[a-g])\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "clase",
+              "energy",
+              "eficiencia"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Cantidad",
+              "Qty",
+              "Units"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "^(\\d{1,2})\\s*(horno\\s+microondas|microondas|microwave)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{1,2})\\s*(horno\\s+microondas|microondas|microwave)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Plateado, Acero",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Co\\s+([A-Za-z]+)",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "blanco",
+              "gris",
+              "plateado",
+              "acero"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Horno Panasonic del inventario real",
+      "texto": "01 Horno microondas Ma Panasonic MoNN-SB34HMRPK Dimensiones 315 x 349 x 227 mm peso 12.7 kg con potencia de 800 W Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Panasonic",
+        "MODELO": "NN-SB34HMRPK",
+        "TIPO_MICROONDAS": "Horno microondas",
+        "DIMENSIONES": "315 x 349 x 227 mm",
+        "PESO": "12.7",
+        "POTENCIA": "800",
+        "COLOR": "Negro",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Microondas LG con grill",
+      "texto": "02 Microondas LG MS2336GIB 23L 800W con grill 1000W display digital 5 niveles",
+      "extraccionEsperada": {
+        "MARCA": "LG",
+        "MODELO": "MS2336GIB",
+        "CAPACIDAD": "23",
+        "POTENCIA": "800",
+        "FUNCIONES": [
+          "Grill"
+        ],
+        "DISPLAY": "Digital",
+        "NIVELES_POTENCIA": "5",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 3: Microondas Samsung con convección",
+      "texto": "01 Microondas Samsung ME6194ST 28L 900W convección 1500W con auto-cook",
+      "extraccionEsperada": {
+        "MARCA": "Samsung",
+        "MODELO": "ME6194ST",
+        "CAPACIDAD": "28",
+        "POTENCIA": "900",
+        "FUNCIONES": [
+          "Convección"
+        ],
+        "PROGRAMAS": [
+          "Auto-cook"
+        ]
+      }
+    },
+    {
+      "nombre": "Caso 4: Microondas integrable con sensor",
+      "texto": "01 Microondas integrable Sharp 25L 1000W con sensor-cook y bloqueo niños",
+      "extraccionEsperada": {
+        "MARCA": "Sharp",
+        "CAPACIDAD": "25",
+        "POTENCIA": "1000",
+        "INSTALACION": "Integrable",
+        "PROGRAMAS": [
+          "Sensor-cook"
+        ],
+        "SEGURIDAD": [
+          "Bloqueo niños"
+        ]
+      }
+    }
+  ]
+}

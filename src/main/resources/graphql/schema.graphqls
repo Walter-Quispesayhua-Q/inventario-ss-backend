@@ -1,0 +1,21 @@
+# Este archivo define los tipos raíz para las consultas y mutaciones.
+# Todos los demás archivos .graphqls usarán "extend" para añadir
+# funcionalidades a estos tipos base.
+
+# --- Declaración de Tipos Escalares Personalizados ---
+# NOTA: Upload NO se usa aquí. Los archivos se manejan por REST API.
+scalar JSON
+scalar DateTime
+scalar Date
+scalar Long
+
+type Query {
+    # Este campo es un placeholder para asegurar que el tipo Query no esté vacío.
+    # Puedes pensar en él como un punto de partida.
+    _version: String
+}
+
+type Mutation {
+    # Placeholder para el tipo Mutation.
+    _version: String
+}

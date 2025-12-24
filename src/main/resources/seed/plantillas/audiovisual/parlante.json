@@ -1,0 +1,563 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-SPK-2025-V1",
+    "version": "1.0",
+    "nombre": "Parlante",
+    "categoriaSemantica": "DISPOSITIVO_AUDIO_PARLANTE",
+    "descripcion": "Plantilla ML de parlante - Maneja columna única, múltiples columnas e híbrido para dispositivos de reproducción de audio"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_POTENCIA_ESPECIFICA",
+        "condicion": ".*\\d+\\s*(w|watts?|vatios?).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró potencia específica del parlante"
+      },
+      {
+        "nombre": "BONUS_CONECTIVIDAD_WIRELESS",
+        "condicion": ".*(bluetooth|wifi|wireless|inalambrico).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró conectividad inalámbrica"
+      },
+      {
+        "nombre": "BONUS_INTELIGENTE",
+        "condicion": ".*(inteligente|smart|alexa|google|echo|dot).*",
+        "puntos": 0.10,
+        "descripcion": "Se identificó como parlante inteligente"
+      },
+      {
+        "nombre": "BONUS_MARCA_AUDIO",
+        "condicion": ".*(jbl|bose|sony|samsung|creative|logitech).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró marca conocida de audio"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["parlante", "altavoz", "speaker", "soundbar", "audio"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["bluetooth", "wifi", "wireless", "inteligente", "smart", "echo"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["stereo", "bass", "subwoofer", "tweeter", "surround", "watts"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["sonido", "musica", "audio", "volumen"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": ["inteligente", "bluetooth", "soundbar", "subwoofer", "portatil", "desktop", "gaming", "party"],
+      "conectividad": ["bluetooth", "wifi", "wireless", "usb", "aux", "jack", "nfc", "airplay"],
+      "asistentes": ["alexa", "google", "assistant", "siri", "cortana", "bixby"],
+      "audio": ["stereo", "mono", "surround", "2.1", "5.1", "7.1", "dolby", "dts"],
+      "drivers": ["woofer", "tweeter", "subwoofer", "bass", "mid-range", "full-range"],
+      "caracteristicas": ["waterproof", "portable", "rgb", "led", "party", "karaoke", "mic"],
+      "marcas_comunes": ["jbl", "bose", "sony", "samsung", "creative", "logitech", "harman", "beats"],
+      "modelos_especificos": ["partybox310", "echo-dot", "hw-m360", "creative-865h"],
+      "tecnologias": ["apt-x", "ldac", "sbc", "aac", "true-wireless", "tws"]
+    },
+    "marcas": {
+      "tier1": ["bose", "jbl", "sony", "harman-kardon", "bang-olufsen"],
+      "tier2": ["samsung", "lg", "creative", "logitech", "beats"],
+      "tier3": ["anker", "tronsmart", "xiaomi", "marshall", "ultimate-ears"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "television", "proyector", "camara"],
+      "fuerte": ["mouse", "teclado", "impresora", "scanner"],
+      "media": ["cable", "adaptador", "soporte", "microfono"],
+      "debil": ["audio", "usb", "bluetooth", "wireless"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma\\s+([A-Z]+)|\\b(jbl|bose|sony|samsung|creative|logitech)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(partybox\\d+|echo[-\\s]*dot|hw[-\\s]*\\w+|n\\s*\\d+h)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "tipo_dispositivo": "\\b(parlante|altavoz|speaker|soundbar|barra[-\\s]*sonido)\\b",
+      "tipo_parlante": "\\b(inteligente|bluetooth|wireless|soundbar|subwoofer|portatil|desktop|gaming|party)\\b",
+      "asistente": "\\b(alexa|google|assistant|siri|cortana|bixby|echo|dot)\\b",
+      "conectividad": "\\b(bluetooth|wifi|wireless|usb|aux|jack|nfc|airplay|inalambrico)\\b",
+      "potencia_rms": "(\\d+(?:\\.\\d+)?)\\s*(w|watts?|vatios?)\\s*(rms|peak|max)?",
+      "configuracion_audio": "\\b(stereo|mono|2\\.1|5\\.1|7\\.1|surround)\\b",
+      "drivers": "\\b(woofer|tweeter|subwoofer|bass|mid[-\\s]*range|full[-\\s]*range)\\b",
+      "respuesta_frecuencia": "(\\d+)\\s*[-~]\\s*(\\d+)\\s*(hz|khz)",
+      "impedancia": "(\\d+)\\s*(ohm|ohms|Ω)",
+      "sensibilidad": "(\\d+)\\s*(db|decibel)",
+      "distorsion": "(\\d+(?:\\.\\d+)?)\\s*%\\s*(thd|distorsion)",
+      "bateria": "(\\d+)\\s*(mah|wh|horas?)\\s*(bateria|battery)?",
+      "alcance_bluetooth": "(\\d+)\\s*(m|metros?|ft|feet?)\\s*(alcance|range)?",
+      "resistencia_agua": "\\b(ipx?[0-9]|waterproof|resistente[-\\s]*agua|sumergible)\\b",
+      "iluminacion": "\\b(rgb|led|lights?|luces?)\\b",
+      "microfono": "\\b(microfono|mic|manos[-\\s]*libres|hands[-\\s]*free)\\b",
+      "dimensiones": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm)",
+      "peso": "(\\d+(?:\\.\\d+)?)\\s*(kg|kilogramos?|g|gramos?)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: JBL, Bose, Sony, Samsung, Creative",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma\\s+([A-Z]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(jbl|bose|sony|samsung|creative|logitech)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: PARTYBOX310, Echo Dot 4, HW-M360",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(partybox\\d+|echo[-\\s]*dot|hw[-\\s]*\\w+|n\\s*\\d+h)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PARLANTE",
+      "etiqueta": "Tipo de Parlante",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Inteligente, Bluetooth, Soundbar, Portátil",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Inteligente", "Bluetooth", "Soundbar", "Subwoofer", "Portátil", "Desktop", "Gaming", "Party"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Categoria"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(inteligente|bluetooth|wireless|soundbar|subwoofer|portatil|desktop|gaming|party)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["inteligente", "bluetooth", "soundbar", "portatil", "gaming"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ASISTENTE_VOZ",
+      "etiqueta": "Asistente de Voz",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Alexa, Google Assistant, Siri",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Alexa", "Google Assistant", "Siri", "Cortana", "Bixby", "No"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Asistente", "Voice Assistant", "AI"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(alexa|google|assistant|siri|cortana|bixby|echo|dot)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["alexa", "google", "assistant", "siri", "echo"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Bluetooth, WiFi, USB, AUX",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connection", "Interface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(bluetooth|wifi|wireless|usb|aux|jack|nfc|airplay|inalambrico)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA_RMS",
+      "etiqueta": "Potencia RMS (Watts)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 20, 50, 100, 240",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 1,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Potencia", "Power", "Watts", "RMS"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(w|watts?|vatios?)\\s*(rms|peak|max)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONFIGURACION_AUDIO",
+      "etiqueta": "Configuración de Audio",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Stereo, 2.1, 5.1, Surround",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["Mono", "Stereo", "2.1", "5.1", "7.1", "Surround"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Audio", "Configuración", "Channels"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(stereo|mono|2\\.1|5\\.1|7\\.1|surround)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["stereo", "mono", "2.1", "5.1", "surround"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DRIVERS",
+      "etiqueta": "Drivers/Altavoces",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Woofer, Tweeter, Subwoofer",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Drivers", "Speakers", "Altavoces"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(woofer|tweeter|subwoofer|bass|mid[-\\s]*range|full[-\\s]*range)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESPUESTA_FRECUENCIA",
+      "etiqueta": "Respuesta de Frecuencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 20Hz - 20kHz, 50Hz - 18kHz",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Frecuencia", "Frequency Response", "Hz"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*[-~]\\s*(\\d+)\\s*(hz|khz)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "IMPEDANCIA",
+      "etiqueta": "Impedancia (Ohms)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 4, 8, 16",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 2,
+        "max": 600
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Impedancia", "Ohms", "Impedance"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(ohm|ohms|Ω)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SENSIBILIDAD",
+      "etiqueta": "Sensibilidad (dB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 85, 90, 95",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 70,
+        "max": 120
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Sensibilidad", "dB", "Sensitivity"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(db|decibel)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BATERIA",
+      "etiqueta": "Batería/Autonomía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 10 horas, 5000 mAh, No aplica",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Batería", "Battery", "Autonomía"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(mah|wh|horas?)\\s*(bateria|battery)?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALCANCE_BLUETOOTH",
+      "etiqueta": "Alcance Bluetooth (metros)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 10, 30, 50",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 5,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alcance", "Range", "Bluetooth Range"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(m|metros?|ft|feet?)\\s*(alcance|range)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESISTENCIA_AGUA",
+      "etiqueta": "Resistencia al Agua",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: IPX7, Waterproof, No resistente",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "opciones": ["IPX4", "IPX5", "IPX6", "IPX7", "IPX8", "Waterproof", "No resistente"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Resistencia", "Water", "IPX"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ipx?[0-9]|waterproof|resistente[-\\s]*agua|sumergible)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ipx", "waterproof", "resistente", "sumergible"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ILUMINACION",
+      "etiqueta": "Iluminación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: RGB, LED, Sin iluminación",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": ["RGB", "LED multicolor", "LED simple", "Sin iluminación"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Iluminación", "LED", "Lights"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(rgb|led|lights?|luces?)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["rgb", "led", "lights", "luces"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MICROFONO_INTEGRADO",
+      "etiqueta": "Micrófono Integrado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Manos libres, Array",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "opciones": ["Sí", "No", "Manos libres", "Array de micrófonos", "Noise Cancelling"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Micrófono", "Mic", "Hands Free"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(microfono|mic|manos[-\\s]*libres|hands[-\\s]*free)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["microfono", "mic", "manos", "libres", "hands"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_ESPECIALES",
+      "etiqueta": "Funciones Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Karaoke, Party Mode, Bass Boost",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Funciones", "Features", "Especiales"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(karaoke|party|bass[-\\s]*boost|eq|equalizer)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 312 x 230 x 171 mm",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.8, 2.5, 5.9",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 0.1,
+        "max": 50.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Kg"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|kilogramos?|g|gramos?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Azul, Blanco, Gris",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w]+)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "azul", "blanco", "gris", "rojo", "verde"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Parlante Echo Dot del inventario real",
+      "texto": "01 PARLANTE INTELIGENTE ECHO DOT 4 AZUL CON ALEXA bluetooth wifi smart speaker",
+      "extraccionEsperada": {
+        "MODELO": "ECHO DOT 4",
+        "TIPO_PARLANTE": "Inteligente",
+        "ASISTENTE_VOZ": "Alexa",
+        "CONECTIVIDAD": ["Bluetooth", "WiFi"],
+        "COLOR": "Azul"
+      }
+    },
+    {
+      "nombre": "Caso 2: Parlante JBL del inventario real",
+      "texto": "01 Parlante Ma JBL Mo PARTYBOX310 Se TL1075-KN0410655 Co NEGRO 240W bluetooth party mode",
+      "extraccionEsperada": {
+        "MARCA": "JBL",
+        "MODELO": "PARTYBOX310",
+        "TIPO_PARLANTE": "Party",
+        "CONECTIVIDAD": ["Bluetooth"],
+        "POTENCIA_RMS": "240",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "Bose",
+        "Modelo": "SoundLink Revolve+",
+        "Tipo": "Portátil",
+        "Asistente": "No",
+        "Conectividad": "Bluetooth, AUX",
+        "Potencia": "16W",
+        "Audio": "Stereo",
+        "Drivers": "Full-range",
+        "Frecuencia": "60Hz - 17kHz",
+        "Batería": "16 horas",
+        "Alcance": "9m",
+        "Resistencia": "IPX4",
+        "Micrófono": "Manos libres",
+        "Peso": "0.9kg",
+        "Color": "Triple Black"
+      },
+      "extraccionEsperada": {
+        "MARCA": "Bose",
+        "MODELO": "SoundLink Revolve+",
+        "TIPO_PARLANTE": "Portátil",
+        "ASISTENTE_VOZ": "No",
+        "CONECTIVIDAD": ["Bluetooth", "AUX"],
+        "POTENCIA_RMS": "16",
+        "CONFIGURACION_AUDIO": "Stereo",
+        "DRIVERS": ["Full-range"],
+        "RESPUESTA_FRECUENCIA": "60Hz - 17kHz",
+        "BATERIA": "16 horas",
+        "ALCANCE_BLUETOOTH": "9",
+        "RESISTENCIA_AGUA": "IPX4",
+        "MICROFONO_INTEGRADO": "Manos libres",
+        "PESO": "0.9",
+        "COLOR": "Triple Black"
+      }
+    }
+  ]
+}

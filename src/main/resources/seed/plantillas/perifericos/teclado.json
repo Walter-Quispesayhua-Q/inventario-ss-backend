@@ -1,0 +1,476 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-TEC-2025-V1",
+    "version": "1.0",
+    "nombre": "Teclado",
+    "categoriaSemantica": "DISPOSITIVO_ENTRADA_TECLADO",
+    "descripcion": "Plantilla ML de teclado - Maneja columna única, múltiples columnas e híbrido para dispositivos de entrada de texto"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_CONECTIVIDAD",
+        "condicion": ".*(usb|wireless|bluetooth|inalambrico|arc).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró tipo de conectividad específica"
+      },
+      {
+        "nombre": "BONUS_TIENE_LAYOUT",
+        "condicion": ".*(qwerty|español|ingles|104|87|60).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró información de layout o distribución"
+      },
+      {
+        "nombre": "BONUS_TIPO_ESPECIAL",
+        "condicion": ".*(gaming|mecanico|ergonomico|arc|plegable|microsoft).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró tipo especial de teclado o marca conocida"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["teclado", "teclados", "keyboard", "keys"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["usb", "wireless", "bluetooth", "mecanico", "membrana", "microsoft", "arc"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["qwerty", "gaming", "ergonomico", "multimedia", "compacto"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["teclas", "layout", "distribucion", "entrada"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "conectividad": ["usb", "usb-c", "wireless", "bluetooth", "ps2", "2.4ghz", "arc"],
+      "tipos": ["mecanico", "membrana", "hibrido", "optico", "capacitivo", "ready"],
+      "layouts": ["qwerty", "dvorak", "colemak", "español", "ingles", "latin"],
+      "formatos": ["full-size", "tkl", "60%", "65%", "75%", "compact", "mini"],
+      "caracteristicas": ["gaming", "ergonomico", "multimedia", "retroiluminado", "arc", "plegable"],
+      "switches": ["cherry", "gateron", "kailh", "outemu", "romer-g"],
+      "iluminacion": ["rgb", "led", "backlight", "retroiluminado", "sin-luz"],
+      "marcas_comunes": ["microsoft", "dell", "lenovo", "logitech", "corsair"]
+    },
+    "marcas": {
+      "tier1": ["microsoft", "logitech", "corsair", "razer", "steelseries"],
+      "tier2": ["dell", "hp", "lenovo", "asus", "cooler-master"],
+      "tier3": ["genius", "trust", "cybertel", "redragon", "havit"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["mouse", "raton", "monitor", "pantalla"],
+      "fuerte": ["impresora", "scanner", "webcam", "microfono"],
+      "media": ["cable", "adaptador", "hub", "dock"],
+      "debil": ["usb", "wireless", "bluetooth"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|\\bteclados?\\s+([\\w\\-]+)|Ma([\\w\\-]+)",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|usb|$))|Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "conectividad": "\\b(usb|usb[-\\s]*c|wireless|bluetooth|ps2|2\\.4ghz|arc)\\b",
+      "tipo_teclado": "\\b(mecanico|membrana|hibrido|optico|capacitivo|arc|ready)\\b",
+      "layout": "\\b(qwerty|dvorak|español|ingles|latin|104|87|60)\\b",
+      "formato": "\\b(full[-\\s]*size|tkl|60%|65%|75%|compact|mini)\\b",
+      "iluminacion": "\\b(rgb|led|backlight|retroiluminado|sin[-\\s]*luz)\\b",
+      "switches": "\\b(cherry|gateron|kailh|outemu|romer[-\\s]*g)\\b",
+      "numero_teclas": "(\\d{2,3})\\s*(teclas?|keys?)",
+      "caracteristicas_especiales": "\\b(gaming|gamer|ergonomico|multimedia|basic|optical|arc|plegable)\\b",
+      "resistencia": "\\b(ipx[0-9]|spill[-\\s]*resistant|waterproof|resistente)\\b",
+      "bateria": "(\\d+)\\s*(meses?|años?|horas?)\\s*(bateria|battery|aaa|aa|recargable)?",
+      "dimensiones": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+      "peso": "(\\d{1,2}\\.\\d|\\d+)\\s*(kg|kilogramos|g|gramos)"
+    },
+    "caracteristicas": {
+      "gaming": "\\b(gaming|gamer|juegos|esports|pro[-\\s]*gaming)\\b",
+      "ergonomico": "\\b(ergonomico|ergonomic|comfort|arc|curvado|plegable)\\b",
+      "multimedia": "\\b(multimedia|media|volume|play|pause|mute|calculator)\\b",
+      "especial": "\\b(arc|plegable|flexible|curved|split)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Microsoft, Logitech, Dell",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\bteclados?\\s+([\\w\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "Ma([\\w\\-]+)", "grupo": 1},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: 1366, MS111T, KU0225, ARC",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|usb|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Tipo de Conectividad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: USB, USB-C, Bluetooth, Inalámbrico",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["USB", "USB-C", "Bluetooth", "Inalámbrico 2.4GHz", "PS/2", "USB + Bluetooth"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connection", "Interface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|usb[-\\s]*c|wireless|bluetooth|ps2|2\\.4ghz|arc)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["usb", "bluetooth", "wireless", "inalambrico", "arc"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_TECLADO",
+      "etiqueta": "Tipo de Teclado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Mecánico, Membrana, Híbrido",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": ["Mecánico", "Membrana", "Híbrido", "Óptico", "Capacitivo"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Type", "Tecnología"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mecanico|membrana|hibrido|optico|capacitivo|arc|ready)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["mecanico", "membrana", "hibrido", "optico", "arc", "ready"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LAYOUT_DISTRIBUCION",
+      "etiqueta": "Layout/Distribución",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: QWERTY Español, QWERTY Inglés, Dvorak",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["QWERTY Español", "QWERTY Inglés", "QWERTY Latino", "Dvorak", "Colemak"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Layout", "Distribución", "Idioma"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(qwerty|dvorak|español|ingles|latin|104|87|60)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["qwerty", "español", "ingles", "latino"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATO_TAMAÑO",
+      "etiqueta": "Formato/Tamaño",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Full Size, TKL, 60%, Compacto",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": ["Full Size", "TKL (Tenkeyless)", "60%", "65%", "75%", "Compacto", "Mini"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formato", "Size", "Tamaño"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(full[-\\s]*size|tkl|60%|65%|75%|compact|mini)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["full", "tkl", "compact", "mini"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_TECLAS",
+      "etiqueta": "Número de Teclas",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 104, 87, 61, 68",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 40,
+        "max": 120
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Teclas", "Keys", "Número"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d{2,3})\\s*(teclas?|keys?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ILUMINACION",
+      "etiqueta": "Iluminación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: RGB, LED Blanco, Sin iluminación",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["RGB", "LED Blanco", "LED Azul", "LED Rojo", "Retroiluminado", "Sin iluminación"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Iluminación", "Backlight", "LED"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(rgb|led|backlight|retroiluminado|sin[-\\s]*luz)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["rgb", "led", "backlight", "retroiluminado"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_SWITCHES",
+      "etiqueta": "Tipo de Switches",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Cherry MX Blue, Gateron Brown, Outemu Red",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Switches", "Switch Type", "Mecánico"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cherry|gateron|kailh|outemu|romer[-\\s]*g)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["cherry", "gateron", "kailh", "outemu"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_GAMING",
+      "etiqueta": "Gaming",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, Gaming RGB, Pro Gaming",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": ["Sí", "No", "Gaming RGB", "Pro Gaming", "Esports"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Gaming", "Gamer", "Juegos"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(gaming|gamer|juegos|esports|pro[-\\s]*gaming)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["gaming", "gamer", "juegos", "esports"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ERGONOMICO",
+      "etiqueta": "Ergonómico",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, ARC, Curvado",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "opciones": ["Sí", "No", "ARC", "Curvado", "Plegable", "Split"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ergonómico", "Ergonomic", "Comfort"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ergonomico|ergonomic|comfort|arc|curvado|plegable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ergonomico", "arc", "curvado", "plegable"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_MULTIMEDIA",
+      "etiqueta": "Funciones Multimedia",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Volume, Play/Pause, Mute, Calculator",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Multimedia", "Media", "Funciones"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(multimedia|media|volume|play|pause|mute|calculator|browser|email)\\b", "multiple": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESISTENCIA_AGUA",
+      "etiqueta": "Resistencia al Agua",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, IPX4, Spill-resistant",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": ["Sí", "No", "IPX4", "Spill-resistant", "Waterproof"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Resistencia", "Water", "IPX"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ipx[0-9]|spill[-\\s]*resistant|waterproof|resistente)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ipx", "spill", "waterproof", "resistente"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BATERIA_AUTONOMIA",
+      "etiqueta": "Batería/Autonomía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: No aplica, 24 meses, 6 meses AAA",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Batería", "Battery", "Autonomía"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(meses?|años?|horas?)\\s*(bateria|battery|aaa|aa|recargable)?", "grupo": 0},
+          {"tipo": "PATRON", "patron": "\\b(aaa|aa|recargable|lithium)\\b", "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 441 x 149 x 23 mm",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.6, 1.2, 2.1",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 0.2,
+        "max": 5.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Kg"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(\\d{1,2}[,.]\\d{1,2}|\\d{1,4})\\s+(kg|kilogramos|g|gramos)\\b", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w]+)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "plateado", "black", "white"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Teclado Microsoft básico del inventario real",
+      "texto": "01 Teclado Ma Microsoft Mo 1366 Se 65803411634 USB QWERTY español Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "Microsoft",
+        "MODELO": "1366",
+        "CONECTIVIDAD": "USB",
+        "LAYOUT_DISTRIBUCION": "QWERTY Español",
+        "COLOR": "Negro"
+      }
+    },
+    {
+      "nombre": "Caso 2: Teclados Microsoft ARC del inventario real",
+      "texto": "03 Teclados microsoft ARC USB ergonómico curvado inalámbrico bluetooth Co Blanco",
+      "extraccionEsperada": {
+        "MARCA": "Microsoft",
+        "MODELO": "ARC",
+        "CONECTIVIDAD": "USB + Bluetooth",
+        "ERGONOMICO": "ARC",
+        "TIPO_TECLADO": "ARC",
+        "COLOR": "Blanco"
+      }
+    },
+    {
+      "nombre": "Caso 3: Teclado Dell del inventario real",
+      "texto": "01 Teclado Ma Dell Mo MS111T Se CN-0C639N-71616-5C1-28DW USB membrana negro",
+      "extraccionEsperada": {
+        "MARCA": "Dell",
+        "MODELO": "MS111T",
+        "CONECTIVIDAD": "USB",
+        "TIPO_TECLADO": "Membrana",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

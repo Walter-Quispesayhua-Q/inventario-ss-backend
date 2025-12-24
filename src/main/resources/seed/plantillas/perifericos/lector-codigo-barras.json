@@ -1,0 +1,624 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-BCR-2025-V1",
+    "version": "1.0",
+    "nombre": "LectorCodigoBarras",
+    "categoriaSemantica": "EQUIPOS_LECTOR_BARCODE_SCANNER_2D_1D",
+    "descripcion": "Plantilla ML de Lector Código de Barras - Maneja columna única, múltiples columnas e híbrido para lectores 1D, 2D, láser e imagen"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_BIENEX_BX2D",
+        "condicion": ".*(ma\\s+bienex.*mo\\s+bx2d|bienex.*bx2d.*2d).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Lector BIENEX BX2D específico del inventario"
+      },
+      {
+        "nombre": "BONUS_ZEBRA_DS2208",
+        "condicion": ".*(ma\\s+zebra.*mo\\s+ds2208|zebra.*ds2208).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró Lector ZEBRA DS2208 específico del inventario"
+      },
+      {
+        "nombre": "BONUS_2D_NEGRO",
+        "condicion": ".*(2d.*co\\s+negro|lector.*2d.*negro).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró lector 2D color negro"
+      },
+      {
+        "nombre": "BONUS_CODIGO_BARRAS",
+        "condicion": ".*(lector\\s+de\\s+c[oó]digo\\s+de\\s+barras|c[oó]digo.*barras).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró término lector de código de barras específico"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["lector", "codigo", "barras", "scanner", "2d"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["bienex", "zebra", "barcode", "reader", "laser"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["qr", "datamatrix", "pdf417", "usb", "bluetooth"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["handheld", "portable", "wireless", "cordless"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": ["bienex", "zebra", "honeywell", "datalogic", "symbol", "motorola"],
+      "tipos_lector": ["1d", "2d", "laser", "ccd", "imagen", "imager", "led"],
+      "tipos_codigo": ["ean", "upc", "code128", "code39", "qr", "datamatrix", "pdf417", "aztec"],
+      "conectividad": ["usb", "bluetooth", "wifi", "rs232", "ethernet", "wireless"],
+      "interfaces": ["hid", "opos", "twain", "sdk", "keyboard-wedge"],
+      "alimentacion": ["usb-power", "battery", "external-power", "5v", "rechargeable"],
+      "tecnologias": ["omnidireccional", "lineal", "area", "imaging", "scanning"],
+      "aplicaciones": ["retail", "warehouse", "inventory", "pos", "healthcare"],
+      "certificaciones": ["ce", "fcc", "rohs", "ul", "ip54", "ip65"],
+      "compatibilidad": ["windows", "android", "ios", "linux", "pos"],
+      "caracteristicas": ["trigger", "hands-free", "presentation", "handheld"],
+      "colores": ["negro", "blanco", "gris", "amarillo", "rojo"]
+    },
+    "marcas": {
+      "tier1": ["bienex", "zebra", "honeywell", "datalogic", "symbol"],
+      "tier2": ["motorola", "opticon", "metrologic", "psc", "intermec"],
+      "tier3": ["generic", "no-brand", "china", "oem", "local"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["impresora", "monitor", "teclado", "mouse"],
+      "fuerte": ["pizarra", "escritorio", "silla", "archivador"],
+      "media": ["mueble", "furniture", "office", "storage"],
+      "debil": ["electronic", "computer", "digital", "software"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(bienex|zebra|honeywell|datalogic)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(bx2d|ds2208|qs6500|pm9500)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_lector": "\\b(lector\\s+de\\s+c[oó]digo\\s+de\\s+barras|barcode\\s+scanner|code\\s+reader)\\b",
+      "tecnologia_lector": "\\b(1d|2d|laser|ccd|imagen|imager|led)\\b",
+      "marca_lector": "Ma\\s+([\\w\\-]+)",
+      "modelo_lector": "Mo\\s+([\\w\\-\\d\\s]+?)(?=\\s+Se|$)",
+      "serie_lector": "Se\\s*([A-Z0-9\\-]+)",
+      "color_lector": "Co\\s+([A-Za-z]+)",
+      "tipos_codigo_soportados": "\\b(ean|upc|code128|code39|qr|datamatrix|pdf417|aztec)\\b",
+      "conectividad_lector": "\\b(usb|bluetooth|wifi|rs232|ethernet|wireless)\\b",
+      "interfaz_lector": "\\b(hid|opos|twain|sdk|keyboard[-\\s]*wedge)\\b",
+      "alimentacion_lector": "\\b(usb\\s+power|battery|external\\s+power|5v|rechargeable)\\b",
+      "distancia_lectura": "(\\d+)\\s*(cm|mm|inch)\\s*(distancia|distance|range)",
+      "velocidad_lectura": "(\\d+)\\s*(scans?|lecturas?)\\s*por\\s*(segundo|minuto)",
+      "resolucion_lector": "(\\d+)\\s*mil\\s*(resoluci[oó]n|resolution)",
+      "angulo_lectura": "(\\d+)\\s*grados?\\s*(angulo|angle|skew)",
+      "durabilidad_lector": "(\\d+)\\s*m\\s*(ca[ií]da|drop|resistance)",
+      "temperatura_lector": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "humedad_lector": "(\\d+)%\\s*(to|a)\\s*(\\d+)%\\s*(humedad|humidity)",
+      "certificaciones_lector": "\\b(ce|fcc|rohs|ul|ip54|ip65)\\b",
+      "decodificacion_tipo": "\\b(omnidireccional|lineal|area)\\s*(decodificaci[oó]n|decoding)",
+      "compatibilidad_lector": "\\b(windows|android|ios|linux|pos)\\b",
+      "dimensiones_lector": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "peso_lector": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?",
+      "cable_longitud": "(\\d+(?:\\.\\d+)?)\\s*m\\s*(cable|cord|longitud)",
+      "soporte_lector": "\\b(soporte|stand|holder|mount|cradle)\\b",
+      "modo_lectura": "\\b(trigger|continuous|auto[-\\s]*sense|presentation)\\b",
+      "led_indicador": "\\b(led|beeper|vibration|indicator)\\s*(indicador|feedback)?",
+      "campo_lectura": "(\\d+)\\s*x\\s*(\\d+)\\s*(?:mm|cm)\\s*(campo|field|area)",
+      "profundidad_campo": "(\\d+)\\s*(?:mm|cm|inch)\\s*(profundidad|depth|dof)",
+      "densidad_codigo": "(\\d+)\\s*mil\\s*(densidad|density|minimum)",
+      "procesamiento": "\\b(32[-\\s]*bit|arm|risc)\\s*(procesador|processor)?",
+      "memoria_lector": "(\\d+)\\s*(kb|mb)\\s*(memoria|memory|flash)",
+      "garantia_lector": "(\\d+)\\s*(a[ñn]os?|meses?)\\s*(garant[ií]a|warranty)",
+      "cantidad": "(\\d{1,2})\\s*(lector|scanner|reader)",
+      "aplicacion_lector": "\\b(retail|warehouse|inventory|pos|healthcare|logistics)\\b",
+      "modo_operacion": "\\b(handheld|hands[-\\s]*free|presentation|fixed)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: BIENEX, ZEBRA, Honeywell, Datalogic",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(bienex|zebra|honeywell|datalogic)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: BX2D, DS2208, QS6500, PM9500",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Mo\\s+([\\w\\-\\d\\s]+?)(?=\\s+Se|$)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "\\b(bx2d|ds2208|qs6500|pm9500)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_LECTOR",
+      "etiqueta": "Tecnología del Lector",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1D, 2D, Láser, CCD, Imagen",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["1D", "2D", "Láser", "CCD", "Imagen", "Imager", "LED"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tecnología", "Technology", "Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(1d|2d|laser|ccd|imagen|imager|led)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["1d", "2d", "laser", "ccd", "imagen", "imager", "led"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPOS_CODIGO_SOPORTADOS",
+      "etiqueta": "Tipos de Código Soportados",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: EAN, UPC, Code128, QR, DataMatrix, PDF417",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Códigos", "Code Types", "Symbologies"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ean|upc|code128|code39|qr|datamatrix|pdf417|aztec)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, Bluetooth, WiFi, RS232, Ethernet",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "Interface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|bluetooth|wifi|rs232|ethernet|wireless)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INTERFAZ_SOFTWARE",
+      "etiqueta": "Interfaz de Software",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HID, OPOS, TWAIN, SDK, Keyboard-Wedge",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Interfaz", "Interface", "Software"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(hid|opos|twain|sdk|keyboard[-\\s]*wedge)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALIMENTACION",
+      "etiqueta": "Alimentación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: USB Power, Battery, External Power, 5V",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["USB Power", "Battery", "External Power", "5V", "Rechargeable"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Alimentación", "Power", "Supply"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb\\s+power|battery|external\\s+power|5v|rechargeable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["usb", "power", "battery", "external", "5v"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DISTANCIA_LECTURA",
+      "etiqueta": "Distancia de Lectura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0-30cm, 5-50cm, 10-100cm",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Distancia", "Range", "Distance"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(cm|mm|inch)\\s*(distancia|distance|range)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_LECTURA",
+      "etiqueta": "Velocidad de Lectura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 100 scans/seg, 300 lecturas/min",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Velocidad", "Speed", "Scan Rate"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(scans?|lecturas?)\\s*por\\s*(segundo|minuto)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION",
+      "etiqueta": "Resolución",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 3 mil, 5 mil, 10 mil",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Resolución", "Resolution", "Density"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*mil\\s*(resoluci[oó]n|resolution)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANGULO_LECTURA",
+      "etiqueta": "Ángulo de Lectura",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: ±45°, ±60°, ±30°",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ángulo", "Angle", "Skew"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*grados?\\s*(angulo|angle|skew)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DURABILIDAD",
+      "etiqueta": "Resistencia a Caídas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1.5m, 2.0m, 2.5m",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Durabilidad", "Drop Resistance", "Rugged"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*m\\s*(ca[ií]da|drop|resistance)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RANGO_TEMPERATURA",
+      "etiqueta": "Rango de Temperatura (°C)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: -10°C a 50°C, 0°C a 40°C",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Temperature", "Operating"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "([-]?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "HUMEDAD",
+      "etiqueta": "Humedad Relativa (%)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 5%-95%, 10%-90%",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Humedad", "Humidity", "RH"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)%\\s*(to|a)\\s*(\\d+)%\\s*(humedad|humidity)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, FCC, RoHS, UL, IP54, IP65",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ce|fcc|rohs|ul|ip54|ip65)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DECODIFICACION",
+      "etiqueta": "Tipo de Decodificación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Omnidireccional, Lineal, Área",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "opciones": ["Omnidireccional", "Lineal", "Área", "Manual"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Decodificación", "Decoding", "Reading"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(omnidireccional|lineal|area)\\s*(decodificaci[oó]n|decoding)", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["omnidireccional", "lineal", "area", "manual"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPATIBILIDAD_SO",
+      "etiqueta": "Compatibilidad SO",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Windows, Android, iOS, Linux, POS",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Compatibilidad", "OS Support", "Systems"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(windows|android|ios|linux|pos)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (g)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 150, 200, 300, 500",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 50,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Mass"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LONGITUD_CABLE",
+      "etiqueta": "Longitud del Cable (m)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 1.5, 2.0, 3.0, 5.0",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 1.0,
+        "max": 10.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cable", "Cord Length", "Wire"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*m\\s*(cable|cord|longitud)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACCESORIOS",
+      "etiqueta": "Accesorios Incluidos",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Soporte, Stand, Holder, Mount, Cradle",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Accesorios", "Accessories", "Includes"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(soporte|stand|holder|mount|cradle)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODO_OPERACION",
+      "etiqueta": "Modo de Operación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Handheld, Hands-free, Presentation, Fixed",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "opciones": ["Handheld", "Hands-free", "Presentation", "Fixed", "Trigger"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modo", "Mode", "Operation"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(handheld|hands[-\\s]*free|presentation|fixed)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["handheld", "hands-free", "presentation", "fixed", "trigger"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "APLICACION",
+      "etiqueta": "Aplicación Principal",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Retail, Warehouse, Inventory, POS, Healthcare",
+      "prioridad": 22,
+      "orden_ui": 22,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Aplicación", "Application", "Use"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(retail|warehouse|inventory|pos|healthcare|logistics)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 23,
+      "orden_ui": 23,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(lector|scanner|reader)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(lector|scanner|reader)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Amarillo, Rojo",
+      "prioridad": 24,
+      "orden_ui": 24,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Co\\s+([A-Za-z]+)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "amarillo", "rojo"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Lector BIENEX del inventario real",
+      "texto": "01 Lector de código de barras 2D Ma BIENEX Mo BX2D Se 20220210318 Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "BIENEX",
+        "MODELO": "BX2D",
+        "TECNOLOGIA_LECTOR": "2D",
+        "COLOR": "Negro",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Lector ZEBRA del inventario real",
+      "texto": "01 Lector de código de barras 2D Ma ZEBRA Mo DS2208 Se22111010553527 Co Negro",
+      "extraccionEsperada": {
+        "MARCA": "ZEBRA",
+        "MODELO": "DS2208",
+        "TECNOLOGIA_LECTOR": "2D",
+        "COLOR": "Negro",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 3: Lector láser 1D con especificaciones",
+      "texto": "02 Lector código barras 1D Honeywell MS5145 USB con cable 2m trigger handheld",
+      "extraccionEsperada": {
+        "MARCA": "Honeywell",
+        "MODELO": "MS5145",
+        "TECNOLOGIA_LECTOR": "1D",
+        "CONECTIVIDAD": ["USB"],
+        "LONGITUD_CABLE": "2",
+        "MODO_OPERACION": "Handheld",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Scanner 2D omnidireccional",
+      "texto": "01 Barcode scanner 2D Datalogic QD2430 omnidireccional QR EAN UPC presentation",
+      "extraccionEsperada": {
+        "MARCA": "Datalogic",
+        "MODELO": "QD2430",
+        "TECNOLOGIA_LECTOR": "2D",
+        "TIPO_DECODIFICACION": "Omnidireccional",
+        "TIPOS_CODIGO_SOPORTADOS": ["QR", "EAN", "UPC"],
+        "MODO_OPERACION": "Presentation"
+      }
+    }
+  ]
+}

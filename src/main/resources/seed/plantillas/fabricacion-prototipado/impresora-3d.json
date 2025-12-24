@@ -1,0 +1,533 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-3DP-2025-V1",
+    "version": "1.0",
+    "nombre": "Impresora3D",
+    "categoriaSemantica": "FABRICACION_IMPRESORA_3D_PROTOTIPADO",
+    "descripcion": "Plantilla ML de Impresora 3D - Maneja columna única, múltiples columnas e híbrido para impresoras 3D y fabricación aditiva"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_FLASHFORGE_FINDER",
+        "condicion": ".*(impresora.*3d.*flashforge|flashforge.*finder).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró Flashforge Finder específico del inventario"
+      },
+      {
+        "nombre": "BONUS_3D_PRINTER",
+        "condicion": ".*(impresora\\s+3d|3d\\s+printer).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró impresora 3D específica"
+      },
+      {
+        "nombre": "BONUS_FINDER3_MODEL",
+        "condicion": ".*(mo.*finder3|finder3.*modelo).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró modelo Finder3 específico"
+      },
+      {
+        "nombre": "BONUS_SERIE_LLMB",
+        "condicion": ".*(se.*llmb|llmb.*serie).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró serie LLMB específica"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["impresora", "3d", "printer", "flashforge", "finder"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["fabricacion", "prototipado", "aditiva", "filamento"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["pla", "abs", "fdm", "sla", "boquilla", "extrusor"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["makery", "design", "creative", "prototype"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tecnologias": ["fdm", "sla", "dlp", "sls", "polyjet", "metal-jetting"],
+      "materiales": ["pla", "abs", "petg", "tpu", "wood", "carbon-fiber", "metal"],
+      "marcas_comunes": ["flashforge", "prusa", "ultimaker", "bambu-lab", "creality"],
+      "modelos_populares": ["finder3", "ender3", "prusa-i3", "ultimaker-s3", "bambu-x1"],
+      "caracteristicas": ["heated-bed", "auto-leveling", "dual-extruder", "enclosed", "wifi"],
+      "precisiones": ["0.1mm", "0.2mm", "0.3mm", "50-micron", "100-micron"],
+      "volumenes_impresion": ["140x140x140", "220x220x250", "300x300x400"],
+      "boquillas": ["0.4mm", "0.2mm", "0.6mm", "0.8mm", "1.0mm"],
+      "temperaturas": ["60c", "100c", "200c", "250c", "300c"],
+      "conectividad": ["usb", "wifi", "ethernet", "sd-card", "cloud"],
+      "software": ["flashprint", "cura", "prusaslicer", "bambu-studio"],
+      "formatos_archivo": ["stl", "obj", "3mf", "gcode", "amf"]
+    },
+    "marcas": {
+      "tier1": ["flashforge", "prusa", "ultimaker", "bambu-lab", "formlabs"],
+      "tier2": ["creality", "anycubic", "elegoo", "qidi", "artillery"],
+      "tier3": ["ender", "anet", "tronxy", "geeetech", "longer"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "cpu", "laptop", "nvr"],
+      "fuerte": ["pizarra", "ecran", "rotuladora", "robot"],
+      "media": ["silla", "mesa", "escritorio", "archivador"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(flashforge|prusa|ultimaker|creality)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(finder\\d*|ender\\d*|prusa[-\\s]*i\\d*)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_impresora": "\\b(impresora\\s+3d|3d\\s+printer|printer\\s+3d)\\b",
+      "tecnologia_impresion": "\\b(fdm|sla|dlp|sls|polyjet|metal[-\\s]*jetting)\\b",
+      "materiales_compatibles": "\\b(pla|abs|petg|tpu|wood|carbon[-\\s]*fiber|metal|resin)\\b",
+      "precision_capa": "(\\d+(?:\\.\\d+)?)\\s*(?:mm|microns?)\\s*(precision|layer|capa)",
+      "volumen_impresion": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(?:mm|cm)",
+      "tamaño_boquilla": "(\\d+(?:\\.\\d+)?)\\s*mm\\s*(nozzle|boquilla)",
+      "cama_caliente": "\\b(heated\\s+bed|cama\\s+caliente|bed\\s+heating)\\b",
+      "auto_nivelado": "\\b(auto[-\\s]*leveling|auto[-\\s]*calibration|nivelacion[-\\s]*automatica)\\b",
+      "extrusores": "\\b(single|dual|triple)\\s*(extruder|extrusor)",
+      "conectividad_3d": "\\b(usb|wifi|ethernet|sd[-\\s]*card|cloud|bluetooth)\\b",
+      "software_compatible": "\\b(flashprint|cura|prusaslicer|bambu[-\\s]*studio|simplify3d)\\b",
+      "formatos_archivo": "\\b(stl|obj|3mf|gcode|amf|ply)\\b",
+      "temperatura_extrusor": "(\\d+)\\s*°?c\\s*(extruder|extrusor|hotend)",
+      "temperatura_cama": "(\\d+)\\s*°?c\\s*(bed|cama|platform)",
+      "velocidad_impresion": "(\\d+)\\s*mm/s\\s*(speed|velocidad|print)",
+      "filamento_diametro": "(\\d+(?:\\.\\d+)?)\\s*mm\\s*(filament|filamento|diameter)",
+      "cantidad": "(\\d{1,2})\\s*(impresora\\s+3d|3d\\s+printer)",
+      "peso_impresora": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)",
+      "consumo_energia": "(\\d+(?:\\.\\d+)?)\\s*w\\s*(power|consumption|consumo)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Flashforge, Prusa, Ultimaker, Creality",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(flashforge|prusa|ultimaker|creality)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Finder3, Ender 3, Prusa i3, Ultimaker S3",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(finder\\d*|ender\\d*|prusa[-\\s]*i\\d*)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_IMPRESION",
+      "etiqueta": "Tecnología de Impresión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: FDM, SLA, DLP, SLS",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["FDM", "SLA", "DLP", "SLS", "PolyJet", "Metal Jetting"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tecnología", "Technology", "Type"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(fdm|sla|dlp|sls|polyjet|metal[-\\s]*jetting)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["fdm", "sla", "dlp", "sls", "polyjet"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIALES_COMPATIBLES",
+      "etiqueta": "Materiales Compatibles",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: PLA, ABS, PETG, TPU",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Materiales", "Materials", "Filament"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(pla|abs|petg|tpu|wood|carbon[-\\s]*fiber|metal|resin)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PRECISION_CAPA",
+      "etiqueta": "Precisión de Capa (mm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.1, 0.2, 0.3, 0.05",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 0.01,
+        "max": 1.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Precisión", "Precision", "Layer"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*(?:mm|microns?)\\s*(precision|layer|capa)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLUMEN_IMPRESION_X",
+      "etiqueta": "Volumen X (mm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 140, 220, 300",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "validacion": {
+        "min": 50,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Volumen X", "Build X", "Size X"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(?:mm|cm)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLUMEN_IMPRESION_Y",
+      "etiqueta": "Volumen Y (mm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 140, 220, 300",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "validacion": {
+        "min": 50,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Volumen Y", "Build Y", "Size Y"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(?:mm|cm)", "grupo": 2}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLUMEN_IMPRESION_Z",
+      "etiqueta": "Volumen Z (mm)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 140, 250, 400",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 50,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Volumen Z", "Build Z", "Height"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(?:mm|cm)", "grupo": 3}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_BOQUILLA",
+      "etiqueta": "Tamaño de Boquilla (mm)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.4, 0.2, 0.6, 0.8",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 0.1,
+        "max": 2.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Boquilla", "Nozzle", "Extruder"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*mm\\s*(nozzle|boquilla)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAMA_CALIENTE",
+      "etiqueta": "Cama Caliente",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cama", "Bed", "Heating"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(heated\\s+bed|cama\\s+caliente|bed\\s+heating)\\b", "booleano": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AUTO_NIVELADO",
+      "etiqueta": "Auto Nivelado",
+      "tipoDato": "BOOLEANO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Nivelado", "Leveling", "Calibration"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(auto[-\\s]*leveling|auto[-\\s]*calibration|nivelacion[-\\s]*automatica)\\b", "booleano": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_EXTRUSORES",
+      "etiqueta": "Número de Extrusores",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Extrusores", "Extruders", "Heads"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(single|dual|triple)\\s*(extruder|extrusor)", "mapeo": {"single": "1", "dual": "2", "triple": "3"}}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: USB, WiFi, SD Card, Ethernet",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "Interface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(usb|wifi|ethernet|sd[-\\s]*card|cloud|bluetooth)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOFTWARE_COMPATIBLE",
+      "etiqueta": "Software Compatible",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: FlashPrint, Cura, PrusaSlicer",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Software", "Slicer", "Programs"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(flashprint|cura|prusaslicer|bambu[-\\s]*studio|simplify3d)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMATOS_ARCHIVO",
+      "etiqueta": "Formatos de Archivo",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: STL, OBJ, 3MF, GCODE",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Formatos", "Formats", "Files"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(stl|obj|3mf|gcode|amf|ply)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_EXTRUSOR",
+      "etiqueta": "Temperatura Extrusor (°C)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 200, 250, 300",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 100,
+        "max": 500
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temp Extrusor", "Extruder Temp", "Hotend"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*°?c\\s*(extruder|extrusor|hotend)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_CAMA",
+      "etiqueta": "Temperatura Cama (°C)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 60, 80, 100",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 30,
+        "max": 150
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temp Cama", "Bed Temp", "Heated Bed"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*°?c\\s*(bed|cama|platform)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(impresora\\s+3d|3d\\s+printer)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(impresora\\s+3d|3d\\s+printer)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Azul",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "azul", "rojo"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Flashforge Finder3 del inventario real",
+      "texto": "01 Impresora 3D MaFLASHFORGE MoFinder3 SeLLMB9200064",
+      "extraccionEsperada": {
+        "MARCA": "FLASHFORGE",
+        "MODELO": "Finder3",
+        "TECNOLOGIA_IMPRESION": "FDM"
+      }
+    },
+    {
+      "nombre": "Caso 2: Impresora 3D con especificaciones",
+      "texto": "01 Impresora 3D FDM Ma Prusa Mo i3 MK3S+ con cama caliente y auto nivelado 220x220x250mm",
+      "extraccionEsperada": {
+        "MARCA": "Prusa",
+        "MODELO": "i3 MK3S+",
+        "TECNOLOGIA_IMPRESION": "FDM",
+        "CAMA_CALIENTE": true,
+        "AUTO_NIVELADO": true,
+        "VOLUMEN_IMPRESION_X": "220",
+        "VOLUMEN_IMPRESION_Y": "220",
+        "VOLUMEN_IMPRESION_Z": "250"
+      }
+    },
+    {
+      "nombre": "Caso 3: Impresora 3D con materiales",
+      "texto": "01 Impresora 3D Ma Creality Mo Ender 3 Pro compatible con PLA, ABS, PETG boquilla 0.4mm",
+      "extraccionEsperada": {
+        "MARCA": "Creality",
+        "MODELO": "Ender 3 Pro",
+        "MATERIALES_COMPATIBLES": ["PLA", "ABS", "PETG"],
+        "TAMAÑO_BOQUILLA": "0.4"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "ubicacion": {
+    "titulo": "UBICACIÓN ACTUAL",
+    "regex": "^UBICACIÓN\\s+ACTUAL:?$",
+    "esFicha": true,
+    "puntuacion": 10
+  },
+  "descripcionBien": {
+    "titulo": "DESCRIPCIÓN DEL BIEN",
+    "regex": "^DESCRIPCIÓN\\s+DEL\\s+BIEN:?$",
+    "esFicha": false,
+    "puntuacion": -5
+  },
+  "pcId": {
+    "titulo": "Identificador de la Ficha",
+    "regex": "^(PC|Laptop|Equipo)-[0-9]{2}$",
+    "esFicha": true,
+    "puntuacion": 15
+  }
+}

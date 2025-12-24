@@ -1,0 +1,357 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-RAM-2025-V1",
+    "version": "1.0",
+    "nombre": "Memoria RAM",
+    "categoriaSemantica": "COMPONENTE_INTERNO",
+    "descripcion": "Plantilla ML para módulos de memoria RAM - DDR3, DDR4, DDR5",
+    "indices": [
+      "RAM",
+      "Memoria RAM",
+      "Memoria"
+    ]
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.30,
+      "palabrasTecnicas": 0.25,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.10,
+      "contexto": 0.05
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    }
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "ram",
+          "memoria",
+          "memory",
+          "dimm",
+          "sodimm"
+        ],
+        "peso": 8.0
+      },
+      "fuertes": {
+        "terminos": [
+          "ddr3",
+          "ddr4",
+          "ddr5",
+          "modulo",
+          "stick"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "capacidad",
+          "velocidad",
+          "frecuencia",
+          "latencia"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "memoria",
+          "componente",
+          "upgrade"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos": [
+        "ddr3",
+        "ddr4",
+        "ddr5",
+        "sdram",
+        "dimm",
+        "sodimm",
+        "ecc",
+        "registrada"
+      ],
+      "capacidades": [
+        "4gb",
+        "8gb",
+        "16gb",
+        "32gb",
+        "64gb"
+      ],
+      "frecuencias": [
+        "2133mhz",
+        "2400mhz",
+        "2666mhz",
+        "3200mhz",
+        "3600mhz",
+        "4800mhz",
+        "5200mhz",
+        "5600mhz"
+      ],
+      "latencias": [
+        "cl14",
+        "cl16",
+        "cl18",
+        "cl20",
+        "cl22",
+        "cl30",
+        "cl40"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "kingston",
+        "corsair",
+        "samsung",
+        "crucial",
+        "g.skill"
+      ],
+      "tier2": [
+        "adata",
+        "hyperx",
+        "patriot",
+        "teamgroup",
+        "pny"
+      ],
+      "tier3": [
+        "micron",
+        "hynix",
+        "timetec",
+        "v-color"
+      ]
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "monitor",
+        "teclado",
+        "impresora",
+        "mouse",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "ssd",
+        "hdd",
+        "tarjeta",
+        "grafica",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "usb",
+        "cable",
+        "disco"
+      ],
+      "debil": []
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:)\\s*([\\w]+)",
+      "modelo": "(mo:|modelo:)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|de\\s|$))",
+      "serie": "(se:|serie:|serial:)\\s*([A-Z0-9]+)"
+    },
+    "especificaciones": {
+      "capacidad": "(\\d+)\\s*(gb|GB)",
+      "tipo_ddr": "(ddr[345])(-\\d+)?",
+      "frecuencia": "(\\d{4})\\s*(mhz|MHz)",
+      "latencia": "(cl\\d{2})",
+      "kit": "(\\d)\\s*x\\s*(\\d+)\\s*gb"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Kingston, Corsair, Samsung",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Fury Beast, Vengeance LPX",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model"
+            ],
+            "prioridad": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD_GB",
+      "etiqueta": "Capacidad (GB)",
+      "tipoDato": "ENTERO",
+      "requerido": true,
+      "placeholder": "Ej: 8, 16, 32",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "validacion": {
+        "min": 1,
+        "max": 256
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Capacidad",
+              "GB",
+              "Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*gb",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DDR",
+      "etiqueta": "Tipo DDR",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: DDR4, DDR5",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "DDR3",
+        "DDR4",
+        "DDR5"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "DDR",
+              "Type"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(ddr[345])",
+            "grupo": 1,
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_MHZ",
+      "etiqueta": "Frecuencia (MHz)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 3200, 3600, 5600",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 800,
+        "max": 8000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Frecuencia",
+              "MHz",
+              "Speed"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{4})\\s*(mhz|MHz)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "LATENCIA",
+      "etiqueta": "Latencia CL",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: CL16, CL18, CL40",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Latencia",
+              "CL",
+              "CAS"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(cl\\d{2})",
+            "grupo": 1,
+            "mayusculas": true
+          }
+        ]
+      }
+    }
+  ]
+}

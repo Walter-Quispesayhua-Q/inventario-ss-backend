@@ -1,0 +1,83 @@
+{
+  "tipoFormato": "CLAVE_VALOR",
+  "descripcion": "Formato clave-valor (fichas técnicas, formularios)",
+  "hojas": {
+    "indices": [0],
+    "detectarTodas": false,
+    "nombresPorIndice": {}
+  },
+  "claves": {
+    "columna": "A",
+    "filaInicio": 1,
+    "filaFin": null,
+    "deteccionAutomatica": true
+  },
+  "valores": {
+    "columna": "B",
+    "filaInicio": 1,
+    "filaFin": null,
+    "permitirMultiplesColumnas": false
+  },
+  "columnasEspeciales": {
+    "ignorar": {
+      "habilitado": true,
+      "columnas": [],
+      "deteccionAutomatica": true,
+      "patronesIgnorar": ["^\\d+$", "^#$", "^N°$", "^Item$", "^No\\.$"]
+    }
+  },
+  "celdasCombinadas": {
+    "soportar": true,
+    "detectarAutomatico": true,
+    "propagarValor": "HACIA_ABAJO",
+    "usarComoAgrupador": true
+  },
+  "secciones": {
+    "habilitadas": true,
+    "detectarAutomatico": true,
+    "separadores": ["===", "---", "***"],
+    "patronSeccion": "^\\[.*\\]$"
+  },
+  "fichasMultiples": {
+    "habilitadas": true,
+    "detectarAutomatico": true,
+    "prioridad": "PATRON_PRIMERO",
+    "separadores": {
+      "porPatron": {
+        "habilitado": true,
+        "patrones": [
+          "^[A-Z]{2,10}-\\d{1,5}$",
+          "^[A-Z]{2,10}_\\d{1,5}$",
+          "^\\d{4,12}$",
+          "^INV-\\d{4}-\\d{3,5}$",
+          "^[A-Z]+-[A-Z]+-\\d+$"
+        ],
+        "textoExacto": ["===", "---", "***"],
+        "detectarEnColumna": "A"
+      },
+      "porFilasVacias": {
+        "habilitado": true,
+        "minimoFilasVacias": 1,
+        "maximoFilasVaciasConsecutivas": 3
+      }
+    }
+  },
+  "preservarCoordenadas": {
+    "habilitado": true,
+    "incluirCeldasVacias": false,
+    "formatoCoordenada": "A1"
+  },
+  "vistaPrevia": {
+    "mostrarCoordenadasOriginal": true,
+    "resaltarClavesDetectadas": true,
+    "mostrarSeccionesColapsables": true,
+    "maxParesPreview": 100,
+    "mostrarHojasDisponibles": true
+  },
+  "paginacion": {
+    "habilitada": true,
+    "elementosPorPaginaDefault": 50,
+    "opcionesElementosPorPagina": [25, 50, 100],
+    "maxElementosSinPaginar": 100
+  }
+}

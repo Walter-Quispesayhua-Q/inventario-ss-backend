@@ -1,0 +1,587 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-AP-2025-V1",
+    "version": "1.0",
+    "nombre": "Access Point",
+    "categoriaSemantica": "DISPOSITIVO_RED_WIRELESS",
+    "descripcion": "Plantilla ML de access point - Maneja columna única, múltiples columnas e híbrido para puntos de acceso inalámbrico"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TIENE_WIFI_STANDARD",
+        "condicion": ".*(802\\.11[a-z]+|wifi\\s*[4567]|ac|ax|be|108gd).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró estándar WiFi específico incluyendo 108gd"
+      },
+      {
+        "nombre": "BONUS_TIENE_POE",
+        "condicion": ".*(poe|power.*over.*ethernet|with\\s+poe).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró soporte PoE incluyendo 'with poe'"
+      },
+      {
+        "nombre": "BONUS_TIENE_VELOCIDAD",
+        "condicion": ".*\\b\\d+\\s*(mbps|gbps|gd).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró velocidad específica incluyendo 'gd'"
+      },
+      {
+        "nombre": "BONUS_EMPRESARIAL",
+        "condicion": ".*(enterprise|business|managed|controller|ubiquiti|unifi).*",
+        "puntos": 0.08,
+        "descripcion": "Se identificó como access point empresarial o Ubiquiti"
+      },
+      {
+        "nombre": "BONUS_ACCESS_POINT_KEYWORDS",
+        "condicion": ".*(access\\s+point|ap\\b).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontraron palabras clave específicas de access point"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["access", "point", "ap", "wireless", "wifi"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["802.11", "wifi6", "wifi5", "dual-band", "tri-band", "ubiquiti", "unifi", "108gd"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["poe", "indoor", "outdoor", "ceiling", "wall", "with"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["inalambrico", "wireless", "red", "network"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "wifi": ["802.11a", "802.11b", "802.11g", "802.11n", "802.11ac", "802.11ax", "802.11be", "wifi4", "wifi5", "wifi6", "wifi6e", "wifi7", "108gd"],
+      "velocidad": ["mbps", "gbps", "ac1200", "ac1750", "ax1800", "ax3000", "ax6000", "be9300", "108gd"],
+      "bandas": ["2.4ghz", "5ghz", "6ghz", "dual-band", "tri-band", "banda", "frecuencia"],
+      "antenas": ["mimo", "mu-mimo", "beamforming", "externa", "interna", "omnidireccional", "direccional"],
+      "seguridad": ["wpa", "wpa2", "wpa3", "wep", "radius", "enterprise", "personal"],
+      "poe": ["poe", "poe+", "poe++", "power-over-ethernet", "15.4w", "30w", "60w", "with poe"],
+      "montaje": ["ceiling", "wall", "indoor", "outdoor", "desktop", "rack"],
+      "caracteristicas": ["mesh", "controller", "standalone", "managed", "enterprise", "captive"],
+      "fabricantes": ["ubiquiti", "unifi", "d-link", "cisco", "aruba", "netgear", "tp-link"],
+      "modelos_especificos": ["uap-ac-pro", "dwl-220", "uap", "dwl"]
+    },
+    "marcas": {
+      "tier1": ["ubiquiti", "cisco", "aruba", "ruckus", "meraki"],
+      "tier2": ["netgear", "d-link", "tp-link", "asus", "linksys"],
+      "tier3": ["tenda", "mercusys", "edimax", "engenius", "cambium"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["router", "switch", "repetidor", "extender"],
+      "fuerte": ["monitor", "impresora", "servidor", "ups"],
+      "media": ["cable", "adaptador", "antena", "amplificador"],
+      "debil": ["ethernet", "red", "network", "internet"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|mr:|marca:?)\\s*([\\w\\-]+)|Ma([\\w\\-]+)|Mr\\s+([\\w\\-]+)|\\b(ubiquiti|d-link)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|with|access|$))|\\b(uap-[\\w\\-]+|dwl-\\d+\\s*ap)\\b|Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "wifi_standard": "\\b(802\\.11[a-z]+|wifi\\s*[4567]e?|ax|ac|be|108gd)\\b",
+      "velocidad": "\\b(ac|ax|be)(\\d{3,4})\\b|(\\d+)\\s*(mbps|gbps|gd)\\b",
+      "bandas_frecuencia": "\\b(dual|tri|single)[-\\s]*(band|banda)\\b|(\\d\\.\\d)\\s*(ghz|GHz)",
+      "antenas_mimo": "(\\d+)\\s*x\\s*(\\d+)\\s*(mimo|antena)",
+      "poe_support": "\\b(poe\\+?\\+?|power[-\\s]*over[-\\s]*ethernet|with\\s+poe)\\b",
+      "potencia_poe": "(\\d+\\.\\d+|\\d+)\\s*(w|watts)\\s*(poe|consumption)?",
+      "velocidad_ethernet": "\\b(10/100/1000|10/100|gigabit|fast)\\b",
+      "cobertura": "(\\d+)\\s*(m²|metros?|users|usuarios)",
+      "temperatura": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c",
+      "dimensiones": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)",
+      "peso": "(\\d{1,2}\\.\\d)\\s*(kg|kilogramos)"
+    },
+    "conectividad": {
+      "puertos_ethernet": "(\\d+)\\s*x?\\s*(ge|gigabit|ethernet|lan)",
+      "console_port": "\\b(console|rs232|usb)\\b",
+      "access_point_keywords": "\\b(access\\s+point|ap\\b)"
+    },
+    "caracteristicas": {
+      "montaje": "\\b(ceiling|wall|indoor|outdoor|desktop|rack|mount)\\b",
+      "gestion": "\\b(unifi|managed|standalone|controller|cloud)\\b",
+      "mesh": "\\b(mesh|seamless|roaming)\\b",
+      "captive": "\\b(captive|portal|guest|hotspot)\\b",
+      "seguridad": "\\b(wpa[23]?|wep|radius|enterprise|personal)\\b",
+      "funciones": "\\b(mesh|captive|portal|guest|vlan|qos|bandwidth)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Ubiquiti, D-Link, Cisco, UNIFI",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|mr:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([\\w\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "Mr\\s+([\\w\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(ubiquiti|d-link)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: UAP-AC-PRO, DWL-220 AP, WAP121",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|with|access|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(uap-[\\w\\-]+|dwl-\\d+\\s*ap)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo\\s+([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ESTANDAR_WIFI",
+      "etiqueta": "Estándar WiFi",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 802.11ax (WiFi 6), 802.11ac (WiFi 5), 802.11g",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["802.11ax (WiFi 6E)", "802.11ax (WiFi 6)", "802.11ac (WiFi 5)", "802.11n (WiFi 4)", "802.11be (WiFi 7)", "802.11g"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["WiFi", "Standard", "Estándar"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(802\\.11[a-z]+|wifi\\s*[4567]e?|ax|ac|be|108gd)\\b", "grupo": 0},
+          {"tipo": "MAPEO", "ax": "802.11ax (WiFi 6)", "ac": "802.11ac (WiFi 5)", "wifi6": "802.11ax (WiFi 6)", "108gd": "802.11g"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VELOCIDAD_WIFI_MAXIMA",
+      "etiqueta": "Velocidad WiFi Máxima",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: AX3000, AC1750, 300 Mbps, 108 Mbps",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Velocidad", "Speed", "Throughput", "Mbps"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ac|ax|be)(\\d{3,4})\\b", "grupo": 0},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(mbps|gbps|gd)\\b", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BANDAS_FRECUENCIA",
+      "etiqueta": "Bandas de Frecuencia",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Dual Band (2.4 + 5 GHz), Single Band",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Single Band (2.4 GHz)", "Single Band (5 GHz)", "Dual Band (2.4 + 5 GHz)", "Tri Band (2.4 + 5 + 6 GHz)"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Bandas", "Bands", "Frecuencia", "Frequency"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(dual|tri|single)[-\\s]*(band|banda)\\b", "mayusculas": true},
+          {"tipo": "PATRON", "patron": "(\\d\\.\\d)\\s*(ghz|GHz)", "multiple": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANTENAS",
+      "etiqueta": "Configuración de Antenas",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 3x3 MIMO, 4 antenas internas, 2 externas",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Antenas", "Antennas", "MIMO"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*(mimo|antena)", "grupo": 0},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(antenas?|antennas?)\\s*(externa|interna)?", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TECNOLOGIA_MIMO",
+      "etiqueta": "Tecnología MIMO",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: MU-MIMO, 2x2 MIMO, Beamforming",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "opciones": ["MIMO", "MU-MIMO", "Beamforming", "OFDMA", "TWT", "Smart Antenna"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["MIMO", "MU-MIMO", "Beamforming"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mu-mimo|mimo|beamforming|ofdma|twt)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["mu-mimo", "mimo", "beamforming", "ofdma", "twt"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOPORTE_POE",
+      "etiqueta": "Soporte PoE",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Sí, No, PoE+, PoE 802.3af, with poe",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "opciones": ["Sí", "No", "PoE (15.4W)", "PoE+ (30W)", "PoE++ (60W)", "802.3af", "802.3at"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["PoE", "Power over Ethernet"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(poe\\+\\+?|power[-\\s]*over[-\\s]*ethernet|with\\s+poe|802\\.3a[ft])\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["poe", "power", "ethernet", "802.3af", "802.3at", "with"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_POE",
+      "etiqueta": "Consumo PoE (Watts)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 9.5, 15.4, 25.2",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 5.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Consumo", "Power", "Watts"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+\\.\\d+|\\d+)\\s*(w|watts)\\s*(poe|consumption)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_ETHERNET",
+      "etiqueta": "Puertos Ethernet",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1x Gigabit, 2x 10/100/1000, No",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Ethernet", "LAN", "Puertos"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x?\\s*(ge|gigabit|ethernet|lan)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MONTAJE",
+      "etiqueta": "Tipo de Montaje",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Techo, Pared, Exterior, Interior",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Montaje", "Mount", "Installation"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ceiling|wall|indoor|outdoor|desktop|rack|mount)\\b", "multiple": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","},
+          {"tipo": "MAPEO", "ceiling": "Techo", "wall": "Pared", "indoor": "Interior", "outdoor": "Exterior"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "GESTION_TIPO",
+      "etiqueta": "Tipo de Gestión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Standalone, Controller, Cloud, Managed, UniFi",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Standalone", "Controller", "Cloud", "Managed", "UniFi", "Centralized"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Gestión", "Management", "Control"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(unifi|managed|standalone|controller|cloud|centralized)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["unifi", "managed", "standalone", "controller", "cloud"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SEGURIDAD_WIFI",
+      "etiqueta": "Seguridad WiFi",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: WPA3, WPA2, RADIUS, Enterprise",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Seguridad", "Security", "Encriptación"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(wpa[23]?|wep|radius|enterprise|personal)\\b", "multiple": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FUNCIONES_AVANZADAS",
+      "etiqueta": "Funciones Avanzadas",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Mesh, Captive Portal, Guest Network, VLAN",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Funciones", "Features", "Características"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mesh|captive|portal|guest|vlan|qos|bandwidth)\\b", "multiple": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COBERTURA_INTERIOR",
+      "etiqueta": "Cobertura Interior",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 150m², 300m², Hasta 50 usuarios",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cobertura", "Coverage", "Range"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(m²|metros?|users|usuarios)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USUARIOS_CONCURRENTES",
+      "etiqueta": "Usuarios Concurrentes",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 200",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 10,
+        "max": 1000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Usuarios", "Users", "Clients"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(users|usuarios|clients|concurrent)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_OPERACION",
+      "etiqueta": "Temperatura de Operación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 0°C a 40°C, -30°C a 60°C",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Temperature", "Operating Temp"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(-?\\d+)\\s*[-~]\\s*(\\d+)\\s*°?c", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: FCC, CE, IC, IP54",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(fcc|ce|ic|ip[0-9]{2}|ul|rohs)\\b", "multiple": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 175 x 175 x 43 mm",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dimensiones", "Dimensions", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*x\\s*(\\d+)\\s*x\\s*(\\d+)\\s*(mm|cm)", "grupo": 0}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 0.35, 0.65, 1.2",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "validacion": {
+        "min": 0.1,
+        "max": 5.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Kg"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2}\\.\\d)\\s*(kg|kilogramos)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Negro, Gris",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w]+)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["blanco", "negro", "gris", "plateado", "white", "black"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Access Point Ubiquiti UNIFI del inventario real",
+      "texto": "01 ACCESS POINT UBIQUITI MaUNIFI Mo UAP-AC-PRO Se D021F93CF556 802.11ac dual-band PoE ceiling Co Blanco",
+      "extraccionEsperada": {
+        "MARCA": "UNIFI",
+        "MODELO": "UAP-AC-PRO",
+        "ESTANDAR_WIFI": "802.11ac (WiFi 5)",
+        "BANDAS_FRECUENCIA": "Dual Band",
+        "SOPORTE_POE": "PoE",
+        "TIPO_MONTAJE": ["Techo"],
+        "GESTION_TIPO": "UniFi",
+        "COLOR": "Blanco"
+      }
+    },
+    {
+      "nombre": "Caso 2: Access Point D-Link del inventario real",
+      "texto": "1 Access Point Mo DWL-220 AP Mr D-LINK Access point with poe 108gd indoor wireless",
+      "extraccionEsperada": {
+        "MARCA": "D-LINK",
+        "MODELO": "DWL-220 AP",
+        "ESTANDAR_WIFI": "802.11g",
+        "VELOCIDAD_WIFI_MAXIMA": "108gd",
+        "SOPORTE_POE": "with poe",
+        "TIPO_MONTAJE": ["Interior"]
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "Cisco",
+        "Modelo": "WAP571",
+        "WiFi": "802.11ac WiFi 5",
+        "Velocidad": "AC1200",
+        "Bandas": "Dual Band",
+        "MIMO": "2x2 MU-MIMO",
+        "PoE": "PoE+ 802.3at",
+        "Consumo": "12.9W",
+        "Ethernet": "1x Gigabit",
+        "Montaje": "Ceiling, Wall",
+        "Gestión": "Managed",
+        "Seguridad": "WPA2, WPA3",
+        "Usuarios": "100",
+        "Color": "Blanco"
+      },
+      "extraccionEsperada": {
+        "MARCA": "Cisco",
+        "MODELO": "WAP571",
+        "ESTANDAR_WIFI": "802.11ac (WiFi 5)",
+        "VELOCIDAD_WIFI_MAXIMA": "AC1200",
+        "BANDAS_FRECUENCIA": "Dual Band",
+        "TECNOLOGIA_MIMO": "2x2 MU-MIMO",
+        "SOPORTE_POE": "PoE+ (30W)",
+        "CONSUMO_POE": "12.9",
+        "PUERTOS_ETHERNET": "1x Gigabit",
+        "TIPO_MONTAJE": ["Techo", "Pared"],
+        "GESTION_TIPO": "Managed",
+        "SEGURIDAD_WIFI": ["WPA2", "WPA3"],
+        "USUARIOS_CONCURRENTES": "100",
+        "COLOR": "Blanco"
+      }
+    }
+  ]
+}

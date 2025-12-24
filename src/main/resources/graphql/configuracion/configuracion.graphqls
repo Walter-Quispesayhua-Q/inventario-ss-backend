@@ -1,0 +1,53 @@
+"""
+Parámetro de configuración del sistema almacenado en base de datos.
+Permite configuración dinámica sin necesidad de reiniciar la aplicación.
+"""
+type ParametroSistemaDTO {
+    clave: String!
+    valor: String!
+    descripcion: String
+    fechaCreacion: String!
+    fechaUltimaModificacion: String!
+}
+
+"""
+Datos para crear un nuevo parámetro de sistema.
+"""
+input ParametroSistemaCreacionInput {
+    clave: String!
+    valor: String!
+    descripcion: String
+}
+
+"""
+Datos para actualizar el valor de un parámetro existente.
+La clave no puede modificarse.
+"""
+input ParametroSistemaActualizacionInput {
+    valor: String!
+    descripcion: String
+}
+
+extend type Query {
+    """
+    Obtiene todos los parámetros de configuración del sistema.
+    """
+    parametrosSistema: [ParametroSistemaDTO!]!
+
+    """
+    Obtiene un parámetro específico por su clave.
+    """
+    parametroPorClave(clave: String!): ParametroSistemaDTO
+}
+
+extend type Mutation {
+    """
+    Crea un nuevo parámetro de sistema.
+    """
+    crearParametroSistema(parametro: ParametroSistemaCreacionInput!): ParametroSistemaDTO!
+
+    """
+    Actualiza el valor de un parámetro existente.
+    """
+    actualizarParametroSistema(clave: String!, parametro: ParametroSistemaActualizacionInput!): ParametroSistemaDTO!
+}

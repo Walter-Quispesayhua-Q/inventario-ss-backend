@@ -1,0 +1,519 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-NVR-2025-V1",
+    "version": "1.0",
+    "nombre": "NVR",
+    "categoriaSemantica": "SEGURIDAD_NVR_VIDEO_RECORDER",
+    "descripcion": "Plantilla ML de NVR - Maneja columna única, múltiples columnas e híbrido para Network Video Recorders y sistemas de videovigilancia"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_64CH_8SATA",
+        "condicion": ".*(nvr\\s+64ch.*8sata|64\\s*canales.*8\\s*sata).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró NVR específico 64CH 8SATA del inventario"
+      },
+      {
+        "nombre": "BONUS_KIHVISION",
+        "condicion": ".*(ma\\s+kihvision|kihvision.*nvr).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró marca KIHVISION específica"
+      },
+      {
+        "nombre": "BONUS_DISCO_PURPLE_PRO",
+        "condicion": ".*(disco.*duro.*purple.*pro|purple.*pro.*wd).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró disco WD Purple Pro específico"
+      },
+      {
+        "nombre": "BONUS_DS_MODEL",
+        "condicion": ".*(mo\\s+ds[-\\s]*\\d+|ds[-\\s]*\\d+ni).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró modelo DS específico de KIHVISION"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["nvr", "network", "video", "recorder", "kihvision"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["canales", "ch", "sata", "disco", "purple", "pro"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["vigilancia", "seguridad", "grabacion", "videovigilancia"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["surveillance", "security", "monitoring", "cctv"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "canales": ["4ch", "8ch", "16ch", "32ch", "64ch", "128ch"],
+      "puertos_sata": ["2sata", "4sata", "8sata", "16sata"],
+      "resoluciones": ["4k", "8mp", "5mp", "4mp", "2mp", "1080p", "720p"],
+      "protocolos": ["onvif", "rtsp", "http", "https", "p2p"],
+      "conectividad": ["ethernet", "poe", "wifi", "4g", "lan", "wan"],
+      "almacenamiento": ["purple-pro", "surveillance", "wd", "seagate", "hdd", "ssd"],
+      "marcas_comunes": ["kihvision", "hikvision", "dahua", "uniview", "axis"],
+      "compresion": ["h.264", "h.265", "mjpeg", "smart-codec"],
+      "interfaces": ["hdmi", "vga", "usb", "rs485", "alarm"],
+      "alimentacion": ["12v", "24v", "220v", "poe+", "hi-poe"],
+      "caracteristicas": ["motion-detection", "face-recognition", "line-crossing", "intrusion"],
+      "formatos_disco": ["sata", "sas", "nvme", "esata"],
+      "raid": ["raid-0", "raid-1", "raid-5", "raid-6", "raid-10"]
+    },
+    "marcas": {
+      "tier1": ["kihvision", "hikvision", "dahua", "uniview", "axis"],
+      "tier2": ["bosch", "hanwha", "vivotek", "acti", "geovision"],
+      "tier3": ["swann", "lorex", "reolink", "amcrest", "zmodo"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "cpu", "laptop", "impresora"],
+      "fuerte": ["pizarra", "ecran", "rotuladora", "robot"],
+      "media": ["silla", "mesa", "escritorio", "archivador"],
+      "debil": ["mueble", "furniture", "office", "storage"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|\\b(kihvision|hikvision|dahua)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(ds[-\\s]*\\w+|nvr[-\\s]*\\w+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_nvr": "\\b(nvr|network\\s+video\\s+recorder|video\\s+recorder)\\b",
+      "canales": "(\\d+)\\s*ch\\s*(nvr|recorder|canales)?",
+      "puertos_sata": "(\\d+)\\s*sata\\s*(ports|puertos)?",
+      "voltaje_nvr": "(\\d+)\\s*v\\s*(input|supply|power)?",
+      "resolucion_maxima": "\\b(\\d+k|\\d+mp|4k|8mp|1080p|720p)\\b",
+      "protocolos_red": "\\b(onvif|rtsp|http|https|p2p|tcp|udp)\\b",
+      "conectividad_nvr": "\\b(ethernet|poe|wifi|4g|lan|wan|rs485)\\b",
+      "compresion_video": "\\b(h\\.264|h\\.265|h264|h265|mjpeg|smart[-\\s]*codec)\\b",
+      "interfaces_salida": "\\b(hdmi|vga|usb|rs485|alarm|audio)\\b",
+      "almacenamiento_incluido": "disco\\s+duro.*?(\\d+)\\s*(tb|gb|teras?)",
+      "tipo_disco": "\\b(purple\\s+pro|surveillance|wd|seagate|sata|sas)\\b",
+      "raid_soporte": "\\b(raid[-\\s]*\\d+|jbod|single)\\b",
+      "caracteristicas_ia": "\\b(motion[-\\s]*detection|face[-\\s]*recognition|line[-\\s]*crossing|intrusion|smart[-\\s]*analysis)\\b",
+      "poe_soporte": "\\b(poe\\+?|hi[-\\s]*poe|poe\\s+switch)\\b",
+      "bandwidth": "(\\d+)\\s*(mbps|gbps)\\s*(bandwidth|throughput)",
+      "cantidad": "(\\d{1,2})\\s*(nvr|network\\s+video\\s+recorder)",
+      "temperatura_operacion": "(-?\\d+)\\s*°?c\\s*(to|a)\\s*(\\d+)\\s*°?c",
+      "consumo_energia": "(\\d+(?:\\.\\d+)?)\\s*w\\s*(power|consumption)",
+      "peso_nvr": "(\\d+(?:\\.\\d+)?)\\s*(kg|g)\\s*(peso|weight)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: KIHVISION, Hikvision, Dahua",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(kihvision|hikvision|dahua)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: DS-9632NI-I8, NVR-5000, HVR-1000",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(ds[-\\s]*\\w+|nvr[-\\s]*\\w+)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "NUMERO_CANALES",
+      "etiqueta": "Número de Canales",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 4, 8, 16, 32, 64, 128",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "validacion": {
+        "min": 1,
+        "max": 256
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Canales", "Channels", "CH"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*ch\\s*(nvr|recorder|canales)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PUERTOS_SATA",
+      "etiqueta": "Puertos SATA",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2, 4, 8, 16",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "validacion": {
+        "min": 1,
+        "max": 32
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["SATA", "Storage", "HDD"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*sata\\s*(ports|puertos)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE",
+      "etiqueta": "Voltaje (V)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 12, 24, 110, 220",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "validacion": {
+        "min": 5,
+        "max": 250
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Voltaje", "Voltage", "Power"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*v\\s*(input|supply|power)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION_MAXIMA",
+      "etiqueta": "Resolución Máxima",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4K, 8MP, 5MP, 1080P",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": ["4K", "8MP", "5MP", "4MP", "2MP", "1080P", "720P"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Resolución", "Resolution", "Quality"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(\\d+k|\\d+mp|4k|8mp|1080p|720p)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["4k", "8mp", "5mp", "4mp", "2mp", "1080p"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PROTOCOLOS_RED",
+      "etiqueta": "Protocolos de Red",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: ONVIF, RTSP, HTTP, P2P",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Protocolos", "Protocols", "Network"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(onvif|rtsp|http|https|p2p|tcp|udp)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Ethernet, PoE, WiFi, 4G",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Conectividad", "Connectivity", "Network"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ethernet|poe|wifi|4g|lan|wan|rs485)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COMPRESION_VIDEO",
+      "etiqueta": "Compresión de Video",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: H.264, H.265, MJPEG",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Compresión", "Compression", "Codec"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(h\\.264|h\\.265|h264|h265|mjpeg|smart[-\\s]*codec)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INTERFACES_SALIDA",
+      "etiqueta": "Interfaces de Salida",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HDMI, VGA, USB, RS485",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Interfaces", "Output", "Conexiones"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(hdmi|vga|usb|rs485|alarm|audio)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ALMACENAMIENTO_INCLUIDO",
+      "etiqueta": "Almacenamiento Incluido (TB)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 4, 8, 10",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 1,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Almacenamiento", "Storage", "HDD"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "disco\\s+duro.*?(\\d+)\\s*(tb|gb|teras?)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_DISCO",
+      "etiqueta": "Tipo de Disco",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Purple Pro, Surveillance, WD, Seagate",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Purple Pro", "Surveillance", "WD", "Seagate", "SATA", "SAS"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Disco", "HDD", "Drive"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(purple\\s+pro|surveillance|wd|seagate|sata|sas)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["purple", "pro", "surveillance", "wd", "seagate"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RAID_SOPORTE",
+      "etiqueta": "Soporte RAID",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: RAID-0, RAID-1, RAID-5, JBOD",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["RAID", "Storage", "Array"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(raid[-\\s]*\\d+|jbod|single)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_IA",
+      "etiqueta": "Características de IA",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Motion Detection, Face Recognition, Line Crossing",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["IA", "AI", "Smart"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(motion[-\\s]*detection|face[-\\s]*recognition|line[-\\s]*crossing|intrusion|smart[-\\s]*analysis)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POE_SOPORTE",
+      "etiqueta": "Soporte PoE",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: PoE+, Hi-PoE, PoE Switch",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "opciones": ["PoE", "PoE+", "Hi-PoE", "PoE Switch", "No"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["PoE", "Power", "Ethernet"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(poe\\+?|hi[-\\s]*poe|poe\\s+switch)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["poe", "hi-poe", "power", "ethernet"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BANDWIDTH",
+      "etiqueta": "Ancho de Banda (Mbps)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 100, 200, 500, 1000",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "validacion": {
+        "min": 10,
+        "max": 10000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Bandwidth", "Throughput", "Speed"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*(mbps|gbps)\\s*(bandwidth|throughput)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "validacion": {
+        "min": 1,
+        "max": 10
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(nvr|network\\s+video\\s+recorder)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(nvr|network\\s+video\\s+recorder)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Blanco, Gris, Plateado",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PALABRAS", "lista": ["negro", "blanco", "gris", "plateado"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: NVR KIHVISION del inventario real",
+      "texto": "01 NVR 64CH 8SATA 220V SKU Ma KIHVISION Mo DS-9632NI-I8 Se L02357748 Y 02 DISCO DURO PURPLE PRO WD 10 TERAS PAB. E",
+      "extraccionEsperada": {
+        "MARCA": "KIHVISION",
+        "MODELO": "DS-9632NI-I8",
+        "NUMERO_CANALES": "64",
+        "PUERTOS_SATA": "8",
+        "VOLTAJE": "220",
+        "ALMACENAMIENTO_INCLUIDO": "10",
+        "TIPO_DISCO": "Purple Pro"
+      }
+    },
+    {
+      "nombre": "Caso 2: NVR con características avanzadas",
+      "texto": "01 NVR 32CH 4SATA con soporte ONVIF y PoE+ resolución 4K Ma Hikvision Mo DS-7732NI-K4",
+      "extraccionEsperada": {
+        "MARCA": "Hikvision",
+        "MODELO": "DS-7732NI-K4",
+        "NUMERO_CANALES": "32",
+        "PUERTOS_SATA": "4",
+        "RESOLUCION_MAXIMA": "4K",
+        "PROTOCOLOS_RED": ["ONVIF"],
+        "POE_SOPORTE": "PoE+"
+      }
+    },
+    {
+      "nombre": "Caso 3: NVR básico de 16 canales",
+      "texto": "01 NVR 16CH 2SATA 12V con H.264 y motion detection Ma Dahua Mo NVR4216-4KS2",
+      "extraccionEsperada": {
+        "MARCA": "Dahua",
+        "MODELO": "NVR4216-4KS2",
+        "NUMERO_CANALES": "16",
+        "PUERTOS_SATA": "2",
+        "VOLTAJE": "12",
+        "COMPRESION_VIDEO": ["H.264"],
+        "CARACTERISTICAS_IA": ["Motion Detection"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,580 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-DSP-2025-V1",
+    "version": "1.0",
+    "nombre": "Dispensador",
+    "categoriaSemantica": "EQUIPOS_DISPENSADOR_DISPENSER_SANITARIO",
+    "descripcion": "Plantilla ML de Dispensador - Maneja columna única, múltiples columnas e híbrido para dispensadores de jabón, alcohol, agua y otros líquidos"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_PEDAL_JABON_ALCOHOL",
+        "condicion": ".*(dispensador.*pedal.*jab[oó]n.*alcohol|pedal.*alcohol.*gel).*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró dispensador con pedal de jabón y alcohol gel específico"
+      },
+      {
+        "nombre": "BONUS_ACERO_INOXIDABLE_DP001",
+        "condicion": ".*(acero\\s+inoxidable.*dp001|dp001.*acero\\s+inoxidable).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró dispensador de acero inoxidable modelo DP001"
+      },
+      {
+        "nombre": "BONUS_YACCO_X20000156",
+        "condicion": ".*(marca\\s+yacco.*serie\\s+x20000156|yacco.*x20000156).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró dispensador marca YACCO serie específica"
+      },
+      {
+        "nombre": "BONUS_CANOS_FRIA_CALIENTE",
+        "condicion": ".*(ca[ñn]os.*fr[ií]a.*caliente|fr[ií]a.*caliente.*ca[ñn]os).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró dispensador con caños fría y caliente"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": ["dispensador", "dispenser", "pedal", "alcohol", "jabon"],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": ["gel", "acero", "inoxidable", "circular", "agua", "pedestal"],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": ["canos", "electrico", "fria", "caliente", "automatico"],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": ["sanitario", "higiene", "touchless", "sensor"],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "marcas_comunes": ["yacco", "rubbermaid", "kimberly-clark", "gojo", "purell"],
+      "tipos_dispensador": ["pedal", "pedestal", "pared", "mesa", "automatico", "manual"],
+      "contenidos": ["jabon", "alcohol-gel", "agua", "desinfectante", "gel-antibacterial", "espuma"],
+      "materiales": ["acero-inoxidable", "plastico", "aluminio", "vidrio", "abs"],
+      "formas": ["circular", "rectangular", "cuadrado", "oval", "cilindrico"],
+      "capacidades": ["500ml", "1l", "1.2l", "2l", "3l", "5l", "10l", "20l"],
+      "instalaciones": ["pared", "piso", "mesa", "empotrado", "portatil"],
+      "mecanismos": ["pedal", "sensor", "palanca", "boton", "touchless", "infrarrojo"],
+      "acabados": ["mate", "brillante", "satinado", "cromado", "pintado"],
+      "modelos": ["dp001", "dp002", "disp-100", "disp-200"],
+      "caracteristicas": ["canos-electricos", "fria-caliente", "filtro", "enfriador", "calentador"],
+      "voltajes": ["110v", "220v", "12v", "24v"],
+      "certificaciones": ["ce", "ul", "fda", "rohs", "nsf"]
+    },
+    "marcas": {
+      "tier1": ["yacco", "rubbermaid", "kimberly-clark", "gojo", "purell"],
+      "tier2": ["simplehuman", "umbra", "joseph-joseph", "oxo", "sterilite"],
+      "tier3": ["generic", "no-brand", "china", "oem", "local"],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": ["monitor", "cpu", "laptop", "impresora"],
+      "fuerte": ["silla", "mesa", "escritorio", "archivador"],
+      "media": ["mueble", "furniture", "office", "storage"],
+      "debil": ["electronic", "computer", "digital", "software"]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z\\-]+)|marca\\s+([A-Z\\w\\-]+)|\\b(yacco|rubbermaid|gojo)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(dp\\d+|disp[-\\s]*\\d+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)|SERIE\\s+([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)"
+    },
+    "especificaciones": {
+      "tipo_dispensador": "\\b(dispensador|dispenser)\\b",
+      "mecanismo_dispensador": "\\b(con\\s+pedal|pedestal|pared|mesa|automatico|manual|sensor)\\b",
+      "contenido_dispensador": "\\b(jab[oó]n|alcohol\\s+gel|agua|desinfectante|gel\\s+antibacterial|espuma)\\b",
+      "material_dispensador": "\\b(acero\\s+inoxidable|pl[aá]stico|aluminio|vidrio|abs)\\b",
+      "forma_dispensador": "\\b(circular|rectangular|cuadrado|oval|cilindrico)\\b",
+      "modelo_dispensador": "\\b(dp\\d+|disp[-\\s]*\\d+)\\b",
+      "capacidad_dispensador": "(\\d+(?:[\\.,]\\d+)?)\\s*(litros?|ml|lt?)\\s*(capacidad|volumen)?",
+      "caracteristicas_dispensador": "\\b(ca[ñn]os?\\s+el[eé]ctricos?|fr[ií]a?\\s+y\\s+caliente|sensor|touchless|infrarrojo)\\b",
+      "dimensiones_dispensador": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(?:mm|cm)",
+      "peso_dispensador": "(\\d+(?:\\.\\d+)?)\\s*kg\\s*(peso|weight)?",
+      "voltaje_dispensador": "(\\d+)\\s*v\\s*(voltaje|voltage)?",
+      "potencia_dispensador": "(\\d+)\\s*w\\s*(potencia|power|consumo)?",
+      "certificaciones_dispensador": "\\b(ce|ul|fda|rohs|nsf)\\b",
+      "instalacion_dispensador": "\\b(pared|piso|mesa|empotrado|portatil|movil)\\b",
+      "acabado_dispensador": "\\b(mate|brillante|satinado|cromado|pintado)\\b",
+      "temperatura_agua": "\\b(ambiente|fr[ií]a|caliente|templada)\\b",
+      "filtro_dispensador": "\\b(filtro|purificador|carbon|sedimento)\\b",
+      "dosis_dispensador": "\\b(ajustable|fija|variable)\\s*(dosis|ml|cantidad)?",
+      "bateria_dispensador": "(\\d+)\\s*mah\\s*(bateria|battery)?",
+      "autonomia_dispensador": "(\\d+)\\s*(dosis|usos|dispensaciones)\\s*(autonomia|duracion)?",
+      "recarga_dispensador": "\\b(recargable|desechable|rellenable)\\b",
+      "nivel_liquido": "\\b(indicador|visor|ventana)\\s*(nivel|contenido)?",
+      "cantidad": "(\\d{1,2})\\s*(dispensador|dispenser)",
+      "color_dispensador": "Co\\s+([A-Za-z]+)",
+      "uso_aplicacion": "\\b(cocina|ba[ñn]o|oficina|hospital|clinica|laboratorio)\\b",
+      "goteo_dispensador": "\\b(anti[-\\s]*goteo|no\\s+drip|sin\\s+goteo)\\b"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: YACCO, Rubbermaid, Gojo, Purell",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Marca", "Brand", "Fabricante", "Ma"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(ma:|marca:?)\\s*([\\w\\-]+)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "marca\\s+([A-Z\\w\\-]+)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Ma([A-Z\\-]+)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "\\b(yacco|rubbermaid|gojo)\\b", "grupo": 1, "mayusculas": true},
+          {"tipo": "MARCA_CONOCIDA", "fuente": "marcas.*"},
+          {"tipo": "APRENDIZAJE", "fuente": "marcasAprendidas"}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: DP001, DISP-100, X2000, AQS-500",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Modelo", "Model", "Mo"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))", "grupo": 2},
+          {"tipo": "PATRON", "patron": "\\b(dp\\d+|disp[-\\s]*\\d+)\\b", "grupo": 0, "mayusculas": true},
+          {"tipo": "PATRON", "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)", "grupo": 1},
+          {"tipo": "DESPUES_DE_MARCA", "separador": " "}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_MECANISMO",
+      "etiqueta": "Tipo de Mecanismo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Con pedal, Pedestal, Automático, Manual",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "opciones": ["Con pedal", "Pedestal", "Pared", "Automático", "Manual", "Sensor"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Tipo", "Mechanism", "Activation"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(con\\s+pedal|pedestal|pared|mesa|automatico|manual|sensor)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["pedal", "pedestal", "automatico", "manual", "sensor"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONTENIDO",
+      "etiqueta": "Contenido/Líquido",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Jabón, Alcohol gel, Agua, Desinfectante",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Contenido", "Liquid", "Content"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(jab[oó]n|alcohol\\s+gel|agua|desinfectante|gel\\s+antibacterial|espuma)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MATERIAL",
+      "etiqueta": "Material",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Acero inoxidable, Plástico, Aluminio, Vidrio",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": ["Acero inoxidable", "Plástico", "Aluminio", "Vidrio", "ABS"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Material", "Construction", "Build"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(acero\\s+inoxidable|pl[aá]stico|aluminio|vidrio|abs)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["acero", "inoxidable", "plastico", "aluminio", "vidrio"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FORMA",
+      "etiqueta": "Forma",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Circular, Rectangular, Cuadrado, Oval",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": ["Circular", "Rectangular", "Cuadrado", "Oval", "Cilíndrico"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Forma", "Shape", "Design"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(circular|rectangular|cuadrado|oval|cilindrico)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["circular", "rectangular", "cuadrado", "oval"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CAPACIDAD",
+      "etiqueta": "Capacidad",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 500ml, 1L, 2L, 5L, 10L",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Capacidad", "Volume", "Size"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:[\\.,]\\d+)?)\\s*(litros?|ml|lt?)\\s*(capacidad|volumen)?", "grupo": 0, "mayusculas": true}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CARACTERISTICAS_ESPECIALES",
+      "etiqueta": "Características Especiales",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Caños eléctricos, Fría y caliente, Sensor, Touchless",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Características", "Features", "Special"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ca[ñn]os?\\s+el[eé]ctricos?|fr[ií]a?\\s+y\\s+caliente|sensor|touchless|infrarrojo)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso (kg)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 2.5, 5.0, 10.5, 25.0",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 0.5,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Peso", "Weight", "Mass"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+(?:\\.\\d+)?)\\s*kg\\s*(peso|weight)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "VOLTAJE",
+      "etiqueta": "Voltaje (V)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 12, 24, 110, 220",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "validacion": {
+        "min": 12,
+        "max": 250
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Voltaje", "Voltage", "Power"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*v\\s*(voltaje|voltage)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "POTENCIA",
+      "etiqueta": "Potencia (W)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 50, 100, 200, 500",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "validacion": {
+        "min": 10,
+        "max": 2000
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Potencia", "Power", "Watts"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "(\\d+)\\s*w\\s*(potencia|power|consumo)?", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "INSTALACION",
+      "etiqueta": "Tipo de Instalación",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Pared, Piso, Mesa, Empotrado, Portátil",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "opciones": ["Pared", "Piso", "Mesa", "Empotrado", "Portátil", "Móvil"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Instalación", "Installation", "Mounting"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(pared|piso|mesa|empotrado|portatil|movil)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["pared", "piso", "mesa", "empotrado", "portatil"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ACABADO",
+      "etiqueta": "Acabado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Mate, Brillante, Satinado, Cromado",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "opciones": ["Mate", "Brillante", "Satinado", "Cromado", "Pintado"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Acabado", "Finish", "Surface"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(mate|brillante|satinado|cromado|pintado)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["mate", "brillante", "satinado", "cromado"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TEMPERATURA_AGUA",
+      "etiqueta": "Temperatura del Agua",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Ambiente, Fría, Caliente, Templada",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Temperatura", "Water Temp", "Heat"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ambiente|fr[ií]a|caliente|templada)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FILTRO",
+      "etiqueta": "Sistema de Filtrado",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Filtro de carbón, Purificador, Sedimento",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Filtro", "Filter", "Purification"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(filtro|purificador|carbon|sedimento)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["filtro", "purificador", "carbon", "sedimento"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DOSIS",
+      "etiqueta": "Control de Dosis",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Ajustable, Fija, Variable",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "opciones": ["Ajustable", "Fija", "Variable", "Manual"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Dosis", "Dose", "Amount"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ajustable|fija|variable)\\s*(dosis|ml|cantidad)?", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["ajustable", "fija", "variable", "manual"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RECARGA",
+      "etiqueta": "Sistema de Recarga",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Recargable, Desechable, Rellenable",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "opciones": ["Recargable", "Desechable", "Rellenable", "Cartucho"],
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Recarga", "Refill", "Reload"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(recargable|desechable|rellenable)\\b", "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["recargable", "desechable", "rellenable", "cartucho"]}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CERTIFICACIONES",
+      "etiqueta": "Certificaciones",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: CE, UL, FDA, RoHS, NSF",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Certificaciones", "Certifications", "Standards"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(ce|ul|fda|rohs|nsf)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USO_APLICACION",
+      "etiqueta": "Uso/Aplicación",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Cocina, Baño, Oficina, Hospital, Clínica",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Uso", "Application", "Environment"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "\\b(cocina|ba[ñn]o|oficina|hospital|clinica|laboratorio)\\b", "multiple": true, "mayusculas": true},
+          {"tipo": "LISTA_SEPARADA", "separador": ","}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CANTIDAD",
+      "etiqueta": "Cantidad",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3, 5",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "validacion": {
+        "min": 1,
+        "max": 50
+      },
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Cantidad", "Qty", "Units"], "prioridad": 1},
+          {"tipo": "PATRON", "patron": "^(\\d{1,2})\\s*(dispensador|dispenser)", "grupo": 1},
+          {"tipo": "PATRON", "patron": "(\\d{1,2})\\s*(dispensador|dispenser)", "grupo": 1}
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Blanco, Negro, Plateado, Cromado",
+      "prioridad": 21,
+      "orden_ui": 21,
+      "extraccion": {
+        "estrategias": [
+          {"tipo": "COLUMNA_MAPEADA", "nombresColumna": ["Color", "Colour", "Co"], "prioridad": 1},
+          {"tipo": "ETIQUETA", "patron": "(co:|color:?)\\s*([\\w\\s]+?)(?=\\s|$)", "grupo": 2},
+          {"tipo": "PATRON", "patron": "Co\\s+([A-Za-z]+)", "grupo": 1, "mayusculas": true},
+          {"tipo": "PALABRAS", "lista": ["blanco", "negro", "plateado", "cromado", "gris"]}
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Dispensador con pedal del inventario real",
+      "texto": "01 Dispensador con pedal de jabón y alcohol gel de acero inoxidable circular DP001",
+      "extraccionEsperada": {
+        "TIPO_MECANISMO": "Con pedal",
+        "CONTENIDO": ["Jabón", "Alcohol gel"],
+        "MATERIAL": "Acero inoxidable",
+        "FORMA": "Circular",
+        "MODELO": "DP001",
+        "CANTIDAD": "1"
+      }
+    },
+    {
+      "nombre": "Caso 2: Dispensador pedestal del inventario real",
+      "texto": "01 Dispensador pedestal de agua con 2 caños eléctricos fría y caliente marca YACCO SERIE X20000156",
+      "extraccionEsperada": {
+        "MARCA": "YACCO",
+        "TIPO_MECANISMO": "Pedestal",
+        "CONTENIDO": ["Agua"],
+        "CARACTERISTICAS_ESPECIALES": ["Caños eléctricos", "Fría y caliente"],
+        "TEMPERATURA_AGUA": ["Fría", "Caliente"]
+      }
+    },
+    {
+      "nombre": "Caso 3: Dispensador automático con sensor",
+      "texto": "02 Dispensador automático de alcohol gel con sensor touchless capacidad 1L acero inoxidable",
+      "extraccionEsperada": {
+        "TIPO_MECANISMO": "Automático",
+        "CONTENIDO": ["Alcohol gel"],
+        "CARACTERISTICAS_ESPECIALES": ["Sensor", "Touchless"],
+        "CAPACIDAD": "1L",
+        "MATERIAL": "Acero inoxidable",
+        "CANTIDAD": "2"
+      }
+    },
+    {
+      "nombre": "Caso 4: Dispensador de pared industrial",
+      "texto": "01 Dispensador de pared para desinfectante capacidad 2L plástico blanco con bomba manual",
+      "extraccionEsperada": {
+        "TIPO_MECANISMO": "Manual",
+        "INSTALACION": "Pared",
+        "CONTENIDO": ["Desinfectante"],
+        "CAPACIDAD": "2L",
+        "MATERIAL": "Plástico"
+      }
+    }
+  ]
+}

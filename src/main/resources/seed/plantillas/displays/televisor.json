@@ -1,0 +1,1052 @@
+{
+  "metadatos": {
+    "idPlantilla": "TPL-TV-2025-V1",
+    "version": "1.0",
+    "nombre": "Televisor",
+    "categoriaSemantica": "DISPOSITIVO_DISPLAY_TELEVISOR",
+    "descripcion": "Plantilla ML de televisor - Maneja columna única, múltiples columnas e híbrido para dispositivos de visualización televisiva"
+  },
+  "inteligencia": {
+    "modoAprendizaje": true,
+    "adaptacionAutomatica": true,
+    "reconocimientoPatrones": true,
+    "nivelConfianzaMinimo": 0.80,
+    "detectarEstructura": true,
+    "modoColumnas": "AUTO"
+  },
+  "scoring": {
+    "formula": "MULTI_DIMENSIONAL_ML",
+    "pesos": {
+      "palabrasClave": 0.25,
+      "palabrasTecnicas": 0.20,
+      "marcas": 0.15,
+      "patrones": 0.15,
+      "etiquetas": 0.15,
+      "contexto": 0.10
+    },
+    "umbrales": {
+      "rechazo": 0.50,
+      "dudoso": 0.70,
+      "probable": 0.85,
+      "seguro": 0.95,
+      "certeza": 0.99
+    },
+    "bonificaciones": [
+      {
+        "nombre": "BONUS_TAMAÑO_ESPECIFICO",
+        "condicion": ".*(\\d{2,3})[\\s\"]*(?:pulgadas?|inch|\").*",
+        "puntos": 0.15,
+        "descripcion": "Se encontró tamaño específico del televisor"
+      },
+      {
+        "nombre": "BONUS_TIPO_PANTALLA",
+        "condicion": ".*(led|plasma|lcd|oled|qled).*",
+        "puntos": 0.12,
+        "descripcion": "Se encontró tecnología de pantalla específica"
+      },
+      {
+        "nombre": "BONUS_RESOLUCION",
+        "condicion": ".*(hd|4k|uhd|1080p|720p|\\d{3,4}\\s*x\\s*\\d{3,4}).*",
+        "puntos": 0.10,
+        "descripcion": "Se encontró resolución específica"
+      },
+      {
+        "nombre": "BONUS_MARCA_TV",
+        "condicion": ".*(samsung|lg|sony|panasonic|toshiba|hisense).*",
+        "puntos": 0.08,
+        "descripcion": "Se encontró marca conocida de televisores"
+      }
+    ]
+  },
+  "reconocimiento": {
+    "palabrasClave": {
+      "criticas": {
+        "terminos": [
+          "televisor",
+          "tv",
+          "television",
+          "smart",
+          "led"
+        ],
+        "peso": 5.0
+      },
+      "fuertes": {
+        "terminos": [
+          "plasma",
+          "lcd",
+          "oled",
+          "qled",
+          "4k",
+          "uhd",
+          "hd"
+        ],
+        "peso": 3.0
+      },
+      "medias": {
+        "terminos": [
+          "pulgadas",
+          "inch",
+          "hdmi",
+          "usb",
+          "wifi",
+          "android"
+        ],
+        "peso": 2.0
+      },
+      "debiles": {
+        "terminos": [
+          "pantalla",
+          "display",
+          "screen",
+          "monitor"
+        ],
+        "peso": 1.0
+      }
+    },
+    "palabrasTecnicas": {
+      "tipos_pantalla": [
+        "led",
+        "plasma",
+        "lcd",
+        "oled",
+        "qled",
+        "neo-qled",
+        "nanocell",
+        "triluminos"
+      ],
+      "resoluciones": [
+        "hd",
+        "full-hd",
+        "4k",
+        "uhd",
+        "8k",
+        "1080p",
+        "720p",
+        "480p",
+        "2160p"
+      ],
+      "smart_os": [
+        "android",
+        "tizen",
+        "webos",
+        "roku",
+        "fire-tv",
+        "google-tv",
+        "smart"
+      ],
+      "conectividad": [
+        "hdmi",
+        "usb",
+        "wifi",
+        "bluetooth",
+        "ethernet",
+        "vga",
+        "component",
+        "composite"
+      ],
+      "caracteristicas": [
+        "smart",
+        "curved",
+        "frameless",
+        "ultra-slim",
+        "hdr",
+        "dolby",
+        "atmos"
+      ],
+      "marcas_comunes": [
+        "samsung",
+        "lg",
+        "sony",
+        "panasonic",
+        "toshiba",
+        "hisense",
+        "tcl",
+        "philips"
+      ],
+      "modelos_especificos": [
+        "qn55q7fna",
+        "s32b300nwn",
+        "un55nu7100",
+        "oled55c1"
+      ],
+      "tecnologias": [
+        "hdr10",
+        "dolby-vision",
+        "quantum-dot",
+        "local-dimming",
+        "motion-rate"
+      ]
+    },
+    "marcas": {
+      "tier1": [
+        "samsung",
+        "lg",
+        "sony",
+        "panasonic",
+        "philips"
+      ],
+      "tier2": [
+        "toshiba",
+        "hisense",
+        "tcl",
+        "sharp",
+        "vizio"
+      ],
+      "tier3": [
+        "insignia",
+        "element",
+        "westinghouse",
+        "sceptre",
+        "rca"
+      ],
+      "marcasAprendidas": []
+    },
+    "palabrasExclusion": {
+      "absoluta": [
+        "impresora",
+        "scanner",
+        "mouse",
+        "teclado",
+        "termoventilador",
+        "convector",
+        "calefactor",
+        "fan heater",
+        "radiador",
+        "climatizacion",
+        "imaco"
+      ],
+      "fuerte": [
+        "laptop",
+        "tablet",
+        "smartphone",
+        "camara",
+        "temperatura",
+        "calefaccion"
+      ],
+      "media": [
+        "proyector",
+        "monitor",
+        "computadora",
+        "cpu"
+      ],
+      "debil": [
+        "cable",
+        "control",
+        "soporte",
+        "rack"
+      ]
+    }
+  },
+  "patronesRegex": {
+    "identificadores": {
+      "caf": "(caf[-\\s]?\\w+|CAF[-\\s]?\\w+)",
+      "marca": "(ma:|marca:?)\\s*([\\w\\-]+)|Ma([A-Z]+)|\\b(samsung|lg|sony|panasonic|toshiba|hisense)\\b",
+      "modelo": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))|\\b(qn\\w+|s\\d+\\w+|un\\w+|oled\\w+)\\b|Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+      "serie": "(se:|serie:|serial:?)\\s*([A-Z0-9\\-]+)",
+      "color": "(co:|color:?)\\s*([\\w]+)"
+    },
+    "especificaciones": {
+      "tipo_dispositivo": "\\b(televisor|tv|television|smart\\s+tv)\\b",
+      "tamaño_pulgadas": "(\\d{2,3})(?:\\.\\d+)?[\\s\\\"]*(?:pulgadas?|inch|\\\"|'')",
+      "tipo_pantalla": "\\b(led|plasma|lcd|oled|qled|neo[-\\s]*qled|nanocell)\\b",
+      "resolucion_numerica": "(\\d{3,4})\\s*x\\s*(\\d{3,4})",
+      "resolucion_estandar": "\\b(hd|full[-\\s]*hd|4k|uhd|8k|1080p|720p|480p|2160p)\\b",
+      "smart_tv": "\\b(smart|android|tizen|webos|roku|fire[-\\s]*tv|google[-\\s]*tv)\\b",
+      "conectividad": "\\b(hdmi|usb|wifi|bluetooth|ethernet|vga|component|composite)\\b",
+      "hdr": "\\b(hdr|hdr10|dolby[-\\s]*vision|hlg)\\b",
+      "audio": "\\b(dolby|atmos|dts|surround|stereo|audio)\\b",
+      "refresh_rate": "(\\d+)\\s*(hz|hertz)",
+      "brillo": "(\\d+)\\s*(nits?|cd/m2|cdm2)",
+      "contraste": "(\\d+(?:,\\d+)?)\\s*:?\\s*(1|contraste)",
+      "energia": "\\b(energy[-\\s]*star|eco|class\\s+[a-g]|\\d+[-\\s]*watts?)\\b",
+      "montaje": "\\b(wall[-\\s]*mount|table[-\\s]*stand|ceiling|vesa)\\b",
+      "angulo_vision": "(\\d+)\\s*°?\\s*(grados?|degrees?|viewing[-\\s]*angle)",
+      "tiempo_respuesta": "(\\d+)\\s*(ms|milisegundos?)",
+      "dimensiones": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm|inches?)",
+      "peso": "(\\d+(?:\\.\\d+)?)\\s*(kg|kilogramos?|lbs?|pounds?)"
+    }
+  },
+  "atributosExtraccion": [
+    {
+      "nombreCampo": "MARCA",
+      "etiqueta": "Marca",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: Samsung, LG, Sony, Panasonic",
+      "prioridad": 1,
+      "orden_ui": 1,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Marca",
+              "Brand",
+              "Fabricante",
+              "Ma"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(ma:|marca:?)\\s*([\\w\\-]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Ma([A-Z]+)",
+            "grupo": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(samsung|lg|sony|panasonic|toshiba|hisense)\\b",
+            "grupo": 1,
+            "mayusculas": true
+          },
+          {
+            "tipo": "MARCA_CONOCIDA",
+            "fuente": "marcas.*"
+          },
+          {
+            "tipo": "APRENDIZAJE",
+            "fuente": "marcasAprendidas"
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "MODELO",
+      "etiqueta": "Modelo",
+      "tipoDato": "TEXTO",
+      "requerido": true,
+      "placeholder": "Ej: QN55Q7FNA, S32B300NWN, UN55NU7100",
+      "prioridad": 2,
+      "orden_ui": 2,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Modelo",
+              "Model",
+              "Mo"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(mo:|modelo:?)\\s*([\\w\\s\\-\\.]+?)(?=\\s*(se:|co:|con|de\\s|$))",
+            "grupo": 2
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(qn\\w+|s\\d+\\w+|un\\w+|oled\\w+)\\b",
+            "grupo": 0,
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "Mo([\\w\\s\\-\\.]+?)(?=\\s*Se:|$)",
+            "grupo": 1
+          },
+          {
+            "tipo": "DESPUES_DE_MARCA",
+            "separador": " "
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TAMAÑO_PANTALLA",
+      "etiqueta": "Tamaño de Pantalla (pulgadas)",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 32, 43, 55, 65, 75",
+      "prioridad": 3,
+      "orden_ui": 3,
+      "validacion": {
+        "min": 15,
+        "max": 100
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tamaño",
+              "Size",
+              "Pulgadas",
+              "Inch"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{2,3})(?:\\.\\d+)?[\\s\\\"]*(?:pulgadas?|inch|\\\"|'')",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "TIPO_PANTALLA",
+      "etiqueta": "Tecnología de Pantalla",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: LED, OLED, QLED, Plasma, LCD",
+      "prioridad": 4,
+      "orden_ui": 4,
+      "opciones": [
+        "LED",
+        "OLED",
+        "QLED",
+        "Neo QLED",
+        "Plasma",
+        "LCD",
+        "NanoCell",
+        "Triluminos"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Tipo",
+              "Pantalla",
+              "Technology"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(led|plasma|lcd|oled|qled|neo[-\\s]*qled|nanocell)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "led",
+              "plasma",
+              "lcd",
+              "oled",
+              "qled",
+              "nanocell"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RESOLUCION",
+      "etiqueta": "Resolución",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 4K UHD, Full HD, HD, 1920x1080",
+      "prioridad": 5,
+      "orden_ui": 5,
+      "opciones": [
+        "4K UHD",
+        "8K",
+        "Full HD",
+        "HD",
+        "1080p",
+        "720p"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Resolución",
+              "Resolution",
+              "Quality"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d{3,4})\\s*x\\s*(\\d{3,4})",
+            "grupo": 0
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hd|full[-\\s]*hd|4k|uhd|8k|1080p|720p|480p|2160p)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SMART_TV",
+      "etiqueta": "Smart TV / Sistema Operativo",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Smart TV, Android TV, Tizen, WebOS",
+      "prioridad": 6,
+      "orden_ui": 6,
+      "opciones": [
+        "Smart TV",
+        "Android TV",
+        "Tizen",
+        "WebOS",
+        "Roku TV",
+        "Fire TV",
+        "Google TV"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Smart",
+              "OS",
+              "Sistema"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(smart|android|tizen|webos|roku|fire[-\\s]*tv|google[-\\s]*tv)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "smart",
+              "android",
+              "tizen",
+              "webos",
+              "roku",
+              "google"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONECTIVIDAD",
+      "etiqueta": "Conectividad",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: HDMI, USB, WiFi, Bluetooth",
+      "prioridad": 7,
+      "orden_ui": 7,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Conectividad",
+              "Conexiones",
+              "Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hdmi|usb|wifi|bluetooth|ethernet|vga|component|composite)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "HDMI_PUERTOS",
+      "etiqueta": "Puertos HDMI",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 2, 3, 4",
+      "prioridad": 8,
+      "orden_ui": 8,
+      "validacion": {
+        "min": 1,
+        "max": 8
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "HDMI",
+              "Puertos HDMI",
+              "HDMI Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*hdmi",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "USB_PUERTOS",
+      "etiqueta": "Puertos USB",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 1, 2, 3",
+      "prioridad": 9,
+      "orden_ui": 9,
+      "validacion": {
+        "min": 0,
+        "max": 6
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "USB",
+              "Puertos USB",
+              "USB Ports"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*x?\\s*usb",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "HDR_SOPORTE",
+      "etiqueta": "Soporte HDR",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: HDR10, Dolby Vision, HDR10+",
+      "prioridad": 10,
+      "orden_ui": 10,
+      "opciones": [
+        "Sí",
+        "No",
+        "HDR10",
+        "Dolby Vision",
+        "HDR10+",
+        "HLG"
+      ],
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "HDR",
+              "High Dynamic Range"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(hdr|hdr10|dolby[-\\s]*vision|hlg)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "hdr",
+              "hdr10",
+              "dolby",
+              "vision",
+              "hlg"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "AUDIO_SISTEMA",
+      "etiqueta": "Sistema de Audio",
+      "tipoDato": "LISTA",
+      "requerido": false,
+      "placeholder": "Ej: Dolby Atmos, DTS, Stereo",
+      "prioridad": 11,
+      "orden_ui": 11,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Audio",
+              "Sound",
+              "Sonido"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(dolby|atmos|dts|surround|stereo|audio)\\b",
+            "multiple": true,
+            "mayusculas": true
+          },
+          {
+            "tipo": "LISTA_SEPARADA",
+            "separador": ","
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "FRECUENCIA_REFRESCO",
+      "etiqueta": "Frecuencia de Refresco (Hz)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 60, 120, 144",
+      "prioridad": 12,
+      "orden_ui": 12,
+      "validacion": {
+        "min": 50,
+        "max": 240
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Hz",
+              "Refresh Rate",
+              "Frecuencia"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(hz|hertz)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "BRILLO_NITS",
+      "etiqueta": "Brillo (nits)",
+      "tipoDato": "ENTERO",
+      "requerido": false,
+      "placeholder": "Ej: 300, 500, 1000",
+      "prioridad": 13,
+      "orden_ui": 13,
+      "validacion": {
+        "min": 100,
+        "max": 10000
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Brillo",
+              "Nits",
+              "Brightness"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*(nits?|cd/m2|cdm2)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "RATIO_CONTRASTE",
+      "etiqueta": "Ratio de Contraste",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 5000:1, 1000000:1, Dinámico",
+      "prioridad": 14,
+      "orden_ui": 14,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Contraste",
+              "Contrast",
+              "Ratio"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:,\\d+)?)\\s*:?\\s*(1|contraste)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "CONSUMO_ENERGIA",
+      "etiqueta": "Consumo de Energía",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 150W, Energy Star, Clase A",
+      "prioridad": 15,
+      "orden_ui": 15,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Consumo",
+              "Power",
+              "Energía"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(energy[-\\s]*star|eco|class\\s+[a-g]|\\d+[-\\s]*watts?)\\b",
+            "mayusculas": true
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "SOPORTE_PARED",
+      "etiqueta": "Soporte de Pared",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: VESA 200x200, Wall Mount, No compatible",
+      "prioridad": 16,
+      "orden_ui": 16,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "VESA",
+              "Mount",
+              "Soporte"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "\\b(wall[-\\s]*mount|table[-\\s]*stand|ceiling|vesa)\\b",
+            "mayusculas": true
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "vesa\\s*(\\d+)\\s*x\\s*(\\d+)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "ANGULO_VISION",
+      "etiqueta": "Ángulo de Visión",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 178°, 160° horizontal",
+      "prioridad": 17,
+      "orden_ui": 17,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Ángulo",
+              "Viewing Angle",
+              "FOV"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+)\\s*°?\\s*(grados?|degrees?|viewing[-\\s]*angle)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "DIMENSIONES",
+      "etiqueta": "Dimensiones (L x A x P)",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: 1232 x 706 x 59 mm",
+      "prioridad": 18,
+      "orden_ui": 18,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Dimensiones",
+              "Dimensions",
+              "Size"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*x\\s*(\\d+(?:\\.\\d+)?)\\s*(mm|cm|inches?)",
+            "grupo": 0
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "PESO",
+      "etiqueta": "Peso",
+      "tipoDato": "DECIMAL",
+      "requerido": false,
+      "placeholder": "Ej: 15.2, 24.5, 35.8",
+      "prioridad": 19,
+      "orden_ui": 19,
+      "validacion": {
+        "min": 3.0,
+        "max": 100.0
+      },
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Peso",
+              "Weight",
+              "Kg"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "PATRON",
+            "patron": "(\\d+(?:\\.\\d+)?)\\s*(kg|kilogramos?|lbs?|pounds?)",
+            "grupo": 1
+          }
+        ]
+      }
+    },
+    {
+      "nombreCampo": "COLOR",
+      "etiqueta": "Color",
+      "tipoDato": "TEXTO",
+      "requerido": false,
+      "placeholder": "Ej: Negro, Plateado, Blanco",
+      "prioridad": 20,
+      "orden_ui": 20,
+      "extraccion": {
+        "estrategias": [
+          {
+            "tipo": "COLUMNA_MAPEADA",
+            "nombresColumna": [
+              "Color",
+              "Colour",
+              "Co"
+            ],
+            "prioridad": 1
+          },
+          {
+            "tipo": "ETIQUETA",
+            "patron": "(co:|color:?)\\s*([\\w]+)",
+            "grupo": 2
+          },
+          {
+            "tipo": "PALABRAS",
+            "lista": [
+              "negro",
+              "plateado",
+              "blanco",
+              "gris",
+              "titanio"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "aprendizaje": {
+    "palabrasAprendidas": [],
+    "patronesDescubiertos": [],
+    "marcasNuevas": [],
+    "modelosFrencuentes": [],
+    "combinacionesExitosas": [],
+    "columnasDetectadas": [],
+    "historial": {
+      "deteccionesCorrectas": 0,
+      "deteccionesIncorrectas": 0,
+      "correccionesUsuario": 0,
+      "palabrasAgregadas": 0,
+      "patronesEncontrados": 0,
+      "columnasUsadas": 0
+    },
+    "configuracion": {
+      "autoAprender": true,
+      "aprenderColumnas": true,
+      "umbralAprendizaje": 0.80,
+      "maximoPalabrasAprendidas": 500,
+      "frecuenciaMinimaPatron": 3
+    }
+  },
+  "casosDePruebaBase": [
+    {
+      "nombre": "Caso 1: Televisor Samsung del inventario real",
+      "texto": "01 Televisor plasma LED de 55 Ma SAMSUNG Se 07943CYK900057 Mo QN55Q7FNA 4K QLED Smart TV",
+      "extraccionEsperada": {
+        "MARCA": "SAMSUNG",
+        "MODELO": "QN55Q7FNA",
+        "TAMAÑO_PANTALLA": "55",
+        "TIPO_PANTALLA": "QLED",
+        "RESOLUCION": "4K",
+        "SMART_TV": "Smart TV"
+      }
+    },
+    {
+      "nombre": "Caso 2: Monitor Samsung del inventario real",
+      "texto": "01 MONITOR MaSAMSUNG MoS32B300NWN Se0DNAHCPW101588W 32 pulgadas LED Full HD",
+      "extraccionEsperada": {
+        "MARCA": "SAMSUNG",
+        "MODELO": "S32B300NWN",
+        "TAMAÑO_PANTALLA": "32",
+        "TIPO_PANTALLA": "LED",
+        "RESOLUCION": "Full HD"
+      }
+    },
+    {
+      "nombre": "Caso 3: Múltiples columnas simulado",
+      "columnas": {
+        "Marca": "LG",
+        "Modelo": "OLED55C1PUB",
+        "Tamaño": "55 pulgadas",
+        "Tipo": "OLED",
+        "Resolución": "4K UHD",
+        "Smart": "WebOS",
+        "HDMI": "4",
+        "USB": "3",
+        "HDR": "Dolby Vision",
+        "Audio": "Dolby Atmos",
+        "Hz": "120",
+        "Consumo": "178W",
+        "Peso": "18.7kg",
+        "Color": "Negro"
+      },
+      "extraccionEsperada": {
+        "MARCA": "LG",
+        "MODELO": "OLED55C1PUB",
+        "TAMAÑO_PANTALLA": "55",
+        "TIPO_PANTALLA": "OLED",
+        "RESOLUCION": "4K UHD",
+        "SMART_TV": "WebOS",
+        "HDMI_PUERTOS": "4",
+        "USB_PUERTOS": "3",
+        "HDR_SOPORTE": "Dolby Vision",
+        "AUDIO_SISTEMA": [
+          "Dolby Atmos"
+        ],
+        "FRECUENCIA_REFRESCO": "120",
+        "CONSUMO_ENERGIA": "178W",
+        "PESO": "18.7",
+        "COLOR": "Negro"
+      }
+    }
+  ]
+}

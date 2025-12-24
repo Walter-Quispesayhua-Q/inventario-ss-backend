@@ -1,0 +1,141 @@
+{
+  "version": "1.0",
+  "fechaActualizacion": "2025-01-06",
+  "configuracion": {
+    "cargaParalela": true,
+    "cachearPlantillas": true,
+    "validarIntegridad": true,
+    "permitirPlantillasCustom": true,
+    "autoDescubrimiento": true,
+    "generarMapeoAutomatico": true,
+    "usarConvencionNombres": true,
+    "logging": {
+      "nivel": "INFO",
+      "mostrarTiemposCarga": true,
+      "mostrarMemoriaUsada": true
+    }
+  },
+  "convenciones": {
+    "descripcion": "Reglas para auto-mapeo de archivos a categorías",
+    "formatoNombreArchivo": "{categoria-snake-case}.json",
+    "formatoCategoriaBD": "{CATEGORIA_UPPER_SNAKE}",
+    "ejemplos": [
+      {"archivo": "cpu-desktop.json", "genera": "CPU_DESKTOP"},
+      {"archivo": "mouse.json", "genera": "MOUSE"},
+      {"archivo": "lector-codigo-barras.json", "genera": "LECTOR_CODIGO_BARRAS"}
+    ],
+    "excepciones": {
+      "rack.json": "RACK_RED",
+      "webcam.json": "CAMARA_WEB",
+      "ecran.json": "PANTALLA_PROYECCION"
+    }
+  },
+  "grupos": {
+    "COMPUTACION": {
+      "carpeta": "computacion",
+      "descripcion": "Equipos de cómputo, servidores y dispositivos portátiles.",
+      "autoDescubrir": true,
+      "validarExistencia": true,
+      "atributosComunes": ["MARCA", "MODELO", "PROCESADOR", "RAM"],
+      "categoriasPredefinidas": {
+        "cpu-desktop": "CPU",
+        "laptop": "LAPTOP",
+        "servidor": "SERVIDOR",
+        "tablet": "TABLET"
+      }
+    },
+    "REDES": {
+      "carpeta": "redes",
+      "descripcion": "Equipos de networking y conectividad.",
+      "autoDescubrir": true,
+      "atributosComunes": ["MARCA", "MODELO", "PUERTOS", "VELOCIDAD"],
+      "categoriasPredefinidas": {
+        "router": "ROUTER",
+        "switch": "SWITCH",
+        "access-point": "ACCESS_POINT",
+        "patch-panel": "PATCH_PANEL",
+        "rack": "RACK_RED"
+      }
+    },
+    "PERIFERICOS": {
+      "carpeta": "perifericos",
+      "descripcion": "Dispositivos de entrada/salida y accesorios de computadora.",
+      "autoDescubrir": true,
+      "atributosComunes": ["MARCA", "MODELO", "CONECTIVIDAD"],
+      "categoriasPredefinidas": {
+        "teclado": "TECLADO",
+        "mouse": "MOUSE",
+        "impresora": "IMPRESORA",
+        "scanner": "SCANNER",
+        "lector-codigo-barras": "LECTOR_CODIGO",
+        "lector-cd": "LECTOR_CD",
+        "webcam": "WEBCAM"
+      }
+    },
+    "MOBILIARIO": {
+      "carpeta": "mobiliario",
+      "descripcion": "Muebles y equipamiento de oficina.",
+      "autoDescubrir": true,
+      "atributosComunes": ["MATERIAL", "COLOR", "DIMENSIONES"],
+      "categoriasPredefinidas": {}
+    },
+    "AUDIOVISUAL": {
+      "carpeta": "audiovisual",
+      "descripcion": "Equipos de audio y video.",
+      "autoDescubrir": true,
+      "atributosComunes": ["MARCA", "MODELO", "POTENCIA"],
+      "categoriasPredefinidas": {}
+    },
+    "ENERGIA": {
+      "carpeta": "energia",
+      "descripcion": "Sistemas de alimentación y protección eléctrica.",
+      "autoDescubrir": true,
+      "atributosComunes": ["CAPACIDAD", "VOLTAJE", "MARCA"],
+      "categoriasPredefinidas": {
+        "ups": "UPS",
+        "fuente-alimentacion": "FUENTE_ALIMENTACION",
+        "transformador": "TRANSFORMADOR"
+      }
+    },
+    "DESARROLLO_PROTOTIPADO": {
+      "carpeta": "desarrollo-prototipado",
+      "descripcion": "Placas de desarrollo y componentes para prototipado.",
+      "autoDescubrir": true,
+      "atributosComunes": ["MODELO", "VERSION", "MEMORIA"],
+      "categoriasPredefinidas": {}
+    },
+    "OTROS": {
+      "descripcion": "Categorías misceláneas",
+      "carpetas": [
+        "displays",
+        "almacenamiento",
+        "oficina",
+        "instrumentos-medicion",
+        "seguridad",
+        "climatizacion",
+        "herramientas",
+        "electrodomesticos",
+        "fabricacion-prototipado",
+        "robotica"
+      ],
+      "autoDescubrir": true,
+      "usarConvencionNombres": true
+    }
+  },
+  "validaciones": {
+    "plantillaMinima": {
+      "campos": ["metadatos", "inteligencia", "scoring", "reconocimiento"],
+      "atributosMinimos": 5,
+      "palabrasClaveMinimas": 10
+    },
+    "alertas": {
+      "archivosHuerfanos": true,
+      "categoriasDuplicadas": true,
+      "plantillasInvalidas": true
+    }
+  },
+  "estadisticas": {
+    "generarAutomaticamente": true,
+    "incluir": ["totalPlantillas", "totalCarpetas", "plantillasPorGrupo", "ultimaActualizacion"]
+  }
+}
